@@ -394,13 +394,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.11.1"
-  pinput:
+  pin_code_fields:
     dependency: "direct main"
     description:
-      name: pinput
+      name: pin_code_fields
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.2.0"
+    version: "7.3.0"
   plugin_platform_interface:
     dependency: transitive
     description:
@@ -462,6 +462,13 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  snapping_sheet:
+    dependency: "direct main"
+    description:
+      name: snapping_sheet
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "3.1.0"
   source_gen:
     dependency: transitive
     description:
