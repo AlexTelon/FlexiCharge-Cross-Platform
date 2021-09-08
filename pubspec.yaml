@@ -27,6 +27,11 @@ dependencies:
   cupertino_icons: ^1.0.3
   stacked: ^2.2.5
   stacked_services: ^0.8.13
+  google_maps_flutter: ^2.0.8
+  geolocator: ^7.6.0  
+  http: ^0.13.3
+  pinput: ^1.2.0
+
 
 dev_dependencies:
   stacked_generator: ^0.5.1

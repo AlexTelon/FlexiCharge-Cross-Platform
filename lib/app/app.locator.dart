@@ -9,7 +9,9 @@
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
-import '../services/trasactions.dart';
+import '../services/chargers.dart';
+import '../services/local_data.dart';
+import '../services/transactions.dart';
 
 final locator = StackedLocator.instance;
 
@@ -20,4 +22,6 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
 
 // Register dependencies
   locator.registerLazySingleton(() => Transactions());
+  locator.registerLazySingleton(() => ChargerService());
+  locator.registerLazySingleton(() => LocalData());
 }
