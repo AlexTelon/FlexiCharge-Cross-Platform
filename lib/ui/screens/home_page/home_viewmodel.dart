@@ -10,20 +10,24 @@ class HomeViewModel extends BaseViewModel {
     getUserLocation();
   }
 
-  String title = '';
+  String _chargerCode = '';
   Completer<GoogleMapController> controller = Completer();
-  final SnappingSheetController _snappingSheetController = SnappingSheetController();
-
-  SnappingSheetController get snappingSheetController => _snappingSheetController;
+  final SnappingSheetController _snappingSheetController =
+      SnappingSheetController();
 
   CameraPosition cameraPosition = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
     zoom: 14.4746,
   );
 
+  SnappingSheetController get snappingSheetController =>
+      _snappingSheetController;
+
+  set chargerCode(String value) => _chargerCode = value;
+
   void getUserLocation() =>
-      Geolocator.getPositionStream(desiredAccuracy: LocationAccuracy.high)
-          .listen((value) {
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+          .then((value) {
         cameraPosition = CameraPosition(
           target: LatLng(value.latitude, value.longitude),
           zoom: 14.4746,
