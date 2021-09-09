@@ -3,10 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'app/app.router.dart';
 
+
+void printTest() {
+  print("Hej --> HEJ");
+}
+
 main()  {
   setupLocator();
   runApp(MyApp());
 }
+
+
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

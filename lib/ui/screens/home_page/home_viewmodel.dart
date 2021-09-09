@@ -1,11 +1,17 @@
 import 'dart:async';
-
+import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/services/chargers.dart';
+import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:snapping_sheet/snapping_sheet.dart';
 import 'package:stacked/stacked.dart';
 
 class HomeViewModel extends BaseViewModel {
+  
+  final chagerAPI = locator<ChargerService> ();
+  final localData = locator<LocalData> ();
+
   init() {
     getUserLocation();
   }
