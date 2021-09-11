@@ -22,6 +22,8 @@ class ChargerService {
         return Charger.fromJson(jsonDecode(response.body));
       default:
         throw Exception(ErrorCodes.internalError);
+
     }
+    
   }
 }

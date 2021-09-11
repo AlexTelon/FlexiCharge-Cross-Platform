@@ -18,8 +18,22 @@ class ChargerCodeInput extends StatelessWidget {
         length: 6,
         onChanged: onChanged,
         animationCurve: Curves.easeInOut,
-        autoFocus: true,
-        boxShadows: [BoxShadow()],
+        keyboardType: TextInputType.number,
+        keyboardAppearance: Brightness.light,
+        pinTheme: PinTheme(
+          shape: PinCodeFieldShape.box,
+          borderRadius: BorderRadius.circular(5),
+          fieldHeight: 50,
+          fieldWidth: 40,
+          activeFillColor: Colors.grey,
+          activeColor: Colors.grey,
+          selectedColor: Colors.grey,
+        ),
+        textStyle: TextStyle(
+          color: Colors.white,
+        ),
+        boxShadows: [BoxShadow(color: Colors.grey)],
+        
       ),
     );
   }
