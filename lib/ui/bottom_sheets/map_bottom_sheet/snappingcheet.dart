@@ -49,7 +49,7 @@ class CustomSnappingSheet extends StatelessWidget {
                 // ignore: deprecated_member_use
                 RaisedButton(
                   onPressed: () => model.getChargers(),
-                  child: Text('Find'),
+                  child: Text('connect'),
                 ),
                 SizedBox(
                   height: 30,
