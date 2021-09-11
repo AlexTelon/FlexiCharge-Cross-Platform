@@ -25,13 +25,21 @@ class HomeView extends StatelessWidget {
             markers: {
               Marker(
                 markerId: MarkerId("1"),
-                position: LatLng(57.782239, 14.164477),
+                position: LatLng(57.781921, 14.161227),
                 icon: model.greenMarkerIcon,
+                infoWindow: InfoWindow(
+                  title: 'Trädgårdsgatan 25',
+                  snippet: "Hi I'm Available",
+                ),
               ),
               Marker(
                 markerId: MarkerId("2"),
-                position: LatLng(57.783074, 14.165754),
+                position: LatLng(57.782053, 14.162851),
                 icon: model.redMarkerIcon,
+                infoWindow: InfoWindow(
+                  title: 'Barnarpsgatan',
+                  snippet: "Hi I'm Unavailable",
+                ),
               ),
             },
             tileOverlays: {}),

@@ -27,7 +27,7 @@ class HomeViewModel extends BaseViewModel {
 
   CameraPosition cameraPosition = CameraPosition(
     target: LatLng(37.42796133580664, -122.085749655962),
-    zoom: 14.4746,
+    zoom: 14.5,
   );
 
   void getUserLocation() =>
