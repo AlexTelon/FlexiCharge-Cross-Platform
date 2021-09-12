@@ -23,7 +23,7 @@ class CustomSnappingSheet extends StatelessWidget {
       builder: (context, model, child) => Container(
         padding: EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.grey,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Container(

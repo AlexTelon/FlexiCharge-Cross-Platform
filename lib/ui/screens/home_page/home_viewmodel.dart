@@ -11,9 +11,10 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final chagerAPI = locator<ChargerService>();
-  final localData = locator<LocalData>();
-  final bottomSheetService = locator<BottomSheetService>();
+  final _chagerAPI = locator<ChargerService>();
+  final _localData = locator<LocalData>();
+  final _bottomSheetService = locator<BottomSheetService>();
+  final _navigationService = locator<NavigationService>();
 
   init() {
     getUserLocation();
@@ -26,22 +27,26 @@ class HomeViewModel extends BaseViewModel {
     zoom: 14.4746,
   );
 
-  List<Charger> get chargers => localData.chargers;
+  List<Charger> get chargers => _localData.chargers;
 
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then(
-        (value) {
-          cameraPosition = CameraPosition(
-            target: LatLng(value.latitude, value.longitude),
-            zoom: 14.4746,
-          );
-          notifyListeners();
-          print(value.latitude);
-        },
-      );
+  void getUserLocation() {
+    Geolocator.getCurrentPosition(
+            desiredAccuracy: LocationAccuracy.best)
+        .then(
+      (value) {
+        cameraPosition = CameraPosition(
+          target: LatLng(value.latitude, value.longitude),
+          zoom: 14.4746,
+        );
+        notifyListeners();
+        print(value.latitude);
+      },
+    );
+  }
 
   Future<void> openFindCharger() async {
-    bottomSheetService.showCustomSheet(variant: BottomSheetType.mapBottomSheet);
+    _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.mapBottomSheet,
+    );
   }
 }
