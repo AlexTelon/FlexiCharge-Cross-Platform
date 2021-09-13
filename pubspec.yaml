@@ -37,6 +37,8 @@ dependencies:
 dev_dependencies:
   stacked_generator: ^0.5.1
   build_runner: ^2.1.2
+  flutter_svg: ^0.18.0
+
 
   flutter_test:
     sdk: flutter
@@ -47,6 +49,7 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
 
+  - assets
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.

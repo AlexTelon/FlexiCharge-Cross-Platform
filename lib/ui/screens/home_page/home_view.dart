@@ -1,3 +1,6 @@
+import 'dart:html';
+import 'dart:ui';
+
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/map_icon.dart';
@@ -7,7 +10,6 @@ import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -25,8 +27,8 @@ class HomeView extends StatelessWidget {
                 _controller.setMapStyle(MapStyle().SilverMode);
               },
               tileOverlays: {}),
-              Center(
-                child: MapIcon(onTap: () => print("TEST"), isLarge: false, icon: Icon(Icons.location_on),)
+              Positioned(
+                child: MapIcon(onTap: () => print("TEST"), isLarge: false, icon: Icons.location_on)
               )
           ]
         ),

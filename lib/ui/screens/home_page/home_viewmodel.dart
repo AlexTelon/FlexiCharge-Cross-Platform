@@ -11,7 +11,7 @@ class HomeViewModel extends BaseViewModel {
   
   final chagerAPI = locator<ChargerService> ();
   final localData = locator<LocalData> ();
-
+ 
   init() {
     getUserLocation();
   }

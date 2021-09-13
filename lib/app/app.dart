@@ -4,6 +4,7 @@ import 'package:flexicharge/services/transactions.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:stacked/stacked_annotations.dart';
 
+
 @StackedApp(
   routes: [
     MaterialRoute(page: HomeView, initial: true),
