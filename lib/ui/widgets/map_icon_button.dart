@@ -15,8 +15,8 @@ class MapIcon extends StatelessWidget {
       child:ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(isLarge ? 80:50)),
         child: Container(
-          width: isLarge ? 80:50,
-          height: isLarge ? 80:50,
+          width: isLarge ? 70:50,
+          height: isLarge ? 70:50,
           color: Color.fromARGB(220, 21, 21, 21),
           child: icon,
         ),
