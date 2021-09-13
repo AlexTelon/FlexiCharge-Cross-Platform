@@ -6,6 +6,7 @@ import 'package:flexicharge/ui/widgets/plugs.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flexicharge/ui/widgets/plug.dart';
 
 class CustomSnappingSheet extends StatelessWidget {
   const CustomSnappingSheet({
@@ -33,6 +34,7 @@ class CustomSnappingSheet extends StatelessWidget {
               children: [
                 Plugs(
                   chargers: model.chargers,
+                  
                 ),
                 Align(
                   alignment: Alignment.center,

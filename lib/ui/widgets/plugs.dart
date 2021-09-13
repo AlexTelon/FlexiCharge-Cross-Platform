@@ -1,5 +1,6 @@
 import 'package:flexicharge/models/charger.dart';
 import 'package:flutter/material.dart';
+import 'package:flexicharge/ui/widgets/plug.dart';
 
 class Plugs extends StatefulWidget {
   const Plugs({required this.chargers, Key? key}) : super(key: key);
@@ -23,7 +24,9 @@ class _PlugsState extends State<Plugs> {
               (charger) => Container(
                 width: 160.0,
                 child: Row(
-                  children: [Text('available   '), Text(charger.id)],
+                  children: [
+                    Plug(),
+                  ],
                 ),
               ),
             )
