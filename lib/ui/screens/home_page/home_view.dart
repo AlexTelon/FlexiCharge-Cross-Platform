@@ -8,20 +8,42 @@ import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
-        body: Stack(children: [
-          GoogleMap(
+        
+        body: GoogleMap(
             initialCameraPosition: model.cameraPosition,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController _controller) {
               model.controller.complete(_controller);
               _controller.setMapStyle(MapStyle().SilverMode);
+              _controller.animateCamera(
+                CameraUpdate.newCameraPosition(model.cameraPosition),
+              );
+            },
+            markers: {
+              Marker(
+                markerId: MarkerId("1"),
+                position: LatLng(57.781921, 14.161227),
+                icon: model.greenMarkerIcon,
+                infoWindow: InfoWindow(
+                  title: 'Trädgårdsgatan 25',
+                  snippet: "Hi I'm Available",
+                ),
+              ),
+              Marker(
+                markerId: MarkerId("2"),
+                position: LatLng(57.782053, 14.162851),
+                icon: model.redMarkerIcon,
+                infoWindow: InfoWindow(
+                  title: 'Barnarpsgatan',
+                  snippet: "Hi I'm Unavailable",
+                ),
+              ),
             },
           ),
           Align(
