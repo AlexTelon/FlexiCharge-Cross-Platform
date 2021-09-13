@@ -1,5 +1,7 @@
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
+import 'package:flexicharge/ui/widgets/map_icon.dart';
+import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -11,6 +13,7 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
+        
         body: GoogleMap(
             initialCameraPosition: model.cameraPosition,
             myLocationEnabled: true,
@@ -42,7 +45,18 @@ class HomeView extends StatelessWidget {
                 ),
               ),
             },
-            tileOverlays: {}),
+          ),
+          Align(
+            alignment: Alignment.bottomCenter,
+            child: MapIcon(
+              onTap: ()=> model.openFindCharger(),
+              isLarge: true,
+              icon: Icon(
+                Icons.location_on,
+              ),
+            ),
+          )
+        ]),
       ),
       viewModelBuilder: () => HomeViewModel(),
     );
