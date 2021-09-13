@@ -3,11 +3,7 @@ import 'dart:ui';
 
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
-<<<<<<< Updated upstream
-import 'package:flexicharge/ui/widgets/map_icon.dart';
-=======
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
->>>>>>> Stashed changes
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,12 +18,8 @@ class HomeView extends StatelessWidget {
       builder: (context, model, child) => Scaffold(
         
         body: Stack(
-          children:[
-<<<<<<< Updated upstream
-             GoogleMap(
-=======
+          children:[ 
             GoogleMap(
->>>>>>> Stashed changes
               initialCameraPosition: model.cameraPosition,
               myLocationEnabled: true,
               zoomControlsEnabled: false,
@@ -36,12 +28,7 @@ class HomeView extends StatelessWidget {
                 _controller.setMapStyle(MapStyle().SilverMode);
               },
               tileOverlays: {}),
-<<<<<<< Updated upstream
-              Positioned(
-                child: MapIcon(onTap: () => print("TEST"), isLarge: false, icon: Icons.location_on)
-              )
-=======
-            Padding(
+              Padding(
               padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -64,7 +51,6 @@ class HomeView extends StatelessWidget {
                 )
               )
             ),
->>>>>>> Stashed changes
           ]
         ),
       ),
