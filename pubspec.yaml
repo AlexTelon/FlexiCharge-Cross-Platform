@@ -32,6 +32,7 @@ dependencies:
   http: ^0.13.3
   pin_code_fields: ^7.3.0
   snapping_sheet: ^3.1.0
+  flutter_svg: ^0.22.0
 
 
 dev_dependencies:
