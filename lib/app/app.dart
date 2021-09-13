@@ -14,10 +14,11 @@ import 'package:stacked_services/stacked_services.dart';
     LazySingleton(classType: ChargerService),
     LazySingleton(classType: LocalData),
     LazySingleton(classType: BottomSheetService),
+    LazySingleton(classType: NavigationService),
   ],
 )
 
-/// obs: When updating this file run 
+/// obs: When updating this file run
 /// [ $ flutter pub run build_runner build --delete-conflicting-outputs ]  in the terminal &&
 ///  and also when you change class signature
 class AppSetup {

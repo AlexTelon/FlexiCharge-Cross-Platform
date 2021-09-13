@@ -13,8 +13,8 @@ class HomeView extends StatelessWidget {
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
-        
-        body: GoogleMap(
+        body: Stack(children: [
+          GoogleMap(
             initialCameraPosition: model.cameraPosition,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
@@ -46,16 +46,6 @@ class HomeView extends StatelessWidget {
               ),
             },
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: MapIcon(
-              onTap: ()=> model.openFindCharger(),
-              isLarge: true,
-              icon: Icon(
-                Icons.location_on,
-              ),
-            ),
-          )
         ]),
       ),
       viewModelBuilder: () => HomeViewModel(),

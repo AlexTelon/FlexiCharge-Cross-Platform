@@ -26,4 +26,5 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
   locator.registerLazySingleton(() => ChargerService());
   locator.registerLazySingleton(() => LocalData());
   locator.registerLazySingleton(() => BottomSheetService());
+  locator.registerLazySingleton(() => NavigationService());
 }
