@@ -31,11 +31,15 @@ dependencies:
   geolocator: ^7.6.0  
   http: ^0.13.3
   pin_code_fields: ^7.3.0
+  snapping_sheet: ^3.1.0
+  flutter_svg: ^0.22.0
+
 
 
 dev_dependencies:
   stacked_generator: ^0.5.1
   build_runner: ^2.1.2
+
 
   flutter_test:
     sdk: flutter
