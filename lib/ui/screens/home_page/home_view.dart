@@ -1,8 +1,6 @@
-import 'dart:ui';
-
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
+// import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -21,6 +19,7 @@ class HomeView extends StatelessWidget {
             initialCameraPosition: model.cameraPosition,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
+            myLocationButtonEnabled: true, // Set To false later.
             onMapCreated: (GoogleMapController _controller) {
               model.controller.complete(_controller);
               _controller.setMapStyle(MapStyle().SilverMode);
