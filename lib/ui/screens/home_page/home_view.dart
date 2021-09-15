@@ -41,7 +41,6 @@ class HomeView extends StatelessWidget {
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
-            myLocationButtonEnabled: true, // Set To false later.
             onMapCreated: (GoogleMapController _controller) {
               model.controller.complete(_controller);
               model.userLocateController = _controller;
