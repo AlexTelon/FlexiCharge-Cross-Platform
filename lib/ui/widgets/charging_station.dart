@@ -11,7 +11,10 @@ class ChargingStation extends StatelessWidget {
     return Center(
       child: Container(
         child: Column(children: [
-          Text(adress),
+          Text(
+            adress,
+            style: TextStyle(color: Colors.white),
+          ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [

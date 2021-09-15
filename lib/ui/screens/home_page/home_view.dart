@@ -63,14 +63,14 @@ class HomeView extends StatelessWidget {
                       MapIcon(
                         onTap: () => print("TEST1"),
                         isLarge: false,
-                        icon: SvgPicture.asset('assets/location.svg',
+                        icon: SvgPicture.asset('assets/svg_images/location.svg',
                             fit: BoxFit.scaleDown),
                       ),
                       SizedBox(height: 30),
                       MapIcon(
                         onTap: () => print("Test2"),
                         isLarge: false,
-                        icon: SvgPicture.asset('assets/camera.svg',
+                        icon: SvgPicture.asset('assets/svg_images/camera.svg',
                             fit: BoxFit.scaleDown),
                       ),
                     ],
@@ -78,13 +78,13 @@ class HomeView extends StatelessWidget {
                   MapIcon(
                     onTap: () => model.openFindCharger(),
                     isLarge: true,
-                    icon: SvgPicture.asset('assets/logo.svg',
+                    icon: SvgPicture.asset('assets/svg_images/logo.svg',
                         fit: BoxFit.contain),
                   ),
                   MapIcon(
                     onTap: () => print("Test4"),
                     isLarge: false,
-                    icon: SvgPicture.asset('assets/person.svg',
+                    icon: SvgPicture.asset('assets/svg_images/person.svg',
                         fit: BoxFit.scaleDown),
                   ),
                 ],

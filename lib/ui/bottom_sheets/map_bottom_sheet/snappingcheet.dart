@@ -29,98 +29,100 @@ class CustomSnappingSheet extends StatelessWidget {
           color: Color(0xff333333),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Container(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ChargingStation(
-                adress: 'A6 Jönköping',
-                currentLocation: 'Barnarpsgatan 68',
-              ),
-              Plugs(
-                chargers: model.chargers,
-              ),
-              Text(
-                "Payment",
-                style: TextStyle(
-                    fontFamily: 'Lato',
-                    color: Color(0xffffffff),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: -0.408),
-              ),
-              SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  SwichButton(
-                    onTap: () {
-                      model.isSwishActive = true;
-                      print("Swish Payment In Progress");
-                    },
-                    isSelected: model.isSwishActive,
-                  ),
-                  InvoiceButton(
-                    onTap: () {
-                      model.isSwishActive = false;
-                      print("Swish Payment In Progress");
-                    },
-                    isSelected: !model.isSwishActive,
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 10,
-              ),
-              Text("Charger Identifier",
+        child: SingleChildScrollView(
+          child: Container(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                ChargingStation(
+                  adress: 'A6 Jönköping',
+                  currentLocation: 'Barnarpsgatan 68',
+                ),
+                Plugs(
+                  chargers: model.chargers,
+                ),
+                Text(
+                  "Payment",
                   style: TextStyle(
-                    fontFamily: 'Lato',
-                    color: Color(0xffffffff),
-                    fontSize: 17,
-                    fontWeight: FontWeight.w400,
-                    fontStyle: FontStyle.normal,
-                    letterSpacing: -0.408,
-                  )),
-              SizedBox(
-                height: 10,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: ChargerCodeInput(
-                  onChanged: (input) => model.chargerCode = input,
-                  validator: (input) {
-                    return '';
-                  },
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408),
                 ),
-              ),
-
-              SizedBox(height: 10),
-              // ignore: deprecated_member_use
-              InkWell(
-                onTap: () => model.getChargers(),
-                child: Container(
-                  width: 300,
-                  height: 48,
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SwichButton(
+                      onTap: () {
+                        model.isSwishActive = true;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: model.isSwishActive,
+                    ),
+                    InvoiceButton(
+                      onTap: () {
+                        model.isSwishActive = false;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: !model.isSwishActive,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Charger Identifier",
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408,
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
+                Align(
                   alignment: Alignment.center,
-                  decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xff78bd76)),
-                  child: Text("Begin Charging",
-                      style: TextStyle(
-                        fontFamily: 'ITCAvantGardePro',
-                        color: Color(0xffffffff),
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        fontStyle: FontStyle.normal,
-                        letterSpacing: -0.3839999999999999,
-                      )),
+                  child: ChargerCodeInput(
+                    onChanged: (input) => model.chargerCode = input,
+                    validator: (input) {
+                      return '';
+                    },
+                  ),
                 ),
-              ),
-              SizedBox(
-                height: 30,
-              ),
-            ],
+        
+                SizedBox(height: 10),
+                // ignore: deprecated_member_use
+                InkWell(
+                  onTap: () => model.getChargers(),
+                  child: Container(
+                    width: 300,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xff78bd76)),
+                    child: Text("Begin Charging",
+                        style: TextStyle(
+                          fontFamily: 'ITCAvantGardePro',
+                          color: Color(0xffffffff),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: -0.3839999999999999,
+                        )),
+                  ),
+                ),
+                SizedBox(
+                  height: 30,
+                ),
+              ],
+            ),
           ),
         ),
       ),
