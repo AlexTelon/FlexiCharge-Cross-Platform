@@ -1,6 +1,3 @@
-import 'dart:html';
-import 'dart:ui';
-
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
@@ -62,7 +59,7 @@ class HomeView extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [ 
-                        MapIcon(onTap: () => print("TEST1"), isLarge: false, icon: SvgPicture.asset('assets/location.svg',fit: BoxFit.scaleDown)),
+                        MapIcon(onTap: () => model.openFindCharger(), isLarge: false, icon: SvgPicture.asset('assets/location.svg',fit: BoxFit.scaleDown)),
                         SizedBox(height: 30),
                         MapIcon(onTap: () => print("Test2"), isLarge: false, icon: SvgPicture.asset('assets/camera.svg',fit: BoxFit.scaleDown)),
                       ]
