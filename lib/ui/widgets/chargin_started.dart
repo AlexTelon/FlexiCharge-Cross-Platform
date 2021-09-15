@@ -4,12 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChargingStarted extends StatelessWidget {
-  const ChargingStarted(
-      {Key? key, required this.imageOne, required this.imageTwo})
-      : super(key: key);
-
-  final SvgPicture imageOne;
-  final SvgPicture imageTwo;
+  const ChargingStarted({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,22 +15,19 @@ class ChargingStarted extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Container(
-            width: MediaQuery.of(context).size.width * 0.2,
-            height: MediaQuery.of(context).size.height * 0.2,
-            color: Color.fromARGB(220, 21, 21, 21),
-            child: imageOne,
+            child: Image(
+                image: AssetImage('assets/images/smallFlexiChargeLogo.png')),
           ),
           // Rectangle Copy 20
           // Fill 1
           Container(
-              width: MediaQuery.of(context).size.width * 0.1,
-              height: MediaQuery.of(context).size.height * 0.05,
-              decoration: BoxDecoration(color: const Color(0xffffffff))),
+              child: Image(
+            width: 50,
+            height: 50,
+            image: AssetImage('assets/images/white_arrow_right.png'),
+          )),
           Container(
-            width: MediaQuery.of(context).size.width * 0.2,
-            height: MediaQuery.of(context).size.height * 0.2,
-            color: Color.fromARGB(220, 21, 21, 21),
-            child: imageTwo,
+            child: Image(image: AssetImage('assets/images/whiteCheck.png')),
           ),
         ],
       ),

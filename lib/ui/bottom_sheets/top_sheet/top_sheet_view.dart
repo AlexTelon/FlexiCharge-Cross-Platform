@@ -37,12 +37,7 @@ class TopSheetView extends StatelessWidget {
                   ),
                   Expanded(
                     flex: 2,
-                    child: ChargingStarted(
-                      imageOne: SvgPicture.asset(
-                          '/assets/svg_images/logoIconColor.svg'),
-                      imageTwo: SvgPicture.asset(
-                          '/assets/svg_images/logoIconColor.svg'),
-                    ),
+                    child: ChargingStarted(),
                   ),
                   if (model.chargeInProgress)
                     Expanded(
