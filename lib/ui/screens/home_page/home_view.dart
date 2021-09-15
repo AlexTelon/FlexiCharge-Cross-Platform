@@ -1,9 +1,6 @@
-import 'dart:async';
-import 'dart:ui';
-
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
+// import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -44,6 +41,7 @@ class HomeView extends StatelessWidget {
             mapToolbarEnabled: false,
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
+            myLocationButtonEnabled: true, // Set To false later.
             onMapCreated: (GoogleMapController _controller) {
               model.controller.complete(_controller);
               model.userLocateController = _controller;

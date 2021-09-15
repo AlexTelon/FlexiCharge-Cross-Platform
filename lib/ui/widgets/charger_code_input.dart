@@ -13,7 +13,7 @@ class ChargerCodeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: PinCodeTextField(
+       child: PinCodeTextField(
         appContext: context,
         length: 6,
         onChanged: onChanged,
