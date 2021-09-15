@@ -2,19 +2,22 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flutter/material.dart';
 import 'plug.dart';
 
-class Plugs extends StatefulWidget {
+class Plugs extends StatelessWidget {
   const Plugs({required this.chargers, Key? key}) : super(key: key);
   final List<Charger> chargers;
-
-  @override
-  _PlugsState createState() => _PlugsState();
-}
-
-class _PlugsState extends State<Plugs> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Plug(),
+      height: 140,
+      width: MediaQuery.of(context).size.width,
+      child: ListView(
+        scrollDirection: Axis.horizontal,
+        children: chargers
+            .map(
+              (charger) => Plug(charger: charger),
+            )
+            .toList(),
+      ),
     );
   }
 }

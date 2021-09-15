@@ -2,6 +2,7 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
+import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -31,6 +32,9 @@ class CustomSnappingSheet extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ChargingStation(
+                    adress: 'A6 Jönköping',
+                    currentLocation: 'Barnarpsgatan 68'),
                 Plugs(
                   chargers: model.chargers,
                 ),

@@ -1,4 +1,4 @@
-enum ChargerStatus{
+enum ChargerStatus {
   available,
   booked,
   occupied,

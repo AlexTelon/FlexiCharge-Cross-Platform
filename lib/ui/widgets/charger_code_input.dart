@@ -12,21 +12,23 @@ class ChargerCodeInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: PinCodeTextField(
-        appContext: context,
-        length: 6,
-        onChanged: onChanged,
-        animationCurve: Curves.bounceInOut,
-        keyboardType: TextInputType.number,
-        keyboardAppearance: Brightness.dark,
-        pinTheme: PinTheme(
-          shape: PinCodeFieldShape.box,
-          borderRadius: BorderRadius.circular(5),
-          fieldHeight: 50,
-          fieldWidth: 40,
+    return Center(
+      child: Container(
+        child: PinCodeTextField(
+          appContext: context,
+          length: 6,
+          onChanged: onChanged,
+          animationCurve: Curves.bounceInOut,
+          keyboardType: TextInputType.number,
+          keyboardAppearance: Brightness.dark,
+          pinTheme: PinTheme(
+            shape: PinCodeFieldShape.box,
+            borderRadius: BorderRadius.circular(5),
+            fieldHeight: 50,
+            fieldWidth: 40,
+          ),
+          boxShadows: [BoxShadow(color: Colors.white)],
         ),
-        boxShadows: [BoxShadow(color: Colors.white)],
       ),
     );
   }

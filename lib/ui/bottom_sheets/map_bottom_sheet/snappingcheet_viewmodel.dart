@@ -3,8 +3,8 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/services/chargers.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:stacked/stacked.dart';
-class CustomSnappingSheetViewModel extends BaseViewModel{
 
+class CustomSnappingSheetViewModel extends BaseViewModel {
   final chagerAPI = locator<ChargerService>();
   final localData = locator<LocalData>();
 
@@ -15,7 +15,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel{
 
   void getChargers() {
     chargers = localData.chargers
-        .where((charger) => charger.id == _chargerCode)
+        .where(
+          (charger) =>
+              charger.id ==
+              int.parse(
+                _chargerCode,
+              ),
+        )
         .toList();
     notifyListeners();
   }
