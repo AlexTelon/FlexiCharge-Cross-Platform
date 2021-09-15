@@ -29,8 +29,8 @@ class ChargerCodeInput extends StatelessWidget {
           fieldWidth: 34,
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(5),
-          inactiveColor: const Color(0xff333333), //Override default red
-          activeColor: const Color(0xff333333), //Override default green
+          inactiveColor: const Color.fromARGB(1, 0, 0, 0), //Override default red to fully transparent
+          activeColor: const Color.fromARGB(1, 0, 0, 0), //Override default green to fully transparent
         ),
       ),
     );

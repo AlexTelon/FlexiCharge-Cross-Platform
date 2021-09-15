@@ -2,6 +2,8 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
+import 'package:flexicharge/ui/widgets/invoice_button.dart';
+import 'package:flexicharge/ui/widgets/swish_button.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -23,7 +25,7 @@ class CustomSnappingSheet extends StatelessWidget {
       builder: (context, model, child) => Container(
         padding: EdgeInsets.all(25),
         decoration: BoxDecoration(
-          color: Colors.grey,
+          color: Color(0xff333333),
           borderRadius: BorderRadius.circular(15),
         ),
         child: Container(
@@ -34,6 +36,51 @@ class CustomSnappingSheet extends StatelessWidget {
                 Plugs(
                   chargers: model.chargers,
                 ),
+                Text(
+                  "Payment",
+                  style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408),
+                ),
+                SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SwichButton(
+                      onTap: () {
+                        model.isSwishActive = true;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: model.isSwishActive,
+                    ),
+                    InvoiceButton(
+                      onTap: () {
+                        model.isSwishActive = false;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: !model.isSwishActive,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                Text("Charger Identifier",
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408,
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: ChargerCodeInput(
@@ -43,13 +90,28 @@ class CustomSnappingSheet extends StatelessWidget {
                     },
                   ),
                 ),
-                SizedBox(
-                  height: 10,
-                ),
+
+                SizedBox(height: 10),
                 // ignore: deprecated_member_use
-                RaisedButton(
-                  onPressed: () => model.getChargers(),
-                  child: Text('connect'),
+                InkWell(
+                  onTap: () => model.getChargers(),
+                  child: Container(
+                    width: 300,
+                    height: 48,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xff78bd76)),
+                    child: Text("Begin Charging",
+                        style: TextStyle(
+                          fontFamily: 'ITCAvantGardePro',
+                          color: Color(0xffffffff),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: -0.3839999999999999,
+                        )),
+                  ),
                 ),
                 SizedBox(
                   height: 30,
