@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'plug.dart';
 
 class Plugs extends StatelessWidget {
-  const Plugs({required this.chargers, Key? key}) : super(key: key);
+  const Plugs({required this.isSelected, required this.chargers, Key? key})
+      : super(key: key);
   final List<Charger> chargers;
+  final isSelected;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -14,7 +16,7 @@ class Plugs extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         children: chargers
             .map(
-              (charger) => Plug(charger: charger),
+              (charger) => Plug(isSelected: isSelected, charger: charger),
             )
             .toList(),
       ),

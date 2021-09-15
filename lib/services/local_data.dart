@@ -12,7 +12,7 @@ class LocalData {
       location: LatLng(123.5, 1321.5),
     ),
     Charger.fromCharger(
-      id: 201920,
+      id: 201820,
       status: 0,
       type: 'fourPin',
       capacity: 'fourKW',
@@ -20,7 +20,7 @@ class LocalData {
       location: LatLng(321.5, 248.5),
     ),
     Charger.fromCharger(
-      id: 202020,
+      id: 201820,
       status: 2,
       type: 'fivePin',
       capacity: 'fiveKW',
@@ -28,7 +28,15 @@ class LocalData {
       location: LatLng(444.8, 3331.6),
     ),
     Charger.fromCharger(
-      id: 202120,
+      id: 201820,
+      status: 3,
+      type: 'sixPin',
+      capacity: 'sixKW',
+      cost: 'sixKrKWh',
+      location: LatLng(666.8, 555.6),
+    ),
+    Charger.fromCharger(
+      id: 201820,
       status: 3,
       type: 'sixPin',
       capacity: 'sixKW',
