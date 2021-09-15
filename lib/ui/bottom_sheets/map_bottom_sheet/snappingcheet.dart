@@ -36,34 +36,51 @@ class CustomSnappingSheet extends StatelessWidget {
                 Plugs(
                   chargers: model.chargers,
                 ),
-                Text("Payment", style: TextStyle(
-                  fontFamily: 'Lato',
-                  color: Color(0xffffffff),
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: -0.408
-                )),
+                Text(
+                  "Payment",
+                  style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408),
+                ),
                 SizedBox(height: 10),
                 Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                    SwichButton(onTap: () => print("test")),
-                    InvoiceButton(onTap:() => print("test10")),
-                    ],
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    SwichButton(
+                      onTap: () {
+                        model.isSwishActive = true;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: model.isSwishActive,
+                    ),
+                    InvoiceButton(
+                      onTap: () {
+                        model.isSwishActive = false;
+                        print("Swish Payment In Progress");
+                      },
+                      isSelected: !model.isSwishActive,
+                    ),
+                  ],
                 ),
-                SizedBox(height: 10,),
-                Text(
-                  "Charger Identifier", style: TextStyle(
-                  fontFamily: 'Lato',
-                  color: Color(0xffffffff),
-                  fontSize: 17,
-                  fontWeight: FontWeight.w400,
-                  fontStyle: FontStyle.normal,
-                  letterSpacing: -0.408,
-                  )
+                SizedBox(
+                  height: 10,
                 ),
-                SizedBox(height: 10,),
+                Text("Charger Identifier",
+                    style: TextStyle(
+                      fontFamily: 'Lato',
+                      color: Color(0xffffffff),
+                      fontSize: 17,
+                      fontWeight: FontWeight.w400,
+                      fontStyle: FontStyle.normal,
+                      letterSpacing: -0.408,
+                    )),
+                SizedBox(
+                  height: 10,
+                ),
                 Align(
                   alignment: Alignment.center,
                   child: ChargerCodeInput(
@@ -73,7 +90,7 @@ class CustomSnappingSheet extends StatelessWidget {
                     },
                   ),
                 ),
-             
+
                 SizedBox(height: 10),
                 // ignore: deprecated_member_use
                 InkWell(
@@ -83,19 +100,17 @@ class CustomSnappingSheet extends StatelessWidget {
                     height: 48,
                     alignment: Alignment.center,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      color: Color(0xff78bd76)
-                    ),
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xff78bd76)),
                     child: Text("Begin Charging",
-                      style: TextStyle(
-                      fontFamily: 'ITCAvantGardePro',
-                      color: Color(0xffffffff),
-                      fontSize: 16,
-                      fontWeight: FontWeight.w700,
-                      fontStyle: FontStyle.normal,
-                      letterSpacing: -0.3839999999999999,
-                      )
-                    ),
+                        style: TextStyle(
+                          fontFamily: 'ITCAvantGardePro',
+                          color: Color(0xffffffff),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: -0.3839999999999999,
+                        )),
                   ),
                 ),
                 SizedBox(
