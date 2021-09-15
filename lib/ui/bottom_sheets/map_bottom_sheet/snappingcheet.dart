@@ -86,6 +86,7 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: ChargerCodeInput(
                     onChanged: (input) => model.chargerCode = input,
                     validator: (input) {
+                      if( input == null || input.length != 6) throw ErrorDescription( "Invalid charger ID" );
                       return '';
                     },
                   ),
