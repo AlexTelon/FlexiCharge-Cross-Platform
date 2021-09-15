@@ -22,24 +22,40 @@ class CustomSnappingSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CustomSnappingSheetViewModel>.reactive(
       builder: (context, model, child) => Container(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.only(
+          left: 25,
+          right: 25,
+          bottom: 25
+        ),
         decoration: BoxDecoration(
           //color: Color(0xff333333),
-          color: Colors.black54,
+          color: Colors.grey.shade900,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(15),
             topRight: Radius.circular(15),
           ),
         ),
         child: Container(
-            height: 900,
+            height: 1000,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                  ChargerLocations(),
-              //  Plugs(
-              //    chargers: model.chargers,
-              //  ),
+                Align(
+                  alignment: Alignment.center,
+                  child: IconButton(
+                    onPressed: () {
+                      completer(SheetResponse(data: null));
+                    },
+                    icon: Icon(Icons.keyboard_arrow_down_sharp, color: Colors.white,),
+                  ),
+                ),
+                ChargerLocations(),
+                SizedBox(
+                  height: 10,
+                ),
+                //  Plugs(
+                //    chargers: model.chargers,
+                //  ),
                 Align(
                   alignment: Alignment.center,
                   child: ChargerCodeInput(
