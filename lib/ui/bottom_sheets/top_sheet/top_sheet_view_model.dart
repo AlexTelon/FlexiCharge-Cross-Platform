@@ -5,7 +5,9 @@ import 'package:stacked/stacked.dart';
 class TopSheetViewModel extends BaseViewModel {
   String _topSheetText = "Text";
   bool connectingToCharger = true;
+  bool chargeInProgress = false;
   BitmapDescriptor startChargingIcon = BitmapDescriptor.defaultMarker;
+  var flexLogo = new Image.asset('/assets/images/smallFlexiChargeLogo.png');
 
   init() async {
     startChargingIcon = await _chargerStartedIcon;
@@ -48,5 +50,6 @@ class TopSheetViewModel extends BaseViewModel {
         }
         break;
     }
+    notifyListeners();
   }
 }
