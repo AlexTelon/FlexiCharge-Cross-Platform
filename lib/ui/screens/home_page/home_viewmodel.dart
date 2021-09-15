@@ -21,22 +21,25 @@ class HomeViewModel extends BaseViewModel {
     getUserLocation();
     greenMarkerIcon = await _greenMarkerIcon;
     redMarkerIcon = await _redMarkerIcon;
+    blackMarkerIcon = await _blackMarkerIcon;
     notifyListeners();
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
 
   Completer<GoogleMapController> controller = Completer();
+  GoogleMapController? userLocateController;
 
   CameraPosition cameraPosition = CameraPosition(
-    target: LatLng(37.42796133580664, -122.085749655962),
+    target: LatLng(57.781921, 14.161227),
     zoom: 14.5,
   );
 
   void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.medium)
+      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
           .then((value) {
         cameraPosition = CameraPosition(
           target: LatLng(value.latitude, value.longitude),
@@ -56,9 +59,27 @@ class HomeViewModel extends BaseViewModel {
         'assets/images/redMarker.png',
       );
 
+  get _blackMarkerIcon => BitmapDescriptor.fromAssetImage(
+        ImageConfiguration(size: Size(25, 25)),
+        'assets/images/blackMarker.png',
+      );
+
   Future<void> openFindCharger() async {
     _bottomSheetService.showCustomSheet(
       variant: BottomSheetType.mapBottomSheet,
     );
+  }
+
+  Future<void> findUser() async {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((value) async {
+      cameraPosition = CameraPosition(
+        target: LatLng(value.latitude, value.longitude),
+        zoom: 17,
+      );
+      userLocateController
+          ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
+      notifyListeners();
+    });
   }
 }

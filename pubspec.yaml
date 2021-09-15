@@ -33,6 +33,9 @@ dependencies:
   pin_code_fields: ^7.3.0
   snapping_sheet: ^3.1.0
   flutter_svg: ^0.22.0
+  loading_overlay_pro: ^2.1.1
+  splashscreen: ^1.2.0
+
 
 
 
@@ -43,6 +46,17 @@ dev_dependencies:
 
   flutter_test:
     sdk: flutter
+
+
+  flutter_native_splash: ^1.2.3
+
+flutter_native_splash:
+  color: "#000000"
+  image: assets/splashScreen/splashImage.png
+  android: true
+  ios: true
+  android_gravity: center
+  ios_content_mode: center
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
