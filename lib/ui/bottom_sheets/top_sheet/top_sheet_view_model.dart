@@ -34,7 +34,7 @@ class TopSheetViewModel extends BaseViewModel {
     switch (topSheetState) {
       case 1:
         {
-          topSheetSize = 0.3;
+          topSheetSize = 0.35;
         }
         break;
       case 2:

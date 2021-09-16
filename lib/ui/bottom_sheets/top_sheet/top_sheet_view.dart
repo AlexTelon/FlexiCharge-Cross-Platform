@@ -54,8 +54,9 @@ class TopSheetView extends StatelessWidget {
                   if (model.chargingState != 1) Spacer(),
                   Expanded(
                     child: TextButton(
-                      child: Text('"Pull down to stop charging"'),
+                      child: Text('Press to stop charging'),
                       style: TextButton.styleFrom(
+                        primary: Colors.white,
                         textStyle: const TextStyle(
                             color: const Color(0xffffffff),
                             fontWeight: FontWeight.w400,
