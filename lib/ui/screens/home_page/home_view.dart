@@ -1,3 +1,4 @@
+
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
@@ -94,6 +95,7 @@ class HomeView extends StatelessWidget {
                                 'assets/svg_images/person.svg',
                                 fit: BoxFit.scaleDown)),
                       ]))),
+
         ]),
       ),
       viewModelBuilder: () => HomeViewModel(),

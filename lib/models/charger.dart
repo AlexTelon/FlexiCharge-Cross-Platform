@@ -1,28 +1,28 @@
-import 'package:flexicharge/enums/charger_status.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class Charger {
-  String id = '';
-  ChargerStatus status = ChargerStatus.available;
+  int id = -1;
   LatLng location = LatLng(0, 0);
-  String data = '';
-  Charger();
-  Charger.fromCharger(this.id, this.status, this.location, this.data);
+  int status = 0;
+  String capacity = '';
+  String cost = '';
+  String type = '';
 
+  Charger();
+  Charger.fromCharger({
+    required this.id,
+    required this.location,
+    required this.status,
+    required this.capacity,
+    required this.cost,
+    required this.type,
+  });
   Charger.fromJson(Map<String, dynamic> json) {
-    id = json['userId'];
+    id = json['chargerId'];
     location = LatLng(json['latitude'], json['longitude']);
-    switch (json['status']) {
-      case 'booked':
-        status = ChargerStatus.booked;
-        break;
-      case 'occupied':
-        status = ChargerStatus.occupied;
-        break;
-      case 'available':
-        status = ChargerStatus.available;
-        break;
-      default:
-    }
+    status = json['status'];
+    capacity = json['capacity'];
+    cost = json['cost'];
+    type = json['type'];
   }
 }
