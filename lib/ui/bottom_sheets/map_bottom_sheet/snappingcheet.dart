@@ -1,7 +1,10 @@
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
 import 'package:flexicharge/ui/widgets/charger_locations.dart';
+import 'package:flexicharge/ui/widgets/charging_station.dart';
+import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
+import 'package:flexicharge/ui/widgets/swish_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -22,11 +25,7 @@ class CustomSnappingSheet extends StatelessWidget {
         height: 1000,
         child: Container(
           height: 1000,
-          padding: EdgeInsets.only(
-            left: 25,
-            right: 25,
-            bottom: 25
-          ),
+          padding: EdgeInsets.only(left: 25, right: 25, bottom: 25),
           decoration: BoxDecoration(
             //color: Color(0xff333333),
             color: Colors.grey.shade900,
@@ -36,72 +35,131 @@ class CustomSnappingSheet extends StatelessWidget {
             ),
           ),
           child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.center,
-                    child: IconButton(
-                      onPressed: () {
-                        completer(SheetResponse(data: null));
-                      },
-                      icon: Icon(Icons.keyboard_arrow_down_sharp, color: Colors.white,),
-                    ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                if (model.selectedChargerId == -1)
+                  Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.center,
+                        child: IconButton(
+                          onPressed: () {
+                            completer(SheetResponse(data: null));
+                          },
+                          icon: Icon(
+                            Icons.keyboard_arrow_down_sharp,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      ChargerLocations(
+                        chargers: model.nearestLocation,
+                        onTap: (chargingPointId) {
+                          model.selectedChargerId = chargingPointId;
+                          model.getChargersFromNearest();
+                        },
+                      ),
+                    ],
                   ),
-                  ChargerLocations(
-                    onTap: (chargingPointId) => {
-                      completer(SheetResponse(data: null))  //test
+                SizedBox(
+                  height: 10,
+                ),
+                if (model.selectedChargerId != -1)
+                  Column(
+                    children: [
+                      ChargingStation(
+                        onTap: () => print("Charging Button Works"),
+                        adress: 'A6 Jönköping',
+                        currentLocation: 'Barnarpsgatan 68',
+                      ),
+                      SizedBox(height: 20),
+                      Plugs(
+                        chargers: model.chargers,
+                        onTap: (id) => model.selectedChargerId = id,
+                        selectedChargerId: model.selectedChargerId,
+                      ),
+                      SizedBox(height: 10),
+                      Text(
+                        "Payment",
+                        style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Color(0xffffffff),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: -0.408),
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          SwichButton(
+                            onTap: () {
+                              model.isSwishActive = true;
+                              print("Swish Payment In Progress");
+                            },
+                            isSelected: model.isSwishActive,
+                          ),
+                          InvoiceButton(
+                            onTap: () {
+                              model.isSwishActive = false;
+                              print("Swish Payment In Progress");
+                            },
+                            isSelected: !model.isSwishActive,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                    ],
+                  ),
+
+                Align(
+                  alignment: Alignment.center,
+                  child: ChargerCodeInput(
+                    onChanged: (input) => model.chargerCode = input,
+                    validator: (input) {
+                      if (input == null || input.length != 6)
+                        throw ErrorDescription("Invalid charger ID");
+                      return 'Invalid charger ID';
                     },
                   ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                   Plugs(
-                     chargers: model.chargers, 
-                     onTap: (id ) => model.selectedChargerId = id, 
-                     selectedChargerId: model.selectedChargerId,
-                   ),
-                  Align(
+                ),
+
+                SizedBox(height: 10),
+
+                // ignore: deprecated_member_use
+                InkWell(
+                  onTap: () => model.getChargers(),
+                  child: Container(
+                    width: 300,
+                    height: 48,
                     alignment: Alignment.center,
-                    child: ChargerCodeInput(
-                      onChanged: (input) => model.chargerCode = input,
-                      validator: (input) {
-                        if( input == null || input.length != 6) throw ErrorDescription( "Invalid charger ID" );
-                        return 'Invalid charger ID';
-                      },
-                    ),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Color(0xff78bd76)),
+                    child: Text("Begin Charging",
+                        style: TextStyle(
+                          fontFamily: 'ITCAvantGardePro',
+                          color: Color(0xffffffff),
+                          fontSize: 16,
+                          fontWeight: FontWeight.w700,
+                          fontStyle: FontStyle.normal,
+                          letterSpacing: -0.3839999999999999,
+                        )),
                   ),
-      
-                  SizedBox(height: 10),
-                  // ignore: deprecated_member_use
-                  InkWell(
-                    onTap: () => model.getChargers(),
-                    child: Container(
-                      width: 300,
-                      height: 48,
-                      alignment: Alignment.center,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8),
-                          color: Color(0xff78bd76)),
-                      child: Text("Begin Charging",
-                          style: TextStyle(
-                            fontFamily: 'ITCAvantGardePro',
-                            color: Color(0xffffffff),
-                            fontSize: 16,
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                            letterSpacing: -0.3839999999999999,
-                          )),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10,
-                  ),
-                ],
-              ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+              ],
             ),
           ),
-      ), viewModelBuilder: () => CustomSnappingSheetViewModel(),
-      ); 
+        ),
+      ),
+      viewModelBuilder: () => CustomSnappingSheetViewModel(),
+    );
   }
 }

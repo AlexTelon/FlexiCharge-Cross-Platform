@@ -12,6 +12,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   String _chargerCode = '';
   List<Charger> chargers = [];
+  List<Charger> get nearestLocation => localData.chargers;
   bool get isSwishActive => _isSwishActive;
 
   set isSwishActive(bool newState) {
@@ -23,9 +24,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   set selectedChargerId(int newId) {
     _selectedChargerId = newId;
+
     notifyListeners();
   }
-
 
   set chargerCode(String value) => _chargerCode = value;
 
@@ -37,6 +38,15 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
               int.parse(
                 _chargerCode,
               ),
+        )
+        .toList();
+    notifyListeners();
+  }
+
+  void getChargersFromNearest() {
+    chargers = localData.chargers
+        .where(
+          (charger) => charger.id == selectedChargerId,
         )
         .toList();
     notifyListeners();
