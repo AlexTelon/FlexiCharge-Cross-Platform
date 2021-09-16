@@ -69,7 +69,7 @@ class CustomSnappingSheet extends StatelessWidget {
                   Column(
                     children: [
                       ChargingStation(
-                        onTap: () => print("Charging Button Works"),
+                        onTap: () => model.changWideget(),
                         adress: 'A6 Jönköping',
                         currentLocation: 'Barnarpsgatan 68',
                       ),

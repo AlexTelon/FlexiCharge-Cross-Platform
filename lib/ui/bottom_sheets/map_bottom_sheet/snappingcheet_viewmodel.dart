@@ -28,6 +28,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  void changWideget() {
+    _selectedChargerId = -1;
+    notifyListeners();
+  }
+
   set chargerCode(String value) => _chargerCode = value;
 
   void getChargers() {
