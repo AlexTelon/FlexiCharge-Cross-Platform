@@ -23,7 +23,6 @@ class CustomSnappingSheet extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<CustomSnappingSheetViewModel>.reactive(
       builder: (context, model, child) => Container(
-        
         padding: EdgeInsets.all(25),
         decoration: BoxDecoration(
           color: Color(0xff333333),
@@ -35,11 +34,14 @@ class CustomSnappingSheet extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 ChargingStation(
+                  onTap: () => print("Charging Button Works"),
                   adress: 'A6 Jönköping',
                   currentLocation: 'Barnarpsgatan 68',
                 ),
                 Plugs(
+                  onTap: (id) => model.selectedChargerId = id,
                   chargers: model.chargers,
+                  selectedChargerId: model.selectedChargerId,
                 ),
                 Text(
                   "Payment",
@@ -95,7 +97,7 @@ class CustomSnappingSheet extends StatelessWidget {
                     },
                   ),
                 ),
-        
+
                 SizedBox(height: 10),
                 // ignore: deprecated_member_use
                 InkWell(

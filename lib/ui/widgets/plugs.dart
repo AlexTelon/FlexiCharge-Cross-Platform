@@ -3,20 +3,30 @@ import 'package:flutter/material.dart';
 import 'plug.dart';
 
 class Plugs extends StatelessWidget {
-  const Plugs({required this.isSelected, required this.chargers, Key? key})
-      : super(key: key);
+  const Plugs({
+    required this.onTap,
+    required this.selectedChargerId,
+    required this.chargers,
+    Key? key,
+  }) : super(key: key);
   final List<Charger> chargers;
-  final isSelected;
+  final int selectedChargerId;
+  final Function(int)? onTap;
+
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: chargers.length == 0 ? 0 : 130,
+      height: chargers.length == 0 ? 0 : 70,
       width: MediaQuery.of(context).size.width,
       child: ListView(
         scrollDirection: Axis.horizontal,
         children: chargers
             .map(
-              (charger) => Plug(isSelected: isSelected, charger: charger),
+              (charger) => Plug(
+                onTap: () => onTap != null ? onTap!(charger.id) : null,
+                isSelected: charger.id == selectedChargerId,
+                charger: charger,
+              ),
             )
             .toList(),
       ),
