@@ -1,5 +1,6 @@
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
@@ -83,7 +84,7 @@ class HomeView extends StatelessWidget {
                             icon: SvgPicture.asset('assets/logo.svg',
                                 fit: BoxFit.contain)),
                         MapIcon(
-                            onTap: () => print("Test4"),
+                            onTap: () => print("test4"),
                             isLarge: false,
                             icon: SvgPicture.asset('assets/person.svg',
                                 fit: BoxFit.scaleDown))

@@ -3,50 +3,84 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetViewModel extends BaseViewModel {
-  String _topSheetText = "Text";
-  bool connectingToCharger = true;
-  bool chargeInProgress = false;
-  BitmapDescriptor startChargingIcon = BitmapDescriptor.defaultMarker;
-  var flexLogo = new Image.asset('/assets/images/smallFlexiChargeLogo.png');
+  String topSheetText = "";
+  int chargingState = 0;
+  int batteryProcent = 100;
+  int topSheetState = 1;
+  double topSheetSize = 0.3;
+  String chargingAdress = "Kungsgatan 1a, Jönköping";
+  String timeUntilFullyCharged = "1hr 21min until full";
+  String kilowattHours = "5,72 kwh at 3kwh";
 
-  init() async {
-    startChargingIcon = await _chargerStartedIcon;
+  void testTopSheet() {
+    if (chargingState < 4) {
+      chargingState += 1;
+    } else {
+      chargingState = 0;
+    }
+
+    print(chargingState);
     notifyListeners();
+    changeChargingState();
   }
 
-  get _chargerStartedIcon => BitmapDescriptor.fromAssetImage(
-      ImageConfiguration(size: Size(25, 25)),
-      '/assets/images/smallFlexiChargeLogo.png');
+  void changeTopSheetSize() {
+    if (topSheetState < 3) {
+      topSheetState += 1;
+    } else {
+      topSheetState = 1;
+    }
 
-  String getTitleText() {
-    return _topSheetText;
-  }
-
-  void changeTitleText(int state) {
-    switch (state) {
+    switch (topSheetState) {
       case 1:
         {
-          _topSheetText = "Charging Started";
+          topSheetSize = 0.3;
         }
         break;
       case 2:
         {
-          _topSheetText = "Charging In Progress";
+          topSheetSize = 0.4;
         }
         break;
       case 3:
         {
-          _topSheetText = "Fully Charged";
+          topSheetSize = 0.5;
+        }
+        break;
+    }
+    notifyListeners();
+  }
+
+  void changeChargingState() {
+    switch (chargingState) {
+      case 1:
+        {
+          topSheetText = "Charging Started";
+          chargingState = 1;
+        }
+        break;
+      case 2:
+        {
+          topSheetText = "Charging In Progress";
+          chargingState = 2;
+        }
+        break;
+      case 3:
+        {
+          topSheetText = "Fully Charged";
+          chargingState = 3;
         }
         break;
       case 4:
         {
-          _topSheetText = "Charging Summary";
+          topSheetText = "Charging Summary";
+          chargingState = 4;
         }
         break;
       default:
         {
-          _topSheetText = "";
+          topSheetText = "";
+          chargingState = 0;
         }
         break;
     }
