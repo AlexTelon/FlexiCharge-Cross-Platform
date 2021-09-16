@@ -1,3 +1,4 @@
+import 'package:flexicharge/ui/icons_widgets/get_icon.dart';
 import 'package:flutter/material.dart';
 
 class NearestStation extends StatelessWidget {
@@ -5,51 +6,53 @@ class NearestStation extends StatelessWidget {
     required this.location,
     required this.distance,
     required this.chargers,
+    required this.onTap,
     Key? key,
   }) : super(key: key);
 
   final String location, distance;
   final int chargers;
+  final Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: <Widget>[
-            Text(
-              location,
-              style: TextStyle(
-                fontFamily: 'Lato',
-                color: Color(0xffffffff),
-                fontSize: 17,
+    return InkWell(
+      onTap: onTap,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              Text(
+                location,
+                style: TextStyle(
+                  fontFamily: 'Lato',
+                  color: Color(0xffffffff),
+                  fontSize: 17,
+                ),
               ),
-            ),
-            Icon(
-              Icons.track_changes_sharp,
-              color: Colors.white,
-            ),
-          ],
-        ),
-        Column(
-          children: [
-            Text(
-              distance,
-              style: TextStyle(
-                fontFamily: 'Lato',
-                color: Color(0xffffffff),
-                fontSize: 17,
+              Image.asset("assets/images/chargerIcon.png"),
+            ],
+          ),
+          Column(
+            children: [
+              Text(
+                distance,
+                style: TextStyle(
+                  fontFamily: 'Lato',
+                  color: Color(0xffffffff),
+                  fontSize: 17,
+                ),
               ),
-            ),
-            SizedBox(
-              height: 20,
-            ),
-          ],
-        ),
-      ],
+              SizedBox(
+                height: 20,
+              ),
+            ],
+          ),
+        ],
+      ),
     );
   }
 }

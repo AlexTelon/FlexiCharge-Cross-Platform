@@ -6,7 +6,8 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
 
 class ChargerLocations extends StatelessWidget {
-  const ChargerLocations({Key? key}) : super(key: key);
+  const ChargerLocations({required this.onTap, Key? key}) : super(key: key);
+  final Function(int)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -14,10 +15,10 @@ class ChargerLocations extends StatelessWidget {
 
     return Column(
       children: [
-        NearestStation(location: 'Kungsgatan 1a, Jönköping', distance: '544m', chargers: 2),
-        NearestStation(location: 'Asecs Röd Entre, Jönköping', distance: '1,2km', chargers: 2),
-        NearestStation(location: 'Sjukhusgatan, Jönköping', distance: '1,5km', chargers: 2),
-        NearestStation(location: 'Asecs Entry Am, Jönköping', distance: '2,3km', chargers: 2),
+        NearestStation(onTap: ()=> onTap != null? onTap!(212132):null,location: 'Kungsgatan 1a, Jönköping', distance: '544m', chargers: 2),
+        NearestStation(onTap: ()=> onTap != null? onTap!(212132):null,location: 'Asecs Röd Entre, Jönköping', distance: '1,2km', chargers: 4),
+        NearestStation(onTap: ()=> onTap != null? onTap!(212132):null,location: 'Sjukhusgatan, Jönköping', distance: '1,5km', chargers: 3),
+        NearestStation(onTap: ()=> onTap != null? onTap!(212132):null,location: 'Asecs Entry Am, Jönköping', distance: '2,3km', chargers: 2),
       ],
     );
   }

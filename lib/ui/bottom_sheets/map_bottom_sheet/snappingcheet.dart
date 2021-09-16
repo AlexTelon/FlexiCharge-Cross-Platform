@@ -49,7 +49,11 @@ class CustomSnappingSheet extends StatelessWidget {
                     icon: Icon(Icons.keyboard_arrow_down_sharp, color: Colors.white,),
                   ),
                 ),
-                ChargerLocations(),
+                ChargerLocations(
+                  onTap: (chargingPointId) => {
+                    completer(SheetResponse(data: null))  //test
+                  },
+                ),
                 SizedBox(
                   height: 10,
                 ),
