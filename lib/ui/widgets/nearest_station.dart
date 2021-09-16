@@ -33,7 +33,7 @@ class NearestStation extends StatelessWidget {
                   fontSize: 17,
                 ),
               ),
-              Image.asset("assets/images/chargerIcon.png"),
+              Image.asset("assets/images/charger_icon.png", width: 18, height: 16,fit: BoxFit.fill ),
             ],
           ),
           Column(
