@@ -19,7 +19,7 @@ class HomeView extends StatelessWidget {
             initialCameraPosition: model.cameraPosition,
             myLocationEnabled: true,
             zoomControlsEnabled: false,
-            myLocationButtonEnabled: true, // Set To false later.  
+            myLocationButtonEnabled: true, // Set To false later.
             onMapCreated: (GoogleMapController _controller) {
               model.controller.complete(_controller);
               _controller.setMapStyle(MapStyle().SilverMode);
@@ -48,29 +48,49 @@ class HomeView extends StatelessWidget {
               ),
             },
           ),
-           Padding(
-              padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  crossAxisAlignment: CrossAxisAlignment.end, 
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [ 
-                        MapIcon(onTap: () => print("Test1"), isLarge: false, icon: SvgPicture.asset('assets/svg_images/location.svg',fit: BoxFit.scaleDown)),
-                        SizedBox(height: 30),
-                        MapIcon(onTap: () => print("Test2"), isLarge: false, icon: SvgPicture.asset('assets/svg_images/camera.svg',fit: BoxFit.scaleDown)),
-                      ]
+          Padding(
+            padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    crossAxisAlignment: CrossAxisAlignment.end,
+                    children: [
+                      MapIcon(
+                        onTap: () => print("TEST1"),
+                        isLarge: false,
+                        icon: SvgPicture.asset('assets/svg_images/location.svg',
+                            fit: BoxFit.scaleDown),
+                      ),
+                      SizedBox(height: 30),
+                      MapIcon(
+                        onTap: () => print("Test2"),
+                        isLarge: false,
+                        icon: SvgPicture.asset('assets/svg_images/camera.svg',
+                            fit: BoxFit.scaleDown),
+                      ),
+                    ],
                   ),
-                  MapIcon(onTap: ()=> model.openFindCharger(), isLarge: true,icon: SvgPicture.asset('assets/svg_images/logo.svg',fit:BoxFit.contain)),
-                  MapIcon(onTap: ()=> print("Test4"), isLarge: false, icon: SvgPicture.asset('assets/svg_images/person.svg',fit: BoxFit.scaleDown)),
-                  ]
-                )
-              )
+                  MapIcon(
+                    onTap: () => model.openFindCharger(),
+                    isLarge: true,
+                    icon: SvgPicture.asset('assets/svg_images/logo.svg',
+                        fit: BoxFit.contain),
+                  ),
+                  MapIcon(
+                    onTap: () => print("Test4"),
+                    isLarge: false,
+                    icon: SvgPicture.asset('assets/svg_images/person.svg',
+                        fit: BoxFit.scaleDown),
+                  ),
+                ],
+              ),
             ),
+          ),
         ]),
       ),
       viewModelBuilder: () => HomeViewModel(),

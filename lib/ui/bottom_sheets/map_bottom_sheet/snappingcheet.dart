@@ -2,6 +2,7 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
+import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/swish_button.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
@@ -15,7 +16,6 @@ class CustomSnappingSheet extends StatelessWidget {
     required this.completer,
     Key? key,
   }) : super(key: key);
-
   final SheetRequest request;
   final Function(SheetResponse) completer;
 
@@ -28,13 +28,20 @@ class CustomSnappingSheet extends StatelessWidget {
           color: Color(0xff333333),
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Container(
-            height: 700,
+        child: SingleChildScrollView(
+          child: Container(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                ChargingStation(
+                  onTap: () => print("Charging Button Works"),
+                  adress: 'A6 Jönköping',
+                  currentLocation: 'Barnarpsgatan 68',
+                ),
                 Plugs(
+                  onTap: (id) => model.selectedChargerId = id,
                   chargers: model.chargers,
+                  selectedChargerId: model.selectedChargerId,
                 ),
                 Text(
                   "Payment",
@@ -118,7 +125,9 @@ class CustomSnappingSheet extends StatelessWidget {
                   height: 30,
                 ),
               ],
-            )),
+            ),
+          ),
+        ),
       ),
       viewModelBuilder: () => CustomSnappingSheetViewModel(),
     );
