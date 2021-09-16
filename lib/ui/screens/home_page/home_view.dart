@@ -50,7 +50,8 @@ class HomeView extends StatelessWidget {
               ),
             },
           ),
-          if (model.activeTopSheet)
+          if (!model
+              .activeTopSheet) // Change this boolean value to toggle TopSheet On/Off.
             Align(
               alignment: Alignment.topCenter,
               child: TopSheetView(),
