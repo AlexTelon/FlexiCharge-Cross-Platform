@@ -9,6 +9,7 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -19,6 +20,8 @@ class HomeViewModel extends BaseViewModel {
 
   init() async {
     getUserLocation();
+    findUser();
+    getAddress();
     greenMarkerIcon = await _greenMarkerIcon;
     redMarkerIcon = await _redMarkerIcon;
     blackMarkerIcon = await _blackMarkerIcon;
@@ -46,7 +49,6 @@ class HomeViewModel extends BaseViewModel {
           zoom: 16.5,
         );
         notifyListeners();
-        print(value.latitude);
       });
 
   get _greenMarkerIcon => BitmapDescriptor.fromAssetImage(
@@ -81,5 +83,15 @@ class HomeViewModel extends BaseViewModel {
           ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       notifyListeners();
     });
+  }
+
+  Future<void> getAddress() async {
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
+        .then((value) async {
+      await placemarkFromCoordinates(value.latitude, value.longitude);
+      return placemarkFromCoordinates;
+    });
+    notifyListeners();
+    print(placemarkFromCoordinates);
   }
 }

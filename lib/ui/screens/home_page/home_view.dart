@@ -5,6 +5,7 @@ import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:loading_overlay_pro/loading_overlay_pro.dart';
@@ -42,6 +43,7 @@ class HomeView extends StatelessWidget {
             myLocationButtonEnabled: false,
             zoomControlsEnabled: false,
             onMapCreated: (GoogleMapController _controller) {
+              model.getUserLocation();
               model.controller.complete(_controller);
               model.userLocateController = _controller;
               _controller.setMapStyle(MapStyle().SilverMode);
@@ -82,24 +84,27 @@ class HomeView extends StatelessWidget {
                               MapIcon(
                                   onTap: () => model.findUser(),
                                   isLarge: false,
-                                  icon: SvgPicture.asset('assets/location.svg',
+                                  icon: SvgPicture.asset(
+                                      'assets/svg_images/location.svg',
                                       fit: BoxFit.scaleDown)),
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => print("Test2"),
                                   isLarge: false,
-                                  icon: SvgPicture.asset('assets/camera.svg',
+                                  icon: SvgPicture.asset(
+                                      'assets/svg_images/camera.svg',
                                       fit: BoxFit.scaleDown)),
                             ]),
                         MapIcon(
                             onTap: () => model.openFindCharger(),
                             isLarge: true,
-                            icon: SvgPicture.asset('assets/logo.svg',
+                            icon: SvgPicture.asset('assets/svg_images/logo.svg',
                                 fit: BoxFit.contain)),
                         MapIcon(
                             onTap: () => print("Test4"),
                             isLarge: false,
-                            icon: SvgPicture.asset('assets/person.svg',
+                            icon: SvgPicture.asset(
+                                'assets/svg_images/person.svg',
                                 fit: BoxFit.scaleDown))
                       ]))),
         ]),
