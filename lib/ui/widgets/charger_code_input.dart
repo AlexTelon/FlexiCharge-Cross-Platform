@@ -13,20 +13,26 @@ class ChargerCodeInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-       child: PinCodeTextField(
+      child: PinCodeTextField(
+        onChanged: onChanged,
+        onCompleted: validator,
         appContext: context,
         length: 6,
-        onChanged: onChanged,
         animationCurve: Curves.bounceInOut,
         keyboardType: TextInputType.number,
         keyboardAppearance: Brightness.dark,
+        boxShadows: [BoxShadow(color: Colors.white)],
+        autoDismissKeyboard: true,
         pinTheme: PinTheme(
+          fieldHeight: 53,
+          fieldWidth: 34,
           shape: PinCodeFieldShape.box,
           borderRadius: BorderRadius.circular(5),
-          fieldHeight: 50,
-          fieldWidth: 40,
+          inactiveColor: const Color.fromARGB(
+              1, 0, 0, 0), //Override default red to fully transparent
+          activeColor: const Color.fromARGB(
+              1, 0, 0, 0), //Override default green to fully transparent
         ),
-        boxShadows: [BoxShadow(color: Colors.white)],
       ),
     );
   }

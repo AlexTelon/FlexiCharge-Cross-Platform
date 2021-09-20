@@ -8,9 +8,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final chagerAPI = locator<ChargerService>();
   final localData = locator<LocalData>();
   bool _isSwishActive = false;
+  int _selectedChargerId = -1;
 
   String _chargerCode = '';
   List<Charger> chargers = [];
+  List<Charger> get nearestLocation => localData.chargers;
   bool get isSwishActive => _isSwishActive;
 
   set isSwishActive(bool newState) {
@@ -18,11 +20,39 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  int get selectedChargerId => _selectedChargerId;
+
+  set selectedChargerId(int newId) {
+    _selectedChargerId = newId;
+
+    notifyListeners();
+  }
+
+  void changWideget() {
+    _selectedChargerId = -1;
+    notifyListeners();
+  }
+
   set chargerCode(String value) => _chargerCode = value;
 
   void getChargers() {
     chargers = localData.chargers
-        .where((charger) => charger.id == _chargerCode)
+        .where(
+          (charger) =>
+              charger.id ==
+              int.parse(
+                _chargerCode,
+              ),
+        )
+        .toList();
+    notifyListeners();
+  }
+
+  void getChargersFromNearest() {
+    chargers = localData.chargers
+        .where(
+          (charger) => charger.id == selectedChargerId,
+        )
         .toList();
     notifyListeners();
   }
