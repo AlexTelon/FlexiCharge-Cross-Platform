@@ -5,11 +5,20 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  Future<Charger> getChargers() async {
-    var response = await http.get(Uri.parse('http://localhost:8080/chargers'));
+  static const endPoint = "http://localhost:8080/";
+  // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
+  var client = new http.Client();
+
+  Future<List<Charger>> getChargers() async {
+    var chargers = <Charger>[];
+    var response = await client.get(Uri.parse('$endPoint/chargers'));
     switch (response.statusCode) {
       case 200:
-        return Charger.fromJson(jsonDecode(response.body));
+        var parsed = json.decode(response.body) as List<dynamic>;
+        for (var charger in parsed) {
+          chargers.add(Charger.fromJson(charger));
+        }
+        return chargers;
       case 500:
         throw Exception("Internal server error");
       default:
@@ -17,12 +26,16 @@ class ChargerApiService {
     }
   }
 
-  Future<Charger> getChargerById(String id) async {
-    var response =
-        await http.get(Uri.parse('http://localhost:8080/chargers/' + id));
+  /// Remove .first from the return when you use the flexi charger Api
+  Future<Charger> getChargerById(int id) async {
+    // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
+
+    var response = await client
+        .get(Uri.parse('https://retoolapi.dev/xLZMZ7/data?chargerId=$id'));
     switch (response.statusCode) {
       case 200:
-        return Charger.fromJson(jsonDecode(response.body));
+        var charger = json.decode(response.body);
+        return Charger.fromJson(charger.first);
       case 404:
         throw Exception("Not Found");
       default:
@@ -30,12 +43,16 @@ class ChargerApiService {
     }
   }
 
-  Future<Charger> getAllAvailableChargers() async {
-    var response = await http
-        .get(Uri.parse('http://localhost:8080/chargers/chargers/available'));
+  Future<List<Charger>> getAllAvailableChargers() async {
+    var chargers = <Charger>[];
+    var response = await client.get(Uri.parse('$endPoint/chargers/available'));
     switch (response.statusCode) {
       case 200:
-        return Charger.fromJson(jsonDecode(response.body));
+        var parsed = json.decode(response.body) as List<dynamic>;
+        for (var charger in parsed) {
+          chargers.add(Charger.fromJson(charger));
+        }
+        return chargers;
       case 404:
         throw Exception("Not Found");
       default:
@@ -45,14 +62,14 @@ class ChargerApiService {
 
   // The function don't work yet...
   Future<Charger> getChargersByChargerPointId(chargerPointId) async {
-    var response = await http.get(Uri.parse('http://localhost:8080/chargers'));
+    var response = await client.get(Uri.parse('$endPoint/chargers'));
     return Charger.fromJson(jsonDecode(response.body));
   }
 
   //Check later
   Future<Charger> updateStatus(status, id) async {
-    var response = await http.put(
-      Uri.parse('http://localhost:8080/chargers/' + id),
+    var response = await client.put(
+      Uri.parse('$endPoint/chargers/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },

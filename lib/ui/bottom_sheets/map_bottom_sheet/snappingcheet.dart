@@ -1,3 +1,4 @@
+import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
 import 'package:flexicharge/ui/widgets/charger_locations.dart';
@@ -132,7 +133,7 @@ class CustomSnappingSheet extends StatelessWidget {
 
                 // ignore: deprecated_member_use
                 InkWell(
-                  onTap: () => model.getChargers(),
+                  onTap: () => model.getChargerById(185444),
                   child: Container(
                     width: 300,
                     height: 48,

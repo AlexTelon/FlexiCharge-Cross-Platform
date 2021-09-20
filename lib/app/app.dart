@@ -1,4 +1,4 @@
-import 'package:flexicharge/services/chargers.dart';
+import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transactions.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';

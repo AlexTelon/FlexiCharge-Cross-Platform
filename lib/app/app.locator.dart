@@ -10,7 +10,7 @@ import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 import 'package:stacked_services/stacked_services.dart';
 
-import '../services/chargers.dart';
+import '../services/charger_api_service.dart';
 import '../services/local_data.dart';
 import '../services/transactions.dart';
 

@@ -1,11 +1,11 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
-import 'package:flexicharge/services/chargers.dart';
+import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:stacked/stacked.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
-  final chagerAPI = locator<ChargerApiService>();
+  final chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
   bool _isSwishActive = false;
   int _selectedChargerId = -1;
@@ -24,7 +24,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   set selectedChargerId(int newId) {
     _selectedChargerId = newId;
-
     notifyListeners();
   }
 
@@ -34,19 +33,25 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   }
 
   set chargerCode(String value) => _chargerCode = value;
+  /* === Dummy Data ===  */
+  // void getChargers() {
+  //   chargers = localData.chargers
+  //       .where(
+  //         (charger) =>
+  //             charger.id ==
+  //             int.parse(
+  //               _chargerCode,
+  //             ),
+  //       )
+  //       .toList();
+  //   notifyListeners();
+  // }
 
-  void getChargers() {
-    chargers = localData.chargers
-        .where(
-          (charger) =>
-              charger.id ==
-              int.parse(
-                _chargerCode,
-              ),
-        )
-        .toList();
-    notifyListeners();
-  }
+  Future<List<Charger>> getChargers() =>
+      locator<ChargerApiService>().getChargers();
+
+  Future<Charger> getChargerById(int id) =>
+      locator<ChargerApiService>().getChargerById(id);
 
   void getChargersFromNearest() {
     chargers = localData.chargers

@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
-import 'package:flexicharge/services/chargers.dart';
+import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
