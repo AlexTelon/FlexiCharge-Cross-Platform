@@ -53,17 +53,17 @@ class HomeViewModel extends BaseViewModel {
 
   get _greenMarkerIcon => BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(25, 25)),
-        'assets/images/greenMarker.png',
+        'assets/images/green_marker.png',
       );
 
   get _redMarkerIcon => BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(25, 25)),
-        'assets/images/redMarker.png',
+        'assets/images/red_marker.png',
       );
 
   get _blackMarkerIcon => BitmapDescriptor.fromAssetImage(
         ImageConfiguration(size: Size(25, 25)),
-        'assets/images/blackMarker.png',
+        'assets/images/black_marker.png',
       );
 
   Future<void> openFindCharger() async {
