@@ -23,7 +23,7 @@ class SwichButton extends StatelessWidget {
           color: const Color(0xffffffff),
         ),
         // child: image,
-        child: Image.asset("assets/images/swish-logo.png"),
+        child: Image.asset("assets/images/swish_logo.png"),
       ),
     );
   }
