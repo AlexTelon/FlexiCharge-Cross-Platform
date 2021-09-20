@@ -5,7 +5,7 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:stacked/stacked.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
-  final chagerAPI = locator<ChargerService>();
+  final chagerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
   bool _isSwishActive = false;
   int _selectedChargerId = -1;

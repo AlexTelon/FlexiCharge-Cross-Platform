@@ -1,4 +1,3 @@
-import 'package:flexicharge/ui/icons_widgets/get_icon.dart';
 import 'package:flutter/material.dart';
 
 class NearestStation extends StatelessWidget {
@@ -33,7 +32,8 @@ class NearestStation extends StatelessWidget {
                   fontSize: 17,
                 ),
               ),
-              Image.asset("assets/images/charger_icon.png", width: 18, height: 16,fit: BoxFit.fill ),
+              Image.asset("assets/images/charger_icon.png",
+                  width: 18, height: 16, fit: BoxFit.fill),
             ],
           ),
           Column(

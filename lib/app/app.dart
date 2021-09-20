@@ -11,10 +11,10 @@ import 'package:stacked_services/stacked_services.dart';
   ],
   dependencies: [
     LazySingleton(classType: Transactions),
-    LazySingleton(classType: ChargerService),
     LazySingleton(classType: LocalData),
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: NavigationService),
+    LazySingleton(classType: ChargerApiService)
   ],
 )
 

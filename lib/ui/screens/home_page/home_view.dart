@@ -8,7 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:loading_overlay_pro/loading_overlay_pro.dart';
+// import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
 /*class SplashScreen extends StatelessWidget {
   SplashScreen() {

@@ -23,8 +23,8 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
 
 // Register dependencies
   locator.registerLazySingleton(() => Transactions());
-  locator.registerLazySingleton(() => ChargerService());
   locator.registerLazySingleton(() => LocalData());
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => NavigationService());
+  locator.registerLazySingleton(() => ChargerApiService());
 }
