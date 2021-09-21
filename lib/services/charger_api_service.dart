@@ -6,7 +6,6 @@ import 'package:http/http.dart' as http;
 
 class ChargerApiService {
   static const endPoint = "http://localhost:8080/";
-  // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
   var client = new http.Client();
 
   Future<List<Charger>> getChargers() async {
@@ -28,8 +27,6 @@ class ChargerApiService {
 
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
-    // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
-
     var response = await client
         .get(Uri.parse('https://retoolapi.dev/xLZMZ7/data?chargerId=$id'));
     switch (response.statusCode) {
