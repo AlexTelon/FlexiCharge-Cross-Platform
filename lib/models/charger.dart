@@ -4,6 +4,7 @@ class Charger {
   int id = -1;
   int chargerPointId = 0;
   int status = -1;
+
   String capacity = '';
   String cost = '';
   String type = '';

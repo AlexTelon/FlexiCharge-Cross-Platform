@@ -6,8 +6,9 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  static const endPoint = "http://localhost:8080/";
+  static const endPoint = "http://54.220.194.65:8080/";
   var client = new http.Client();
+  var chargerPoint = new ChargerPoint();
 
   Future<List<Charger>> getChargers() async {
     var chargers = <Charger>[];
@@ -15,6 +16,7 @@ class ChargerApiService {
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
+        var i = 0;
         for (var charger in parsed) {
           chargers.add(Charger.fromJson(charger));
         }
@@ -29,9 +31,8 @@ class ChargerApiService {
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
     // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
-    var uri = 'https://retoolapi.dev/32jX9L/data?chargerId=' + id.toString();
     print(id.toString());
-    var response = await client.get(Uri.parse(uri));
+    var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
     switch (response.statusCode) {
       case 200:
         var charger = json.decode(response.body);
@@ -69,17 +70,14 @@ class ChargerApiService {
 
   //Check later
   Future<void> updateStatus(int status, int id, int chargePointID) async {
-    var uri = 'hhttps://retoolapi.dev/32jX9L/data/5';
     await client
         .put(
-          Uri.parse(uri),
+          Uri.parse('$endPoint/chargers/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
           body: jsonEncode(<String, int>{
             'status': status,
-            'chargePointID': chargePointID,
-            'chargerId': id,
           }),
         )
         .then((result) => {
