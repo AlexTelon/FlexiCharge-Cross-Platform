@@ -29,13 +29,14 @@ class ChargerApiService {
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
     // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
-
-    var response = await client
-        .get(Uri.parse('https://retoolapi.dev/xLZMZ7/data?chargerId=$id'));
+    var uri = 'https://retoolapi.dev/xLZMZ7/data?chargerId=' + id.toString();
+    print(id.toString());
+    var response = await client.get(Uri.parse(uri));
     switch (response.statusCode) {
       case 200:
         var charger = json.decode(response.body);
-        return Charger.fromJson(charger.first);
+        var chargerFromJson = Charger.fromJson(charger.first);
+        return chargerFromJson;
       case 404:
         throw Exception("Not Found");
       default:
@@ -67,13 +68,13 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<Charger> updateStatus(status, id) async {
+  Future<Charger> updateStatus(int status, int id) async {
     var response = await client.put(
       Uri.parse('$endPoint/chargers/$id'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode(<String, int>{
         'status': status,
       }),
     );

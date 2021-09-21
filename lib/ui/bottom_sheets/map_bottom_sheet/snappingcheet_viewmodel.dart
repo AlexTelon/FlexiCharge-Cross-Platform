@@ -70,6 +70,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   Future<void> getChargerById(int id) async {
     selectedCharger = await _chargerAPI.getChargerById(id);
+    notifyListeners();
   }
 
   void getChargersFromNearest() {
