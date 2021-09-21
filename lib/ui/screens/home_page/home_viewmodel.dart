@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flutter/cupertino.dart';
@@ -27,8 +28,6 @@ class HomeViewModel extends BaseViewModel {
     redMarkerIcon = await _redMarkerIcon;
     blackMarkerIcon = await _blackMarkerIcon;
     notifyListeners();
-  
-
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
@@ -71,9 +70,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> openFindCharger(int? value) async {
     _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.mapBottomSheet,
-      data: value
-    );
+        variant: BottomSheetType.mapBottomSheet, data: value);
   }
 
   Future<void> findUser() async {
@@ -103,6 +100,11 @@ class HomeViewModel extends BaseViewModel {
     _navigationService.navigateTo(Routes.qrScannerView)?.then((value) {
       // If value == null do nothing
       // else open topsheet and send value
+
+      if (value != null) {
+        _bottomSheetService.showCustomSheet(
+            variant: BottomSheetType.mapBottomSheet, data: value);
+      }
     });
   }
 }

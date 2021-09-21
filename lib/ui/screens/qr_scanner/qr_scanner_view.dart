@@ -1,10 +1,12 @@
 import 'dart:io';
 
+import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/ui/screens/qr_scanner/qr_scanner_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class QrScannerView extends StatefulWidget {
   State<StatefulWidget> createState() => _QRViewState();
@@ -14,6 +16,7 @@ class _QRViewState extends State<QrScannerView> {
   Barcode? result;
   QRViewController? controller;
   final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  final _navigationService = locator<NavigationService>();
 
   // In order to get hot reload to work we need to pause the camera if the platform
   // is android, or resume the camera if the platform is iOS.
@@ -141,9 +144,12 @@ class _QRViewState extends State<QrScannerView> {
     setState(() {
       this.controller = controller;
     });
+    // Called when a scan is complete
     controller.scannedDataStream.listen((scanData) {
       setState(() {
         result = scanData;
+        _navigationService.back(result: result);
+        dispose(); //Scan is done, destroy the QR-scanner
       });
     });
   }
