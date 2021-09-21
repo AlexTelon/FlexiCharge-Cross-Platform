@@ -17,6 +17,7 @@ class ChargerPoint {
 
   ChargerPoint.fromJson(Map<String, dynamic> json) {
     var coordinatesList = (json['coordinates'] as String).split(',');
+    //var coordinatesListFromMap =(json['location']['coordinates'] as List);
     chargerPointId = json['chargePointID'];
     location = json['location'];
     coordinates = LatLng(
