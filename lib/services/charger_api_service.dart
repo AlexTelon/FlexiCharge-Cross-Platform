@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
@@ -28,7 +29,7 @@ class ChargerApiService {
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
     // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
-    var uri = 'https://retoolapi.dev/xLZMZ7/data?chargerId=' + id.toString();
+    var uri = 'https://retoolapi.dev/32jX9L/data?chargerId=' + id.toString();
     print(id.toString());
     var response = await client.get(Uri.parse(uri));
     switch (response.statusCode) {
@@ -67,23 +68,24 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<Charger> updateStatus(int status, int id) async {
-    var response = await client.put(
-      Uri.parse('$endPoint/chargers/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, int>{
-        'status': status,
-      }),
-    );
-    switch (response.statusCode) {
-      case 204:
-        return Charger.fromJson(jsonDecode(response.body));
-      case 400:
-        throw Exception("Bad Request");
-      default:
-        throw Exception(ErrorCodes.internalError);
-    }
+  Future<void> updateStatus(int status, int id, int chargePointID) async {
+    var uri = 'hhttps://retoolapi.dev/32jX9L/data/5';
+    await client
+        .put(
+          Uri.parse(uri),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, int>{
+            'status': status,
+            'chargePointID': chargePointID,
+            'chargerId': id,
+          }),
+        )
+        .then((result) => {
+              print("test" + result.statusCode.toString()),
+              print("test2" + result.body.toString()),
+              print("test3" + id.toString())
+            });
   }
 }

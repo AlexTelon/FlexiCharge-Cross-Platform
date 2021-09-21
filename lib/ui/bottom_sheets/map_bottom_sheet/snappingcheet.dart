@@ -140,7 +140,11 @@ class CustomSnappingSheet extends StatelessWidget {
                 WideButton(
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () => print("TEST"),
+                  onTap: () => model.updateStatus(
+                    0,
+                    model.selectedCharger.id,
+                    1,
+                  ),
                 ),
 
                 SizedBox(
