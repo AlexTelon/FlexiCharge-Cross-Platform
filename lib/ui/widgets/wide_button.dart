@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class WideButton extends StatelessWidget {
   const WideButton(
