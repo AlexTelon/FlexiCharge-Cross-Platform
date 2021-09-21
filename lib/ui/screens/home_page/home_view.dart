@@ -89,14 +89,14 @@ class HomeView extends StatelessWidget {
                                       fit: BoxFit.scaleDown)),
                               SizedBox(height: 30),
                               MapIcon(
-                                  onTap: () => print("Test2"),
+                                  onTap: () => model.openQrScanner(),
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
                                       fit: BoxFit.scaleDown)),
                             ]),
                         MapIcon(
-                            onTap: () => model.openFindCharger(),
+                            onTap: () => model.openFindCharger(null),
                             isLarge: true,
                             icon: SvgPicture.asset('assets/svg_images/logo.svg',
                                 fit: BoxFit.contain)),
