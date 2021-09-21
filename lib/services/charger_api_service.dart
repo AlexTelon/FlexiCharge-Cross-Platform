@@ -66,7 +66,7 @@ class ChargerApiService {
     return Charger.fromJson(jsonDecode(response.body));
   }
 
-  //Check later
+  ///Check later, when the server is on.
   Future<Charger> updateStatus(status, id) async {
     var response = await client.put(
       Uri.parse('$endPoint/chargers/$id'),
