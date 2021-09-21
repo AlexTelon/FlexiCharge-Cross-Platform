@@ -39,7 +39,7 @@ class CustomSnappingSheet extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (model.selectedChargerId == -1)
+                if (model.selectedCharger.id == -1)
                   Column(
                     children: [
                       Align(
@@ -57,7 +57,7 @@ class CustomSnappingSheet extends StatelessWidget {
                       ChargerLocations(
                         chargers: model.nearestLocation,
                         onTap: (chargingPointId) {
-                          model.selectedChargerId = chargingPointId;
+                          model.selectedCharger.id = chargingPointId;
                           model.getChargersFromNearest();
                         },
                       ),
@@ -66,7 +66,7 @@ class CustomSnappingSheet extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                if (model.selectedChargerId != -1)
+                if (model.selectedCharger.id != -1)
                   Column(
                     children: [
                       ChargingStation(
@@ -77,8 +77,8 @@ class CustomSnappingSheet extends StatelessWidget {
                       SizedBox(height: 20),
                       Plugs(
                         chargers: model.chargers,
-                        onTap: (id) => model.selectedChargerId = id,
-                        selectedChargerId: model.selectedChargerId,
+                        onTap: (id) => model.selectedCharger.id = id,
+                        selectedChargerId: model.selectedCharger.id,
                       ),
                       SizedBox(height: 10),
                       Text(
