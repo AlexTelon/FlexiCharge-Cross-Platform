@@ -14,13 +14,8 @@ class TopSheetViewModel extends BaseViewModel {
   String timeUntilFullyCharged = "1hr 21min until full";
   String kilowattHours = "5,72 kwh at 3kwh";
 
-  void changeTopSheetState() {
-    if (topSheetState < 3) {
-      topSheetState += 1;
-    } else {
-      topSheetState = 1;
-    }
-
+  void changeTopSheetState(state) {
+    topSheetState = state;
     notifyListeners();
     changeTopSheetSize();
   }
@@ -29,7 +24,7 @@ class TopSheetViewModel extends BaseViewModel {
     switch (topSheetState) {
       case 1:
         {
-          topSheetSize = 0.35;
+          topSheetSize = 0.30;
         }
         break;
       case 2:
@@ -39,22 +34,31 @@ class TopSheetViewModel extends BaseViewModel {
         break;
       case 3:
         {
-          topSheetSize = 0.6;
+          topSheetSize = 0.60;
         }
         break;
     }
     notifyListeners();
   }
 
-  void changeChargingState() {
-    if (chargingState < 4) {
-      chargingState += 1;
+  void changeChargingState(bool finishedCharging) {
+    if (finishedCharging) {
+      chargingState = 4;
+      changeTopSheetState(3);
     } else {
-      chargingState = 1;
-      topSheetState = 3;
-      changeTopSheetState();
+      if (chargingState < 3) {
+        chargingState += 1;
+      } else {
+        chargingState = 1;
+        changeTopSheetState(1);
+      }
     }
 
+    notifyListeners();
+    displayChargingState();
+  }
+
+  void displayChargingState() {
     switch (chargingState) {
       case 1:
         {
@@ -93,6 +97,7 @@ class TopSheetViewModel extends BaseViewModel {
         }
         break;
     }
+
     notifyListeners();
   }
 }

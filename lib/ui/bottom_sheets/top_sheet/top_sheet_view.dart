@@ -30,7 +30,7 @@ class TopSheetView extends StatelessWidget {
                     alignment: Alignment.topCenter,
                     child: TextButton(
                       // Todo: Change Textbutton() to Text() when finished with UI.
-                      onPressed: () => model.changeChargingState(),
+                      onPressed: () => model.changeChargingState(false),
                       child: Text(
                         model.topSheetText,
                         style: const TextStyle(
@@ -65,6 +65,7 @@ class TopSheetView extends StatelessWidget {
                         padding:
                             EdgeInsets.symmetric(vertical: 50, horizontal: 10),
                         child: StopChargingButton(
+                            onPressed: () => model.changeChargingState(true),
                             buttonText: model.stopChargingButtonText),
                       ),
                     ),
@@ -84,7 +85,7 @@ class TopSheetView extends StatelessWidget {
                               fontSize: 12.0),
                         ),
                         onPressed: () {
-                          model.changeTopSheetState();
+                          model.changeTopSheetState(2);
                         },
                       ),
                     ),
