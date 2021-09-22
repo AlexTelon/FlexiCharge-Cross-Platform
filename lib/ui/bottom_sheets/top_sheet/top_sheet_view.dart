@@ -75,15 +75,16 @@ class TopSheetView extends StatelessWidget {
                     Align(
                       alignment: Alignment.bottomCenter,
                       child: TextButton(
-                        child: Text(model.expandButtonText),
-                        style: TextButton.styleFrom(
-                          primary: Colors.white,
-                          textStyle: const TextStyle(
-                              color: const Color(0xffffffff),
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Lato",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 12.0),
+                        child: Column(
+                          children: [
+                            Text(model.expandButtonText,
+                                style: TextStyle(color: Colors.white)),
+                            Image(
+                                width: 30,
+                                height: 30,
+                                image:
+                                    AssetImage('assets/images/arrow_down.png'))
+                          ],
                         ),
                         onPressed: () {
                           model.changeTopSheetState(2);
