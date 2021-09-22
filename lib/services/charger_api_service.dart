@@ -30,7 +30,6 @@ class ChargerApiService {
 
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
-    // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
     print(id.toString());
     var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
     switch (response.statusCode) {

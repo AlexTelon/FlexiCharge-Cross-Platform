@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChargerPoint {
   int chargerPointId = -1;
-  LatLng coordinates = LatLng(0.0, 0.0);
+  List coordinates = [0.0, 0.0];
   List<Charger> chargers = [];
 
   ChargerPoint();
@@ -16,9 +16,9 @@ class ChargerPoint {
   ChargerPoint.fromJson(Map<String, dynamic> json) {
     var coordinatesList = (json['location'] as String).split(',');
     chargerPointId = json['chargePointID'];
-    coordinates = LatLng(
-      double.parse(coordinatesList[0]),
-      double.parse(coordinatesList[1]),
-    );
+    coordinates = [
+      coordinatesList[0],
+      coordinatesList[1],
+    ];
   }
 }
