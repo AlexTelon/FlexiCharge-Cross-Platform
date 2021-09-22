@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 
 class WideButton extends StatelessWidget {
-  const WideButton(
-      {Key? key,
-      required this.color,
-      required this.text,
-      required this.onTap,
-      this.showWideButton = true})
-      : super(key: key);
+  const WideButton({
+    Key? key,
+    required this.color,
+    required this.text,
+    required this.onTap,
+    this.showWideButton = false,
+  }) : super(key: key);
   final Color color;
   final String text;
-  final bool? showWideButton;
+  final bool showWideButton;
   final Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Visibility(
-      visible: showWideButton == false,
+      visible: showWideButton,
       child: InkWell(
         onTap: onTap,
         child: Container(

@@ -124,7 +124,11 @@ class CustomSnappingSheet extends StatelessWidget {
                     onChanged: (input) => model.chargerCode = input,
                     validator: (input) {
                       if (input == null || input.length != 6) {
-                        model.showWideButton = true;
+                        if (input!.length == 0 || input.length != 6) {
+                          model.showWideButton = false;
+                        } else {
+                          model.showWideButton = true;
+                        }
                         return "Invalid charger ID";
                       } else {
                         model.chargerCode = input;
@@ -148,7 +152,7 @@ class CustomSnappingSheet extends StatelessWidget {
                     model.selectedCharger.id,
                     1,
                   ),
-                  showWideButton: false,
+                  showWideButton: model.showWideButton,
                 ),
 
                 SizedBox(
