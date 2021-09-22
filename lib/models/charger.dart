@@ -14,7 +14,7 @@ class Charger {
     required this.id,
     required this.chargerPointId,
     required this.status,
-    required this.coordinates,
+    // required this.coordinates,
     required this.capacity,
     required this.cost,
     required this.type,
@@ -23,7 +23,7 @@ class Charger {
     id = json['chargerId'];
     chargerPointId = json['chargePointID'];
     status = json['status'];
-    coordinates = json['location'];
+    // coordinates = json['location'];
     capacity = json['capacity'] ?? '';
     cost = json['cost'] ?? '';
     type = json['type'] ?? '';

@@ -30,8 +30,9 @@ class ChargerApiService {
 
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
-    print(id.toString());
-    var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
+    print(id);
+    var response =
+        await client.get(Uri.parse('$endPoint/chargers/' + id.toString()));
     switch (response.statusCode) {
       case 200:
         var charger = json.decode(response.body);
