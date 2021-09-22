@@ -1,6 +1,7 @@
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/widgets/chargin_started.dart';
 import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
+import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -88,6 +89,13 @@ class TopSheetView extends StatelessWidget {
                           model.changeTopSheetState(2);
                         },
                       ),
+                    ),
+                  if (model.chargingState == 4 && model.topSheetState == 3)
+                    Expanded(
+                      child: ChargingSummary(
+                          chargingDuration: "1hr 41min",
+                          energyUsed: "9.1kWh @ 3.00 kr kWh",
+                          totalCost: "27.3kr"),
                     ),
                 ],
               ),
