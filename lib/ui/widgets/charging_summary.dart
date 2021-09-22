@@ -33,7 +33,7 @@ class ChargingSummary extends StatelessWidget {
               flex: 1,
               child: Row(
                 // Displaying charging duration.
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   Text(
                     "Duration ",
@@ -49,7 +49,7 @@ class ChargingSummary extends StatelessWidget {
             flex: 1,
             child: Row(
               // Displaying energy used during charging.
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text(
                   "Energy used ",
@@ -63,31 +63,36 @@ class ChargingSummary extends StatelessWidget {
             ),
           ),
           Expanded(
-            // Displaying Total cost
             flex: 2,
-            child: Container(
-              margin: EdgeInsets.symmetric(vertical: 20),
-              width: MediaQuery.of(context).size.width * 0.50,
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(4)),
-                  border: Border.all(color: const Color(0xffe5e5e5), width: 1),
-                  color: const Color(0xffffffff)),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Text(
-                    "Total Cost",
-                    style: Theme.of(context).textTheme.bodyText2,
-                  ),
-                  Text(
-                    totalCost,
-                    style: Theme.of(context).textTheme.bodyText2,
-                  )
-                ],
+            child: FittedBox(
+              // Displaying Total cost
+              fit: BoxFit.cover,
+              child: Container(
+                margin: EdgeInsets.symmetric(vertical: 10),
+                width: MediaQuery.of(context).size.width * 0.50,
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.all(Radius.circular(4)),
+                    border:
+                        Border.all(color: const Color(0xffe5e5e5), width: 1),
+                    color: const Color(0xffffffff)),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Text(
+                      "Total Cost",
+                      style: Theme.of(context).textTheme.bodyText2,
+                    ),
+                    Text(
+                      totalCost,
+                      style: Theme.of(context).textTheme.bodyText2,
+                    )
+                  ],
+                ),
               ),
             ),
           ),
           Expanded(
+            flex: 1,
             child: Text(
               "Your receipt for this charging session and others can be found on the Invoices Page.",
               style: Theme.of(context).textTheme.bodyText1,

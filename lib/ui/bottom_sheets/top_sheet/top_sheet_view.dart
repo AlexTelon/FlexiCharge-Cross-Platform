@@ -60,11 +60,11 @@ class TopSheetView extends StatelessWidget {
                     ),
                   if (model.topSheetState == 2 &&
                       (model.chargingState == 2 || model.chargingState == 3))
-                    Expanded(
-                      flex: 2,
+                    FittedBox(
+                      fit: BoxFit.fitHeight,
                       child: Padding(
                         padding:
-                            EdgeInsets.symmetric(vertical: 50, horizontal: 10),
+                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
                         child: StopChargingButton(
                             onPressed: () => model.changeChargingState(true),
                             buttonText: model.stopChargingButtonText),

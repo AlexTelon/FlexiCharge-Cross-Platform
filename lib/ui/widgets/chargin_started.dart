@@ -16,18 +16,23 @@ class ChargingStarted extends StatelessWidget {
         children: [
           Container(
             child: Image(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.30,
                 image: AssetImage('assets/images/smallFlexiChargeLogo.png')),
           ),
           // Rectangle Copy 20
           // Fill 1
           Container(
               child: Image(
-            width: 50,
-            height: 50,
+            width: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.08,
             image: AssetImage('assets/images/white_arrow_right.png'),
           )),
           Container(
-            child: Image(image: AssetImage('assets/images/whiteCheck.png')),
+            child: Image(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.30,
+                image: AssetImage('assets/images/whiteCheck.png')),
           ),
         ],
       ),

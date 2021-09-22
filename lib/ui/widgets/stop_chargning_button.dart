@@ -11,19 +11,21 @@ class StopChargingButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: MediaQuery.of(context).size.width,
-      decoration: BoxDecoration(
-          border: Border.all(color: Colors.white),
-          borderRadius: BorderRadius.all(Radius.circular(30)),
-          color: const Color(0xff333333)),
-      child: TextButton(
-        onPressed: onPressed,
-        child: Text(
-          buttonText,
-          style: TextStyle(color: Colors.white),
-        ),
-      ),
-    );
+    return FittedBox(
+        fit: BoxFit.fitHeight,
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+              border: Border.all(color: Colors.white),
+              borderRadius: BorderRadius.all(Radius.circular(30)),
+              color: const Color(0xff333333)),
+          child: TextButton(
+            onPressed: onPressed,
+            child: Text(
+              buttonText,
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ));
   }
 }
