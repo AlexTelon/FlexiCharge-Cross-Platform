@@ -9,12 +9,19 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
   bool _isSwishActive = false;
+  bool _showWideButton = false;
   Charger _selectedCharger = Charger();
 
   String _chargerCode = '';
   List<Charger> chargers = [];
   List<Charger> get nearestLocation => localData.chargers;
   bool get isSwishActive => _isSwishActive;
+  bool get showWideButton => _showWideButton;
+
+  set showWideButton(bool newState) {
+    _showWideButton = newState;
+    notifyListeners();
+  }
 
   set isSwishActive(bool newState) {
     _isSwishActive = newState;
