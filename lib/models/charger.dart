@@ -20,7 +20,7 @@ class Charger {
     required this.type,
   });
   Charger.fromJson(Map<String, dynamic> json) {
-    id = json['chargerId'];
+    id = json['chargerID'];
     chargerPointId = json['chargePointID'];
     status = json['status'];
     // coordinates = json['location'];

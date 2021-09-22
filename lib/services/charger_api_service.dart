@@ -6,7 +6,7 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  static const endPoint = "http://54.220.194.65:8080/";
+  static const endPoint = "http://54.220.194.65:8080";
   var client = new http.Client();
   var chargerPoint = new ChargerPoint();
 
@@ -30,13 +30,13 @@ class ChargerApiService {
 
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
-    print(id);
-    var response =
-        await client.get(Uri.parse('$endPoint/chargers/' + id.toString()));
+    // print(id);
+    var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
+    // print(response.body);
     switch (response.statusCode) {
       case 200:
         var charger = json.decode(response.body);
-        var chargerFromJson = Charger.fromJson(charger.first);
+        var chargerFromJson = Charger.fromJson(charger);
         return chargerFromJson;
       case 404:
         throw Exception("Not Found");

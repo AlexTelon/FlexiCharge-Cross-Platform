@@ -16,7 +16,7 @@ class ChargerCodeInput extends StatelessWidget {
       child: PinCodeTextField(
         onChanged: onChanged,
         onCompleted: validator,
-        validator: validator, // Essa skrivit
+        // validator: validator, // Essa skrivit
         appContext: context,
         length: 6,
         animationCurve: Curves.bounceInOut,
