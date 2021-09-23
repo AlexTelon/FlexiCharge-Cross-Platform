@@ -4,6 +4,7 @@ import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
 import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -20,37 +21,41 @@ class TopSheetView extends StatelessWidget {
         builder: (context, model, child) => Container(
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * model.topSheetSize,
-              padding: EdgeInsets.all(5),
               decoration: BoxDecoration(
                 color: const Color(0xff333333),
                 borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
+                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Align(
-                    alignment: Alignment.topCenter,
-                    child: TextButton(
-                      // Todo: Change Textbutton() to Text() when finished with UI.
-                      onPressed: () => model.changeChargingState(false),
-                      child: Text(
-                        model.topSheetText,
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "ITCAvantGardeStd",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                      ),
-                    ),
-                  ),
+                  Container(
+                      height: MediaQuery.of(context).size.height * 0.10,
+                      child: FittedBox(
+                        fit: BoxFit.fitHeight,
+                        child: TextButton(
+                          // Todo: Change Textbutton() to Text() when finished with UI.
+                          onPressed: () => model.changeChargingState(false),
+                          child: Text(
+                            model.topSheetText,
+                            style: const TextStyle(
+                                color: const Color(0xffffffff),
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "ITCAvantGardeStd",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 17.0),
+                          ),
+                        ),
+                      )),
                   if (model.chargingState == 1)
-                    Expanded(
-                      flex: 1,
+                    Container(
+                      // Charging Started
+                      height: MediaQuery.of(context).size.height * 0.15,
                       child: ChargingStarted(),
                     ),
                   if (model.chargingState == 2 || model.chargingState == 3)
-                    Expanded(
-                      flex: 1,
+                    Container(
+                      height: MediaQuery.of(context).size.height * 0.125,
+                      // Charging In Progress & Fully Charged
                       child: ChargingInProgress(
                         batteryProcent: model.batteryProcent,
                         chargingAdress: model.chargingAdress,
@@ -60,11 +65,11 @@ class TopSheetView extends StatelessWidget {
                     ),
                   if (model.topSheetState == 2 &&
                       (model.chargingState == 2 || model.chargingState == 3))
-                    FittedBox(
-                      fit: BoxFit.fitHeight,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(vertical: 15, horizontal: 10),
+                    Container(
+                      // Stop charging button
+                      height: MediaQuery.of(context).size.height * 0.225,
+                      child: Align(
+                        alignment: Alignment.center,
                         child: StopChargingButton(
                             onPressed: () => model.changeChargingState(true),
                             buttonText: model.stopChargingButtonText),
@@ -72,25 +77,28 @@ class TopSheetView extends StatelessWidget {
                     ),
                   if ((model.chargingState == 2 || model.chargingState == 3) &&
                       model.topSheetState != 2)
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: TextButton(
-                        child: Column(
-                          children: [
-                            Text(model.expandButtonText,
-                                style: TextStyle(color: Colors.white)),
-                            Image(
-                                width: 30,
-                                height: 30,
-                                image:
-                                    AssetImage('assets/images/arrow_down.png'))
-                          ],
-                        ),
-                        onPressed: () {
-                          model.changeTopSheetState(2);
-                        },
-                      ),
-                    ),
+                    // Push down button
+                    Container(
+                        height: MediaQuery.of(context).size.height * 0.075,
+                        child: FittedBox(
+                          fit: BoxFit.fitHeight,
+                          child: TextButton(
+                            child: Column(
+                              children: [
+                                Text(model.expandButtonText,
+                                    style: TextStyle(color: Colors.white)),
+                                Image(
+                                    width: 30,
+                                    height: 30,
+                                    image: AssetImage(
+                                        'assets/images/arrow_down.png'))
+                              ],
+                            ),
+                            onPressed: () {
+                              model.changeTopSheetState(2);
+                            },
+                          ),
+                        )),
                   if (model.chargingState == 4 && model.topSheetState == 3)
                     Expanded(
                       child: ChargingSummary(

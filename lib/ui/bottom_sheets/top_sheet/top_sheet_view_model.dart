@@ -6,7 +6,7 @@ import 'package:stacked/stacked.dart';
 class TopSheetViewModel extends BaseViewModel {
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
-  int batteryProcent = 100;
+  int batteryProcent = 75;
   int topSheetState = 1;
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
@@ -16,6 +16,11 @@ class TopSheetViewModel extends BaseViewModel {
   String chargingAdress = "Kungsgatan 1a, Jönköping";
   String timeUntilFullyCharged = "1hr 21min until full";
   String kilowattHours = "5,72 kwh at 3kwh";
+
+  void updateBatteryProcent(int procent) {
+    batteryProcent = procent;
+    notifyListeners();
+  }
 
   void changeTopSheetState(state) {
     topSheetState = state;

@@ -1,3 +1,4 @@
+import 'package:flexicharge/ui/widgets/circular_loading_bar.dart';
 import 'package:flutter/material.dart';
 
 class ChargingInProgress extends StatelessWidget {
@@ -17,42 +18,12 @@ class ChargingInProgress extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: 150,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          FittedBox(
-            fit: BoxFit.fitHeight,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Image(
-                  width: 25,
-                  height: 25,
-                  image: AssetImage('assets/images/lightningIcon.png'),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(batteryProcent.toString(),
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Lato",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 20.0),
-                        textAlign: TextAlign.right),
-                    Text("%",
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Lato",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 14.0),
-                        textAlign: TextAlign.right)
-                  ],
-                )
-              ],
-            ),
+          CircularLoadingBar(
+            loadingPercentage: batteryProcent / 100,
           ),
           FittedBox(
             fit: BoxFit.fitHeight,

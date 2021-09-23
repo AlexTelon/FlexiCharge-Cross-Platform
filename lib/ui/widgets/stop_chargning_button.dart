@@ -12,9 +12,10 @@ class StopChargingButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FittedBox(
-        fit: BoxFit.fitHeight,
+        fit: BoxFit.fitWidth,
         child: Container(
-          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height * 0.10,
+          width: MediaQuery.of(context).size.width * 0.90,
           decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
               borderRadius: BorderRadius.all(Radius.circular(30)),
@@ -23,7 +24,7 @@ class StopChargingButton extends StatelessWidget {
             onPressed: onPressed,
             child: Text(
               buttonText,
-              style: TextStyle(color: Colors.white),
+              style: Theme.of(context).textTheme.bodyText1,
             ),
           ),
         ));
