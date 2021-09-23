@@ -1,15 +1,18 @@
+import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetViewModel extends BaseViewModel {
-  String topSheetText = "Charging Started";
+  String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
   int batteryProcent = 100;
   int topSheetState = 1;
   double topSheetSize = 0.3;
-  String stopChargingButtonText = "Stop Charging";
+  String stopChargingButtonText = "";
   String expandButtonText = "";
+
+  // Dummy data
   String chargingAdress = "Kungsgatan 1a, Jönköping";
   String timeUntilFullyCharged = "1hr 21min until full";
   String kilowattHours = "5,72 kwh at 3kwh";
@@ -62,29 +65,29 @@ class TopSheetViewModel extends BaseViewModel {
     switch (chargingState) {
       case 1:
         {
-          topSheetText = "Charging Started";
+          topSheetText = TopSheetString.chargingStarted.name;
           chargingState = 1;
         }
         break;
       case 2:
         {
-          topSheetText = "Charging In Progress";
-          stopChargingButtonText = "Stop Charging";
-          expandButtonText = "Push to stop charging";
+          topSheetText = TopSheetString.chargingInProgress.name;
+          stopChargingButtonText = TopSheetString.stopCharging.name;
+          expandButtonText = TopSheetString.pushToStopCharging.name;
           chargingState = 2;
         }
         break;
       case 3:
         {
-          topSheetText = "Fully Charged";
-          stopChargingButtonText = "Disconnect";
-          expandButtonText = "Push to disconnect";
+          topSheetText = TopSheetString.fullyCharged.name;
+          stopChargingButtonText = TopSheetString.disconnect.name;
+          expandButtonText = TopSheetString.pushToDisconnect.name;
           chargingState = 3;
         }
         break;
       case 4:
         {
-          topSheetText = "Charging Summary";
+          topSheetText = TopSheetString.chargingSummary.name;
           chargingState = 4;
         }
         break;

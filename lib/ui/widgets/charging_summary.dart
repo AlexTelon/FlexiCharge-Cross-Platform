@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class ChargingSummary extends StatelessWidget {
-  const ChargingSummary({
-    Key? key,
-    required this.chargingDuration,
-    required this.energyUsed,
-    required this.totalCost,
-  }) : super(key: key);
+  const ChargingSummary(
+      {Key? key,
+      required this.chargingDuration,
+      required this.energyUsed,
+      required this.totalCost,
+      required this.stopCharging})
+      : super(key: key);
 
   final String chargingDuration;
   final String energyUsed;
   final String totalCost;
+  final Function()? stopCharging;
 
   @override
   Widget build(BuildContext context) {
@@ -102,7 +104,7 @@ class ChargingSummary extends StatelessWidget {
           Expanded(
             flex: 1,
             child: TextButton(
-              onPressed: () => {print("TEST")},
+              onPressed: stopCharging,
               child: Container(
                   child: Image(
                 width: 50,
