@@ -1,11 +1,9 @@
 import 'dart:io';
 
 import 'package:flexicharge/app/app.locator.dart';
-import 'package:flexicharge/ui/screens/qr_scanner/qr_scanner_viewmodel.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
-import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class QrScannerView extends StatefulWidget {
@@ -147,9 +145,7 @@ class _QRViewState extends State<QrScannerView> {
     // Called when a scan is complete
     controller.scannedDataStream.listen((scanData) {
       setState(() {
-        result = scanData;
-        _navigationService.back(result: result);
-        dispose(); //Scan is done, destroy the QR-scanner
+        _navigationService.back(result: scanData);
       });
     });
   }
