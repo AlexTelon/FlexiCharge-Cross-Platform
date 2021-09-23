@@ -18,7 +18,9 @@ class TopSheetView extends StatelessWidget {
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
         viewModelBuilder: () => TopSheetViewModel(),
-        builder: (context, model, child) => Container(
+        builder: (context, model, child) => AnimatedContainer(
+              duration: const Duration(milliseconds: 100),
+              curve: Curves.linear,
               width: MediaQuery.of(context).size.width,
               height: MediaQuery.of(context).size.height * model.topSheetSize,
               decoration: BoxDecoration(
@@ -65,14 +67,16 @@ class TopSheetView extends StatelessWidget {
                     ),
                   if (model.topSheetState == 2 &&
                       (model.chargingState == 2 || model.chargingState == 3))
-                    Container(
-                      // Stop charging button
-                      height: MediaQuery.of(context).size.height * 0.225,
-                      child: Align(
-                        alignment: Alignment.center,
-                        child: StopChargingButton(
-                            onPressed: () => model.changeChargingState(true),
-                            buttonText: model.stopChargingButtonText),
+                    Expanded(
+                      child: Container(
+                        // Stop charging button
+                        height: MediaQuery.of(context).size.height * 0.225,
+                        child: Align(
+                          alignment: Alignment.center,
+                          child: StopChargingButton(
+                              onPressed: () => model.changeChargingState(true),
+                              buttonText: model.stopChargingButtonText),
+                        ),
                       ),
                     ),
                   if ((model.chargingState == 2 || model.chargingState == 3) &&
