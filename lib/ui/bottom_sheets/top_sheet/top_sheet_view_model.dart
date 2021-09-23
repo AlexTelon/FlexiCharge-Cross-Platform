@@ -79,6 +79,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.chargingInProgress.name;
           stopChargingButtonText = TopSheetString.stopCharging.name;
           expandButtonText = TopSheetString.pushToStopCharging.name;
+          batteryProcent = 75;
           chargingState = 2;
         }
         break;
@@ -87,6 +88,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.fullyCharged.name;
           stopChargingButtonText = TopSheetString.disconnect.name;
           expandButtonText = TopSheetString.pushToDisconnect.name;
+          batteryProcent = 100;
           chargingState = 3;
         }
         break;
