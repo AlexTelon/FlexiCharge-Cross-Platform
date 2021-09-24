@@ -6,7 +6,6 @@ class LocalData {
   List<ChargerPoint> chargerPoints = List<ChargerPoint>.generate(10, (index) {
     return ChargerPoint.fromCharger(
         chargerPointId: index,
-        location: 'chargergatan $index',
         coordinates: LatLng(index.toDouble(), index.toDouble()),
         chargers: List<Charger>.generate(
             6,
