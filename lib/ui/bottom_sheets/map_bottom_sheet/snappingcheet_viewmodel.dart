@@ -8,14 +8,15 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-
+import 'package:geocoding/geocoding.dart' as geoCoder;
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
 
-  init(SheetRequest request){
-    if(request.data != null && request.data is ChargerPoint){
-      
+  init(SheetRequest request) {
+    if (request.data != null && request.data is ChargerPoint) {
+      _selectedChargerPoint = request.data;
+      notifyListeners();
     }
   }
 
@@ -34,7 +35,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   bool get isSwishActive => _isSwishActive;
   bool get showWideButton => _showWideButton;
-
 
   set showWideButton(bool newState) {
     _showWideButton = newState;
@@ -79,6 +79,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   void changWideget() {
     _selectedCharger = Charger();
+    _selectedChargerPoint = ChargerPoint();
     notifyListeners();
   }
 
@@ -105,8 +106,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     for (int i = 0; i <= chargerPoints.length && i < 4; i += 1) {
       result.add(
         {
-          'ChargerPoint': chargerPoints[i],
-          'Distance': getDistance(userLocation, chargerPoints[i].coordinates),
+          'chargerPoint': chargerPoints[i],
+          'distance': getDistance(userLocation, chargerPoints[i].coordinates),
         },
       );
     }
@@ -114,19 +115,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   }
 
   set chargerCode(String value) => _chargerCode = value;
-  /* === Dummy Data ===  */
-  // void getChargers() {
-  //   chargers = localData.chargers
-  //       .where(
-  //         (charger) =>
-  //             charger.id ==
-  //             int.parse(
-  //               _chargerCode,
-  //             ),
-  //       )
-  //       .toList();
-  //   notifyListeners();
-  // }
 
   Future<List<Charger>> getChargers() => _chargerAPI.getChargers();
 
@@ -139,15 +127,4 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     await _chargerAPI.updateStatus(status, id, chargePointID);
     notifyListeners();
   }
-
-/*
-  void getChargersFromNearest() {
-    chargers = localData.chargers
-        .where(
-          (charger) => charger.id == selectedCharger.id,
-        )
-        .toList();
-    notifyListeners();
-  }
-  */
 }

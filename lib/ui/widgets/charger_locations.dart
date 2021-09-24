@@ -19,9 +19,9 @@ class ChargerLocations extends StatelessWidget {
         return NearestStation(
             onTap: () =>
                 onTap != null ? onTap!(chargerPoint[chargerPoint]) : null,
-            location: chargerPoint['chargerPoint'], //????
-            distance: chargerPoint['Distance'], //????
-            chargers: chargerPoint['chargerPoint'].chargers.length); //????
+            location: chargerPoint['chargerPoint'] ?? '' , //????
+            distance: chargerPoint['distance'],
+            chargers: (chargerPoint['chargerPoint'] as ChargerPoint ).chargers.where((charger) => charger.status == 1).length); 
       }).toList(),
     );
   }
