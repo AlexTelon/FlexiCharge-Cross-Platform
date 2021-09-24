@@ -80,8 +80,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> updateStatus(int status, int id, int chargePointID) async {
-    await _chargerAPI.updateStatus(status, id, chargePointID);
+  Future<void> updateStatus(int status, int id) async {
+    await _chargerAPI.updateStatus(status, id);
     notifyListeners();
   }
 
