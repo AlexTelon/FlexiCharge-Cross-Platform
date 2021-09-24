@@ -69,7 +69,7 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<void> updateStatus(int status, int id, int chargePointID) async {
+  Future<void> updateStatus(int status, int id) async {
     await client
         .put(
           Uri.parse('$endPoint/chargers/$id'),
