@@ -1,24 +1,27 @@
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
+import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
 class ChargerLocations extends StatelessWidget {
   const ChargerLocations(
-      {required this.chargers, required this.onTap, Key? key})
+      {required this.chargerPoints, required this.onTap, Key? key})
       : super(key: key);
-  final Function(int)? onTap;
-  final List<Charger> chargers;
+  final Function(ChargerPoint)? onTap;
+  final List<Map<String, dynamic>> chargerPoints;
 
   @override
   Widget build(BuildContext context) {
     return Column(
-      children: chargers.map((charger) {
+      children: chargerPoints.map((chargerPoint) {
         return NearestStation(
-            onTap: () => onTap != null ? onTap!(charger.id) : null,
-            location: 'Kungsgatan 1a, Jönköping',
-            distance: '544m',
-            chargers: 2);
+            onTap: () =>
+                onTap != null ? onTap!(chargerPoint[chargerPoint]) : null,
+            location: chargerPoint['chargerPoint'], //????
+            distance: chargerPoint['Distance'], //????
+            chargers: chargerPoint['chargerPoint'].chargers.length); //????
       }).toList(),
     );
   }
