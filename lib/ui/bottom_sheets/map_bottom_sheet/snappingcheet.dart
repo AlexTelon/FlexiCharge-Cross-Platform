@@ -1,10 +1,12 @@
+import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
 import 'package:flexicharge/ui/widgets/charger_locations.dart';
 import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
-import 'package:flexicharge/ui/widgets/swish_button.dart';
+import 'package:flexicharge/ui/widgets/klarna_button.dart';
+import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
@@ -38,7 +40,7 @@ class CustomSnappingSheet extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                if (model.selectedChargerId == -1)
+                if (model.selectedCharger.id == -1)
                   Column(
                     children: [
                       Align(
@@ -56,7 +58,7 @@ class CustomSnappingSheet extends StatelessWidget {
                       ChargerLocations(
                         chargers: model.nearestLocation,
                         onTap: (chargingPointId) {
-                          model.selectedChargerId = chargingPointId;
+                          model.selectedCharger.id = chargingPointId;
                           model.getChargersFromNearest();
                         },
                       ),
@@ -65,7 +67,7 @@ class CustomSnappingSheet extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-                if (model.selectedChargerId != -1)
+                if (model.selectedCharger.id != -1)
                   Column(
                     children: [
                       ChargingStation(
@@ -76,8 +78,8 @@ class CustomSnappingSheet extends StatelessWidget {
                       SizedBox(height: 20),
                       Plugs(
                         chargers: model.chargers,
-                        onTap: (id) => model.selectedChargerId = id,
-                        selectedChargerId: model.selectedChargerId,
+                        onTap: (charger) => model.selectedCharger = charger,
+                        selectedChargerId: model.selectedCharger.id,
                       ),
                       SizedBox(height: 10),
                       Text(
@@ -94,7 +96,7 @@ class CustomSnappingSheet extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          SwichButton(
+                          KlarnaButton(
                             onTap: () {
                               model.isSwishActive = true;
                               print("Swish Payment In Progress");
@@ -121,9 +123,20 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: ChargerCodeInput(
                     onChanged: (input) => model.chargerCode = input,
                     validator: (input) {
-                      if (input == null || input.length != 6)
-                        throw ErrorDescription("Invalid charger ID");
-                      return 'Invalid charger ID';
+                      if (input == null || input.length != 6) {
+                        if (input!.length == 0 || input.length != 6) {
+                          model.showWideButton = false;
+                        } else {
+                          model.showWideButton = true;
+                        }
+                        return "Invalid charger ID";
+                      } else {
+                        model.chargerCode = input;
+                        model.getChargerById(int.parse(input));
+                        model.showWideButton = true;
+
+                        return '';
+                      }
                     },
                   ),
                 ),
@@ -131,26 +144,13 @@ class CustomSnappingSheet extends StatelessWidget {
                 SizedBox(height: 10),
 
                 // ignore: deprecated_member_use
-                InkWell(
-                  onTap: () => model.getChargers(),
-                  child: Container(
-                    width: 300,
-                    height: 48,
-                    alignment: Alignment.center,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        color: Color(0xff78bd76)),
-                    child: Text("Begin Charging",
-                        style: TextStyle(
-                          fontFamily: 'ITCAvantGardePro',
-                          color: Color(0xffffffff),
-                          fontSize: 16,
-                          fontWeight: FontWeight.w700,
-                          fontStyle: FontStyle.normal,
-                          letterSpacing: -0.3839999999999999,
-                        )),
-                  ),
+                WideButton(
+                  color: model.wideButtonColor,
+                  text: model.wideButtonText,
+                  onTap: () => model.updateStatus(0, model.selectedCharger.id),
+                  showWideButton: model.showWideButton,
                 ),
+
                 SizedBox(
                   height: 10,
                 ),
