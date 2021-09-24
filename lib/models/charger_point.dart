@@ -6,7 +6,6 @@ class ChargerPoint {
   String location = "";
   LatLng coordinates = LatLng(0, 0);
   List<Charger> chargers = [];
-
   ChargerPoint();
   ChargerPoint.fromCharger({
     required this.chargerPointId,

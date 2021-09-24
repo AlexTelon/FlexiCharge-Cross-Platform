@@ -40,6 +40,14 @@ class HomeViewModel extends BaseViewModel {
     zoom: 14.5,
   );
 
+/*
+   void getDistance() {
+    double distanceInMeters = Geolocator.distanceBetween(
+        57.7786555, 14.1628453, 57.7801889, 14.1763385);
+    print('the distance between libriries $distanceInMeters/1000');
+  }
+  */
+
   void getUserLocation() =>
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
           .then((value) {
