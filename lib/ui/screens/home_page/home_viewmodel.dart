@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
@@ -18,26 +19,48 @@ class HomeViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
 
   init() async {
-    getUserLocation();
-    findUser();
-    getAddress();
-    greenMarkerIcon = await _greenMarkerIcon;
-    redMarkerIcon = await _redMarkerIcon;
-    blackMarkerIcon = await _blackMarkerIcon;
-    notifyListeners();
+    try {
+      getUserLocation();
+      findUser();
+      getAddress();
+      greenMarkerIcon = await _greenMarkerIcon;
+      redMarkerIcon = await _redMarkerIcon;
+      blackMarkerIcon = await _blackMarkerIcon;
+      var allChargingPoints = await _chagerAPI.getChargerPoints();
+      allChargingPoints.forEach(
+        (chargingPoint) => markers.add(
+          Marker(
+            markerId: MarkerId(chargingPoint.chargerPointId.toString()),
+            icon: chargingPoint.chargers
+                        .where((charger) => charger.status == 0)
+                        .length ==
+                    chargingPoint.chargers.length
+                ? redMarkerIcon
+                : greenMarkerIcon,
+            onTap: () =>
+                openFindCharger(chargerPointId: chargingPoint),
+            position: chargingPoint.coordinates,
+            consumeTapEvents: true,
+          ),
+        ),
+      );
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
+  Set<Marker> markers = {};
 
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
 
   CameraPosition cameraPosition = CameraPosition(
-    target: LatLng(57.781921, 14.161227),
-    zoom: 14.5,
+    target: LatLng(0, 0),
   );
 
 /*
@@ -53,7 +76,7 @@ class HomeViewModel extends BaseViewModel {
           .then((value) {
         cameraPosition = CameraPosition(
           target: LatLng(value.latitude, value.longitude),
-          zoom: 16.5,
+          zoom: 14.5,
         );
         notifyListeners();
       });
@@ -73,10 +96,9 @@ class HomeViewModel extends BaseViewModel {
         'assets/images/black_marker.png',
       );
 
-  Future<void> openFindCharger() async {
+  Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.mapBottomSheet,
-    );
+        variant: BottomSheetType.mapBottomSheet, data: chargerPointId);
   }
 
   Future<void> findUser() async {

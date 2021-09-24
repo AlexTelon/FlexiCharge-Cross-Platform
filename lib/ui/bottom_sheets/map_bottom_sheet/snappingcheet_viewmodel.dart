@@ -7,11 +7,20 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
+
+  init(SheetRequest request){
+    if(request.data != null && request.data is ChargerPoint){
+      
+    }
+  }
+
   bool _isSwishActive = false;
+  bool _showWideButton = false;
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
   List<LatLng> chargerCoordinates = [];
@@ -24,6 +33,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   List<LatLng> chargerLocations = [];
 
   bool get isSwishActive => _isSwishActive;
+  bool get showWideButton => _showWideButton;
+
+
+  set showWideButton(bool newState) {
+    _showWideButton = newState;
+    notifyListeners();
+  }
 
   set isSwishActive(bool newState) {
     _isSwishActive = newState;
@@ -118,6 +134,12 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     selectedCharger = await _chargerAPI.getChargerById(id);
     notifyListeners();
   }
+
+  Future<void> updateStatus(int status, int id, int chargePointID) async {
+    await _chargerAPI.updateStatus(status, id, chargePointID);
+    notifyListeners();
+  }
+
 /*
   void getChargersFromNearest() {
     chargers = localData.chargers
