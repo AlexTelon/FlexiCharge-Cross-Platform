@@ -3,20 +3,22 @@ import 'dart:convert';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  static const endPoint = "http://localhost:8080/";
+  static const endPoint = "http://54.220.194.65:8080";
   http.Client client = new http.Client();
+  var chargerPoint = new ChargerPoint();
   LocalData _localData = locator<LocalData>();
-
   Future<List<Charger>> getChargers() async {
     var chargers = <Charger>[];
     var response = await client.get(Uri.parse('$endPoint/chargers'));
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
+        var i = 0;
         for (var charger in parsed) {
           chargers.add(Charger.fromJson(charger));
         }
@@ -47,14 +49,13 @@ class ChargerApiService {
 
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
-    // https://retoolapi.dev/uwBd3x/data?chargerId%20=159995
-    var uri = 'https://retoolapi.dev/xLZMZ7/data?chargerId=' + id.toString();
-    print(id.toString());
-    var response = await client.get(Uri.parse(uri));
+    // print(id);
+    var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
+    // print(response.body);
     switch (response.statusCode) {
       case 200:
         var charger = json.decode(response.body);
-        var chargerFromJson = Charger.fromJson(charger.first);
+        var chargerFromJson = Charger.fromJson(charger);
         return chargerFromJson;
       case 404:
         throw Exception("Not Found");
@@ -87,23 +88,21 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<Charger> updateStatus(int status, int id) async {
-    var response = await client.put(
-      Uri.parse('$endPoint/chargers/$id'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, int>{
-        'status': status,
-      }),
-    );
-    switch (response.statusCode) {
-      case 204:
-        return Charger.fromJson(jsonDecode(response.body));
-      case 400:
-        throw Exception("Bad Request");
-      default:
-        throw Exception(ErrorCodes.internalError);
-    }
+  Future<void> updateStatus(int status, int id, int chargePointID) async {
+    await client
+        .put(
+          Uri.parse('$endPoint/chargers/$id'),
+          headers: <String, String>{
+            'Content-Type': 'application/json; charset=UTF-8',
+          },
+          body: jsonEncode(<String, int>{
+            'status': status,
+          }),
+        )
+        .then((result) => {
+              print("test" + result.statusCode.toString()),
+              print("test2" + result.body.toString()),
+              print("test3" + id.toString())
+            });
   }
 }

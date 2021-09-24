@@ -123,11 +123,18 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: ChargerCodeInput(
                     onChanged: (input) => model.chargerCode = input,
                     validator: (input) {
-                      if (input == null || input.length != 6)
+                      if (input == null || input.length != 6) {
+                        if (input!.length == 0 || input.length != 6) {
+                          model.showWideButton = false;
+                        } else {
+                          model.showWideButton = true;
+                        }
                         return "Invalid charger ID";
-                      else {
+                      } else {
                         model.chargerCode = input;
                         model.getChargerById(int.parse(input));
+                        model.showWideButton = true;
+
                         return '';
                       }
                     },
@@ -140,7 +147,12 @@ class CustomSnappingSheet extends StatelessWidget {
                 WideButton(
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () => print("TEST"),
+                  onTap: () => model.updateStatus(
+                    0,
+                    model.selectedCharger.id,
+                    1,
+                  ),
+                  showWideButton: model.showWideButton,
                 ),
 
                 SizedBox(
