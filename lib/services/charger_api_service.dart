@@ -1,14 +1,34 @@
 import 'dart:convert';
 
+import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/services/local_data.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
   static const endPoint = "http://localhost:8080/";
-  var client = new http.Client();
+  http.Client client = new http.Client();
+  LocalData _localData = locator<LocalData>();
 
   Future<List<Charger>> getChargers() async {
+    var chargers = <Charger>[];
+    var response = await client.get(Uri.parse('$endPoint/chargers'));
+    switch (response.statusCode) {
+      case 200:
+        var parsed = json.decode(response.body) as List<dynamic>;
+        for (var charger in parsed) {
+          chargers.add(Charger.fromJson(charger));
+        }
+        return chargers;
+      case 500:
+        throw Exception("Internal server error");
+      default:
+        throw Exception(ErrorCodes.internalError);
+    }
+  }
+
+  Future<List<Charger>> getChargerPoints() async {
     var chargers = <Charger>[];
     var response = await client.get(Uri.parse('$endPoint/chargers'));
     switch (response.statusCode) {
