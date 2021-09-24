@@ -1,13 +1,24 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
+
+  init(SheetRequest request){
+    if(request.data != null && request.data is ChargerPoint){
+      
+    }
+  }
+
+
+
   bool _isSwishActive = false;
   bool _showWideButton = false;
   Charger _selectedCharger = Charger();
@@ -17,6 +28,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   List<Charger> get nearestLocation => localData.chargers;
   bool get isSwishActive => _isSwishActive;
   bool get showWideButton => _showWideButton;
+
 
   set showWideButton(bool newState) {
     _showWideButton = newState;

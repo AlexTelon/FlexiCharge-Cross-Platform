@@ -38,7 +38,7 @@ class HomeViewModel extends BaseViewModel {
                 ? redMarkerIcon
                 : greenMarkerIcon,
             onTap: () =>
-                openFindCharger(chargerPointId: chargingPoint.chargerPointId),
+                openFindCharger(chargerPointId: chargingPoint),
             position: chargingPoint.coordinates,
             consumeTapEvents: true,
           ),
@@ -88,7 +88,7 @@ class HomeViewModel extends BaseViewModel {
         'assets/images/black_marker.png',
       );
 
-  Future<void> openFindCharger({int? chargerPointId}) async {
+  Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
         variant: BottomSheetType.mapBottomSheet, data: chargerPointId);
   }
