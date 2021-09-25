@@ -23,6 +23,7 @@ class CustomSnappingSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<CustomSnappingSheetViewModel>.reactive(
+      onModelReady: (model) => model.init(request) ,
       builder: (context, model, child) => SizedBox(
         height: 1000,
         child: Container(

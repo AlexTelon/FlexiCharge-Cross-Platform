@@ -9,28 +9,31 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:geocoding/geocoding.dart' as geoCoder;
+
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
 
-  init(SheetRequest request) {
+  init(SheetRequest request) async {
     if (request.data != null && request.data is ChargerPoint) {
       _selectedChargerPoint = request.data;
       notifyListeners();
     }
+    localData.chargerPoints = await _chargerAPI.getChargerPoints();
+
+    notifyListeners();
   }
 
   bool _isSwishActive = false;
   bool _showWideButton = false;
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
-  List<LatLng> chargerCoordinates = [];
 
   LatLng userLocation = LatLng(0, 0);
 
   String _chargerCode = '';
   List<Charger> chargers = [];
-  //List<Charger> get nearestLocation => localData.chargers;
+  List<ChargerPoint> get nearestLocation => localData.chargerPoints;
   List<LatLng> chargerLocations = [];
 
   bool get isSwishActive => _isSwishActive;
@@ -96,6 +99,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     return distanceInMeters / 1000;
   }
 
+
+
+  ///getSortedChargerPoints function returns sorted nearest locations  type of [Map] and it containes { 
+  ///       'chargerPoint': [String],
+  ///       'distance': [String],
+  ///       'location': [String]
+  ///}
   List<Map<String, dynamic>> get getSortedChargerPoints {
     var chargerPoints = localData.chargerPoints;
     chargerPoints.sort((first, after) =>
@@ -103,13 +113,20 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
             .compareTo(getDistance(userLocation, after.coordinates)));
 
     List<Map<String, dynamic>> result = [];
-    for (int i = 0; i <= chargerPoints.length && i < 4; i += 1) {
-      result.add(
-        {
-          'chargerPoint': chargerPoints[i],
-          'distance': getDistance(userLocation, chargerPoints[i].coordinates),
-        },
+    for (int i = 0; i < chargerPoints.length && i < 4; i += 1) {
+      var distance = getDistance(
+        userLocation,
+        chargerPoints[i].coordinates,
       );
+
+      result.add({
+        'chargerPoint': chargerPoints[i],
+        'distance': 1 <= distance % 1000
+            ? '${(distance % 1000).toStringAsFixed(1)} KM'
+            : '${distance.toStringAsFixed(1)} M',
+        'location': chargerPoints[i].chargerPointId.toString(),
+      });
+      notifyListeners();
     }
     return result;
   }

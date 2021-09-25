@@ -13,7 +13,7 @@ class NearestStation extends StatelessWidget {
   final String location;
   final int chargers;
   final Function()? onTap;
-  final double distance;
+  final String distance;
 
   @override
   Widget build(BuildContext context) {
@@ -34,14 +34,28 @@ class NearestStation extends StatelessWidget {
                   fontSize: 17,
                 ),
               ),
-              Image.asset("assets/images/charger_icon.png",
-                  width: 18, height: 16, fit: BoxFit.fill),
+              chargers == 0
+                  ? Text(
+                      'Sorry This Charging Station Contanes No Available Chargers',
+                      style: TextStyle(
+                        fontFamily: 'Lato',
+                        color: Colors.red,
+                        fontSize: 10,
+                      ),
+                    )
+                  : Row(
+                      children: List<Widget>.generate(
+                        chargers,
+                        (index) => Image.asset("assets/images/charger_icon.png",
+                            width: 18, height: 16, fit: BoxFit.fill),
+                      ),
+                    ),
             ],
           ),
           Column(
             children: [
               Text(
-                distance.toString(),
+                distance,
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Color(0xffffffff),

@@ -3,12 +3,15 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
 class ChargerLocations extends StatelessWidget {
-  const ChargerLocations(
-      {required this.chargerPoints, required this.onTap, Key? key})
-      : super(key: key);
+  const ChargerLocations({
+    required this.chargerPoints,
+    required this.onTap,
+    Key? key,
+  }) : super(key: key);
   final Function(ChargerPoint)? onTap;
   final List<Map<String, dynamic>> chargerPoints;
 
@@ -17,11 +20,14 @@ class ChargerLocations extends StatelessWidget {
     return Column(
       children: chargerPoints.map((chargerPoint) {
         return NearestStation(
-            onTap: () =>
-                onTap != null ? onTap!(chargerPoint[chargerPoint]) : null,
-            location: chargerPoint['chargerPoint'] ?? '' , //????
-            distance: chargerPoint['distance'],
-            chargers: (chargerPoint['chargerPoint'] as ChargerPoint ).chargers.where((charger) => charger.status == 1).length); 
+          onTap: onTap != null ? onTap!(chargerPoint['chargerPoint']) : null,
+          location: chargerPoint['location'], //????
+          distance: chargerPoint['distance'],
+          chargers: (chargerPoint['chargerPoint'] as ChargerPoint)
+              .chargers
+              .where((charger) => charger.status == 1)
+              .length,
+        );
       }).toList(),
     );
   }
