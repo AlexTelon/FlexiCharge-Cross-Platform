@@ -16,7 +16,6 @@ class ChargerApiService {
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
-        var i = 0;
         for (var charger in parsed) {
           chargers.add(Charger.fromJson(charger));
         }
