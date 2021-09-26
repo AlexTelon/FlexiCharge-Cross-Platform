@@ -36,7 +36,7 @@ class LoginView extends StatelessWidget {
                           hint: 'Enter Your Email',
                           onChanged: (value) => print(value),
                         ),
-                        SizedBox(height: 10),
+                        SizedBox(height: 30),
                         TextInputWidget(
                           labelText: 'Password',
                           hint: 'Enter Your Password',

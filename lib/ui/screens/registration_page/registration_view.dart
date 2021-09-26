@@ -17,129 +17,124 @@ class RegistrationView extends StatelessWidget {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
       viewModelBuilder: () => RegistrationViewmodel(),
       builder: (context, model, child) => Scaffold(
-        body: Center(
+        body: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Topbar(text: "Register"),
               SizedBox(height: 30),
-              SingleChildScrollView(
-                child: Container(
-                  child: Column(
+              Column(
+                children: [
+                  // SizedBox(height: 1),
+                  TextInputWidget(
+                    labelText: 'Email',
+                    hint: 'Enter Your Email',
+                    onChanged: (value) => print(value),
+                  ),
+                  SizedBox(height: 15),
+                  TextInputWidget(
+                    labelText: 'Mobile Number',
+                    hint: 'Enter Your Mobile Number',
+                    onChanged: (value) => print(value),
+                    isNumber: true,
+                  ),
+                  SizedBox(height: 15),
+                  TextInputWidget(
+                    labelText: 'Password',
+                    hint: 'Enter Your Password',
+                    onChanged: (value) => print(value),
+                    isPassword: true,
+                  ),
+                  SizedBox(height: 15),
+                  TextInputWidget(
+                    labelText: 'Repeat Password',
+                    hint: 'Enter Your Repeat Password',
+                    onChanged: (value) => print(value),
+                    isPassword: true,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      SizedBox(height: 10),
-                      TextInputWidget(
-                        labelText: 'Email',
-                        hint: 'Enter Your Email',
-                        onChanged: (value) => print(value),
+                      Container(
+                        decoration: BoxDecoration(),
+                        child: Checkbox(
+                            value: model.checked,
+                            checkColor: Colors.black,
+                            activeColor: Colors.white,
+                            side: BorderSide(color: Colors.black),
+                            onChanged: (newState) => model.checked = newState),
                       ),
-                      SizedBox(height: 10),
-                      TextInputWidget(
-                        labelText: 'Mobile Number',
-                        hint: 'Enter Your Mobile Number',
-                        onChanged: (value) => print(value),
-                        isNumber: true,
+                      Text(
+                        "I agree to the terms and conditions",
+                        style: const TextStyle(
+                            color: const Color(0xff212121),
+                            fontWeight: FontWeight.w400,
+                            fontFamily: "Lato",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 13.0),
+                      )
+                    ],
+                  ),
+                  SizedBox(height: 30.0),
+                  WideButton(
+                    text: 'Register',
+                    color: Color(0xff78bd76),
+                    onTap: () => print('Register Button'),
+                    showWideButton: true,
+                  ),
+                  SizedBox(height: 20.0),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Already have an account? ',
+                        style: TextStyle(
+                          fontFamily: 'Lato',
+                          color: Color(0xff212121),
+                          fontSize: 13,
+                          fontWeight: FontWeight.w400,
+                          fontStyle: FontStyle.normal,
+                        ),
                       ),
-                      SizedBox(height: 10),
-                      TextInputWidget(
-                        labelText: 'Password',
-                        hint: 'Enter Your Password',
-                        onChanged: (value) => print(value),
-                        isPassword: true,
-                      ),
-                      SizedBox(height: 10),
-                      TextInputWidget(
-                        labelText: 'Repeat Password',
-                        hint: 'Enter Your Repeat Password',
-                        onChanged: (value) => print(value),
-                        isPassword: true,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                            decoration: BoxDecoration(),
-                            child: Checkbox(
-                                value: model.checked,
-                                checkColor: Colors.black,
-                                activeColor: Colors.white,
-                                side: BorderSide(color: Colors.black),
-                                onChanged: (newState) =>
-                                    model.checked = newState),
-                          ),
-                          Text(
-                            "I agree to the terms and conditions",
-                            style: const TextStyle(
-                                color: const Color(0xff212121),
-                                fontWeight: FontWeight.w400,
-                                fontFamily: "Lato",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 13.0),
-                          )
-                        ],
-                      ),
-                      SizedBox(height: 60.0),
-                      WideButton(
-                        text: 'Register',
-                        color: Color(0xff78bd76),
-                        onTap: () => print('Register Button'),
-                        showWideButton: true,
-                      ),
-                      SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Text(
-                            'Already have an account? ',
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Color(0xff212121),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ),
-                          InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => LoginView()),
-                              );
-                            },
-                            child: Text(
-                              'Log In',
-                              style: TextStyle(
-                                fontFamily: 'Lato',
-                                color: Color(0xff78bd76),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 20.0),
                       InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => HomeView()),
+                            MaterialPageRoute(
+                                builder: (context) => LoginView()),
                           );
                         },
-                        child: Text("Continue as Guest",
-                            style: const TextStyle(
-                                color: const Color(0xff78bd76),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "Lato",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 13.0),
-                            textAlign: TextAlign.center),
-                      )
+                        child: Text(
+                          'Log In',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Color(0xff78bd76),
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        ),
+                      ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 20.0),
+                  InkWell(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => HomeView()),
+                      );
+                    },
+                    child: Text("Continue as Guest",
+                        style: const TextStyle(
+                            color: const Color(0xff78bd76),
+                            fontWeight: FontWeight.w700,
+                            fontFamily: "Lato",
+                            fontStyle: FontStyle.normal,
+                            fontSize: 13.0),
+                        textAlign: TextAlign.center),
+                  )
+                ],
               ),
             ],
           ),
