@@ -51,7 +51,7 @@ class LoginView extends StatelessWidget {
                     Column(
                       children: [
                         WideButton(
-                          text: 'Log in..',
+                          text: 'Log in',
                           showWideButton: true,
                           onTap: () => ('Log in'),
                           color: Color(0xff78bd76),
