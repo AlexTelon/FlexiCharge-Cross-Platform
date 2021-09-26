@@ -8,7 +8,6 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
-import 'package:geocoding/geocoding.dart' as geoCoder;
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
@@ -17,6 +16,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   init(SheetRequest request) async {
     if (request.data != null && request.data is ChargerPoint) {
       _selectedChargerPoint = request.data;
+      _isFirstView = false;
+      _onlyPin = false;
       notifyListeners();
     }
     localData.chargerPoints = await _chargerAPI.getChargerPoints();
@@ -26,6 +27,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   bool _isSwishActive = false;
   bool _showWideButton = false;
+  bool _isFirstView = true;
+  bool _onlyPin = true;
+
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
 
@@ -33,11 +37,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   String _chargerCode = '';
   List<Charger> chargers = [];
-  List<ChargerPoint> get nearestLocation => localData.chargerPoints;
   List<LatLng> chargerLocations = [];
 
+  List<ChargerPoint> get nearestLocation => localData.chargerPoints;
   bool get isSwishActive => _isSwishActive;
   bool get showWideButton => _showWideButton;
+  bool get isFirstView => _isFirstView;
+  bool get onlyPin => _onlyPin;
 
   set showWideButton(bool newState) {
     _showWideButton = newState;
@@ -46,6 +52,16 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   set isSwishActive(bool newState) {
     _isSwishActive = newState;
+    notifyListeners();
+  }
+
+  set isFirstView(bool newState) {
+    _isFirstView = newState;
+    notifyListeners();
+  }
+
+  set onlyPin(bool newState) {
+    _onlyPin = newState;
     notifyListeners();
   }
 
@@ -80,12 +96,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void changWideget() {
-    _selectedCharger = Charger();
-    _selectedChargerPoint = ChargerPoint();
-    notifyListeners();
-  }
-
   void getUserLocation() =>
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
           .then((value) {
@@ -99,9 +109,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     return distanceInMeters / 1000;
   }
 
-
-
-  ///getSortedChargerPoints function returns sorted nearest locations  type of [Map] and it containes { 
+  ///getSortedChargerPoints function returns sorted nearest locations  type of [Map] and it containes {
   ///       'chargerPoint': [String],
   ///       'distance': [String],
   ///       'location': [String]
@@ -122,8 +130,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       result.add({
         'chargerPoint': chargerPoints[i],
         'distance': 1 <= distance % 1000
-            ? '${(distance % 1000).toStringAsFixed(1)} KM'
-            : '${distance.toStringAsFixed(1)} M',
+            ? '${(distance % 1000).toStringAsFixed(1)} km'
+            : '${distance.toStringAsFixed(1)} m',
         'location': chargerPoints[i].chargerPointId.toString(),
       });
       notifyListeners();
@@ -136,8 +144,19 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Future<List<Charger>> getChargers() => _chargerAPI.getChargers();
 
   Future<void> getChargerById(int id) async {
-    selectedCharger = await _chargerAPI.getChargerById(id);
-    notifyListeners();
+    try {
+      selectedCharger = await _chargerAPI.getChargerById(id);
+      selectedChargerPoint = localData.chargerPoints
+          .where((element) =>
+              element.chargerPointId == selectedCharger.chargerPointId)
+          .first;
+      if (selectedCharger.status == 1) onlyPin = false;
+      isFirstView = false;
+      notifyListeners();
+    } catch (e) {
+      selectedCharger = Charger();
+      isFirstView = true;
+    }
   }
 
   Future<void> updateStatus(int status, int id, int chargePointID) async {
