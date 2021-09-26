@@ -20,8 +20,10 @@ class ChargerLocations extends StatelessWidget {
     return Column(
       children: chargerPoints.map((chargerPoint) {
         return NearestStation(
-          onTap: onTap != null ? onTap!(chargerPoint['chargerPoint']) : null,
-          location: chargerPoint['location'], //????
+          onTap:
+              onTap != null ? () => onTap!(chargerPoint['chargerPoint']) : null,
+          location:
+              'well this is the end of the world', //chargerPoint['location'], //????
           distance: chargerPoint['distance'],
           chargers: (chargerPoint['chargerPoint'] as ChargerPoint)
               .chargers

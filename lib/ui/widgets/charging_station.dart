@@ -4,11 +4,11 @@ import 'package:flutter_svg/svg.dart';
 class ChargingStation extends StatelessWidget {
   const ChargingStation({
     required this.onTap,
-    required this.adress,
+    required this.address,
     required this.currentLocation,
     Key? key,
   }) : super(key: key);
-  final String adress;
+  final String address;
   final Function()? onTap;
   final String currentLocation;
   @override
@@ -28,7 +28,7 @@ class ChargingStation extends StatelessWidget {
           Column(
             children: [
               Text(
-                adress,
+                address,
                 style: TextStyle(color: Colors.white),
               ),
               Row(

@@ -31,12 +31,17 @@ class NearestStation extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Color(0xffffffff),
-                  fontSize: 17,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
                 ),
+              ),
+              SizedBox(
+                height: 5,
               ),
               chargers == 0
                   ? Text(
-                      'Sorry This Charging Station Contanes No Available Chargers',
+                      'Sorry This Charging Station Contains No Available Chargers',
                       style: TextStyle(
                         fontFamily: 'Lato',
                         color: Colors.red,
@@ -46,8 +51,15 @@ class NearestStation extends StatelessWidget {
                   : Row(
                       children: List<Widget>.generate(
                         chargers,
-                        (index) => Image.asset("assets/images/charger_icon.png",
-                            width: 18, height: 16, fit: BoxFit.fill),
+                        (index) => Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Image.asset(
+                            "assets/images/charger_icon.png",
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
                       ),
                     ),
             ],
@@ -59,7 +71,10 @@ class NearestStation extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Color(0xffffffff),
-                  fontSize: 17,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: -0.408,
                 ),
               ),
               SizedBox(
