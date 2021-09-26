@@ -83,7 +83,7 @@ class HomeView extends StatelessWidget {
                             onTap: () => model.openFindCharger(),
                             isLarge: true,
                             icon: SvgPicture.asset('assets/svg_images/logo.svg',
-                                fit: BoxFit.contain)),
+                                fit: BoxFit.scaleDown)),
                         MapIcon(
                             onTap: () => print("Test4"),
                             isLarge: false,

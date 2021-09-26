@@ -20,7 +20,6 @@ class ChargerApiService {
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
-        var i = 0;
         for (var charger in parsed) {
           chargers.add(Charger.fromJson(charger));
         }
@@ -114,7 +113,7 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<void> updateStatus(int status, int id, int chargePointID) async {
+  Future<void> updateStatus(int status, int id) async {
     await client
         .put(
           Uri.parse('$endPoint/chargers/$id'),

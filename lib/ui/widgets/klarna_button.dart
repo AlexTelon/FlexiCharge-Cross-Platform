@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
-class SwichButton extends StatelessWidget {
-  const SwichButton({Key? key, required this.onTap, this.isSelected = false})
+class KlarnaButton extends StatelessWidget {
+  const KlarnaButton({Key? key, required this.onTap, this.isSelected = false})
       : super(key: key);
   final Function()? onTap;
   final bool? isSelected;
@@ -23,7 +24,13 @@ class SwichButton extends StatelessWidget {
           color: const Color(0xffffffff),
         ),
         // child: image,
-        child: Image.asset("assets/images/swish_logo.png"),
+        child: Padding(
+          padding: const EdgeInsets.all(6),
+          child: SvgPicture.asset(
+            "assets/svg_images/klarna_logo.svg",
+            fit: BoxFit.scaleDown,
+          ),
+        ),
       ),
     );
   }

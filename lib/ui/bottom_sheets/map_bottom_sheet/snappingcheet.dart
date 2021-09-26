@@ -7,7 +7,7 @@ import 'package:flexicharge/ui/widgets/charger_locations.dart';
 import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/plugs.dart';
-import 'package:flexicharge/ui/widgets/swish_button.dart';
+import 'package:flexicharge/ui/widgets/klarna_button.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -89,11 +89,7 @@ class CustomSnappingSheet extends StatelessWidget {
                 WideButton(
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () => model.updateStatus(
-                    0,
-                    model.selectedCharger.id,
-                    1,
-                  ),
+                  onTap: () => model.updateStatus(0, model.selectedCharger.id),
                   showWideButton: model.showWideButton,
                 ),
                 SizedBox(
