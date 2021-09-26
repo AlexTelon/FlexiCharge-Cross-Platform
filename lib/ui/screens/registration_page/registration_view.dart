@@ -1,10 +1,14 @@
+import 'package:flexicharge/ui/screens/home_page/home_view.dart';
+import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
+import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
+import 'package:stacked_services/stacked_services.dart';
 
 class RegistrationView extends StatelessWidget {
   bool checked = false;
@@ -74,6 +78,65 @@ class RegistrationView extends StatelessWidget {
                           )
                         ],
                       ),
+                      SizedBox(height: 60.0),
+                      WideButton(
+                        text: 'Register',
+                        color: Color(0xff78bd76),
+                        onTap: () => print('Register Button'),
+                        showWideButton: true,
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Already have an account? ',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: Color(0xff212121),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginView()),
+                              );
+                            },
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                color: Color(0xff78bd76),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
+                      InkWell(
+                        onTap: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => HomeView()),
+                          );
+                        },
+                        child: Text("Continue as Guest",
+                            style: const TextStyle(
+                                color: const Color(0xff78bd76),
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Lato",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 13.0),
+                            textAlign: TextAlign.center),
+                      )
                     ],
                   ),
                 ),

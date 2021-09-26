@@ -1,5 +1,7 @@
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
+import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
+import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
@@ -18,53 +20,57 @@ class LoginView extends StatelessWidget {
             children: [
               Topbar(
                 text: "Log In",
-                onTap: () => print("Log In"),
+                onTap: () => print("Back to previos page..."),
               ),
               // UPPP
               SizedBox(height: 30),
               Container(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    FractionallySizedBox(
-                      widthFactor: 0.8,
-                      child: TextField(
-                        onChanged: (t) => print(t),
-                        decoration: InputDecoration(
-                          hintText: 'Enter Your Email',
-                          border: UnderlineInputBorder(),
-                          labelText: 'Email',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xff292b2b)),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xff292b2b)),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Column(
+                          children: [
+                            TextInputWidget(
+                              labelText: 'Email',
+                              hint: 'Enter Your Email',
+                              onChanged: (value) => print(value),
+                            ),
+                            SizedBox(height: 10),
+                            TextInputWidget(
+                              labelText: 'Password',
+                              hint: 'Enter Your Password',
+                              onChanged: (value) => print(value),
+                              isPassword: true,
+                            ),
+                          ],
                         ),
-                      ),
+                        SizedBox(height: 200),
+                        WideButton(
+                          text: 'Log in',
+                          showWideButton: true,
+                          onTap: () => ('Log in'),
+                          color: Color(0xff78bd76),
+                        ),
+                        SizedBox(height: 30),
+                        InkWell(
+                          onTap: () => print('Forget Password'),
+                          child: Text(
+                            'I forget my password',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: Color(0xff78bd76),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w700,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                        )
+                      ],
                     ),
-                    SizedBox(height: 10),
-                    FractionallySizedBox(
-                      widthFactor: 0.8,
-                      child: TextField(
-                        obscureText: true,
-                        onChanged: (t) => print(t),
-                        decoration: InputDecoration(
-                          hintText: 'Enter Your Password',
-                          border: UnderlineInputBorder(),
-                          labelText: 'Password',
-                          enabledBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xff292b2b)),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderSide: BorderSide(color: Color(0xff292b2b)),
-                            borderRadius: BorderRadius.all(Radius.circular(10)),
-                          ),
-                        ),
-                      ),
-                    )
                   ],
                 ),
               ),
