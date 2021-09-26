@@ -53,7 +53,6 @@ class LoginView extends StatelessWidget {
                           ],
                         ),
                       ),
-                      // SizedBox(height: 200),
 
                       ///Contains the WideButton and The InkWell
                       Flexible(
@@ -66,7 +65,7 @@ class LoginView extends StatelessWidget {
                               onTap: () => ('Log in'),
                               color: Color(0xff78bd76),
                             ),
-                            SizedBox(height: 30),
+                            SizedBox(height: 20),
                             InkWell(
                               onTap: () => print('Forget Password'),
                               child: Text(
