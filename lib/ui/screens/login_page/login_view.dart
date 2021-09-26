@@ -26,31 +26,32 @@ class LoginView extends StatelessWidget {
               SizedBox(height: 30),
               Container(
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
+                  // crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    ///Contains the TextInputs
                     Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Column(
-                          children: [
-                            TextInputWidget(
-                              labelText: 'Email',
-                              hint: 'Enter Your Email',
-                              onChanged: (value) => print(value),
-                            ),
-                            SizedBox(height: 10),
-                            TextInputWidget(
-                              labelText: 'Password',
-                              hint: 'Enter Your Password',
-                              onChanged: (value) => print(value),
-                              isPassword: true,
-                            ),
-                          ],
+                        TextInputWidget(
+                          labelText: 'Email',
+                          hint: 'Enter Your Email',
+                          onChanged: (value) => print(value),
                         ),
-                        SizedBox(height: 200),
+                        SizedBox(height: 10),
+                        TextInputWidget(
+                          labelText: 'Password',
+                          hint: 'Enter Your Password',
+                          onChanged: (value) => print(value),
+                          isPassword: true,
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 200),
+
+                    ///Contains the WideButton and The InkWell
+                    Column(
+                      children: [
                         WideButton(
-                          text: 'Log in',
+                          text: 'Log in..',
                           showWideButton: true,
                           onTap: () => ('Log in'),
                           color: Color(0xff78bd76),
