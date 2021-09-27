@@ -5,15 +5,18 @@ class ChargerCodeInput extends StatelessWidget {
   const ChargerCodeInput({
     required this.onChanged,
     required this.validator,
+    required this.controller,
     Key? key,
   }) : super(key: key);
   final Function(String) onChanged;
   final String Function(String?)? validator;
+  final TextEditingController controller;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       child: PinCodeTextField(
+        controller: controller,
         onChanged: onChanged,
         onCompleted: validator,
         // validator: validator, // Essa skrivit

@@ -14,11 +14,26 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final localData = locator<LocalData>();
 
   init(SheetRequest request) async {
+    
     if (request.data != null && request.data is ChargerPoint) {
       _selectedChargerPoint = request.data;
       _isFirstView = false;
       _onlyPin = false;
       notifyListeners();
+    }else if (request.data != null && request.data is String) {
+      chargerCode = request.data;
+      try{
+        await getChargerById(int.parse(request.data));
+        _selectedChargerPoint = localData.chargerPoints.where((element) => element.chargerPointId == _selectedCharger.chargerPointId).first;
+        _isFirstView = false;
+        _onlyPin = false;
+        notifyListeners();
+      }catch(e){
+        // Notify error...
+        selectedCharger = Charger();
+        selectedChargerPoint = ChargerPoint();
+        showWideButton = true;
+      }
     }
   }
 
@@ -41,6 +56,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   bool get showWideButton => _showWideButton;
   bool get isFirstView => _isFirstView;
   bool get onlyPin => _onlyPin;
+  String get chargerCode => _chargerCode;
 
   set showWideButton(bool newState) {
     _showWideButton = newState;

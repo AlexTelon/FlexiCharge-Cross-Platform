@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flutter/foundation.dart';
@@ -78,18 +79,23 @@ class _QRViewState extends State<QrScannerView> {
     );
   }
 
-  void _onQRViewCreated(QRViewController controller) {
+  Future<void> _onQRViewCreated(QRViewController controller) async {
+    localData.qrCode = '';
     setState(() {
       this.controller = controller;
     });
-    // Called when a scan is complete
+    bool foundValid = false; 
+    // Listens for scanned data
     controller.scannedDataStream.listen((scanData) {
-      setState(() {
+      //Prevents the qr-code from continuing to scan after we found a qr-code
+      if(!foundValid ){
         localData.qrCode = scanData.code;
+        foundValid = true;
         _navigationService.back();
-      });
+      }
     });
   }
+
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');

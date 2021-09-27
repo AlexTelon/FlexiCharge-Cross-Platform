@@ -133,7 +133,7 @@ class HomeViewModel extends BaseViewModel {
     // Open qr scan and wait for data
     await _navigationService.navigateTo(Routes.qrScannerView);
     // Pass data to charger code input field
-    await openChargerCodeInput(_localData.qrCode);
+    if(_localData.qrCode.isNotEmpty) openChargerCodeInput(_localData.qrCode);
   }
   Future<void> openChargerCodeInput(String? data) async {
     _bottomSheetService.showCustomSheet(
