@@ -44,4 +44,5 @@ class LocalData {
       location: LatLng(666.8, 555.6),
     ),
   ];
+  String qrCode = '';
 }

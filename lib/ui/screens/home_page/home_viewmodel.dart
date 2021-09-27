@@ -96,15 +96,15 @@ class HomeViewModel extends BaseViewModel {
     print(placemarkFromCoordinates);
   }
 
-  Future<void> openQrScanner() async {
-    _navigationService.navigateTo(Routes.qrScannerView)?.then((value) {
-      // If value == null do nothing
-      // else open topsheet and send value
-
-      if (value != null) {
-        _bottomSheetService.showCustomSheet(
-            variant: BottomSheetType.mapBottomSheet, data: value);
-      }
-    });
+  Future<void> doQrScan() async {
+    // Open qr scan and wait for data
+    await _navigationService.navigateTo(Routes.qrScannerView);
+    // Pass data to charger code input field
+    await openChargerCodeInput(_localData.qrCode);
+  }
+  Future<void> openChargerCodeInput(String? data) async {
+    _bottomSheetService.showCustomSheet(
+      variant: BottomSheetType.mapBottomSheet, data: data
+    );
   }
 }
