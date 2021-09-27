@@ -27,6 +27,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         _selectedChargerPoint = localData.chargerPoints.where((element) => element.chargerPointId == _selectedCharger.chargerPointId).first;
         _isFirstView = false;
         _onlyPin = false;
+        _showWideButton = true;
         notifyListeners();
       }catch(e){
         // Notify error...
