@@ -29,8 +29,8 @@
 		<key>UISupportedInterfaceOrientations</key>
 		<key>io.flutter.embedded_views_preview</key>
 		<string>YES</string>
-		<key>NSLocationWhenInUseUsageDescription</key>
-		<string>This app needs access to location when open.</string>
+		<!-- <key>NSLocationWhenInUseUsageDescription</key>
+		<string>This app needs access to location when open.</string>-->
 		<array>
 			<string>UIInterfaceOrientationPortrait</string>
 			<string>UIInterfaceOrientationLandscapeLeft</string>
