@@ -11,7 +11,7 @@ class Plugs extends StatelessWidget {
   }) : super(key: key);
   final List<Charger> chargers;
   final int selectedChargerId;
-  final Function(int)? onTap;
+  final Function(Charger)? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -20,10 +20,12 @@ class Plugs extends StatelessWidget {
       width: MediaQuery.of(context).size.width,
       child: ListView(
         scrollDirection: Axis.horizontal,
+        physics: ScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
         children: chargers
             .map(
               (charger) => Plug(
-                onTap: () => onTap != null ? onTap!(charger.id) : null,
+                
+                onTap: () => onTap != null ? onTap!(charger) : null,
                 isSelected: charger.id == selectedChargerId,
                 charger: charger,
               ),

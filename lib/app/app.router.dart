@@ -10,13 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../ui/screens/home_page/home_view.dart';
+import '../ui/screens/login_page/login_view.dart';
 import '../ui/screens/qr_scanner/qr_scanner_view.dart';
+import '../ui/screens/registration_page/registration_view.dart';
 
 class Routes {
-  static const String homeView = '/';
+  static const String homeView = '/home-view';
+  static const String loginView = '/login-view';
+  static const String registrationView = '/';
   static const String qrScannerView = '/qr-scanner-view';
   static const all = <String>{
     homeView,
+    loginView,
+    registrationView,
     qrScannerView,
   };
 }
@@ -26,6 +32,8 @@ class StackedRouter extends RouterBase {
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
     RouteDef(Routes.homeView, page: HomeView),
+    RouteDef(Routes.loginView, page: LoginView),
+    RouteDef(Routes.registrationView, page: RegistrationView),
     RouteDef(Routes.qrScannerView, page: QrScannerView),
   ];
   @override
@@ -34,6 +42,18 @@ class StackedRouter extends RouterBase {
     HomeView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => const HomeView(),
+        settings: data,
+      );
+    },
+    LoginView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => LoginView(),
+        settings: data,
+      );
+    },
+    RegistrationView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => RegistrationView(),
         settings: data,
       );
     },

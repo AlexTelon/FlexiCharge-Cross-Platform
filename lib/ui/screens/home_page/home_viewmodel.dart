@@ -2,11 +2,11 @@ import 'dart:async';
 import 'dart:developer';
 
 import 'package:flexicharge/app/app.router.dart';
+import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
-import 'package:flexicharge/models/charger.dart';
-import 'package:flexicharge/services/chargers.dart';
+import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,40 +15,72 @@ import 'package:geocoding/geocoding.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _chagerAPI = locator<ChargerService>();
+  final _chagerAPI = locator<ChargerApiService>();
   final _localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
 
   init() async {
-    getUserLocation();
-    findUser();
-    getAddress();
-    greenMarkerIcon = await _greenMarkerIcon;
-    redMarkerIcon = await _redMarkerIcon;
-    blackMarkerIcon = await _blackMarkerIcon;
-    notifyListeners();
+    try {
+      getUserLocation();
+      findUser();
+      getAddress();
+      greenMarkerIcon = await _greenMarkerIcon;
+      redMarkerIcon = await _redMarkerIcon;
+      blackMarkerIcon = await _blackMarkerIcon;
+      var allChargingPoints = await _chagerAPI.getChargerPoints();
+      _localData.chargerPoints = allChargingPoints;
+      allChargingPoints.forEach(
+        (chargingPoint) => markers.add(
+          Marker(
+            markerId: MarkerId(chargingPoint.chargerPointId.toString()),
+            icon: chargingPoint.chargers
+                        .where((charger) => charger.status == 0)
+                        .length ==
+                    chargingPoint.chargers.length
+                ? redMarkerIcon
+                : greenMarkerIcon,
+            onTap: () => openFindCharger(chargerPointId: chargingPoint),
+            position: chargingPoint.coordinates,
+            consumeTapEvents: true,
+          ),
+        ),
+      );
+      notifyListeners();
+    } catch (e) {
+      print(e);
+    }
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
+  Set<Marker> markers = {};
+  bool activeTopSheet = true;
+
 
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
 
   CameraPosition cameraPosition = CameraPosition(
-    target: LatLng(57.781921, 14.161227),
-    zoom: 14.5,
+    target: LatLng(0, 0),
   );
+
+/*
+   void getDistance() {
+    double distanceInMeters = Geolocator.distanceBetween(
+        57.7786555, 14.1628453, 57.7801889, 14.1763385);
+    print('the distance between libriries $distanceInMeters/1000');
+  }
+  */
 
   void getUserLocation() =>
       Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
           .then((value) {
         cameraPosition = CameraPosition(
           target: LatLng(value.latitude, value.longitude),
-          zoom: 16.5,
+          zoom: 14.5,
         );
         notifyListeners();
       });
@@ -68,9 +100,10 @@ class HomeViewModel extends BaseViewModel {
         'assets/images/black_marker.png',
       );
 
-  Future<void> openFindCharger(int? value) async {
+  Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
-        variant: BottomSheetType.mapBottomSheet, data: value);
+        variant: SheetType.mapBottomSheet, data: chargerPointId);
+
   }
 
   Future<void> findUser() async {
@@ -104,7 +137,7 @@ class HomeViewModel extends BaseViewModel {
   }
   Future<void> openChargerCodeInput(String? data) async {
     _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.mapBottomSheet, data: data
+      variant: SheetType.mapBottomSheet, data: data
     );
   }
 }

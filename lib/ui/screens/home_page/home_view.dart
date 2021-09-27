@@ -1,4 +1,6 @@
 import 'package:flexicharge/services/map_style.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 // import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
@@ -8,7 +10,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:loading_overlay_pro/loading_overlay_pro.dart';
+// import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
 /*class SplashScreen extends StatelessWidget {
   SplashScreen() {
@@ -51,24 +53,14 @@ class HomeView extends StatelessWidget {
                 CameraUpdate.newCameraPosition(model.cameraPosition),
               );
             },
-            markers: {
-              Marker(
-                markerId: MarkerId("1"),
-                position: LatLng(57.781921, 14.161227),
-                icon: model.greenMarkerIcon,
-              ),
-              Marker(
-                markerId: MarkerId("2"),
-                position: LatLng(57.782053, 14.162851),
-                icon: model.redMarkerIcon,
-              ),
-              Marker(
-                markerId: MarkerId("3"),
-                position: LatLng(57.781579, 14.159567),
-                icon: model.blackMarkerIcon,
-              ),
-            },
+            markers: model.markers,
           ),
+          if (model
+              .activeTopSheet) // Change this boolean value to toggle TopSheet On/Off.
+            Align(
+              alignment: Alignment.topCenter,
+              child: TopSheetView(),
+            ),
           Padding(
               padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
               child: Align(
@@ -99,7 +91,7 @@ class HomeView extends StatelessWidget {
                             onTap: () => model.openFindCharger(null),
                             isLarge: true,
                             icon: SvgPicture.asset('assets/svg_images/logo.svg',
-                                fit: BoxFit.contain)),
+                                fit: BoxFit.scaleDown)),
                         MapIcon(
                             onTap: () => print("Test4"),
                             isLarge: false,
