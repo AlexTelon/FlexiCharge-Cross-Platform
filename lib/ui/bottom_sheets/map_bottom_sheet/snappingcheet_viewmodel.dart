@@ -20,9 +20,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       _onlyPin = false;
       notifyListeners();
     }
-    localData.chargerPoints = await _chargerAPI.getChargerPoints();
-
-    notifyListeners();
   }
 
   bool _isSwishActive = false;
@@ -121,20 +118,23 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
             .compareTo(getDistance(userLocation, after.coordinates)));
 
     List<Map<String, dynamic>> result = [];
-    for (int i = 0; i < chargerPoints.length && i < 4; i += 1) {
-      var distance = getDistance(
-        userLocation,
-        chargerPoints[i].coordinates,
-      );
+    try {
+      for (int i = 0; i < chargerPoints.length && i < 4; i += 1) {
+        var distance = getDistance(
+          userLocation,
+          chargerPoints[i].coordinates,
+        );
 
-      result.add({
-        'chargerPoint': chargerPoints[i],
-        'distance': 1 <= distance % 1000
-            ? '${(distance % 1000).toStringAsFixed(1)} km'
-            : '${distance.toStringAsFixed(1)} m',
-        'location': chargerPoints[i].chargerPointId.toString(),
-      });
-      notifyListeners();
+        result.add({
+          'chargerPoint': chargerPoints[i],
+          'distance': 1 <= distance % 1000
+              ? '${(distance % 1000).toStringAsFixed(1)} km'
+              : '${distance.toStringAsFixed(1)} m',
+          'location': '',
+        });
+      }
+    } catch (e) {
+      print(e);
     }
     return result;
   }
