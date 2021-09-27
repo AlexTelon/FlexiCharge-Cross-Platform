@@ -1,3 +1,3 @@
-enum BottomSheetType{
-  mapBottomSheet
+enum SheetType {
+  mapBottomSheet,
 }
