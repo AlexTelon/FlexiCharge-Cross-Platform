@@ -87,11 +87,16 @@ class _QRViewState extends State<QrScannerView> {
     bool foundValid = false; 
     // Listens for scanned data
     controller.scannedDataStream.listen((scanData) {
-      //Prevents the qr-code from continuing to scan after we found a qr-code
-      if(!foundValid ){
-        localData.qrCode = scanData.code;
-        foundValid = true;
-        _navigationService.back();
+      //Prevents the qr-code from continuing to scan after we found a code
+      if(!foundValid){
+        if(scanData.code.length == 6){
+          try{
+            int.parse(scanData.code);
+            localData.qrCode = scanData.code;
+            foundValid = true;
+            _navigationService.back();
+          }catch(e){}
+        } 
       }
     });
   }
