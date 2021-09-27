@@ -57,7 +57,6 @@ class HomeViewModel extends BaseViewModel {
   Set<Marker> markers = {};
   bool activeTopSheet = true;
 
-
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
 
@@ -100,8 +99,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
-        variant: BottomSheetType.mapBottomSheet, data: chargerPointId);
-
+        variant: SheetType.mapBottomSheet, data: chargerPointId);
   }
 
   Future<void> findUser() async {
