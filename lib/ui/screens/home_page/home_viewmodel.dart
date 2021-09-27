@@ -27,6 +27,7 @@ class HomeViewModel extends BaseViewModel {
       redMarkerIcon = await _redMarkerIcon;
       blackMarkerIcon = await _blackMarkerIcon;
       var allChargingPoints = await _chagerAPI.getChargerPoints();
+      _localData.chargerPoints = allChargingPoints;
       allChargingPoints.forEach(
         (chargingPoint) => markers.add(
           Marker(
@@ -37,8 +38,7 @@ class HomeViewModel extends BaseViewModel {
                     chargingPoint.chargers.length
                 ? redMarkerIcon
                 : greenMarkerIcon,
-            onTap: () =>
-                openFindCharger(chargerPointId: chargingPoint),
+            onTap: () => openFindCharger(chargerPointId: chargingPoint),
             position: chargingPoint.coordinates,
             consumeTapEvents: true,
           ),
