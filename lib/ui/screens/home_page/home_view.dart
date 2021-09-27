@@ -53,23 +53,7 @@ class HomeView extends StatelessWidget {
                 CameraUpdate.newCameraPosition(model.cameraPosition),
               );
             },
-            markers: {
-              Marker(
-                markerId: MarkerId("1"),
-                position: LatLng(57.781921, 14.161227),
-                icon: model.greenMarkerIcon,
-              ),
-              Marker(
-                markerId: MarkerId("2"),
-                position: LatLng(57.782053, 14.162851),
-                icon: model.redMarkerIcon,
-              ),
-              Marker(
-                markerId: MarkerId("3"),
-                position: LatLng(57.781579, 14.159567),
-                icon: model.blackMarkerIcon,
-              ),
-            },
+            markers: model.markers,
           ),
           if (model
               .activeTopSheet) // Change this boolean value to toggle TopSheet On/Off.
