@@ -31,6 +31,7 @@ class HomeViewModel extends BaseViewModel {
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
+  bool activeTopSheet = true;
 
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
@@ -67,7 +68,7 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> openFindCharger() async {
     _bottomSheetService.showCustomSheet(
-      variant: BottomSheetType.mapBottomSheet,
+      variant: SheetType.mapBottomSheet,
     );
   }
 

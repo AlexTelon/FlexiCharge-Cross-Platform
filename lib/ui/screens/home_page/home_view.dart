@@ -1,4 +1,6 @@
 import 'package:flexicharge/services/map_style.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 // import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
@@ -69,6 +71,12 @@ class HomeView extends StatelessWidget {
               ),
             },
           ),
+          if (model
+              .activeTopSheet) // Change this boolean value to toggle TopSheet On/Off.
+            Align(
+              alignment: Alignment.topCenter,
+              child: TopSheetView(),
+            ),
           Padding(
               padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
               child: Align(
