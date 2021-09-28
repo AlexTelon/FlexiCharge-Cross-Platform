@@ -1,13 +1,13 @@
 import 'package:flexicharge/models/charger.dart';
 
 class Transaction {
-  late int id;
-  late double meterStart;
-  late double meterStop;
-  late double timeStamp;
-  late int paymentID; //FK
-  late int userID; //FK
-  late int chargerID; //FK
+  int id = -1;
+  int meterStart = -1;
+  int meterStop = -1;
+  int timeStamp = -1;
+  int paymentID = -1;
+  int userID = -1;
+  int chargerID = -1;
 
   Transaction();
   Transaction.fromTransanction({

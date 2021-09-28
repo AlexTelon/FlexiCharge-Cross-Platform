@@ -1,6 +1,6 @@
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
-import 'package:flexicharge/services/transactions.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
@@ -14,7 +14,7 @@ import 'package:stacked_services/stacked_services.dart';
     MaterialRoute(page: RegistrationView, initial: true),
   ],
   dependencies: [
-    LazySingleton(classType: Transactions),
+    LazySingleton(classType: TransactionApiService),
     LazySingleton(classType: LocalData),
     LazySingleton(classType: BottomSheetService),
     LazySingleton(classType: NavigationService),
