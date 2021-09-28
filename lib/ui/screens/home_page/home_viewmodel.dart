@@ -59,7 +59,6 @@ class HomeViewModel extends BaseViewModel {
   Set<Marker> markers = {};
   bool activeTopSheet = true;
 
-
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
 
@@ -103,7 +102,6 @@ class HomeViewModel extends BaseViewModel {
   Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
         variant: SheetType.mapBottomSheet, data: chargerPointId);
-
   }
 
   Future<void> findUser() async {
@@ -133,11 +131,11 @@ class HomeViewModel extends BaseViewModel {
     // Open qr scan and wait for data
     await _navigationService.navigateTo(Routes.qrScannerView);
     // Pass data to charger code input field
-    if(_localData.qrCode.isNotEmpty) openChargerCodeInput(_localData.qrCode);
+    if (_localData.qrCode.isNotEmpty) openChargerCodeInput(_localData.qrCode);
   }
+
   Future<void> openChargerCodeInput(String? data) async {
     _bottomSheetService.showCustomSheet(
-      variant: SheetType.mapBottomSheet, data: data
-    );
+        variant: SheetType.mapBottomSheet, data: data);
   }
 }
