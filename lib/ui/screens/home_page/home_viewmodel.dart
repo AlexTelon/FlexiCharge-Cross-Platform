@@ -22,7 +22,6 @@ class HomeViewModel extends BaseViewModel {
     try {
       getUserLocation();
       findUser();
-      getAddress();
       greenMarkerIcon = await _greenMarkerIcon;
       redMarkerIcon = await _redMarkerIcon;
       blackMarkerIcon = await _blackMarkerIcon;
@@ -113,15 +112,5 @@ class HomeViewModel extends BaseViewModel {
           ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       notifyListeners();
     });
-  }
-
-  Future<void> getAddress() async {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((value) async {
-      await placemarkFromCoordinates(value.latitude, value.longitude);
-      return placemarkFromCoordinates;
-    });
-    notifyListeners();
-    print(placemarkFromCoordinates);
   }
 }

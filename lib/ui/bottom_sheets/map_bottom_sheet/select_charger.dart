@@ -19,16 +19,19 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
           currentLocation: 'Barnarpsgatan 68',
         ),
         SizedBox(height: 20),
-        Plugs(
-          chargers: model.selectedChargerPoint.chargers,
-          onTap: (charger) => model.selectedCharger = charger,
-          selectedChargerId: model.selectedCharger.id,
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15),
+          child: Plugs(
+            chargers: model.selectedChargerPoint.chargers,
+            onTap: (charger) => model.selectedCharger = charger,
+            selectedChargerId: model.selectedCharger.id,
+          ),
         ),
         SizedBox(height: 10),
         Text(
           "Payment",
           style: TextStyle(
-            fontFamily: 'Lato',
+            fontFamily: 'Lato-Regular',
             color: Color(0xffffffff),
             fontSize: 17,
             fontWeight: FontWeight.w400,

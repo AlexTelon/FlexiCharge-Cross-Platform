@@ -69,6 +69,15 @@ flutter:
     - assets/images/
     - assets/svg_images/
 
+  fonts:
+    - family: ITCAvantGardeStd-Bold
+      fonts:
+        - asset: assets/fonts/ITCAvantGardeStd-Bold.otf
+
+    - family: Lato-Regular
+      fonts:
+        - asset: assets/fonts/Lato-Regular.ttf    
+
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
