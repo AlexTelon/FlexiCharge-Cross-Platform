@@ -36,23 +36,7 @@ class _QRViewState extends State<QrScannerView> {
     return Scaffold(
       body: Column(
         children: <Widget>[
-          Expanded(flex: 4, child: _buildQrView(context)),
-          Expanded(
-            flex: 1,
-            child: FittedBox(
-              fit: BoxFit.contain,
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: <Widget>[
-                  if (result != null)
-                    Text(
-                        'Barcode Type: ${describeEnum(result!.format)}   Data: ${result!.code}')
-                  else
-                    Text('Scan QR on charger'),
-                ],
-              ),
-            ),
-          )
+          Expanded(child: _buildQrView(context)),
         ],
       ),
     );
@@ -84,23 +68,22 @@ class _QRViewState extends State<QrScannerView> {
     setState(() {
       this.controller = controller;
     });
-    bool foundValid = false; 
+    bool foundValid = false;
     // Listens for scanned data
     controller.scannedDataStream.listen((scanData) {
       //Prevents the qr-code from continuing to scan after we found a code
-      if(!foundValid){
-        if(scanData.code.length == 6){
-          try{
+      if (!foundValid) {
+        if (scanData.code.length == 6) {
+          try {
             int.parse(scanData.code);
             localData.qrCode = scanData.code;
             foundValid = true;
             _navigationService.back();
-          }catch(e){}
-        } 
+          } catch (e) {}
+        }
       }
     });
   }
-
 
   void _onPermissionSet(BuildContext context, QRViewController ctrl, bool p) {
     // log('${DateTime.now().toIso8601String()}_onPermissionSet $p');
