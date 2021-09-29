@@ -12,10 +12,12 @@ class KlarnaApiService {
   String locale = '';
   int order_amount = 0;
   int order_tax_amount = 0;
-  List order_lines = OrderLine;
+  List<OrderLine> order_lines = [];
 
   // Implement the POST Methods.
   Future<List> createOrder() async {
     return [];
   }
+
+  Future<void> getAccessToken() async {}
 }
