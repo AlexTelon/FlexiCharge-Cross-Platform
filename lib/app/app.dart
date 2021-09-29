@@ -3,7 +3,6 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transactions.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/qr_scanner/qr_scanner_view.dart';
-import 'package:flutter/material.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:stacked/stacked_annotations.dart';
