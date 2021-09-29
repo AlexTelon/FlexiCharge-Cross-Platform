@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'dart:developer';
 
+import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
@@ -123,5 +125,17 @@ class HomeViewModel extends BaseViewModel {
     });
     notifyListeners();
     print(placemarkFromCoordinates);
+  }
+
+  Future<void> doQrScan() async {
+    // Open qr scan and wait for data
+    await _navigationService.navigateTo(Routes.qrScannerView);
+    // Pass data to charger code input field
+    if (_localData.qrCode.isNotEmpty) openChargerCodeInput(_localData.qrCode);
+  }
+
+  Future<void> openChargerCodeInput(String? data) async {
+    _bottomSheetService.showCustomSheet(
+        variant: SheetType.mapBottomSheet, data: data);
   }
 }

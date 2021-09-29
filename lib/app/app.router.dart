@@ -11,16 +11,19 @@ import 'package:stacked/stacked.dart';
 
 import '../ui/screens/home_page/home_view.dart';
 import '../ui/screens/login_page/login_view.dart';
+import '../ui/screens/qr_scanner/qr_scanner_view.dart';
 import '../ui/screens/registration_page/registration_view.dart';
 
 class Routes {
   static const String homeView = '/home-view';
   static const String loginView = '/login-view';
   static const String registrationView = '/';
+  static const String qrScannerView = '/qr-scanner-view';
   static const all = <String>{
     homeView,
     loginView,
     registrationView,
+    qrScannerView,
   };
 }
 
@@ -31,6 +34,7 @@ class StackedRouter extends RouterBase {
     RouteDef(Routes.homeView, page: HomeView),
     RouteDef(Routes.loginView, page: LoginView),
     RouteDef(Routes.registrationView, page: RegistrationView),
+    RouteDef(Routes.qrScannerView, page: QrScannerView),
   ];
   @override
   Map<Type, StackedRouteFactory> get pagesMap => _pagesMap;
@@ -50,6 +54,12 @@ class StackedRouter extends RouterBase {
     RegistrationView: (data) {
       return MaterialPageRoute<dynamic>(
         builder: (context) => RegistrationView(),
+        settings: data,
+      );
+    },
+    QrScannerView: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => QrScannerView(),
         settings: data,
       );
     },
