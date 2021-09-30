@@ -5,7 +5,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionApiService {
-  static const endPoint = "http://54.220.194.65:8080";
+  static const endPoint = "http://54.220.194.65:8080/transactions/1";
   var client = new http.Client();
 
   Future<Transaction> getTransactionById(int id) async {

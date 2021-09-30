@@ -2,18 +2,24 @@ import 'package:flexicharge/models/charger.dart';
 
 class Transaction {
   int id = -1;
-  int meterStart = -1;
-  int meterStop = -1;
-  int timeStamp = -1;
+  bool isKlarnaPayment = true;
+  int kwhTransfered = 0;
+  int currentChargePercentage = 0;
+  double pricePerKwh = 0;
+  int timestamp = -1;
   int paymentID = -1;
   int userID = -1;
   int chargerID = -1;
 
+
   Transaction();
   Transaction.fromTransanction({
     required this.id,
-    required this.meterStart,
-    required this.meterStop,
+    required this.isKlarnaPayment,
+    required this.kwhTransfered,
+    required this.currentChargePercentage,
+    required this.pricePerKwh,
+    required this.timestamp,
     required this.paymentID,
     required this.userID,
     required this.chargerID,
@@ -21,9 +27,11 @@ class Transaction {
 
   Transaction.fromJson(Map<String, dynamic> json) {
     id = json['transactionID'];
-    meterStart = json['meterStart'];
-    meterStop = json['meterStop'];
-    timeStamp = json['timestamp'];
+    isKlarnaPayment = json['isKlarnaPayment'];
+    kwhTransfered = json['kwhTransfered'];
+    currentChargePercentage = json['currentChargePercentage'];
+    pricePerKwh = json['pricePerKwh'];
+    timestamp = json['timestamp'];
     paymentID = json['paymentID'];
     userID = json['userID'];
     chargerID = json['chargerID'];
