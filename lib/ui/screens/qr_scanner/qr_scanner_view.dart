@@ -1,10 +1,7 @@
 import 'dart:io';
 
 import 'package:flexicharge/app/app.locator.dart';
-import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/services/local_data.dart';
-import 'package:flexicharge/ui/screens/home_page/home_view.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 import 'package:stacked_services/stacked_services.dart';

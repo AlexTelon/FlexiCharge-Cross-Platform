@@ -65,7 +65,8 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: ChargerCodeInput(
-                      controller: TextEditingController(text: model.chargerCode),
+                      controller:
+                          TextEditingController(text: model.chargerCode),
                       onChanged: (input) => model.chargerCode = input,
                       validator: (input) {
                         if (input == null || input.length != 6) {
@@ -90,7 +91,12 @@ class CustomSnappingSheet extends StatelessWidget {
                 WideButton(
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () => model.updateStatus(0, model.selectedCharger.id),
+                  onTap: () {
+                    completer(SheetResponse(data: true));
+
+                    model.localData.chargingCharger = model.selectedCharger.id;
+                    model.updateStatus(0, model.selectedCharger.id);
+                  },
                   showWideButton: model.showWideButton,
                 ),
                 SizedBox(
