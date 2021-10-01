@@ -97,7 +97,10 @@ class HomeView extends StatelessWidget {
                                       fit: BoxFit.scaleDown)),
                               SizedBox(height: 30),
                               MapIcon(
-                                  onTap: () => print("Test2"),
+                                  onTap: () => {
+                                        // Calling this function for testing the TransactionApiService.
+                                        model.getTransaction()
+                                      },
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',

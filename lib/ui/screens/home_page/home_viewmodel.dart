@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
@@ -13,6 +14,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _chagerAPI = locator<ChargerApiService>();
+  final _transactionAPI = locator<TransactionApiService>();
   final _localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
@@ -70,6 +72,12 @@ class HomeViewModel extends BaseViewModel {
     _bottomSheetService.showCustomSheet(
       variant: SheetType.mapBottomSheet,
     );
+  }
+
+  Future<void> getTransaction() async {
+    // Testing transactionApiService
+    var transaction = await _transactionAPI.getTransactionById(1);
+    transaction.printTransaction();
   }
 
   Future<void> findUser() async {

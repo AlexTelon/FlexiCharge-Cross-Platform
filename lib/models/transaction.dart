@@ -5,14 +5,14 @@ class Transaction {
   bool isKlarnaPayment = true;
   int kwhTransfered = 0;
   int currentChargePercentage = 0;
-  double pricePerKwh = 0;
+  String pricePerKwh = "";
   int timestamp = -1;
-  int paymentID = -1;
+  int? paymentID = -1;
   int userID = -1;
   int chargerID = -1;
 
-
   Transaction();
+
   Transaction.fromTransanction({
     required this.id,
     required this.isKlarnaPayment,
@@ -35,5 +35,18 @@ class Transaction {
     paymentID = json['paymentID'];
     userID = json['userID'];
     chargerID = json['chargerID'];
+  }
+
+  void printTransaction() {
+    // For test
+    print('id: ${this.id}');
+    print("isKlarnaPayment: ${this.isKlarnaPayment}");
+    print("kwhTransfered: ${this.kwhTransfered}");
+    print("currentChargePercentage: ${this.currentChargePercentage}");
+    print("pricePerKwh: ${this.pricePerKwh}");
+    print("timeStamp: ${this.timestamp}");
+    print("paymentID: ${this.paymentID}");
+    print("userID: ${this.userID}");
+    print("chargerID: ${this.chargerID}");
   }
 }
