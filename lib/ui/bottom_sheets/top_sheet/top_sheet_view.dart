@@ -91,12 +91,11 @@ class TopSheetView extends StatelessWidget {
                               children: [
                                 Text(model.expandButtonText,
                                     style: TextStyle(color: Colors.white)),
-                                Image(
-                                  width: 30,
-                                  height: 30,
-                                  image: AssetImage(
-                                      'assets/images/arrow_down.png'),
-                                )
+                                Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
                             onPressed: () {
