@@ -4,32 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:loading_overlay_pro/animations/bumping_line.dart';
 import 'package:stacked/stacked.dart';
 
-class LaunchView extends StatefulWidget {
+class LaunchView extends StatelessWidget {
   const LaunchView({Key? key}) : super(key: key);
-
-  @override
-  _LaunchViewState createState() => _LaunchViewState();
-}
-
-class _LaunchViewState extends State<LaunchView>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  late Animation<Color?> _color;
-
-  @override
-  void initState() {
-    _controller = AnimationController(
-      vsync: this, // the SingleTickerProviderStateMixin
-    );
-    _color = _controller.drive<Color?>(
-      ColorTween(
-        begin: Colors.yellow,
-        end: Colors.green,
-      ),
-    );
-    //_controller.repeat();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +13,7 @@ class _LaunchViewState extends State<LaunchView>
         viewModelBuilder: () => LaunchViewModel(),
         onModelReady: (model) => model.init(),
         builder: (context, model, child) => Scaffold(
-              backgroundColor: Color.fromRGBO(13, 13, 13, 1),
+              backgroundColor: Colors.black,
               body: Center(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -45,7 +21,7 @@ class _LaunchViewState extends State<LaunchView>
                   children: [
                     Image.asset(
                       'assets/images/splash_image.png',
-                      height: 150,
+                      height: 200,
                     ),
                     SizedBox(
                       height: 30,
@@ -66,8 +42,6 @@ class _LaunchViewState extends State<LaunchView>
                               stops: [0, 0.8659470016891891, 1],
                               begin: Alignment(-1.00, 0.00),
                               end: Alignment(1.00, -0.00),
-                              // angle: 90,
-                              // scale: undefined,
                             ),
                           ),
                         ),

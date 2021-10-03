@@ -14,7 +14,7 @@ class LaunchViewModel extends BaseViewModel {
   final _localData = locator<LocalData>();
   final _chagerAPI = locator<ChargerApiService>();
 
-  double _indication = 1;
+  double _indication = 0.95;
   double get indication => _indication;
   set indication(double newIndication) {
     _indication = newIndication;
@@ -23,7 +23,7 @@ class LaunchViewModel extends BaseViewModel {
 
   init() async {
     try {
-     // await getUserLocation();
+      await getUserLocation();
       indication = 0.9;
 
       _localData.greenMarkerIcon = await _greenMarkerIcon;
