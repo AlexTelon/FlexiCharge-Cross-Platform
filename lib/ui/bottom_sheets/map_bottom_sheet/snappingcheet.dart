@@ -65,6 +65,7 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: ChargerCodeInput(
+                      key: ValueKey<String>(model.chargerCode),
                       controller:
                           TextEditingController(text: model.chargerCode),
                       onChanged: (input) => model.chargerCode = input,
