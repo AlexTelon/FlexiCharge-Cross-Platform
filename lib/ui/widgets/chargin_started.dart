@@ -4,12 +4,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChargingStarted extends StatelessWidget {
+  final Function chargingPercentage;
+
   const ChargingStarted({
     Key? key,
+    required this.chargingPercentage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    chargingPercentage();
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

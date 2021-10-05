@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,15 +13,25 @@ class TopSheetViewModel extends BaseViewModel {
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
+  late Timer timer;
 
   // Dummy data
   String chargingAdress = "Kungsgatan 1a, Jönköping";
   String timeUntilFullyCharged = "1hr 21min until full";
   String kilowattHours = "5,72 kwh at 3kwh";
 
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
   void updateBatteryProcent(int procent) {
-    batteryProcent = procent;
-    notifyListeners();
+    timer = new Timer.periodic(Duration(seconds: 1), (timer) {
+      procent++;
+      batteryProcent = procent;
+      notifyListeners();
+    });
   }
 
   void changeTopSheetState(state) {
