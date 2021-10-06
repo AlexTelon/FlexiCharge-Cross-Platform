@@ -59,7 +59,9 @@ class HomeView extends StatelessWidget {
               .activeTopSheet) // Change this boolean value to toggle TopSheet On/Off.
             Align(
               alignment: Alignment.topCenter,
-              child: TopSheetView(),
+              child: TopSheetView(
+                complete: () => model.completeTopSheet(),
+              ),
             ),
           Padding(
               padding: EdgeInsets.symmetric(vertical: 40.0, horizontal: 10.0),
@@ -81,17 +83,18 @@ class HomeView extends StatelessWidget {
                                       fit: BoxFit.scaleDown)),
                               SizedBox(height: 30),
                               MapIcon(
-                                  onTap: () => print("Test2"),
+                                  onTap: () => model.doQrScan(),
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
                                       fit: BoxFit.scaleDown)),
                             ]),
                         MapIcon(
-                            onTap: () => model.openFindCharger(),
-                            isLarge: true,
-                            icon: SvgPicture.asset('assets/svg_images/logo.svg',
-                                fit: BoxFit.scaleDown)),
+                          onTap: () => model.openFindCharger(),
+                          isLarge: true,
+                          icon: SvgPicture.asset('assets/svg_images/logo.svg',
+                              fit: BoxFit.scaleDown),
+                        ),
                         MapIcon(
                             onTap: () => print("Test4"),
                             isLarge: false,
