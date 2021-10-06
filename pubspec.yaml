@@ -35,6 +35,7 @@ dependencies:
   loading_overlay_pro: ^2.1.1
   splashscreen: ^1.2.0
   geocoding: ^2.0.1
+  gradient_widgets: ^0.6.0
 
 
 
