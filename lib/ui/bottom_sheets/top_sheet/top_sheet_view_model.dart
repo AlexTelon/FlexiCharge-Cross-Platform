@@ -1,9 +1,11 @@
+import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:flexicharge/services/charger_api_service.dart';
+import 'package:flexicharge/services/local_data.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetViewModel extends BaseViewModel {
+  final chargerApiService = locator<ChargerApiService>();
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
   int batteryProcent = 75;
@@ -11,6 +13,8 @@ class TopSheetViewModel extends BaseViewModel {
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
+
+  final localData = locator<LocalData>();
 
   // Dummy data
   String chargingAdress = "Kungsgatan 1a, Jönköping";
@@ -49,10 +53,14 @@ class TopSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void changeChargingState(bool finishedCharging) {
+  Future<void> changeChargingState(
+      bool finishedCharging) async {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
+      chargerApiService.updateStatus(1, localData.chargingCharger);
+      localData.chargingCharger = -1;
+      localData.chargerPoints = await chargerApiService.getChargerPoints();
     } else {
       if (chargingState < 3) {
         chargingState += 1;

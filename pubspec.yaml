@@ -35,7 +35,8 @@ dependencies:
   loading_overlay_pro: ^2.1.1
   splashscreen: ^1.2.0
   geocoding: ^2.0.1
-  mollie: ^0.8.2
+  qr_code_scanner: ^0.5.2
+  gradient_widgets: ^0.6.0
 
 
 
@@ -54,7 +55,7 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#000000"
-  image: assets/splashScreen/splash_image.png
+  image: splash_screen/splash_image.png
   android: true
   ios: true
   android_gravity: center
