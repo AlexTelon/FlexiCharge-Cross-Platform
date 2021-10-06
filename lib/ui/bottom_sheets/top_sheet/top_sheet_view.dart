@@ -53,7 +53,7 @@ class TopSheetView extends StatelessWidget {
                       // Charging Started
                       height: MediaQuery.of(context).size.height * 0.15,
                       child: ChargingStarted(
-                        chargingPercentage: () => model.updateBatteryProcent(3),
+                        chargingPercentage: () => model.updateBatteryProcent(),
                       ),
                     ),
                   if (model.chargingState == 2 || model.chargingState == 3)

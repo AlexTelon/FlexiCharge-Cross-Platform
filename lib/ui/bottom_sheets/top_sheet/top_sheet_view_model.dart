@@ -26,10 +26,13 @@ class TopSheetViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  void updateBatteryProcent(int procent) {
+  void updateBatteryProcent() {
     timer = new Timer.periodic(Duration(seconds: 1), (timer) {
-      procent++;
-      batteryProcent = procent;
+      if (batteryProcent < 100) {
+        batteryProcent += 1;
+      } else {
+        batteryProcent = 0;
+      }
       notifyListeners();
     });
   }
