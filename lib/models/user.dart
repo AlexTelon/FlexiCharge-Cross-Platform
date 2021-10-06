@@ -1,11 +1,13 @@
 
 
 class User{
+  String id = '';
   String name = '';
   String familyName = '';
   String email = '';
   String username = '';
   String password = '';
+  String accessToken = '';
 
   User();
   User.fromUser({
