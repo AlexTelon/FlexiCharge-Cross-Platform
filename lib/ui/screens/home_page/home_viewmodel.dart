@@ -25,12 +25,8 @@ class HomeViewModel extends BaseViewModel {
       getUserLocation();
       findUser();
       getAddress();
-      greenMarkerIcon = await _greenMarkerIcon;
-      redMarkerIcon = await _redMarkerIcon;
-      blackMarkerIcon = await _blackMarkerIcon;
-      var allChargingPoints = await _chagerAPI.getChargerPoints();
-      _localData.chargerPoints = allChargingPoints;
-      allChargingPoints.forEach(
+
+      _localData.chargerPoints.forEach(
         (chargingPoint) => markers.add(
           Marker(
             markerId: MarkerId(chargingPoint.chargerPointId.toString()),
@@ -38,8 +34,8 @@ class HomeViewModel extends BaseViewModel {
                         .where((charger) => charger.status == 0)
                         .length ==
                     chargingPoint.chargers.length
-                ? redMarkerIcon
-                : greenMarkerIcon,
+                ? _localData.redMarkerIcon
+                : _localData.greenMarkerIcon,
             onTap: () => openFindCharger(chargerPointId: chargingPoint),
             position: chargingPoint.coordinates,
             consumeTapEvents: true,
@@ -52,12 +48,9 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
   Set<Marker> markers = {};
-  bool activeTopSheet = true;
+  bool activeTopSheet = false;
 
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
@@ -66,42 +59,25 @@ class HomeViewModel extends BaseViewModel {
     target: LatLng(0, 0),
   );
 
-/*
-   void getDistance() {
-    double distanceInMeters = Geolocator.distanceBetween(
-        57.7786555, 14.1628453, 57.7801889, 14.1763385);
-    print('the distance between libriries $distanceInMeters/1000');
+  void getUserLocation() {
+    cameraPosition = CameraPosition(
+      target: LatLng(
+          _localData.userLocation.latitude, _localData.userLocation.longitude),
+      zoom: 14.5,
+    );
+    notifyListeners();
   }
-  */
-
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((value) {
-        cameraPosition = CameraPosition(
-          target: LatLng(value.latitude, value.longitude),
-          zoom: 14.5,
-        );
-        notifyListeners();
-      });
-
-  get _greenMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/green_marker.png',
-      );
-
-  get _redMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/red_marker.png',
-      );
-
-  get _blackMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/black_marker.png',
-      );
 
   Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
-    _bottomSheetService.showCustomSheet(
-        variant: SheetType.mapBottomSheet, data: chargerPointId);
+    _bottomSheetService
+        .showCustomSheet(
+            variant: SheetType.mapBottomSheet, data: chargerPointId)
+        .then((value) {
+      if (value != null && value.data == true) {
+        activeTopSheet = true;
+        notifyListeners();
+      }
+    });
   }
 
   Future<void> findUser() async {
@@ -118,11 +94,10 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> getAddress() async {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((value) async {
-      await placemarkFromCoordinates(value.latitude, value.longitude);
-      return placemarkFromCoordinates;
-    });
+    await placemarkFromCoordinates(
+      _localData.userLocation.latitude,
+      _localData.userLocation.longitude,
+    );
     notifyListeners();
     print(placemarkFromCoordinates);
   }
@@ -137,5 +112,10 @@ class HomeViewModel extends BaseViewModel {
   Future<void> openChargerCodeInput(String? data) async {
     _bottomSheetService.showCustomSheet(
         variant: SheetType.mapBottomSheet, data: data);
+  }
+
+  completeTopSheet() {
+    activeTopSheet = false;
+    notifyListeners();
   }
 }

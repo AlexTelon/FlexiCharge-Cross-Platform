@@ -14,22 +14,24 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final localData = locator<LocalData>();
 
   init(SheetRequest request) async {
-    
     if (request.data != null && request.data is ChargerPoint) {
       _selectedChargerPoint = request.data;
       _isFirstView = false;
       _onlyPin = false;
       notifyListeners();
-    }else if (request.data != null && request.data is String) {
+    } else if (request.data != null && request.data is String) {
       chargerCode = request.data;
-      try{
+      try {
         await getChargerById(int.parse(request.data));
-        _selectedChargerPoint = localData.chargerPoints.where((element) => element.chargerPointId == _selectedCharger.chargerPointId).first;
+        _selectedChargerPoint = localData.chargerPoints
+            .where((element) =>
+                element.chargerPointId == _selectedCharger.chargerPointId)
+            .first;
         _isFirstView = false;
         _onlyPin = false;
         _showWideButton = true;
         notifyListeners();
-      }catch(e){
+      } catch (e) {
         // Notify error...
         selectedCharger = Charger();
         selectedChargerPoint = ChargerPoint();
@@ -102,6 +104,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   set selectedCharger(Charger newCharger) {
     _selectedCharger = newCharger;
+    chargerCode = _selectedCharger.id.toString();
+    _chargerAPI.getChargerById(newCharger.id);
     notifyListeners();
   }
 
@@ -167,8 +171,10 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           .where((element) =>
               element.chargerPointId == selectedCharger.chargerPointId)
           .first;
-      if (selectedCharger.status == 1) onlyPin = false;
-      isFirstView = false;
+      if (selectedCharger.status == 1) {
+        isFirstView = false;
+        showWideButton = true;
+      }
       notifyListeners();
     } catch (e) {
       selectedCharger = Charger();
@@ -177,7 +183,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   }
 
   Future<void> updateStatus(int status, int id) async {
-    await _chargerAPI.updateStatus(status, id);
+    if (selectedCharger.status == 1) await _chargerAPI.updateStatus(status, id);
     notifyListeners();
   }
 }
