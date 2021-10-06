@@ -8,7 +8,7 @@ import 'package:stacked/stacked.dart';
 class TopSheetViewModel extends BaseViewModel {
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
-  int batteryProcent = 75;
+  int batteryPercent = 75;
   int topSheetState = 1;
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
@@ -26,13 +26,15 @@ class TopSheetViewModel extends BaseViewModel {
     super.dispose();
   }
 
-  void updateBatteryProcent() {
-    timer = new Timer.periodic(Duration(seconds: 1), (timer) {
-      if (batteryProcent < 100) {
-        batteryProcent += 1;
+  void updatebatteryPercent() {
+    var percent = 0;
+    timer = new Timer.periodic(Duration(seconds: 2), (timer) {
+      if (batteryPercent < 100) {
+        percent += 1;
       } else {
-        batteryProcent = 0;
+        timer.cancel();
       }
+      batteryPercent = percent;
       notifyListeners();
     });
   }
@@ -94,7 +96,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.chargingInProgress.name;
           stopChargingButtonText = TopSheetString.stopCharging.name;
           expandButtonText = TopSheetString.pushToStopCharging.name;
-          batteryProcent = 75;
+          batteryPercent = 75;
           chargingState = 2;
         }
         break;
@@ -103,7 +105,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.fullyCharged.name;
           stopChargingButtonText = TopSheetString.disconnect.name;
           expandButtonText = TopSheetString.pushToDisconnect.name;
-          batteryProcent = 100;
+          batteryPercent = 100;
           chargingState = 3;
         }
         break;
