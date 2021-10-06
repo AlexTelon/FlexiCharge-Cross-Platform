@@ -84,6 +84,8 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
+                                  isActive:
+                                      true, //Change to false when charging has started.
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
@@ -91,12 +93,14 @@ class HomeView extends StatelessWidget {
                             ]),
                         MapIcon(
                           onTap: () => model.openFindCharger(),
+                          isActive:
+                              true, //Change to false when charging has started
                           isLarge: true,
                           icon: SvgPicture.asset('assets/svg_images/logo.svg',
                               fit: BoxFit.scaleDown),
                         ),
                         MapIcon(
-                            onTap: () => print("Test4"),
+                            onTap: () => print("Profile logo"),
                             isLarge: false,
                             icon: SvgPicture.asset(
                                 'assets/svg_images/person.svg',
