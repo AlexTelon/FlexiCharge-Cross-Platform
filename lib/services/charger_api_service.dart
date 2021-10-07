@@ -114,6 +114,8 @@ class ChargerApiService {
 
   //Check later
   Future<void> updateStatus(String status, int id) async {
+    print("Status: " + status);
+    print("Id: " + id.toString());
     await client
         .put(
           Uri.parse('$endPoint/chargers/$id'),
@@ -125,9 +127,8 @@ class ChargerApiService {
           }),
         )
         .then((result) => {
-              print("test" + result.statusCode.toString()),
-              print("test2" + result.body.toString()),
-              print("test3" + id.toString())
+              print("statusCode: " + result.statusCode.toString()),
+              print("body: " + result.body.toString())
             });
   }
 }

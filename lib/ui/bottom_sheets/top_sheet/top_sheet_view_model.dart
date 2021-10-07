@@ -57,9 +57,7 @@ class TopSheetViewModel extends BaseViewModel {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
-      chargerApiService.updateStatus(
-          "Available", int.parse(localData.chargingCharger));
-      localData.chargingCharger = '';
+      chargerApiService.updateStatus("Available", localData.chargingCharger);
       localData.chargerPoints = await chargerApiService.getChargerPoints();
     } else {
       if (chargingState < 3) {
