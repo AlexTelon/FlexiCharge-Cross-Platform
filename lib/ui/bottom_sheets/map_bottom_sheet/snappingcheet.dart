@@ -89,8 +89,7 @@ class CustomSnappingSheet extends StatelessWidget {
                   onTap: () {
                     completer(SheetResponse(data: true));
 
-                    model.localData.chargingCharger =
-                        model.selectedCharger.id.toString();
+                    // model.localData.chargingCharger = model.selectedCharger.id.toString(); // WHAT DOES THIS DO? It causes the app to crash... :(
                     model.updateStatus("Unavailable", model.selectedCharger.id);
                   },
                   showWideButton: model.showWideButton,
