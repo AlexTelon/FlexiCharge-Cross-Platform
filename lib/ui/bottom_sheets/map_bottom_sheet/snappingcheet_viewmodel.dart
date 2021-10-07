@@ -85,18 +85,18 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   ChargerPoint get selectedChargerPoint => _selectedChargerPoint;
 
   Color get wideButtonColor {
-    if (selectedCharger.status == 1)
+    if (selectedCharger.status == 'Available')
       return Color.fromRGBO(120, 189, 118, 1);
-    else if (selectedCharger.status == 0)
+    else if (selectedCharger.status == 'Unavailable')
       return Color.fromRGBO(239, 96, 72, 1);
     else
       return Color.fromRGBO(229, 229, 229, 1);
   }
 
   String get wideButtonText {
-    if (selectedCharger.status == 1)
+    if (selectedCharger.status == 'Available')
       return 'Begin Charging';
-    else if (selectedCharger.status == 0)
+    else if (selectedCharger.status == 'Unavailable')
       return 'Charger Occupied';
     else
       return 'Charger Not Identified';

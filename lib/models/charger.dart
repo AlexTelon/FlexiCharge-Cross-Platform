@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Charger {
   int id = -1;
   int chargerPointId = 0;
-  int status = -1;
+  String status = '';
   LatLng coordinates = LatLng(0, 0);
   String capacity = '';
   String cost = '';

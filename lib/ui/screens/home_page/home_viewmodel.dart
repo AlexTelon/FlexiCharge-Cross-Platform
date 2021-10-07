@@ -31,7 +31,7 @@ class HomeViewModel extends BaseViewModel {
           Marker(
             markerId: MarkerId(chargingPoint.chargerPointId.toString()),
             icon: chargingPoint.chargers
-                        .where((charger) => charger.status == 0)
+                        .where((charger) => charger.status != 'Available')
                         .length ==
                     chargingPoint.chargers.length
                 ? _localData.redMarkerIcon

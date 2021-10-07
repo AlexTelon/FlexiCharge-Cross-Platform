@@ -27,7 +27,7 @@ class ChargerLocations extends StatelessWidget {
           distance: chargerPoint['distance'],
           chargers: (chargerPoint['chargerPoint'] as ChargerPoint)
               .chargers
-              .where((charger) => charger.status == 1)
+              .where((charger) => charger.status == 'Available')
               .length,
         );
       }).toList(),
