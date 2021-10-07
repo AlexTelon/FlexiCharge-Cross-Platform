@@ -1,9 +1,7 @@
-import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
-import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
 class ChargerLocations extends StatelessWidget {
   const ChargerLocations({
@@ -26,7 +24,7 @@ class ChargerLocations extends StatelessWidget {
           distance: chargerPoint['distance'],
           chargers: (chargerPoint['chargerPoint'] as ChargerPoint)
               .chargers
-              .where((charger) => charger.status == 'Available')
+              .where((charger) => charger.status == "Available")
               .length,
         );
       }).toList(),

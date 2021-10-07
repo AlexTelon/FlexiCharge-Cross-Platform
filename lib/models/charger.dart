@@ -19,11 +19,11 @@ class Charger {
     required this.cost,
     required this.type,
   });
-  
+
   Charger.fromJson(Map<String, dynamic> json) {
     id = json['chargerID'];
     chargerPointId = json['chargePointID'];
-    status = json['status'];
+    status = json['status'] ?? '';
     // coordinates = json['location'];
     capacity = json['capacity'] ?? '';
     cost = json['cost'] ?? '';
