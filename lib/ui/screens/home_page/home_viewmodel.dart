@@ -16,17 +16,16 @@ import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _chagerAPI = locator<ChargerApiService>();
-  final _localData = locator<LocalData>();
+  final localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
-
   init() async {
     try {
       getUserLocation();
       findUser();
       getAddress();
 
-      _localData.chargerPoints.forEach(
+      localData.chargerPoints.forEach(
         (chargingPoint) => markers.add(
           Marker(
             markerId: MarkerId(chargingPoint.chargerPointId.toString()),
@@ -34,8 +33,8 @@ class HomeViewModel extends BaseViewModel {
                         .where((charger) => charger.status == 0)
                         .length ==
                     chargingPoint.chargers.length
-                ? _localData.redMarkerIcon
-                : _localData.greenMarkerIcon,
+                ? localData.redMarkerIcon
+                : localData.greenMarkerIcon,
             onTap: () => openFindCharger(chargerPointId: chargingPoint),
             position: chargingPoint.coordinates,
             consumeTapEvents: true,
@@ -62,7 +61,7 @@ class HomeViewModel extends BaseViewModel {
   void getUserLocation() {
     cameraPosition = CameraPosition(
       target: LatLng(
-          _localData.userLocation.latitude, _localData.userLocation.longitude),
+          localData.userLocation.latitude, localData.userLocation.longitude),
       zoom: 14.5,
     );
     notifyListeners();
@@ -95,8 +94,8 @@ class HomeViewModel extends BaseViewModel {
 
   Future<void> getAddress() async {
     await placemarkFromCoordinates(
-      _localData.userLocation.latitude,
-      _localData.userLocation.longitude,
+      localData.userLocation.latitude,
+      localData.userLocation.longitude,
     );
     notifyListeners();
     print(placemarkFromCoordinates);
@@ -106,7 +105,7 @@ class HomeViewModel extends BaseViewModel {
     // Open qr scan and wait for data
     await _navigationService.navigateTo(Routes.qrScannerView);
     // Pass data to charger code input field
-    if (_localData.qrCode.isNotEmpty) openChargerCodeInput(_localData.qrCode);
+    if (localData.qrCode.isNotEmpty) openChargerCodeInput(localData.qrCode);
   }
 
   Future<void> openChargerCodeInput(String? data) async {

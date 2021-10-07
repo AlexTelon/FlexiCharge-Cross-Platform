@@ -32,6 +32,7 @@ import 'package:stacked/stacked.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<HomeViewModel>.reactive(
@@ -85,7 +86,7 @@ class HomeView extends StatelessWidget {
                               MapIcon(
                                   onTap: () => model.doQrScan(),
                                   isLarge: false,
-                                  isActive: true,
+                                  isActive: model.localData.isButtonActive,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
                                       fit: BoxFit.scaleDown)),
@@ -93,7 +94,7 @@ class HomeView extends StatelessWidget {
                         MapIcon(
                           onTap: () => model.openFindCharger(),
                           isLarge: true,
-                          isActive: true,
+                          isActive: model.localData.isButtonActive,
                           icon: SvgPicture.asset('assets/svg_images/logo.svg',
                               fit: BoxFit.scaleDown),
                         ),
