@@ -90,7 +90,10 @@ class CustomSnappingSheet extends StatelessWidget {
                     completer(SheetResponse(data: true));
                     model.updateStatus("Unavailable", model.selectedCharger.id);
                     model.localData.chargingCharger = model.selectedCharger.id;
+                    model.localData.isButtonActive = false;
                     print(model.selectedCharger.id);
+                    print(
+                        'Button: ' + model.localData.isButtonActive.toString());
                   },
                   showWideButton: model.showWideButton,
                 ),
