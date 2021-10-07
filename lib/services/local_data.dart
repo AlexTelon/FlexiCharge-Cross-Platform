@@ -10,9 +10,15 @@ class LocalData {
   List<ChargerPoint> chargerPoints = [];
   LatLng userLocation = LatLng(0, 0);
   int _chargingCharger = -1;
+  bool _buttonIsActive = false;
   int get chargingCharger => _chargingCharger;
   set chargingCharger(int newId) {
     chargingCharger = newId;
+  }
+
+  bool get buttonisActive => _buttonIsActive;
+  set buttonisActive(bool newState) {
+    buttonisActive = newState;
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
