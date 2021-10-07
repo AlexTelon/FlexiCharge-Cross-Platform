@@ -1,3 +1,4 @@
+import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
@@ -81,6 +82,7 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
+                                  isActive: model.localData.isButtonActive,
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
@@ -88,6 +90,7 @@ class HomeView extends StatelessWidget {
                             ]),
                         MapIcon(
                           onTap: () => model.openFindCharger(),
+                          isActive: model.localData.isButtonActive,
                           isLarge: true,
                           icon: SvgPicture.asset('assets/svg_images/logo.svg',
                               fit: BoxFit.scaleDown),
