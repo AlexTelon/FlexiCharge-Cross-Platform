@@ -37,6 +37,7 @@ dependencies:
   geocoding: ^2.0.1
   qr_code_scanner: ^0.5.2
   gradient_widgets: ^0.6.0
+  shared_preferences: ^2.0.8
 
 
 

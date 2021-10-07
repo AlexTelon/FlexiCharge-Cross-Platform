@@ -6,7 +6,7 @@ import 'package:flexicharge/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
 
-enum Status {
+enum UserStatus {
   NotLoggedIn,
   LoggedIn,
   Registred,
@@ -18,31 +18,32 @@ class AuthenticationApiService {
   static const registerEndPoint = baseEndPoint + '/sign-up';
   static const verifyEndPoint = baseEndPoint + '/verify';
   static const loginEndPoint = baseEndPoint + '/sign-in';
+  static const changePasswordEndPoint = baseEndPoint + '/change-password';
+  static const resetPasswordEndPoint = baseEndPoint + '/reset-password';
   http.Client client = new http.Client();
+
+  UserStatus _userStatus = UserStatus.NotLoggedIn;
 
   Future<void> registerUser(String name, String familyName, String email,
       String username, String password) async {
     //var user = User();
     final Map<String, dynamic> registerData = {
       'user': {
-        'name' : name,
-        'family_name' :familyName,
-        'email': email, 
-        'username' : username,
+        'name': name,
+        'family_name': familyName,
+        'email': email,
+        'username': username,
         'password': password
-        }
+      }
     };
 
-    Response response = await client.post(
-      Uri.parse(registerEndPoint),
-      body: json.encode(registerData),
-      headers: {'Content-Type': 'application/json'}
-      );
+    Response response = await client.post(Uri.parse(registerEndPoint),
+        body: json.encode(registerData),
+        headers: {'Content-Type': 'application/json'});
 
     switch (response.statusCode) {
       case 200:
-        //user = json.decode(response.body);
-        //return user;
+        _userStatus = UserStatus.Registred;
         break;
       case 400:
         throw Exception("InvalidPasswordException");
@@ -53,44 +54,78 @@ class AuthenticationApiService {
 
   Future<Map<String, dynamic>> loginUser(
       String username, String password) async {
-    //var user = User();
-    var response = await client.post(Uri.parse(loginEndPoint));
+    final Map<String, dynamic> loginData = {
+      'user': {'username': username, 'password': password}
+    };
+
+    Response response = await client.post(Uri.parse(loginEndPoint),
+        body: json.encode(loginData),
+        headers: {'Content-Type': 'application/json'});
 
     switch (response.statusCode) {
       case 200:
         //user = json.decode(response.body);
         final Map<String, dynamic> responseData = json.decode(response.body);
+        _userStatus = UserStatus.LoggedIn;
         return responseData;
       case 400:
-        throw Exception("InvalidPasswordException");
+        throw Exception("NotAuthorizedException");
       default:
         throw Exception(ErrorCodes.internalError);
     }
   }
 
   Future<void> verifyUser(String code, String username) async {
-    var response = await client.post(Uri.parse(verifyEndPoint));
+    final Map<String, dynamic> verifyData = {
+      'user': {'username': code, 'password': username}
+    };
+    Response response = await client.post(Uri.parse(verifyEndPoint),
+        body: json.encode(verifyData),
+        headers: {'Content-Type': 'application/json'});
 
     switch (response.statusCode) {
       case 200:
         break;
       case 400:
-        throw Exception("InvalidPasswordException");
+        throw Exception("ExpiredCodeException");
       default:
         throw Exception(ErrorCodes.internalError);
     }
   }
 
-  Future<Map<String, dynamic>> resetPassword(
+  Future<void> changePassword(
       String accessToken, String previousPassword, String newPassword) async {
-    var response = await client.post(Uri.parse(verifyEndPoint));
+    final Map<String, dynamic> changePasswordData = {
+      'data': {
+        'accessToken': accessToken,
+        'previousPassword': previousPassword,
+        'newPassword': newPassword
+      }
+    };
+    Response response = await client.post(Uri.parse(changePasswordEndPoint),
+        body: json.encode(changePasswordData),
+        headers: {'Content-Type': 'application/json'});
+
+    switch (response.statusCode) {
+      case 200:
+        break;
+      case 400:
+        throw Exception("NotAuthorizedException");
+      default:
+        throw Exception(ErrorCodes.internalError);
+    }
+  }
+
+  Future<Map<String, dynamic>> resetPassword(String username) async {
+    Response response =
+        await client.post(Uri.parse('$changePasswordEndPoint/$username'));
 
     switch (response.statusCode) {
       case 200:
         final Map<String, dynamic> responseData = json.decode(response.body);
         return responseData;
       case 400:
-        throw Exception("InvalidPasswordException");
+        throw Exception("CodeDeliveryFailureException");
       default:
         throw Exception(ErrorCodes.internalError);
     }
