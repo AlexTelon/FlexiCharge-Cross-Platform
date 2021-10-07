@@ -1,7 +1,5 @@
 import 'package:flexicharge/ui/screens/launch/launch_viewmodel.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:loading_overlay_pro/animations/bumping_line.dart';
 import 'package:stacked/stacked.dart';
 
 class LaunchView extends StatelessWidget {

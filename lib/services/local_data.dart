@@ -1,7 +1,5 @@
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flutter/foundation.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocalData {
@@ -10,9 +8,16 @@ class LocalData {
   List<ChargerPoint> chargerPoints = [];
   LatLng userLocation = LatLng(0, 0);
   int _chargingCharger = -1;
+
   int get chargingCharger => _chargingCharger;
   set chargingCharger(int newId) {
-    chargingCharger = newId;
+    _chargingCharger = newId;
+  }
+
+  bool _isButtonActive = true;
+  bool get isButtonActive => _isButtonActive;
+  set isButtonActive(bool newState) {
+    _isButtonActive = newState;
   }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
