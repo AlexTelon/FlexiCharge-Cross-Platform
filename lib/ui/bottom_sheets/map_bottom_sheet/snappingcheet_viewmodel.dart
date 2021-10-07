@@ -85,21 +85,31 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   ChargerPoint get selectedChargerPoint => _selectedChargerPoint;
 
   Color get wideButtonColor {
-    if (selectedCharger.status == 1)
+    if (selectedCharger.status == "Available")
       return Color.fromRGBO(120, 189, 118, 1);
-    else if (selectedCharger.status == 0)
+    else if (selectedCharger.status == "Unavailable")
       return Color.fromRGBO(239, 96, 72, 1);
     else
       return Color.fromRGBO(229, 229, 229, 1);
   }
 
   String get wideButtonText {
-    if (selectedCharger.status == 1)
-      return 'Begin Charging';
-    else if (selectedCharger.status == 0)
-      return 'Charger Occupied';
-    else
-      return 'Charger Not Identified';
+    switch (selectedCharger.status) {
+      case "Available":
+        return 'Begin Charging';
+      case "Occupied":
+        return "Charger Occupied";
+      case "Faulted":
+        return "Charger Faulted";
+      case "Rejected":
+        return "Charger Unavailable";
+      case "Unavailable":
+        return "Charger Unavailable";
+      case "Reserved":
+        return "Charger Reserved";
+      default:
+        return 'Charger Not Identified';
+    }
   }
 
   set selectedCharger(Charger newCharger) {
@@ -171,7 +181,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           .where((element) =>
               element.chargerPointId == selectedCharger.chargerPointId)
           .first;
-      if (selectedCharger.status == 1) {
+      if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
       }
@@ -182,8 +192,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> updateStatus(int status, int id) async {
-    if (selectedCharger.status == 1) await _chargerAPI.updateStatus(status, id);
+  Future<void> updateStatus(String status, int id) async {
+    if (selectedCharger.status == "Available")
+      await _chargerAPI.updateStatus(status, id);
     notifyListeners();
   }
 }

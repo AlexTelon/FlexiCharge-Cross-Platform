@@ -1,9 +1,7 @@
 import 'dart:async';
-import 'dart:developer';
 
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
@@ -30,7 +28,7 @@ class HomeViewModel extends BaseViewModel {
           Marker(
             markerId: MarkerId(chargingPoint.chargerPointId.toString()),
             icon: chargingPoint.chargers
-                        .where((charger) => charger.status == 0)
+                        .where((charger) => charger.status == "Available")
                         .length ==
                     chargingPoint.chargers.length
                 ? localData.redMarkerIcon
