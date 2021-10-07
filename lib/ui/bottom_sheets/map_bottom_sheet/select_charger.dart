@@ -23,6 +23,7 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
           chargers: model.selectedChargerPoint.chargers,
           onTap: (charger) => model.getChargerById(charger.id),
           selectedChargerId: model.selectedCharger.id,
+          
         ),
         SizedBox(height: 10),
         Text(

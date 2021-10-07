@@ -9,11 +9,7 @@ class LocalData {
   String qrCode = '';
   List<ChargerPoint> chargerPoints = [];
   LatLng userLocation = LatLng(0, 0);
-  int _chargingCharger = -1;
-  int get chargingCharger => _chargingCharger;
-  set chargingCharger(int newId) {
-    chargingCharger = newId;
-  }
+  int chargingCharger = -1;
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;

@@ -3,7 +3,6 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:google_maps_flutter_platform_interface/src/types/location.dart';
 
 class ChargerLocations extends StatelessWidget {

@@ -11,7 +11,6 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
@@ -24,7 +23,6 @@ class HomeViewModel extends BaseViewModel {
     try {
       getUserLocation();
       findUser();
-      getAddress();
 
       _localData.chargerPoints.forEach(
         (chargingPoint) => markers.add(
@@ -91,15 +89,6 @@ class HomeViewModel extends BaseViewModel {
           ?.animateCamera(CameraUpdate.newCameraPosition(cameraPosition));
       notifyListeners();
     });
-  }
-
-  Future<void> getAddress() async {
-    await placemarkFromCoordinates(
-      _localData.userLocation.latitude,
-      _localData.userLocation.longitude,
-    );
-    notifyListeners();
-    print(placemarkFromCoordinates);
   }
 
   Future<void> doQrScan() async {
