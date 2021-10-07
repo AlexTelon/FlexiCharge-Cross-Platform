@@ -113,14 +113,14 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<void> updateStatus(int status, int id) async {
+  Future<void> updateStatus(String status, int id) async {
     await client
         .put(
           Uri.parse('$endPoint/chargers/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, int>{
+          body: jsonEncode(<String, String>{
             'status': status,
           }),
         )
