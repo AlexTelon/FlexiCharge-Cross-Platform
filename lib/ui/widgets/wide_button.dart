@@ -15,6 +15,7 @@ class WideButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Visibility(
+      key: ValueKey<bool>(showWideButton),
       visible: showWideButton,
       child: InkWell(
         onTap: onTap,

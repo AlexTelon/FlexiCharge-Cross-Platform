@@ -184,6 +184,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
+        notifyListeners();
       }
       notifyListeners();
     } catch (e) {
@@ -192,9 +193,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> updateStatus(String status, int id) async {
-    if (selectedCharger.status == "Available")
-      await _chargerAPI.updateStatus(status, id);
+  Future<void> updateStatus( int id) async {
+    if (selectedCharger.status == 'Available')
+      await _chargerAPI.reserveCharger(id);
     notifyListeners();
   }
 }

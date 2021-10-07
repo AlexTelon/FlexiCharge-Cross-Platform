@@ -59,7 +59,8 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: ChargerCodeInput(
-                      key: ValueKey<String>(model.chargerCode),
+                      key:
+                          ValueKey<String>(model.selectedCharger.id.toString()),
                       controller:
                           TextEditingController(text: model.chargerCode),
                       onChanged: (input) => model.chargerCode = input,
@@ -84,11 +85,12 @@ class CustomSnappingSheet extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 WideButton(
+                  key: ValueKey<String>(model.selectedCharger.id.toString()),
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
                   onTap: () {
                     completer(SheetResponse(data: true));
-                    model.updateStatus("Unavailable", model.selectedCharger.id);
+                    model.updateStatus(model.selectedCharger.id);
                     model.localData.chargingCharger = model.selectedCharger.id;
                     model.localData.isButtonActive = false;
                     print(model.selectedCharger.id);

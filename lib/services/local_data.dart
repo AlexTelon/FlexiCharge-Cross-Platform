@@ -7,18 +7,9 @@ class LocalData {
   String qrCode = '';
   List<ChargerPoint> chargerPoints = [];
   LatLng userLocation = LatLng(0, 0);
-  int _chargingCharger = -1;
+  int chargingCharger = -1;
 
-  int get chargingCharger => _chargingCharger;
-  set chargingCharger(int newId) {
-    _chargingCharger = newId;
-  }
-
-  bool _isButtonActive = true;
-  bool get isButtonActive => _isButtonActive;
-  set isButtonActive(bool newState) {
-    _isButtonActive = newState;
-  }
+  bool isButtonActive = true;
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
