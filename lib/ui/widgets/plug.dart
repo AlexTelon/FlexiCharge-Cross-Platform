@@ -76,17 +76,16 @@ class Plug extends StatelessWidget {
                           fontSize: 11.0),
                     ), // status
                     Text(
-                      charger.status == 0
-                          ? 'avaible'
-                          : charger.status == 1
-                              ? 'occupid'
-                              : 'booked',
-                      style: const TextStyle(
-                          color: const Color(0xff78bd76),
-                          fontWeight: FontWeight.w400,
-                          fontFamily: "Lato",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 11.0),
+                      charger.status, // Set
+                      style: TextStyle(
+                        color: charger.status == "Available"
+                            ? Color(0xff78bd76)
+                            : Colors.red,
+                        fontWeight: FontWeight.w400,
+                        fontFamily: "Lato",
+                        fontStyle: FontStyle.normal,
+                        fontSize: 11.0,
+                      ),
                     ),
                   ],
                 ),

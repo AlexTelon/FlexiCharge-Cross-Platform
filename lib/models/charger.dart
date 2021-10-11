@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 class Charger {
   int id = -1;
   int chargerPointId = 0;
-  int status = -1;
+  String status = '';
   LatLng coordinates = LatLng(0, 0);
   String capacity = '';
   String cost = '';
@@ -19,10 +19,11 @@ class Charger {
     required this.cost,
     required this.type,
   });
+
   Charger.fromJson(Map<String, dynamic> json) {
     id = json['chargerID'];
     chargerPointId = json['chargePointID'];
-    status = json['status'];
+    status = json['status'] ?? '';
     // coordinates = json['location'];
     capacity = json['capacity'] ?? '';
     cost = json['cost'] ?? '';

@@ -5,15 +5,14 @@ import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class TopSheetView extends StatelessWidget {
-  const TopSheetView({
+  TopSheetView({
+    required this.complete,
     Key? key,
   }) : super(key: key);
-
+  Function() complete;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
@@ -93,11 +92,11 @@ class TopSheetView extends StatelessWidget {
                               children: [
                                 Text(model.expandButtonText,
                                     style: TextStyle(color: Colors.white)),
-                                Image(
-                                    width: 30,
-                                    height: 30,
-                                    image: AssetImage(
-                                        'assets/images/arrow_down.png'))
+                                Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
                             onPressed: () {
@@ -111,7 +110,7 @@ class TopSheetView extends StatelessWidget {
                         chargingDuration: "1hr 41min",
                         energyUsed: "9.1kWh @ 3.00 kr kWh",
                         totalCost: "27.3kr",
-                        stopCharging: () => model.changeChargingState(false),
+                        stopCharging: complete,
                       ),
                     ),
                 ],

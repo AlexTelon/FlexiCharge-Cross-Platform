@@ -29,12 +29,13 @@ dependencies:
   google_maps_flutter: ^2.0.8
   geolocator: ^7.6.0  
   http: ^0.13.3
-  pin_code_fields: ^7.3.0
   snapping_sheet: ^3.1.0
   flutter_svg: ^0.22.0
   loading_overlay_pro: ^2.1.1
   splashscreen: ^1.2.0
-  geocoding: ^2.0.1
+  qr_code_scanner: ^0.5.2
+  gradient_widgets: ^0.6.0
+  pin_code_fields: ^7.3.0
 
 
 
@@ -53,7 +54,7 @@ dev_dependencies:
 
 flutter_native_splash:
   color: "#000000"
-  image: assets/splashScreen/splash_image.png
+  image: splash_screen/splash_image.png
   android: true
   ios: true
   android_gravity: center
