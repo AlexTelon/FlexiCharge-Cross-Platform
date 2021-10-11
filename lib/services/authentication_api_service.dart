@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:core';
 
 import 'package:flexicharge/enums/error_codes.dart';
+import 'package:flexicharge/models/user_preferences.dart';
 import 'package:flexicharge/models/user.dart';
 import 'package:http/http.dart' as http;
 import 'package:http/http.dart';
@@ -67,6 +68,9 @@ class AuthenticationApiService {
         //user = json.decode(response.body);
         final Map<String, dynamic> responseData = json.decode(response.body);
         _userStatus = UserStatus.LoggedIn;
+        var userData = responseData['data'];
+        User authUser = User.fromJson(userData);
+        UserPreferences().saveUser(authUser);
         return responseData;
       case 400:
         throw Exception("NotAuthorizedException");
