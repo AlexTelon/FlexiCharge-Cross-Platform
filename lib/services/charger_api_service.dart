@@ -147,6 +147,7 @@ class ChargerApiService {
           }),
         )
         .then((result) => {
+              print("result code: " + result.statusCode.toString()),
               print("test" + result.statusCode.toString()),
               print("test2" + result.body.toString()),
               print("test3" + id.toString())

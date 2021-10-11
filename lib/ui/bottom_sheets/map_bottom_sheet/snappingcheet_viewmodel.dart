@@ -193,7 +193,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> updateStatus( int id) async {
+  Future<void> updateStatus(int id) async {
     if (selectedCharger.status == 'Available')
       await _chargerAPI.reserveCharger(id);
     notifyListeners();
