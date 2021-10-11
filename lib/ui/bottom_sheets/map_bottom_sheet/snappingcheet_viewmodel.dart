@@ -202,7 +202,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       if (value) {
         TransactionSession response =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
-        print('TransactionSession: ' + response.toString());
+        // Do something with the response... (Display Klarna Widget)
       }
     }
     notifyListeners();

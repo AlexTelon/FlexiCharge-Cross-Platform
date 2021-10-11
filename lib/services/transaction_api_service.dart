@@ -129,8 +129,9 @@ class TransactionApiService {
     print("Klarna statusCode: " + response.statusCode.toString());
     switch (response.statusCode) {
       case 201:
-        var parsedSession = json.decode(response.body) as TransactionSession;
-        print(parsedSession.transactionID.toString());
+        var transactionSession =
+            json.decode(response.body) as Map<String, dynamic>;
+        var parsedSession = TransactionSession.fromJson(transactionSession);
         return parsedSession;
       case 400:
         throw Exception("Not Found");
