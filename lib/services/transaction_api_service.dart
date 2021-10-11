@@ -25,14 +25,18 @@ class TransactionApiService {
     }
   }
 
-  Future<Transaction> getTransactionByUserId(int id) async {
+  Future<List<Transaction>> getTransactionsByUserId(int id) async {
+    var transactions = <Transaction>[];
     var response = await client
         .get(Uri.parse('$endPoint/transactions/userTransactions/$id'));
 
     switch (response.statusCode) {
       case 200:
-        var parsedTransaction = json.decode(response.body) as Transaction;
-        return parsedTransaction;
+        var parsedTransactions = json.decode(response.body) as List<dynamic>;
+        for (var trans in parsedTransactions) {
+          transactions.add(Transaction.fromJson(trans));
+        }
+        return transactions;
       case 404:
         throw Exception("Not Found");
       case 500:
@@ -42,14 +46,18 @@ class TransactionApiService {
     }
   }
 
-  Future<Transaction> getTransactionByChargerId(int id) async {
+  Future<List<Transaction>> getTransactionsByChargerId(int id) async {
+    var transactions = <Transaction>[];
     var response = await client
         .get(Uri.parse('$endPoint/transactions/chargerTransactions/$id'));
 
     switch (response.statusCode) {
       case 200:
-        var parsedTransaction = json.decode(response.body) as Transaction;
-        return parsedTransaction;
+        var parsedTransactions = json.decode(response.body) as List<dynamic>;
+        for (var trans in parsedTransactions) {
+          transactions.add(Transaction.fromJson(trans));
+        }
+        return transactions;
       case 404:
         throw Exception("Not Found");
       case 500:
