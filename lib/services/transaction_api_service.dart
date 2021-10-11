@@ -1,7 +1,7 @@
 import 'dart:convert';
 
 import 'package:flexicharge/enums/error_codes.dart';
-import 'package:flexicharge/models/session.dart';
+import 'package:flexicharge/models/transaction_session.dart';
 import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
@@ -115,20 +115,22 @@ class TransactionApiService {
         .then((result) => print(result));
   }
 
-  Future<Session> createKlaraPaymentSession(int userId, int chargerId) async {
+  Future<TransactionSession> createKlarnaPaymentSession(
+      int? userId, int chargerId) async {
     var response =
         await client.post(Uri.parse('$endPoint/transactions/session'),
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: jsonEncode(<String, int>{
+            body: jsonEncode(<String, int?>{
               'userID': userId,
-              'chargerID': userId,
+              'chargerID': chargerId,
             }));
-
+    print("Klarna statusCode: " + response.statusCode.toString());
     switch (response.statusCode) {
       case 201:
-        var parsedSession = json.decode(response.body) as Session;
+        var parsedSession = json.decode(response.body) as TransactionSession;
+        print(parsedSession.transactionID.toString());
         return parsedSession;
       case 400:
         throw Exception("Not Found");

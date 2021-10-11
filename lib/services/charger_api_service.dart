@@ -132,25 +132,20 @@ class ChargerApiService {
             });
   }
 
-  Future<void> reserveCharger(int id) async {
-    await client
-        .put(
-          Uri.parse('$endPoint/reservations/$id'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            "connectorId": "1",
-            "idTag": "1",
-            "reservationId": "1",
-            "parentIdTag": "1"
-          }),
-        )
-        .then((result) => {
-              print("result code: " + result.statusCode.toString()),
-              print("test" + result.statusCode.toString()),
-              print("test2" + result.body.toString()),
-              print("test3" + id.toString())
-            });
+  Future<bool> reserveCharger(int id) async {
+    var response = await client.put(
+      Uri.parse('$endPoint/reservations/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "connectorId": "1",
+        "idTag": "1",
+        "reservationId": "1",
+        "parentIdTag": "1"
+      }),
+    );
+    print(response.statusCode);
+    return true;
   }
 }
