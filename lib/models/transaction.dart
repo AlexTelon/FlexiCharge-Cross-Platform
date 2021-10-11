@@ -1,5 +1,3 @@
-import 'package:flexicharge/models/charger.dart';
-
 class Transaction {
   int id = -1;
   bool isKlarnaPayment = true;

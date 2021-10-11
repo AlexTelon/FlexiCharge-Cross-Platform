@@ -5,7 +5,6 @@ import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/services/local_data.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -146,7 +145,6 @@ class ChargerApiService {
             "reservationId": "1",
             "parentIdTag": "1"
           }),
-          
         )
         .then((result) => {
               print("test" + result.statusCode.toString()),

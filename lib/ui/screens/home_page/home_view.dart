@@ -1,4 +1,3 @@
-import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
