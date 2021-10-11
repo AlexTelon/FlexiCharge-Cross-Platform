@@ -7,7 +7,7 @@ class PaymentMethodCategory {
 
   PaymentMethodCategory();
 
-  PaymentMethodCategory.fromPaymentMethodCategories({
+  PaymentMethodCategory.fromPaymentMethodCategory({
     required this.id,
     required this.name,
     required this.assetUrls,
