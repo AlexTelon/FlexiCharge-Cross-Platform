@@ -34,15 +34,15 @@ class TransactionSession {
       required this.paymentID});
 
   TransactionSession.fromJson(Map<String, dynamic> json) {
-    transactionID = json['transactionID'] ?? '';
-    userID = json['userID'] ?? '';
-    chargerID = json['chargerID'] ?? '';
-    pricePerKwh = double.parse(json['pricePerKwh']);
-    sessionID = json['session_id'] ?? '';
-    clientToken = json['client_token'] ?? '';
-    // paymentMethodCategories = json['payment_method_categories']?? '';
-    paymentConfirmed = json['paymentConfirmed'] ?? '';
-    isKlarnaPayment = json['isKlarnaPayment'] ?? '';
+    transactionID = json['transactionID'] ?? '0';
+    userID = json['userID'];
+    chargerID = json['chargerID'] ?? '0';
+    pricePerKwh = double.parse(json['pricePerKwh'] ?? "0");
+    sessionID = json['session_id'];
+    clientToken = json['client_token'];
+    // paymentMethodCategories = json['payment_method_categories'] ?? '';
+    paymentConfirmed = json['paymentConfirmed'] ?? 'false';
+    isKlarnaPayment = json['isKlarnaPayment'] ?? 'true';
     timestamp = json['timestamp'] ?? '';
     kwhTransfered = double.parse(json['kwhTransfered'] ?? '0');
     currentChargePercentage =
