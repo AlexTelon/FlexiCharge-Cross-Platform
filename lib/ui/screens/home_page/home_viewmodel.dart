@@ -79,14 +79,19 @@ class HomeViewModel extends BaseViewModel {
   }
 
   void startTimer() {
-    print("starting timer...");
-    localData.chargingPercentage = 0;
-    localData.timer = new Timer.periodic(Duration(seconds: 2), (timer) {
-      localData.chargingPercentage += 1;
-      print(localData.chargingPercentage);
+    print("Starting timer...");
+    localData.timer = new Timer.periodic(Duration(seconds: 1), (timer) {
+      localData.chargingPercentage = fetchChargingPercentage();
+      print("Charging Percentage: " + localData.chargingPercentage.toString());
       notifyListeners();
-      // TODO: Fetch charging percentage from backend and assign it to localData.chargingPercentage.
     });
+  }
+
+  int fetchChargingPercentage() {
+    // ToDo: 1. Fetch Transaction object from backend.
+    // ToDo: 2. Return Transaction.currentChargePercentage.
+    int dummyData = localData.chargingPercentage + 1;
+    return dummyData;
   }
 
   Future<void> getTransaction() async {
@@ -122,7 +127,7 @@ class HomeViewModel extends BaseViewModel {
 
   completeTopSheet() {
     activeTopSheet = false;
-    print("stopping timer");
+    print("Stopping timer");
     localData.timer.cancel();
     notifyListeners();
   }
