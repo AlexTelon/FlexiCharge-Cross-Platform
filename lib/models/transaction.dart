@@ -1,50 +1,52 @@
+import 'package:flexicharge/models/payment_method_category.dart';
+import 'package:flutter/foundation.dart';
+
 class Transaction {
-  int id = -1;
+  int transactionID = 0;
+  String userID = "";
+  int chargerID = 0;
+  double pricePerKwh = 0;
+  String sessionID = "";
+  String clientToken = "";
+  // late List<PaymentMethodCategory> paymentMethodCategories;
+  bool paymentConfirmed = false;
   bool isKlarnaPayment = true;
-  int kwhTransfered = 0;
-  int currentChargePercentage = 0;
-  String pricePerKwh = "";
-  int timestamp = -1;
-  int? paymentID = -1;
-  int userID = -1;
-  int chargerID = -1;
+  int timestamp = 0;
+  double kwhTransfered = 0;
+  double currentChargePercentage = 0;
+  int paymentID = 0;
 
   Transaction();
 
-  Transaction.fromTransanction({
-    required this.id,
-    required this.isKlarnaPayment,
-    required this.kwhTransfered,
-    required this.currentChargePercentage,
-    required this.pricePerKwh,
-    required this.timestamp,
-    required this.paymentID,
-    required this.userID,
-    required this.chargerID,
-  });
+  Transaction.fromTransaction(
+      {required this.transactionID,
+      required this.userID,
+      required this.chargerID,
+      required this.pricePerKwh,
+      required this.sessionID,
+      required this.clientToken,
+      // required this.paymentMethodCategories,
+      required this.paymentConfirmed,
+      required this.isKlarnaPayment,
+      required this.timestamp,
+      required this.kwhTransfered,
+      required this.currentChargePercentage,
+      required this.paymentID});
 
   Transaction.fromJson(Map<String, dynamic> json) {
-    id = json['transactionID'];
-    isKlarnaPayment = json['isKlarnaPayment'];
-    kwhTransfered = json['kwhTransfered'];
-    currentChargePercentage = json['currentChargePercentage'];
-    pricePerKwh = json['pricePerKwh'];
-    timestamp = json['timestamp'];
-    paymentID = json['paymentID'];
-    userID = json['userID'];
-    chargerID = json['chargerID'];
-  }
-
-  void printTransaction() {
-    // For test
-    print('id: ${this.id}');
-    print("isKlarnaPayment: ${this.isKlarnaPayment}");
-    print("kwhTransfered: ${this.kwhTransfered}");
-    print("currentChargePercentage: ${this.currentChargePercentage}");
-    print("pricePerKwh: ${this.pricePerKwh}");
-    print("timeStamp: ${this.timestamp}");
-    print("paymentID: ${this.paymentID}");
-    print("userID: ${this.userID}");
-    print("chargerID: ${this.chargerID}");
+    transactionID = json['transactionID'] ?? '0';
+    userID = json['userID'] ?? '';
+    chargerID = json['chargerID'] ?? '0';
+    pricePerKwh = double.parse(json['pricePerKwh'] ?? '0');
+    sessionID = json['session_id'];
+    clientToken = json['client_token'];
+    // paymentMethodCategories = json['payment_method_categories'] ?? '';
+    paymentConfirmed = json['paymentConfirmed'] ?? 'false';
+    isKlarnaPayment = json['isKlarnaPayment'] ?? 'true';
+    timestamp = json['timestamp'] ?? '';
+    kwhTransfered = double.parse(json['kwhTransfered'] ?? '0');
+    currentChargePercentage =
+        double.parse(json['currentChargePercentage'] ?? '0');
+    paymentID = int.parse(json['paymentID'] ?? '0');
   }
 }

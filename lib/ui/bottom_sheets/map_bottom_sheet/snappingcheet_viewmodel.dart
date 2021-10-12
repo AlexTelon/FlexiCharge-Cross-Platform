@@ -1,7 +1,7 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flexicharge/models/transaction_session.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
@@ -198,12 +198,17 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   Future<void> updateStatus(int id) async {
     if (selectedCharger.status == 'Available') {
+      // Reserve charger during payment
       bool value = await _chargerAPI.reserveCharger(id);
       if (value) {
-        TransactionSession response =
-            await _transactionAPI.createKlarnaPaymentSession(null, id);
-        // Do something with the response... (Display Klarna Widget)
-        localData.transactionSession = response;
+        // Create a transaction session
+        Transaction transactionSession = await _transactionAPI.createKlarnaPaymentSession(null, id);
+        localData.transactionSession = transactionSession;
+        // Send our transactionSession response to klarna widget and wait for auth token
+        String authToken = "";
+        // Create transaction order with the auth token from klarna
+        // localData.transactionSession = _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
+        
       }
     }
     notifyListeners();
