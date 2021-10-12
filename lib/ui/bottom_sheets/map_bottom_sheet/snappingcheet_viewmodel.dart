@@ -199,8 +199,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Future<void> updateStatus(int id) async {
     if (selectedCharger.status == 'Available') {
       // Reserve charger during payment
-      bool value = await _chargerAPI.reserveCharger(id);
-      if (value) {
+      try{
+        await _chargerAPI.reserveCharger(id);
+     
         // Create a transaction session
         Transaction transactionSession = await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
@@ -209,7 +210,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         // Create transaction order with the auth token from klarna
         // localData.transactionSession = _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
         
+      
+      }catch(e){
+        print(e);
       }
+      
     }
     notifyListeners();
   }
