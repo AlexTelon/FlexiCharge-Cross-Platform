@@ -16,9 +16,9 @@ class TransactionApiService {
         var transactionFromJson = Transaction.fromJson(parsedTransaction);
         return transactionFromJson;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -37,9 +37,9 @@ class TransactionApiService {
         }
         return transactions;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -58,9 +58,9 @@ class TransactionApiService {
         }
         return transactions;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -131,16 +131,16 @@ class TransactionApiService {
         var parsedSession = Transaction.fromJson(transaction);
         return parsedSession;
       case 400:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
   }
 
-  //The request returns the updated transaction object,
-  //if everything goes as expected, it will contain a paymentId.
+  // The request returns the updated transaction object,
+  // If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
       int transactionId, String authToken) async {
     var response = await client.post(Uri.parse('$endPoint/transactions/order'),
@@ -159,9 +159,9 @@ class TransactionApiService {
         print("Klarna updatedSession : " + parsedSession.paymentID.toString());
         return parsedSession;
       case 400:
-        throw Exception("Bad request, some error in the body of the request");
+        throw Exception(ErrorCodes.badRequest);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
