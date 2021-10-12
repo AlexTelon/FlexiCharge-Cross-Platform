@@ -8,10 +8,13 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/services.dart';
+
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
   final localData = locator<LocalData>();
+  static const platform = const MethodChannel('com.startActivity/klarnaChannel');
 
   init(SheetRequest request) async {
     if (request.data != null && request.data is ChargerPoint) {
@@ -198,4 +201,19 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       await _chargerAPI.reserveCharger(id);
     notifyListeners();
   }
+
+  Future<String> _startActivity(String clientToken) async {
+    try {
+      final String result = await platform.invokeMethod('StartKlarnaActivity',{
+        'clientToken': clientToken
+      });
+
+      debugPrint('Result: $result ');
+      return result;
+    } on PlatformException catch (e) {
+      debugPrint("Error: '${e.message}'.");
+      return '';
+    }
+  }
+
 }
