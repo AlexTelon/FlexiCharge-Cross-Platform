@@ -169,8 +169,7 @@ class TransactionApiService {
   }
 
   //the request will return an updated transaction object which contains paymentConfirmed == true.
-
-  Future<Transaction> stopCharger(int transactionId) async {
+  Future<Transaction> stopCharging(int transactionId) async {
     var response = await client.post(Uri.parse('$endPoint/transactions/stop'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',

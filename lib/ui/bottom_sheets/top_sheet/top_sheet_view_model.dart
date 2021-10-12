@@ -4,10 +4,12 @@ import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
+  final transactionApiService = locator<TransactionApiService>();
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
   int batteryPercent = 75;
@@ -74,6 +76,9 @@ class TopSheetViewModel extends BaseViewModel {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
+      localData.transactionSession = await transactionApiService
+          .stopCharging(localData.transactionSession.transactionID);
+      print(localData.transactionSession.paymentConfirmed.toString());
       chargerApiService.updateStatus("Available", localData.chargingCharger);
       localData.isButtonActive = true;
       localData.chargerPoints = await chargerApiService.getChargerPoints();
