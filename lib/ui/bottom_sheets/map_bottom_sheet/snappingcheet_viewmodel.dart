@@ -207,14 +207,17 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         // Do something with the response... (Display Klarna Widget)
         localData.transactionSession = response;
+        // start klarna activity
+        var authorizationToken = await _startKlarnaActivity(response.clientToken);
+
       }
     }
     notifyListeners();
   }
 
-  Future<String> _startActivity(String clientToken) async {
+  Future<String> _startKlarnaActivity(String clientToken) async {
     try {
-      final String result = await platform.invokeMethod('StartKlarnaActivity',{
+      final String result = await platform.invokeMethod("StartKlarnaActivity",{
         'clientToken': clientToken
       });
 
