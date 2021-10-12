@@ -5,7 +5,6 @@ import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/services/local_data.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -133,25 +132,20 @@ class ChargerApiService {
             });
   }
 
-  Future<void> reserveCharger(int id) async {
-    await client
-        .put(
-          Uri.parse('$endPoint/reservations/$id'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            "connectorId": "1",
-            "idTag": "1",
-            "reservationId": "1",
-            "parentIdTag": "1"
-          }),
-          
-        )
-        .then((result) => {
-              print("test" + result.statusCode.toString()),
-              print("test2" + result.body.toString()),
-              print("test3" + id.toString())
-            });
+  Future<bool> reserveCharger(int id) async {
+    var response = await client.put(
+      Uri.parse('$endPoint/reservations/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "connectorId": "1",
+        "idTag": "1",
+        "reservationId": "1",
+        "parentIdTag": "1"
+      }),
+    );
+    print(response.statusCode);
+    return true;
   }
 }
