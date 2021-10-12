@@ -149,19 +149,45 @@ class TransactionApiService {
         },
         body: jsonEncode(<String, dynamic>{
           'transactionID': transactionId,
-          'authorization_token': authToken,
+          'authorization_token': authToken
         }));
     switch (response.statusCode) {
       case 201:
         var updatedTransactionSession =
             json.decode(response.body) as Map<String, dynamic>;
         var parsedSession = Transaction.fromJson(updatedTransactionSession);
-        print("Klarna updatedSession : " + parsedSession.paymentID.toString());
+        print("Klarna updatedSession paymentID: " +
+            parsedSession.paymentID.toString());
         return parsedSession;
       case 400:
         throw Exception("Bad request, some error in the body of the request");
       case 500:
         throw Exception("Internal Server Error");
+      default:
+        throw Exception(ErrorCodes.internalError);
+    }
+  }
+
+  //the request will return an updated transaction object which contains paymentConfirmed == true.
+
+  Future<Transaction> stopCharger(int transactionId) async {
+    var response = await client.post(Uri.parse('$endPoint/transactions/stop'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, int>{'transactionID': transactionId}));
+    switch (response.statusCode) {
+      case 201:
+        var updatedTransactionSession =
+            json.decode(response.body) as Map<String, dynamic>;
+        var parsedSession = Transaction.fromJson(updatedTransactionSession);
+        print("Klarna updatedSession paymentConfirmed : " +
+            parsedSession.paymentConfirmed.toString());
+        return parsedSession;
+      case 400:
+        throw Exception("????");
+      case 500:
+        throw Exception("????");
       default:
         throw Exception(ErrorCodes.internalError);
     }
