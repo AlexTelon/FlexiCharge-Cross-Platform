@@ -90,7 +90,7 @@ class CustomSnappingSheet extends StatelessWidget {
                   text: model.wideButtonText,
                   onTap: () {
                     completer(SheetResponse(data: true));
-                    model.updateStatus(model.selectedCharger.id);
+                    model.connect(model.selectedCharger.id);
                     model.localData.chargingCharger = model.selectedCharger.id;
                     model.localData.isButtonActive = false;
                     print(model.selectedCharger.id);
