@@ -195,20 +195,20 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       isFirstView = true;
     }
   }
-
+  // Try to reserve a charger and get a transaction going
   Future<void> connect(int id) async {
     if (selectedCharger.status == 'Available') {
-      // Reserve charger during payment
       try{
+        // Reserve charger during payment
         await _chargerAPI.reserveCharger(id);
      
         // Create a transaction session
         Transaction transactionSession = await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
-        // Send our transactionSession response to klarna widget and wait for auth token
+        // Send our transaction session to klarna widget and wait for auth token
         String authToken = "";
         // Create transaction order with the auth token from klarna
-        // localData.transactionSession = _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
+        localData.transactionSession = await _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
         
       
       }catch(e){
