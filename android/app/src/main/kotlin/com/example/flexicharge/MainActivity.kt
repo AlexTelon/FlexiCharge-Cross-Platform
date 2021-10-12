@@ -28,10 +28,14 @@ class MainActivity: FlutterActivity() {
                 call, result ->
             if(call.method.equals("StartKlarnaActivity")){
                 this.result = result
-                val intent= Intent(this, KlarnaActivity::class.java)
-               // Log.d("lkasmdlkasmdmaksmdklamskldm", call.arguments.toString())
+                //Log.d("lkasmdlkasmdmaksmdklamskldm", call.argument("clientToken"))
+                val clientToken =  call.argument("clientToken") as String?
+                if(clientToken != null){
+                    val intent= Intent(this, KlarnaActivity::class.java)
+                    intent.putExtra("CLIENTTOKEN", clientToken)
+                    startActivityForResult(intent, 1)
 
-                startActivityForResult(intent, 1)
+                }
             }
             else{
                 result.notImplemented()

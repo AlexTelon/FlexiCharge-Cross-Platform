@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_browser_klarna_inapp_sdk"
     tools:context="payment.KlarnaActivity">
 
     <com.klarna.mobile.sdk.api.payments.KlarnaPaymentView

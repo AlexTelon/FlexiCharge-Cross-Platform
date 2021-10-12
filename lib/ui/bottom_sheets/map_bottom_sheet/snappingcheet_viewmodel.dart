@@ -210,7 +210,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         localData.transactionSession = transactionSession;
         // Send our transaction session to klarna widget and wait for auth token
         String authToken = await _startKlarnaActivity(transactionSession.clientToken);
-;
+
         // Create transaction order with the auth token from klarna
         localData.transactionSession = await _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
         
