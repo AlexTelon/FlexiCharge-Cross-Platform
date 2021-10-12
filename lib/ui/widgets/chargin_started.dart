@@ -1,16 +1,12 @@
 import 'package:flutter/material.dart';
 
 class ChargingStarted extends StatelessWidget {
-  final Function chargingPercentage;
-
   const ChargingStarted({
     Key? key,
-    required this.chargingPercentage,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    chargingPercentage();
     return Container(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,

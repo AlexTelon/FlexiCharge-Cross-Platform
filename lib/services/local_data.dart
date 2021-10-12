@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/models/transaction.dart';
@@ -11,6 +13,8 @@ class LocalData {
   int chargingCharger = -1;
   Transaction transactionSession = Transaction();
   bool isButtonActive = true;
+  int chargingPercentage = 0;
+  late Timer timer;
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;

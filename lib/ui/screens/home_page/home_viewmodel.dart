@@ -72,8 +72,20 @@ class HomeViewModel extends BaseViewModel {
         .then((value) {
       if (value != null && value.data == true) {
         activeTopSheet = true;
+        startTimer();
         notifyListeners();
       }
+    });
+  }
+
+  void startTimer() {
+    print("starting timer...");
+    localData.chargingPercentage = 0;
+    localData.timer = new Timer.periodic(Duration(seconds: 2), (timer) {
+      localData.chargingPercentage += 1;
+      print(localData.chargingPercentage);
+      notifyListeners();
+      // TODO: Fetch charging percentage from backend and assign it to localData.chargingPercentage.
     });
   }
 
@@ -110,6 +122,8 @@ class HomeViewModel extends BaseViewModel {
 
   completeTopSheet() {
     activeTopSheet = false;
+    print("stopping timer");
+    localData.timer.cancel();
     notifyListeners();
   }
 }
