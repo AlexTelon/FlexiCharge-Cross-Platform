@@ -80,7 +80,7 @@ class HomeViewModel extends BaseViewModel {
   Future<void> getTransaction() async {
     // Testing transactionApiService
     var transaction = await _transactionAPI.getTransactionById(1);
-    transaction.printTransaction();
+    // transaction.printTransaction();
   }
 
   Future<void> findUser() async {

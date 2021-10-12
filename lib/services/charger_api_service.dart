@@ -25,7 +25,7 @@ class ChargerApiService {
         }
         return chargers;
       case 500:
-        throw Exception("Internal server error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -62,7 +62,7 @@ class ChargerApiService {
 
           return chargerPoints;
         case 500:
-          throw Exception("Internal server error");
+          throw Exception(ErrorCodes.internalError);
         default:
           throw Exception(ErrorCodes.internalError);
       }
@@ -83,7 +83,7 @@ class ChargerApiService {
         var chargerFromJson = Charger.fromJson(charger);
         return chargerFromJson;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -100,7 +100,7 @@ class ChargerApiService {
         }
         return chargers;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -132,7 +132,7 @@ class ChargerApiService {
             });
   }
 
-  Future<bool> reserveCharger(int id) async {
+  Future<void> reserveCharger(int id) async {
     var response = await client.put(
       Uri.parse('$endPoint/reservations/$id'),
       headers: <String, String>{
@@ -145,7 +145,12 @@ class ChargerApiService {
         "parentIdTag": "1"
       }),
     );
-    print(response.statusCode);
-    return true;
+    switch(response.statusCode){
+      case 404: // Not able to connect to charger
+        // throw Exception("Statuscode: " + response.statusCode.toString()); 
+        break;
+      case 500: // Internal server error
+        throw Exception(ErrorCodes.internalError);
+    }
   }
 }

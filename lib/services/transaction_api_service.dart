@@ -1,7 +1,5 @@
 import 'dart:convert';
-
 import 'package:flexicharge/enums/error_codes.dart';
-import 'package:flexicharge/models/transaction_session.dart';
 import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
@@ -18,9 +16,9 @@ class TransactionApiService {
         var transactionFromJson = Transaction.fromJson(parsedTransaction);
         return transactionFromJson;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -39,9 +37,9 @@ class TransactionApiService {
         }
         return transactions;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -60,9 +58,9 @@ class TransactionApiService {
         }
         return transactions;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -115,7 +113,7 @@ class TransactionApiService {
         .then((result) => print(result));
   }
 
-  Future<TransactionSession> createKlarnaPaymentSession(
+  Future<Transaction> createKlarnaPaymentSession(
       int? userId, int chargerId) async {
     var response =
         await client.post(Uri.parse('$endPoint/transactions/session'),
@@ -129,14 +127,67 @@ class TransactionApiService {
     print("Klarna statusCode: " + response.statusCode.toString());
     switch (response.statusCode) {
       case 201:
-        var transactionSession =
-            json.decode(response.body) as Map<String, dynamic>;
-        var parsedSession = TransactionSession.fromJson(transactionSession);
+        var transaction = json.decode(response.body) as Map<String, dynamic>;
+        var parsedSession = Transaction.fromJson(transaction);
         return parsedSession;
       case 400:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("Internal Server Error");
+        throw Exception(ErrorCodes.internalError);
+      default:
+        throw Exception(ErrorCodes.internalError);
+    }
+  }
+
+  // The request returns the updated transaction object,
+  // If everything goes as expected, it will contain a paymentId.
+  Future<Transaction> createKlarnaOrder(
+      int transactionId, String authToken) async {
+    var response = await client.post(Uri.parse('$endPoint/transactions/order'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'transactionID': transactionId,
+          'authorization_token': authToken
+        }));
+    switch (response.statusCode) {
+      case 201:
+        var updatedTransactionSession =
+            json.decode(response.body) as Map<String, dynamic>;
+        var parsedSession = Transaction.fromJson(updatedTransactionSession);
+        print("Klarna updatedSession paymentID: " +
+            parsedSession.paymentID.toString());
+        return parsedSession;
+      case 400:
+        throw Exception(ErrorCodes.badRequest);
+      case 500:
+        throw Exception(ErrorCodes.internalError);
+      default:
+        throw Exception(ErrorCodes.internalError);
+    }
+  }
+
+  //the request will return an updated transaction object which contains paymentConfirmed == true.
+
+  Future<Transaction> stopCharger(int transactionId) async {
+    var response = await client.post(Uri.parse('$endPoint/transactions/stop'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8',
+        },
+        body: jsonEncode(<String, int>{'transactionID': transactionId}));
+    switch (response.statusCode) {
+      case 201:
+        var updatedTransactionSession =
+            json.decode(response.body) as Map<String, dynamic>;
+        var parsedSession = Transaction.fromJson(updatedTransactionSession);
+        print("Klarna updatedSession paymentConfirmed : " +
+            parsedSession.paymentConfirmed.toString());
+        return parsedSession;
+      case 400:
+        throw Exception(ErrorCodes.notFound);
+      case 500:
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
