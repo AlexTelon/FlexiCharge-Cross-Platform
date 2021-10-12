@@ -26,7 +26,7 @@ class Charger {
     status = json['status'] ?? '';
     // coordinates = json['location'];
     capacity = json['capacity'] ?? '';
-    cost = json['cost'] ?? '';
+    cost = json['price'] ?? '';
     type = json['type'] ?? '';
   }
 }
