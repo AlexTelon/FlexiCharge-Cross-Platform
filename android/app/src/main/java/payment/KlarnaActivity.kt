@@ -35,9 +35,7 @@ class KlarnaActivity : AppCompatActivity(), KlarnaPaymentViewCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_klarna)
-        //chargerId = intent.getIntExtra("ChargerId", 0)
         clientToken = intent.getStringExtra("CLIENTTOKEN").toString()
-       // transactionId = intent.getIntExtra("TransactionId", 0)
         initialize()
 
         setupButtons()
