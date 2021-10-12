@@ -1,13 +1,10 @@
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
-import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 // import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 // import 'package:loading_overlay_pro/loading_overlay_pro.dart';
@@ -84,6 +81,7 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
+                                  isActive: model.localData.isButtonActive,
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
@@ -91,6 +89,7 @@ class HomeView extends StatelessWidget {
                             ]),
                         MapIcon(
                           onTap: () => model.openFindCharger(),
+                          isActive: model.localData.isButtonActive,
                           isLarge: true,
                           icon: SvgPicture.asset('assets/svg_images/logo.svg',
                               fit: BoxFit.scaleDown),

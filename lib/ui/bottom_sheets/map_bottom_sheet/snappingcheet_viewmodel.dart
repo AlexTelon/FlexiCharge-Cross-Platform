@@ -1,8 +1,10 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -11,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
+  final _transactionAPI = locator<TransactionApiService>();
   final localData = locator<LocalData>();
 
   init(SheetRequest request) async {
@@ -85,21 +88,31 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   ChargerPoint get selectedChargerPoint => _selectedChargerPoint;
 
   Color get wideButtonColor {
-    if (selectedCharger.status == 1)
+    if (selectedCharger.status == "Available")
       return Color.fromRGBO(120, 189, 118, 1);
-    else if (selectedCharger.status == 0)
+    else if (selectedCharger.status == "Unavailable")
       return Color.fromRGBO(239, 96, 72, 1);
     else
       return Color.fromRGBO(229, 229, 229, 1);
   }
 
   String get wideButtonText {
-    if (selectedCharger.status == 1)
-      return 'Begin Charging';
-    else if (selectedCharger.status == 0)
-      return 'Charger Occupied';
-    else
-      return 'Charger Not Identified';
+    switch (selectedCharger.status) {
+      case "Available":
+        return 'Begin Charging';
+      case "Occupied":
+        return "Charger Occupied";
+      case "Faulted":
+        return "Charger Faulted";
+      case "Rejected":
+        return "Charger Unavailable";
+      case "Unavailable":
+        return "Charger Unavailable";
+      case "Reserved":
+        return "Charger Reserved";
+      default:
+        return 'Charger Not Identified';
+    }
   }
 
   set selectedCharger(Charger newCharger) {
@@ -171,9 +184,10 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           .where((element) =>
               element.chargerPointId == selectedCharger.chargerPointId)
           .first;
-      if (selectedCharger.status == 1) {
+      if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
+        notifyListeners();
       }
       notifyListeners();
     } catch (e) {
@@ -181,9 +195,27 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       isFirstView = true;
     }
   }
-
-  Future<void> updateStatus(int status, int id) async {
-    if (selectedCharger.status == 1) await _chargerAPI.updateStatus(status, id);
+  // Try to reserve a charger and get a transaction going
+  Future<void> connect(int id) async {
+    if (selectedCharger.status == 'Available') {
+      try{
+        // Reserve charger during payment
+        await _chargerAPI.reserveCharger(id);
+     
+        // Create a transaction session
+        Transaction transactionSession = await _transactionAPI.createKlarnaPaymentSession(null, id);
+        localData.transactionSession = transactionSession;
+        // Send our transaction session to klarna widget and wait for auth token
+        String authToken = "";
+        // Create transaction order with the auth token from klarna
+        localData.transactionSession = await _transactionAPI.createKlarnaOrder(transactionSession.transactionID, authToken);
+        
+      
+      }catch(e){
+        print(e);
+      }
+      
+    }
     notifyListeners();
   }
 }

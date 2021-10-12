@@ -13,7 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 import '../services/charger_api_service.dart';
 import '../services/local_data.dart';
-import '../services/transactions.dart';
+import '../services/transaction_api_service.dart';
 
 final locator = StackedLocator.instance;
 
@@ -23,7 +23,7 @@ void setupLocator({String? environment, EnvironmentFilter? environmentFilter}) {
       environment: environment, environmentFilter: environmentFilter);
 
 // Register dependencies
-  locator.registerLazySingleton(() => Transactions());
+  locator.registerLazySingleton(() => TransactionApiService());
   locator.registerLazySingleton(() => LocalData());
   locator.registerLazySingleton(() => BottomSheetService());
   locator.registerLazySingleton(() => NavigationService());

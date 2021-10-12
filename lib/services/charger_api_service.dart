@@ -25,7 +25,7 @@ class ChargerApiService {
         }
         return chargers;
       case 500:
-        throw Exception("Internal server error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -62,7 +62,7 @@ class ChargerApiService {
 
           return chargerPoints;
         case 500:
-          throw Exception("Internal server error");
+          throw Exception(ErrorCodes.internalError);
         default:
           throw Exception(ErrorCodes.internalError);
       }
@@ -83,7 +83,7 @@ class ChargerApiService {
         var chargerFromJson = Charger.fromJson(charger);
         return chargerFromJson;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -100,7 +100,7 @@ class ChargerApiService {
         }
         return chargers;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -113,21 +113,44 @@ class ChargerApiService {
   }
 
   //Check later
-  Future<void> updateStatus(int status, int id) async {
+  Future<void> updateStatus(String status, int id) async {
+    print("Status: " + status);
+    print("Id: " + id.toString());
     await client
         .put(
           Uri.parse('$endPoint/chargers/$id'),
           headers: <String, String>{
             'Content-Type': 'application/json; charset=UTF-8',
           },
-          body: jsonEncode(<String, int>{
+          body: jsonEncode(<String, String>{
             'status': status,
           }),
         )
         .then((result) => {
-              print("test" + result.statusCode.toString()),
-              print("test2" + result.body.toString()),
-              print("test3" + id.toString())
+              print("statusCode: " + result.statusCode.toString()),
+              print("body: " + result.body.toString())
             });
+  }
+
+  Future<void> reserveCharger(int id) async {
+    var response = await client.put(
+      Uri.parse('$endPoint/reservations/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "connectorId": "1",
+        "idTag": "1",
+        "reservationId": "1",
+        "parentIdTag": "1"
+      }),
+    );
+    switch(response.statusCode){
+      case 404: // Not able to connect to charger
+        // throw Exception("Statuscode: " + response.statusCode.toString()); 
+        break;
+      case 500: // Internal server error
+        throw Exception(ErrorCodes.internalError);
+    }
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
@@ -8,11 +10,12 @@ class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
-  int batteryProcent = 75;
+  int batteryPercent = 75;
   int topSheetState = 1;
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
+  late Timer timer;
 
   final localData = locator<LocalData>();
 
@@ -21,9 +24,23 @@ class TopSheetViewModel extends BaseViewModel {
   String timeUntilFullyCharged = "1hr 21min until full";
   String kilowattHours = "5,72 kwh at 3kwh";
 
-  void updateBatteryProcent(int procent) {
-    batteryProcent = procent;
-    notifyListeners();
+  @override
+  void dispose() {
+    timer.cancel();
+    super.dispose();
+  }
+
+  void updatebatteryPercent() {
+    var percent = 0;
+    timer = new Timer.periodic(Duration(seconds: 2), (timer) {
+      if (batteryPercent < 100) {
+        percent += 1;
+      } else {
+        timer.cancel();
+      }
+      batteryPercent = percent;
+      notifyListeners();
+    });
   }
 
   void changeTopSheetState(state) {
@@ -53,13 +70,12 @@ class TopSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> changeChargingState(
-      bool finishedCharging) async {
+  Future<void> changeChargingState(bool finishedCharging) async {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
-      chargerApiService.updateStatus(1, localData.chargingCharger);
-      localData.chargingCharger = -1;
+      chargerApiService.updateStatus("Available", localData.chargingCharger);
+      localData.isButtonActive = true;
       localData.chargerPoints = await chargerApiService.getChargerPoints();
     } else {
       if (chargingState < 3) {
@@ -87,7 +103,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.chargingInProgress.name;
           stopChargingButtonText = TopSheetString.stopCharging.name;
           expandButtonText = TopSheetString.pushToStopCharging.name;
-          batteryProcent = 75;
+          batteryPercent = 75;
           chargingState = 2;
         }
         break;
@@ -96,7 +112,7 @@ class TopSheetViewModel extends BaseViewModel {
           topSheetText = TopSheetString.fullyCharged.name;
           stopChargingButtonText = TopSheetString.disconnect.name;
           expandButtonText = TopSheetString.pushToDisconnect.name;
-          batteryProcent = 100;
+          batteryPercent = 100;
           chargingState = 3;
         }
         break;
