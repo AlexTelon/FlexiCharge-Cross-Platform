@@ -185,9 +185,9 @@ class TransactionApiService {
             parsedSession.paymentConfirmed.toString());
         return parsedSession;
       case 400:
-        throw Exception("????");
+        throw Exception(ErrorCodes.notFound);
       case 500:
-        throw Exception("????");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
