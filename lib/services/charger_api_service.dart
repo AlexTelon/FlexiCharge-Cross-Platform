@@ -145,10 +145,10 @@ class ChargerApiService {
         "parentIdTag": "1"
       }),
     );
-    switch(response.statusCode){
+    switch (response.statusCode) {
       case 404: // Not able to connect to charger
-        // throw Exception("Statuscode: " + response.statusCode.toString()); 
-        break;
+        throw Exception("Statuscode: " + response.statusCode.toString());
+      //break;
       case 500: // Internal server error
         throw Exception(ErrorCodes.internalError);
     }
