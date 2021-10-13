@@ -33,19 +33,15 @@ class TopSheetView extends StatelessWidget {
                   Container(
                       height: MediaQuery.of(context).size.height * 0.10,
                       child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: TextButton(
-                          // Todo: Change Textbutton() to Text() when finished with UI.
-                          onPressed: () => model.changeChargingState(false),
-                          child: Text(
-                            model.topSheetText,
-                            style: const TextStyle(
-                                color: const Color(0xffffffff),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ITCAvantGardeStd",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 17.0),
-                          ),
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          model.topSheetText,
+                          style: const TextStyle(
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "ITCAvantGardeStd",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 17.0),
                         ),
                       )),
                   if (model.chargingState == 1)
