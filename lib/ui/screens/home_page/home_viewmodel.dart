@@ -1,4 +1,6 @@
 import 'dart:async';
+import 'package:flexicharge/enums/event_type.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -6,6 +8,7 @@ import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -72,9 +75,48 @@ class HomeViewModel extends BaseViewModel {
         .then((value) {
       if (value != null && value.data == true) {
         activeTopSheet = true;
+        startTimer();
         notifyListeners();
       }
     });
+  }
+
+  void startTimer() {
+    print("Starting timer...");
+    int secondsPast = 0;
+    localData.chargingPercentage = 0;
+
+    localData.timer = new Timer.periodic(Duration(seconds: 2), (timer) async {
+      secondsPast += 2;
+      localData.chargingPercentage = await fetchChargingPercentage();
+
+      if (secondsPast == 2) {
+        // Change to ChargeInProgress state when 2 seconds has past.
+        localData.controller.add(EventType.showCharging);
+      }
+
+      if (localData.chargingPercentage == 100) {
+        print("Fully charged! Stopping timer...");
+        localData.controller.add(EventType.stopTimer);
+        localData.timer.cancel();
+      }
+
+      print("Seconds: " +
+          secondsPast.toString() +
+          "Charging Percentage: " +
+          localData.chargingPercentage.toString());
+      notifyListeners();
+    });
+  }
+
+  Future<int> fetchChargingPercentage() async {
+    Transaction currentTransaction = await _transactionAPI
+        .getTransactionById(localData.transactionSession.transactionID);
+
+    int currentChargingPercentage =
+        currentTransaction.currentChargePercentage.round();
+
+    return currentChargingPercentage;
   }
 
   Future<void> getTransaction() async {

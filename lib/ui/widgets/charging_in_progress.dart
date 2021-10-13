@@ -1,3 +1,5 @@
+import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/ui/widgets/circular_loading_bar.dart';
 import 'package:flutter/material.dart';
 

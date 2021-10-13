@@ -16,6 +16,7 @@ class TopSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
+        onModelReady: (model) => model.init(),
         viewModelBuilder: () => TopSheetViewModel(),
         builder: (context, model, child) => AnimatedContainer(
               duration: const Duration(milliseconds: 100),
@@ -30,35 +31,31 @@ class TopSheetView extends StatelessWidget {
                 //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Container(
-                    height: MediaQuery.of(context).size.height * 0.13,
-                    child: TextButton(
-                      // Todo: Change Textbutton() to Text() when finished with UI.
-                      onPressed: () => model.changeChargingState(false),
-                      child: Text(
-                        model.topSheetText,
-                        style: const TextStyle(
-                            color: const Color(0xffffffff),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: 'ITCAvantGardeStd-Bold',
-                            fontStyle: FontStyle.normal,
-                            fontSize: 17.0),
-                      ),
-                    ),
-                  ),
+                      height: MediaQuery.of(context).size.height * 0.10,
+                      child: FittedBox(
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          model.topSheetText,
+                          style: const TextStyle(
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "ITCAvantGardeStd",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 17.0),
+                        ),
+                      )),
                   if (model.chargingState == 1)
                     Container(
                       // Charging Started
                       height: MediaQuery.of(context).size.height * 0.15,
-                      child: ChargingStarted(
-                        chargingPercentage: () => model.updatebatteryPercent(),
-                      ),
+                      child: ChargingStarted(),
                     ),
                   if (model.chargingState == 2 || model.chargingState == 3)
                     Container(
                       height: MediaQuery.of(context).size.height * 0.09,
                       // Charging In Progress & Fully Charged
                       child: ChargingInProgress(
-                        batteryProcent: model.batteryPercent,
+                        batteryProcent: model.localData.chargingPercentage,
                         chargingAdress: model.chargingAdress,
                         timeUntilFullyCharged: model.timeUntilFullyCharged,
                         kilowattHours: model.kilowattHours,
