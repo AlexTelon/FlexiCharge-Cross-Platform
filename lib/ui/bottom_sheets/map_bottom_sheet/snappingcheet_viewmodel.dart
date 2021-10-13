@@ -54,7 +54,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
 
-  LatLng userLocation = LatLng(0, 0);
+  LatLng get userLocation => localData.userLocation;
 
   String _chargerCode = '';
   List<Charger> chargers = [];
@@ -130,12 +130,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((value) {
-        userLocation = LatLng(value.latitude, value.longitude);
-      });
-
   //function to calculate the distance between two points
   double getDistance(LatLng userLocation, LatLng chargerPoint) {
     double distanceInMeters = Geolocator.distanceBetween(userLocation.latitude,
@@ -167,7 +161,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           'distance': 1 <= distance % 1000
               ? '${(distance % 1000).toStringAsFixed(1)} km'
               : '${distance.toStringAsFixed(1)} m',
-          'location': '',
+          'location': chargerPoints[i].name,
         });
       }
     } catch (e) {
@@ -205,7 +199,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       try {
         // Reserve charger during payment
         print("Trying to connect to a charger...");
-        await _chargerAPI.reserveCharger(id);
+        // await _chargerAPI.reserveCharger(id);
         print("");
         // Create a transaction session
         Transaction transactionSession =
@@ -217,7 +211,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
         // Create transaction order with the auth token from klarna
         localData.transactionSession = await _transactionAPI.createKlarnaOrder(
-            transactionSession.transactionID, authToken);
+          transactionSession.transactionID,
+          authToken,
+        );
       } catch (e) {
         print(e);
       }

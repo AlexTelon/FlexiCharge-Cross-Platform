@@ -41,7 +41,7 @@ class ChargerApiService {
           List<dynamic> chargers = json.decode(response.body);
           if (chargers.isEmpty)
             return throw throw Exception('No Chargers Found');
-          chargers.forEach((charger) {
+          for (var charger in chargers) {
             var chargerPoint = chargerPoints
                 .where((chargerPoin) =>
                     chargerPoin.chargerPointId == charger['chargePointID'])
@@ -49,16 +49,28 @@ class ChargerApiService {
             if (chargerPoint.isNotEmpty) {
               chargerPoint.first.chargers.add(Charger.fromJson(charger));
             } else {
+              var chargerPoint =
+                  await getChargerPoint(charger['chargePointID']);
+
               chargerPoints.add(
                 ChargerPoint.fromCharger(
                   chargerPointId: charger['chargePointID'],
-                  chargers: [Charger.fromJson(charger)],
+                  chargers: [
+                    Charger.fromCharger(
+                      id: charger['chargerID'],
+                      cost: chargerPoint.price,
+                      chargerPointId: charger['chargePointID'],
+                      status: charger['status'],
+                    )
+                  ],
                   coordinates:
                       LatLng(charger['location'][0], charger['location'][1]),
+                  price: chargerPoint.price,
+                  name: chargerPoint.name,
                 ),
               );
             }
-          });
+          }
 
           return chargerPoints;
         case 500:
@@ -70,6 +82,20 @@ class ChargerApiService {
       print(e);
     }
     return chargerPoints;
+  }
+
+  Future<ChargerPoint> getChargerPoint(int id) async {
+    ChargerPoint chargerPoint = ChargerPoint();
+    try {
+      var response = await client.get(Uri.parse('$endPoint/chargePoints/$id'));
+      if (response.statusCode == 200) {
+        return  ChargerPoint.fromJson(json.decode(response.body));
+      }
+    } catch (e) {
+      print(e);
+    }
+
+    return chargerPoint;
   }
 
   /// Remove .first from the return when you use the flexi charger Api
@@ -145,9 +171,9 @@ class ChargerApiService {
         "parentIdTag": "1"
       }),
     );
-    switch(response.statusCode){
+    switch (response.statusCode) {
       case 404: // Not able to connect to charger
-        // throw Exception("Statuscode: " + response.statusCode.toString()); 
+        // throw Exception("Statuscode: " + response.statusCode.toString());
         break;
       case 500: // Internal server error
         throw Exception(ErrorCodes.internalError);

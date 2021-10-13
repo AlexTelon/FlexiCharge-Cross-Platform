@@ -27,7 +27,6 @@ class MainActivity: FlutterActivity() {
                 call, result ->
             if(call.method.equals("StartKlarnaActivity")){
                 this.result = result
-                //Log.d("lkasmdlkasmdmaksmdklamskldm", call.argument("clientToken"))
                 val clientToken =  call.argument("clientToken") as String?
                 if(clientToken != null){
                     val intent= Intent(this, KlarnaActivity::class.java)
