@@ -23,6 +23,7 @@ class RegistrationView extends StatelessWidget {
               Topbar(text: "Register"),
               SizedBox(height: 30),
               Column(
+                mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   // SizedBox(height: 1),
                   TextInputWidget(
@@ -30,21 +31,21 @@ class RegistrationView extends StatelessWidget {
                     hint: 'Enter Your Email',
                     onChanged: (value) => print(value),
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 20),
                   TextInputWidget(
                     labelText: 'Mobile Number',
                     hint: 'Enter Your Mobile Number',
                     onChanged: (value) => print(value),
                     isNumber: true,
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 20),
                   TextInputWidget(
                     labelText: 'Password',
                     hint: 'Enter Your Password',
                     onChanged: (value) => print(value),
                     isPassword: true,
                   ),
-                  SizedBox(height: 15),
+                  SizedBox(height: 20),
                   TextInputWidget(
                     labelText: 'Repeat Password',
                     hint: 'Enter Your Repeat Password',
@@ -55,6 +56,7 @@ class RegistrationView extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
+                        height: 60,
                         decoration: BoxDecoration(),
                         child: Checkbox(
                             value: model.checked,
