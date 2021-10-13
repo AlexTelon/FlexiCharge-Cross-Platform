@@ -24,13 +24,18 @@ class ChargingInProgress extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         children: [
-          CircularLoadingBar(
-            loadingPercentage: batteryProcent / 100,
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.10,
+            width: MediaQuery.of(context).size.height * 0.10,
+            child: CircularLoadingBar(
+              loadingPercentage: batteryProcent / 100,
+            ),
           ),
           FittedBox(
             fit: BoxFit.fitHeight,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 FittedBox(
                   // Adress
