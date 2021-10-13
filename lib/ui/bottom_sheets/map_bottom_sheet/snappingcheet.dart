@@ -88,11 +88,11 @@ class CustomSnappingSheet extends StatelessWidget {
                   key: ValueKey<String>(model.selectedCharger.id.toString()),
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () {
-                    completer(SheetResponse(data: true));
-                    model.updateStatus(model.selectedCharger.id);
+                  onTap: () async {
+                    await model.connect(model.selectedCharger.id);
                     model.localData.chargingCharger = model.selectedCharger.id;
                     model.localData.isButtonActive = false;
+                    completer(SheetResponse(data: true));
                     print(model.selectedCharger.id);
                   },
                   showWideButton: model.showWideButton,

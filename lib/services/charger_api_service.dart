@@ -5,7 +5,6 @@ import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/services/local_data.dart';
-import 'package:flutter/foundation.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -26,7 +25,7 @@ class ChargerApiService {
         }
         return chargers;
       case 500:
-        throw Exception("Internal server error");
+        throw Exception(ErrorCodes.internalError);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -63,7 +62,7 @@ class ChargerApiService {
 
           return chargerPoints;
         case 500:
-          throw Exception("Internal server error");
+          throw Exception(ErrorCodes.internalError);
         default:
           throw Exception(ErrorCodes.internalError);
       }
@@ -84,7 +83,7 @@ class ChargerApiService {
         var chargerFromJson = Charger.fromJson(charger);
         return chargerFromJson;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -101,7 +100,7 @@ class ChargerApiService {
         }
         return chargers;
       case 404:
-        throw Exception("Not Found");
+        throw Exception(ErrorCodes.notFound);
       default:
         throw Exception(ErrorCodes.internalError);
     }
@@ -134,24 +133,24 @@ class ChargerApiService {
   }
 
   Future<void> reserveCharger(int id) async {
-    await client
-        .put(
-          Uri.parse('$endPoint/reservations/$id'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, String>{
-            "connectorId": "1",
-            "idTag": "1",
-            "reservationId": "1",
-            "parentIdTag": "1"
-          }),
-          
-        )
-        .then((result) => {
-              print("test" + result.statusCode.toString()),
-              print("test2" + result.body.toString()),
-              print("test3" + id.toString())
-            });
+    var response = await client.put(
+      Uri.parse('$endPoint/reservations/$id'),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        "connectorId": "1",
+        "idTag": "1",
+        "reservationId": "1",
+        "parentIdTag": "1"
+      }),
+    );
+    switch(response.statusCode){
+      case 404: // Not able to connect to charger
+        // throw Exception("Statuscode: " + response.statusCode.toString()); 
+        break;
+      case 500: // Internal server error
+        throw Exception(ErrorCodes.internalError);
+    }
   }
 }

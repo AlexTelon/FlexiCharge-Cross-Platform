@@ -1,5 +1,5 @@
 import 'dart:async';
-
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/app/app.locator.dart';
@@ -13,6 +13,7 @@ import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _chagerAPI = locator<ChargerApiService>();
+  final _transactionAPI = locator<TransactionApiService>();
   final localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
@@ -74,6 +75,12 @@ class HomeViewModel extends BaseViewModel {
         notifyListeners();
       }
     });
+  }
+
+  Future<void> getTransaction() async {
+    // Testing transactionApiService
+    var transaction = await _transactionAPI.getTransactionById(1);
+    // transaction.printTransaction();
   }
 
   Future<void> findUser() async {

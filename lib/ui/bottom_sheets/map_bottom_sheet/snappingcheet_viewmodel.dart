@@ -1,17 +1,23 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:flutter/services.dart';
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
+  final _transactionAPI = locator<TransactionApiService>();
   final localData = locator<LocalData>();
+  static const platform =
+      const MethodChannel('com.startActivity/klarnaChannel');
 
   init(SheetRequest request) async {
     if (request.data != null && request.data is ChargerPoint) {
@@ -193,9 +199,42 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
-  Future<void> updateStatus( int id) async {
-    if (selectedCharger.status == 'Available')
-      await _chargerAPI.reserveCharger(id);
+  // Try to reserve a charger and get a transaction going
+  Future<void> connect(int id) async {
+    if (selectedCharger.status == 'Available') {
+      try {
+        // Reserve charger during payment
+        print("Trying to connect to a charger...");
+        await _chargerAPI.reserveCharger(id);
+        print("");
+        // Create a transaction session
+        Transaction transactionSession =
+            await _transactionAPI.createKlarnaPaymentSession(null, id);
+        localData.transactionSession = transactionSession;
+        // Send our transaction session to klarna widget and wait for auth token
+        String authToken =
+            await _startKlarnaActivity(transactionSession.clientToken);
+
+        // Create transaction order with the auth token from klarna
+        localData.transactionSession = await _transactionAPI.createKlarnaOrder(
+            transactionSession.transactionID, authToken);
+      } catch (e) {
+        print(e);
+      }
+    }
     notifyListeners();
+  }
+
+  Future<String> _startKlarnaActivity(String clientToken) async {
+    try {
+      final String result = await platform
+          .invokeMethod("StartKlarnaActivity", {'clientToken': clientToken});
+
+      debugPrint('Result: $result ');
+      return result;
+    } on PlatformException catch (e) {
+      debugPrint("Error: '${e.message}'.");
+      return '';
+    }
   }
 }
