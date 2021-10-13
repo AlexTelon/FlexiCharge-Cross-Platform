@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -6,6 +7,7 @@ import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
@@ -80,8 +82,21 @@ class HomeViewModel extends BaseViewModel {
 
   void startTimer() {
     print("Starting timer...");
+    int x = 0;
     localData.timer = new Timer.periodic(Duration(seconds: 1), (timer) {
+      x += 1;
       localData.chargingPercentage = fetchChargingPercentage();
+
+      if (2 == x) {
+        localData.controller.add(EventType.showCharging);
+      }
+
+      if (localData.chargingPercentage == 100) {
+        print("Stopping Timer");
+        localData.controller.add(EventType.stopTimer);
+        timer.cancel();
+      }
+
       print("Charging Percentage: " + localData.chargingPercentage.toString());
       notifyListeners();
     });
@@ -90,7 +105,7 @@ class HomeViewModel extends BaseViewModel {
   int fetchChargingPercentage() {
     // ToDo: 1. Fetch Transaction object from backend.
     // ToDo: 2. Return Transaction.currentChargePercentage.
-    int dummyData = localData.chargingPercentage + 1;
+    int dummyData = localData.chargingPercentage + 5;
     return dummyData;
   }
 

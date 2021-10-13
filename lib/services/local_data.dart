@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/models/transaction.dart';
@@ -15,6 +16,13 @@ class LocalData {
   bool isButtonActive = true;
   int chargingPercentage = 0;
   late Timer timer;
+  late StreamController<EventType> controller;
+  late Stream stream;
+
+  LocalData() {
+    controller = StreamController.broadcast();
+    stream = controller.stream;
+  }
 
   BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
   BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;

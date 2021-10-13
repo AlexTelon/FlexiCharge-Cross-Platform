@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
@@ -15,6 +16,19 @@ class TopSheetViewModel extends BaseViewModel {
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
+  int batteryPercent = 0;
+
+  init() {
+    streamListener();
+  }
+
+  set changeBatteryPercent(value) {
+    batteryPercent = localData.chargingPercentage;
+
+    if (batteryPercent == 100) {
+      changeChargingState(false);
+    }
+  }
 
   // Dummy data
   String chargingAdress = "Kungsgatan 1a, Jönköping";
@@ -109,5 +123,15 @@ class TopSheetViewModel extends BaseViewModel {
     }
 
     notifyListeners();
+  }
+
+  void streamListener() {
+    localData.stream.listen((event) {
+      if (event == EventType.stopTimer) {
+        changeChargingState(false);
+      } else if (event == EventType.showCharging) {
+        changeChargingState(false);
+      }
+    });
   }
 }

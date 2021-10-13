@@ -16,6 +16,7 @@ class TopSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
+        onModelReady: (model) => model.init(),
         viewModelBuilder: () => TopSheetViewModel(),
         builder: (context, model, child) => AnimatedContainer(
               duration: const Duration(milliseconds: 100),
