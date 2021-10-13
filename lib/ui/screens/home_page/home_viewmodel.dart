@@ -82,19 +82,22 @@ class HomeViewModel extends BaseViewModel {
 
   void startTimer() {
     print("Starting timer...");
-    int x = 0;
+    int secondsPast = 0;
+    localData.chargingPercentage = 0;
+
     localData.timer = new Timer.periodic(Duration(seconds: 1), (timer) {
-      x += 1;
+      secondsPast += 1;
       localData.chargingPercentage = fetchChargingPercentage();
 
-      if (2 == x) {
+      if (secondsPast == 2) {
+        // Change to ChargeInProgress state when 2 seconds has past.
         localData.controller.add(EventType.showCharging);
       }
 
       if (localData.chargingPercentage == 100) {
-        print("Stopping Timer");
+        print("Fully charged! Stopping timer...");
         localData.controller.add(EventType.stopTimer);
-        timer.cancel();
+        localData.timer.cancel();
       }
 
       print("Charging Percentage: " + localData.chargingPercentage.toString());
@@ -142,8 +145,6 @@ class HomeViewModel extends BaseViewModel {
 
   completeTopSheet() {
     activeTopSheet = false;
-    print("Stopping timer");
-    localData.timer.cancel();
     notifyListeners();
   }
 }

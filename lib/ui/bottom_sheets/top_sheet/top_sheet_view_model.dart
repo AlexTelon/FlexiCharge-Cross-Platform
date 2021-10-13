@@ -64,6 +64,8 @@ class TopSheetViewModel extends BaseViewModel {
 
   Future<void> changeChargingState(bool finishedCharging) async {
     if (finishedCharging) {
+      print("Stopping timer...");
+      localData.timer.cancel();
       chargingState = 4;
       changeTopSheetState(3);
       chargerApiService.updateStatus("Available", localData.chargingCharger);
