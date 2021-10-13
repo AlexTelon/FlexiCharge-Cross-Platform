@@ -143,7 +143,7 @@ class TransactionApiService {
   // If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
       int transactionId, String authToken) async {
-    var response = await client.post(Uri.parse('$endPoint/transactions/order'),
+    var response = await client.put(Uri.parse('$endPoint/transactions/start/$transactionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -170,11 +170,11 @@ class TransactionApiService {
 
   //the request will return an updated transaction object which contains paymentConfirmed == true.
   Future<Transaction> stopCharging(int transactionId) async {
-    var response = await client.post(Uri.parse('$endPoint/transactions/stop'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, int>{'transactionID': transactionId}));
+    var response = await client.put(Uri.parse('$endPoint/transactions/stop/$transactionId'));
+        //headers: <String, String>{
+        //  'Content-Type': 'application/json; charset=UTF-8',
+        //}));
+        //body: jsonEncode(<String, int>{'transactionID': transactionId}));
     switch (response.statusCode) {
       case 201:
         var updatedTransactionSession =
