@@ -3,7 +3,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChargerPoint {
   int chargerPointId = -1;
-  LatLng coordinates = LatLng(0.0, 0.0) ;
+  LatLng coordinates = LatLng(0.0, 0.0);
   List<Charger> chargers = [];
   ChargerPoint();
   ChargerPoint.fromCharger({

@@ -19,7 +19,7 @@ class CircularLoadingBar extends StatelessWidget {
             strokeWidth: 10,
             value: loadingPercentage,
             color: Color(0xff333333),
-            valueColor: AlwaysStoppedAnimation(Colors.green),
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
           ),
         ),
         FittedBox(

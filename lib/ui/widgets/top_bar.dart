@@ -34,10 +34,10 @@ class Topbar extends StatelessWidget {
                   child: Text(
                     text,
                     style: TextStyle(
-                      fontFamily: 'ITCAvantGardeStd',
+                      fontFamily: 'ITCAvantGardeStd-Bold',
                       color: Color(0xffffffff),
                       fontSize: 36,
-                      fontWeight: FontWeight.w900,
+                      fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
                     ),
                     textAlign: TextAlign.center,
