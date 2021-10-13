@@ -1,6 +1,3 @@
-import 'package:flexicharge/models/payment_method_category.dart';
-import 'package:flutter/foundation.dart';
-
 class Transaction {
   int transactionID = 0;
   String userID = "";

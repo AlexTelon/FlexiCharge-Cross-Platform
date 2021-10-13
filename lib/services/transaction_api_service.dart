@@ -124,7 +124,6 @@ class TransactionApiService {
               'userID': userId,
               'chargerID': chargerId,
             }));
-    print("Klarna statusCode: " + response.statusCode.toString());
     switch (response.statusCode) {
       case 201:
         var transaction = json.decode(response.body) as Map<String, dynamic>;
@@ -160,11 +159,16 @@ class TransactionApiService {
             parsedSession.paymentID.toString());
         return parsedSession;
       case 400:
+        print(response.body);
         throw Exception(ErrorCodes.badRequest);
+      case 404:
+        print(response.body);
+        throw Exception(ErrorCodes.notFound);
       case 500:
+        print(response.body);
         throw Exception(ErrorCodes.internalError);
       default:
-        throw Exception(ErrorCodes.internalError);
+        throw Exception("default: " + ErrorCodes.internalError.toString());
     }
   }
 

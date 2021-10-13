@@ -204,24 +204,31 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     if (selectedCharger.status == 'Available') {
       try {
         // Reserve charger during payment
-        print("Trying to connect to a charger...");
+        print("Trying to connect to a charger with id: $id...");
         await _chargerAPI.reserveCharger(id);
         print("charger is reserved");
         print("starting the session..");
         // Create a transaction session
+        print("Trying to create a transaction session... ");
         Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
+        print("TransactionID: "+ localData.transactionSession.transactionID.toString());
+        print('Done');
+
         // Send our transaction session to klarna widget and wait for auth token
         print("transactionID:  " + transactionSession.transactionID.toString());
         print("Getting auth token...");
 
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
+        print("authToken: "+ authToken);
+        print('Done');
 
         print("auth token: " + authToken);
 
         // Create transaction order with the auth token from klarna
+        print("Trying to update our transaction session with Klarna order... ");
         localData.transactionSession = await _transactionAPI.createKlarnaOrder(
             transactionSession.transactionID, authToken);
         print("payment ID" + localData.transactionSession.paymentID.toString());
@@ -251,8 +258,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     try {
       final String result = await platform
           .invokeMethod("StartKlarnaActivity", {'clientToken': clientToken});
-
-      debugPrint('Result: $result ');
       return result;
     } on PlatformException catch (e) {
       debugPrint("Error: '${e.message}'.");
