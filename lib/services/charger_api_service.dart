@@ -133,6 +133,7 @@ class ChargerApiService {
   }
 
   Future<void> reserveCharger(int id) async {
+    print("Reserve charger: "+id.toString());
     var response = await client.put(
       Uri.parse('$endPoint/reservations/$id'),
       headers: <String, String>{
