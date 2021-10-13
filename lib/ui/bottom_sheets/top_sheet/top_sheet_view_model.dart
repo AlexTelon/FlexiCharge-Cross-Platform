@@ -53,13 +53,12 @@ class TopSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  Future<void> changeChargingState(
-      bool finishedCharging) async {
+  Future<void> changeChargingState(bool finishedCharging) async {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
-      chargerApiService.updateStatus(1, localData.chargingCharger);
-      localData.chargingCharger = -1;
+      chargerApiService.updateStatus("Available", localData.chargingCharger);
+      localData.isButtonActive = true;
       localData.chargerPoints = await chargerApiService.getChargerPoints();
     } else {
       if (chargingState < 3) {
