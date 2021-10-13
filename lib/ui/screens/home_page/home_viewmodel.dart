@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flexicharge/enums/event_type.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -85,9 +86,9 @@ class HomeViewModel extends BaseViewModel {
     int secondsPast = 0;
     localData.chargingPercentage = 0;
 
-    localData.timer = new Timer.periodic(Duration(seconds: 1), (timer) {
-      secondsPast += 1;
-      localData.chargingPercentage = fetchChargingPercentage();
+    localData.timer = new Timer.periodic(Duration(seconds: 2), (timer) async {
+      secondsPast += 2;
+      localData.chargingPercentage = await fetchChargingPercentage();
 
       if (secondsPast == 2) {
         // Change to ChargeInProgress state when 2 seconds has past.
@@ -100,16 +101,22 @@ class HomeViewModel extends BaseViewModel {
         localData.timer.cancel();
       }
 
-      print("Charging Percentage: " + localData.chargingPercentage.toString());
+      print("Seconds: " +
+          secondsPast.toString() +
+          "Charging Percentage: " +
+          localData.chargingPercentage.toString());
       notifyListeners();
     });
   }
 
-  int fetchChargingPercentage() {
-    // ToDo: 1. Fetch Transaction object from backend.
-    // ToDo: 2. Return Transaction.currentChargePercentage.
-    int dummyData = localData.chargingPercentage + 5;
-    return dummyData;
+  Future<int> fetchChargingPercentage() async {
+    Transaction currentTransaction = await _transactionAPI
+        .getTransactionById(localData.transactionSession.transactionID);
+
+    int currentChargingPercentage =
+        currentTransaction.currentChargePercentage.round();
+
+    return currentChargingPercentage;
   }
 
   Future<void> getTransaction() async {
