@@ -179,8 +179,9 @@ class TransactionApiService {
         //  'Content-Type': 'application/json; charset=UTF-8',
         //}));
         //body: jsonEncode(<String, int>{'transactionID': transactionId}));
+    
     switch (response.statusCode) {
-      case 201:
+      case 200:
         var updatedTransactionSession =
             json.decode(response.body) as Map<String, dynamic>;
         var parsedSession = Transaction.fromJson(updatedTransactionSession);
