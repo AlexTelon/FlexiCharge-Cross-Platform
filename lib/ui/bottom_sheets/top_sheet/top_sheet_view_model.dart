@@ -16,18 +16,9 @@ class TopSheetViewModel extends BaseViewModel {
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
-  int batteryPercent = 0;
 
   init() {
     streamListener();
-  }
-
-  set changeBatteryPercent(value) {
-    batteryPercent = localData.chargingPercentage;
-
-    if (batteryPercent == 100) {
-      changeChargingState(false);
-    }
   }
 
   // Dummy data
