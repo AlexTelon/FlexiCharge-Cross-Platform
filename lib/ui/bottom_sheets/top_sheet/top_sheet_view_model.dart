@@ -5,10 +5,12 @@ import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
+  final transactionApiService = locator<TransactionApiService>();
   final localData = locator<LocalData>();
   String topSheetText = TopSheetString.chargingStarted.name;
   int chargingState = 1;
@@ -59,6 +61,8 @@ class TopSheetViewModel extends BaseViewModel {
       localData.timer.cancel();
       chargingState = 4;
       changeTopSheetState(3);
+      transactionApiService
+          .stopCharging(localData.transactionSession.transactionID);
       chargerApiService.updateStatus("Available", localData.chargingCharger);
       localData.isButtonActive = true;
       localData.chargerPoints = await chargerApiService.getChargerPoints();
