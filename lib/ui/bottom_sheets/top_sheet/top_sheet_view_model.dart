@@ -76,9 +76,7 @@ class TopSheetViewModel extends BaseViewModel {
     if (finishedCharging) {
       chargingState = 4;
       changeTopSheetState(3);
-      localData.transactionSession = await transactionApiService
-          .stopCharging(localData.transactionSession.transactionID);
-      print(localData.transactionSession.paymentConfirmed.toString());
+      transactionApiService.stopCharging(localData.transactionSession.transactionID);
       chargerApiService.updateStatus("Available", localData.chargingCharger);
       localData.isButtonActive = true;
       localData.chargerPoints = await chargerApiService.getChargerPoints();
