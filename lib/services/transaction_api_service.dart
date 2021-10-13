@@ -142,7 +142,8 @@ class TransactionApiService {
   // If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
       int transactionId, String authToken) async {
-    var response = await client.put(Uri.parse('$endPoint/transactions/start/$transactionId'),
+    var response = await client.put(
+        Uri.parse('$endPoint/transactions/start/$transactionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -174,17 +175,19 @@ class TransactionApiService {
 
   //the request will return an updated transaction object which contains paymentConfirmed == true.
   Future<Transaction> stopCharging(int transactionId) async {
-    var response = await client.put(Uri.parse('$endPoint/transactions/stop/$transactionId'));
-        //headers: <String, String>{
-        //  'Content-Type': 'application/json; charset=UTF-8',
-        //}));
-        //body: jsonEncode(<String, int>{'transactionID': transactionId}));
-    
+    var response = await client
+        .put(Uri.parse('$endPoint/transactions/stop/$transactionId'));
+    //headers: <String, String>{
+    //  'Content-Type': 'application/json; charset=UTF-8',
+    //}));
+    //body: jsonEncode(<String, int>{'transactionID': transactionId}));
+
     switch (response.statusCode) {
       case 200:
-        var updatedTransactionSession =
-            json.decode(response.body) as Map<String, dynamic>;
-        var parsedSession = Transaction.fromJson(updatedTransactionSession);
+        // We get a List with a single Transaction object in response
+        var list = json.decode(response.body) as List<dynamic>;
+        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(list.first);
         print("Klarna updatedSession paymentConfirmed : " +
             parsedSession.paymentConfirmed.toString());
         return parsedSession;
