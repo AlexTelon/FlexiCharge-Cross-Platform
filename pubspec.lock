@@ -35,7 +35,11 @@ packages:
       name: async
       url: "https://pub.dartlang.org"
     source: hosted
+<<<<<<< HEAD
     version: "2.6.0"
+=======
+    version: "2.6.1"
+>>>>>>> origin/main
   boolean_selector:
     dependency: transitive
     description:

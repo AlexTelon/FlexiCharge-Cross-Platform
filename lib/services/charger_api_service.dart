@@ -166,6 +166,7 @@ class ChargerApiService {
   }
 
   Future<void> reserveCharger(int id) async {
+    print("Reserve charger: "+id.toString());
     var response = await client.put(
       Uri.parse('$endPoint/reservations/$id'),
       headers: <String, String>{
@@ -180,8 +181,8 @@ class ChargerApiService {
     );
     switch (response.statusCode) {
       case 404: // Not able to connect to charger
-        // throw Exception("Statuscode: " + response.statusCode.toString());
-        break;
+        throw Exception("Statuscode: " + response.statusCode.toString());
+      //break;
       case 500: // Internal server error
         throw Exception(ErrorCodes.internalError);
     }

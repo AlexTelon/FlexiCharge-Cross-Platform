@@ -1,0 +1,4 @@
+enum EventType {
+  showCharging,
+  stopTimer,
+}
