@@ -202,6 +202,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         // Reserve charger during payment
         print("Trying to connect to a charger with id: $id...");
         await _chargerAPI.reserveCharger(id);
+        await Future.delayed(Duration(seconds: 120));
         print("charger is reserved");
         print("starting the session..");
         // Create a transaction session
@@ -209,7 +210,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
-        print("TransactionID: "+ localData.transactionSession.transactionID.toString());
+        print("TransactionID: " +
+            localData.transactionSession.transactionID.toString());
+        print("clientToken: " +
+            localData.transactionSession.clientToken.toString());
+
         print('Done');
 
         // Send our transaction session to klarna widget and wait for auth token
@@ -218,7 +223,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
-        print("authToken: "+ authToken);
+        print("authToken: " + authToken);
         print('Done');
 
         print("auth token: " + authToken);
