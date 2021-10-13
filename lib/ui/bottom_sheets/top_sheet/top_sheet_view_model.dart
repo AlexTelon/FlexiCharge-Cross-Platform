@@ -2,9 +2,11 @@ import 'dart:async';
 
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:stacked/stacked.dart';
+import 'package:intl/intl.dart';
 
 class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
@@ -16,19 +18,36 @@ class TopSheetViewModel extends BaseViewModel {
   String stopChargingButtonText = "";
   String expandButtonText = "";
   late Timer timer;
+  DateTime? fullychargedTime;
 
   final localData = locator<LocalData>();
 
   // Dummy data
-  String chargingAdress = "Kungsgatan 1a, Jönköping";
-  String timeUntilFullyCharged = "1hr 21min until full";
-  String kilowattHours = "5,72 kwh at 3kwh";
+  String get chargingAdress {
+    var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+        .chargers
+        .contains((charger) => charger.id == transactionSession.chargerID));
+
+    return chargerPoint.name;
+  }
+
+  String get timeUntilFullyCharged {
+    var goal = 100;
+    var percentage = transactionSession.currentChargePercentage;
+
+    return '${(goal - percentage).toStringAsFixed(0)} seconds left';
+  }
+
+  String get kilowattHours =>
+      "${transactionSession.kwhTransfered} kWh transferred";
 
   @override
   void dispose() {
     timer.cancel();
     super.dispose();
   }
+
+  Transaction get transactionSession => localData.transactionSession;
 
   void updatebatteryPercent() {
     var percent = 0;
@@ -133,5 +152,30 @@ class TopSheetViewModel extends BaseViewModel {
     }
 
     notifyListeners();
+  }
+}
+
+extension TimeParser on int {
+  DateTime parseUNIXTimestamp() {
+    return DateTime.fromMicrosecondsSinceEpoch(this * 1000);
+  }
+
+  String parseTimeDiff() {
+    var date = DateTime.fromMicrosecondsSinceEpoch(this * 1000);
+    var now = DateTime.now();
+    var duration = now.difference(date);
+    var result = '';
+
+    if (duration.inHours % 24 > 0) {
+      result = result + duration.inHours.toString() + 'hr ';
+    }
+    if (duration.inMinutes % 60 > 0) {
+      result = result + (duration.inMinutes % 60).toString() + 'min ';
+    }
+    if (duration.inSeconds % 60 > 0) {
+      result = result + (duration.inMinutes % 60).toString() + 'sec ';
+    }
+
+    return result;
   }
 }

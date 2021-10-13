@@ -43,11 +43,18 @@ class ChargerApiService {
             return throw throw Exception('No Chargers Found');
           for (var charger in chargers) {
             var chargerPoint = chargerPoints
-                .where((chargerPoin) =>
-                    chargerPoin.chargerPointId == charger['chargePointID'])
+                .where(
+                    (value) => value.chargerPointId == charger['chargePointID'])
                 .toList();
             if (chargerPoint.isNotEmpty) {
-              chargerPoint.first.chargers.add(Charger.fromJson(charger));
+              var firstChargerPoint = chargerPoint.first;
+
+              chargerPoint.first.chargers.add(Charger.fromCharger(
+                id: charger['chargerID'],
+                cost: firstChargerPoint.price,
+                chargerPointId: charger['chargePointID'],
+                status: charger['status'],
+              ));
             } else {
               var chargerPoint =
                   await getChargerPoint(charger['chargePointID']);
@@ -89,7 +96,7 @@ class ChargerApiService {
     try {
       var response = await client.get(Uri.parse('$endPoint/chargePoints/$id'));
       if (response.statusCode == 200) {
-        return  ChargerPoint.fromJson(json.decode(response.body));
+        return ChargerPoint.fromJson(json.decode(response.body));
       }
     } catch (e) {
       print(e);

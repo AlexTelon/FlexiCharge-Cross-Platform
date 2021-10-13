@@ -184,6 +184,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
+        onlyPin = false;
+
         notifyListeners();
       }
       notifyListeners();
@@ -205,15 +207,16 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
+        print('------------------<authToken: ${transactionSession.clientToken}>');
+
         // Send our transaction session to klarna widget and wait for auth token
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
-
         // Create transaction order with the auth token from klarna
-        localData.transactionSession = await _transactionAPI.createKlarnaOrder(
+        /*  localData.transactionSession = await _transactionAPI.createKlarnaOrder(
           transactionSession.transactionID,
           authToken,
-        );
+        );*/
       } catch (e) {
         print(e);
       }
