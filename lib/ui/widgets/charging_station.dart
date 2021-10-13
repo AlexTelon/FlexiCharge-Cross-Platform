@@ -13,6 +13,7 @@ class ChargingStation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      padding: EdgeInsets.all(16),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -28,7 +29,10 @@ class ChargingStation extends StatelessWidget {
             children: [
               Text(
                 address,
-                style: TextStyle(color: Colors.white),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Lato-Regular',
+                ),
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -39,9 +43,9 @@ class ChargingStation extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.green,
                       fontWeight: FontWeight.w400,
-                      fontFamily: "Lato",
+                      fontFamily: "Lato-Regular",
                       fontStyle: FontStyle.normal,
-                      fontSize: 15.0,
+                      fontSize: 13.0,
                     ),
                   ),
                 ],
