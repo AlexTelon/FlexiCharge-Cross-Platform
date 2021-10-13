@@ -142,7 +142,7 @@ class TransactionApiService {
   // If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
       int transactionId, String authToken) async {
-    var response = await client.post(Uri.parse('$endPoint/transactions/order'),
+    var response = await client.put(Uri.parse('$endPoint/transactions/start/$transactionId'),
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -150,7 +150,6 @@ class TransactionApiService {
           'transactionID': transactionId,
           'authorization_token': authToken
         }));
-    print("Create Klarna order status code: " + response.statusCode.toString());
     switch (response.statusCode) {
       case 201:
         var updatedTransactionSession =
@@ -160,10 +159,13 @@ class TransactionApiService {
             parsedSession.paymentID.toString());
         return parsedSession;
       case 400:
+        print(response.body);
         throw Exception(ErrorCodes.badRequest);
       case 404:
+        print(response.body);
         throw Exception(ErrorCodes.notFound);
       case 500:
+        print(response.body);
         throw Exception(ErrorCodes.internalError);
       default:
         throw Exception("default: " + ErrorCodes.internalError.toString());
