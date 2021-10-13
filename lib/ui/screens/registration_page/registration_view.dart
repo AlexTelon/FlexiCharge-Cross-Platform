@@ -1,3 +1,6 @@
+import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/services/authentication_api_service.dart';
+import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
@@ -11,6 +14,8 @@ import 'package:stacked/stacked.dart';
 
 class RegistrationView extends StatelessWidget {
   bool checked = false;
+  final _authAPI = locator<AuthenticationApiService>();
+  final _localData = locator<LocalData>();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
@@ -28,7 +33,7 @@ class RegistrationView extends StatelessWidget {
                   TextInputWidget(
                     labelText: 'Email',
                     hint: 'Enter Your Email',
-                    onChanged: (value) => print(value),
+                    onChanged: (value) => model.email = value,
                   ),
                   SizedBox(height: 15),
                   TextInputWidget(
@@ -41,14 +46,14 @@ class RegistrationView extends StatelessWidget {
                   TextInputWidget(
                     labelText: 'Password',
                     hint: 'Enter Your Password',
-                    onChanged: (value) => print(value),
+                    onChanged: (value) => model.password = value,
                     isPassword: true,
                   ),
                   SizedBox(height: 15),
                   TextInputWidget(
                     labelText: 'Repeat Password',
                     hint: 'Enter Your Repeat Password',
-                    onChanged: (value) => print(value),
+                    onChanged: (value) => model.confirmPassword = value,
                     isPassword: true,
                   ),
                   Row(
@@ -78,7 +83,8 @@ class RegistrationView extends StatelessWidget {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => print('Register Button'),
+                    onTap: () => _authAPI.registerUser(model.name, 'familyName',
+                        model.email, 'username', model.password),
                     showWideButton: true,
                   ),
                   SizedBox(height: 20.0),

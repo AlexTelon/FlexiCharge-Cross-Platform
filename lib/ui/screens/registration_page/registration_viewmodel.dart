@@ -6,6 +6,15 @@ class RegistrationViewmodel extends BaseViewModel {
   bool _checked = false;
   final _authAPI = locator<AuthenticationApiService>();
 
+  String id = '';
+  String name = '';
+  String familyName = '';
+  String email = '';
+  String username = '';
+  String password = '';
+  String confirmPassword = '';
+  String accessToken = '';
+
   set checked(newState) {
     _checked = newState;
     notifyListeners();
