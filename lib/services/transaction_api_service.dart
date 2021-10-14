@@ -120,7 +120,7 @@ class TransactionApiService {
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: jsonEncode(<String, int?>{
+            body: jsonEncode(<String, dynamic>{
               'userID': userId,
               'chargerID': chargerId,
             }));
@@ -141,7 +141,9 @@ class TransactionApiService {
   // The request returns the updated transaction object,
   // If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
-      int transactionId, String authToken) async {
+    int transactionId,
+    String authToken,
+  ) async {
     var response = await client.put(
         Uri.parse('$endPoint/transactions/start/$transactionId'),
         headers: <String, String>{
@@ -153,9 +155,10 @@ class TransactionApiService {
         }));
     switch (response.statusCode) {
       case 201:
-        var updatedTransactionSession =
-            json.decode(response.body) as Map<String, dynamic>;
-        var parsedSession = Transaction.fromJson(updatedTransactionSession);
+        var list = json.decode(response.body) as List<Map<String,dynamic>>;
+        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(list[0]);
+
         print("Klarna updatedSession paymentID: " +
             parsedSession.paymentID.toString());
         return parsedSession;

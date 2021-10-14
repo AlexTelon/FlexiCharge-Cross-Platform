@@ -20,6 +20,7 @@ class TopSheetViewModel extends BaseViewModel {
   String stopChargingButtonText = "";
   String expandButtonText = "";
   DateTime? fullychargedTime;
+  String stopTime = '';
 
   init() {
     streamListener();
@@ -144,6 +145,8 @@ class TopSheetViewModel extends BaseViewModel {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
+        stopTime = '${DateTime.now().hour} :${DateTime.now().minute} ';
+        notifyListeners();
       } else if (event == EventType.showCharging) {
         changeChargingState(false);
       }
@@ -157,13 +160,13 @@ extension TimeParser on int {
   }
 
   String parseTimeDiff() {
-    var date = DateTime.fromMicrosecondsSinceEpoch(this * 1000);
+    var date = DateTime.fromMicrosecondsSinceEpoch(this);
     var now = DateTime.now();
     var duration = now.difference(date);
     var result = '';
 
     if (duration.inHours % 24 > 0) {
-      result = result + duration.inHours.toString() + 'hr ';
+      result = result + (duration.inHours % 24).toString() + 'hr ';
     }
     if (duration.inMinutes % 60 > 0) {
       result = result + (duration.inMinutes % 60).toString() + 'min ';
