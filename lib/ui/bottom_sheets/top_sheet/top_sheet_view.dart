@@ -102,9 +102,12 @@ class TopSheetView extends StatelessWidget {
                   if (model.chargingState == 4 && model.topSheetState == 3)
                     Expanded(
                       child: ChargingSummary(
-                        chargingDuration: "1hr 41min",
-                        energyUsed: "9.1kWh @ 3.00 kr kWh",
-                        totalCost: "27.3kr",
+                        time: model.stopTime,
+                        chargingDuration: model.transactionSession.timestamp.parseTimeDiff(),
+                        energyUsed:
+                            "${model.transactionSession.kwhTransfered.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
+                        totalCost:
+                            "${(model.transactionSession.kwhTransfered * model.transactionSession.pricePerKwh).toStringAsFixed(2)}kr",
                         stopCharging: complete,
                       ),
                     ),

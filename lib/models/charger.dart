@@ -15,19 +15,15 @@ class Charger {
     required this.chargerPointId,
     required this.status,
     // required this.coordinates,
-    required this.capacity,
+    this.capacity = '',
     required this.cost,
-    required this.type,
+    this.type = '',
   });
 
   Charger.fromJson(Map<String, dynamic> json) {
     id = json['chargerID'];
     chargerPointId = json['chargePointID'];
     status = json['status'] ?? '';
-    // coordinates = json['location'];
-    capacity = json['capacity'] ?? '';
-    cost = json['price'] ?? '';
-    type = json['type'] ?? '';
   }
 }
 

@@ -54,7 +54,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
 
-  LatLng userLocation = LatLng(0, 0);
+  LatLng get userLocation => localData.userLocation;
 
   String _chargerCode = '';
   List<Charger> chargers = [];
@@ -130,12 +130,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((value) {
-        userLocation = LatLng(value.latitude, value.longitude);
-      });
-
   //function to calculate the distance between two points
   double getDistance(LatLng userLocation, LatLng chargerPoint) {
     double distanceInMeters = Geolocator.distanceBetween(userLocation.latitude,
@@ -167,7 +161,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           'distance': 1 <= distance % 1000
               ? '${(distance % 1000).toStringAsFixed(1)} km'
               : '${distance.toStringAsFixed(1)} m',
-          'location': '',
+          'location': chargerPoints[i].name,
         });
       }
     } catch (e) {
@@ -190,6 +184,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
+        onlyPin = false;
+
         notifyListeners();
       }
       notifyListeners();
@@ -213,7 +209,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
-        print("TransactionID: "+ localData.transactionSession.transactionID.toString());
+        print("TransactionID: " +
+            localData.transactionSession.transactionID.toString());
+        print("clientToken: " +
+            localData.transactionSession.clientToken.toString());
+
         print('Done');
 
         // Send our transaction session to klarna widget and wait for auth token
@@ -222,10 +222,11 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
-        print("authToken: "+ authToken);
+        print("authToken: " + authToken);
         print('Done');
 
         print("auth token: " + authToken);
+        
 
         // Create transaction order with the auth token from klarna
         print("Trying to update our transaction session with Klarna order... ");

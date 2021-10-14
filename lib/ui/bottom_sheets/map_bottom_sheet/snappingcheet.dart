@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/nearest_chargers.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/select_charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
@@ -42,12 +44,28 @@ class CustomSnappingSheet extends StatelessWidget {
                 if (model.onlyPin)
                   Align(
                     alignment: Alignment.center,
-                    child: IconButton(
-                      onPressed: () => model.onlyPin = false,
-                      icon: Icon(
-                        Icons.keyboard_arrow_up_sharp,
-                        color: Colors.white,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () => model.onlyPin = false,
+                          icon: Icon(
+                            Icons.keyboard_arrow_up_sharp,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Chargers Near Me',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Color(0xffffffff),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: -0.408,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 if (!model.onlyPin)

@@ -2,6 +2,7 @@ package com.example.flexicharge
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import androidx.annotation.NonNull
 import io.flutter.embedding.android.FlutterActivity
 import io.flutter.embedding.engine.FlutterEngine
@@ -27,9 +28,10 @@ class MainActivity: FlutterActivity() {
                 call, result ->
             if(call.method.equals("StartKlarnaActivity")){
                 this.result = result
-                //Log.d("lkasmdlkasmdmaksmdklamskldm", call.argument("clientToken"))
                 val clientToken =  call.argument("clientToken") as String?
                 if(clientToken != null){
+
+                    Log.d("--------------------->",clientToken)
                     val intent= Intent(this, KlarnaActivity::class.java)
                     intent.putExtra("CLIENTTOKEN", clientToken)
                     startActivityForResult(intent, 1)

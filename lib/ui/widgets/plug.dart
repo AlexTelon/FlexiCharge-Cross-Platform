@@ -72,7 +72,7 @@ class Plug extends StatelessWidget {
                           fontSize: 11.0),
                     ), // cost kr/kWh
                     Text(
-                      charger.cost,
+                      '${charger.cost} SEK',
                       style: const TextStyle(
                           color: const Color(0xff000000),
                           fontWeight: FontWeight.w400,

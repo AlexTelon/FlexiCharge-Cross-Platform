@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
@@ -18,21 +19,39 @@ class TopSheetViewModel extends BaseViewModel {
   double topSheetSize = 0.3;
   String stopChargingButtonText = "";
   String expandButtonText = "";
+  DateTime? fullychargedTime;
+  String stopTime = '';
 
   init() {
     streamListener();
   }
 
   // Dummy data
-  String chargingAdress = "Kungsgatan 1a, Jönköping";
-  String timeUntilFullyCharged = "1hr 21min until full";
-  String kilowattHours = "5,72 kwh at 3kwh";
+  String get chargingAdress {
+    /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+        .chargers
+        .contains((charger) => charger.id == transactionSession.chargerID));
+*/
+    return 'lite kvar';
+  }
+
+  String get timeUntilFullyCharged {
+    var goal = 100;
+    var percentage = transactionSession.currentChargePercentage;
+
+    return '${(goal - percentage).toStringAsFixed(0)} seconds left';
+  }
+
+  String get kilowattHours =>
+      "${transactionSession.kwhTransfered} kWh transferred";
 
   void changeTopSheetState(state) {
     topSheetState = state;
     notifyListeners();
     changeTopSheetSize();
   }
+
+  Transaction get transactionSession => localData.transactionSession;
 
   void changeTopSheetSize() {
     switch (topSheetState) {
@@ -126,9 +145,36 @@ class TopSheetViewModel extends BaseViewModel {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
+        stopTime = '${DateTime.now().hour} :${DateTime.now().minute} ';
+        notifyListeners();
       } else if (event == EventType.showCharging) {
         changeChargingState(false);
       }
     });
+  }
+}
+
+extension TimeParser on int {
+  DateTime parseUNIXTimestamp() {
+    return DateTime.fromMicrosecondsSinceEpoch(this * 1000);
+  }
+
+  String parseTimeDiff() {
+    var date = DateTime.fromMicrosecondsSinceEpoch(this);
+    var now = DateTime.now();
+    var duration = now.difference(date);
+    var result = '';
+
+    if (duration.inHours % 24 > 0) {
+      result = result + (duration.inHours % 24).toString() + 'hr ';
+    }
+    if (duration.inMinutes % 60 > 0) {
+      result = result + (duration.inMinutes % 60).toString() + 'min ';
+    }
+    if (duration.inSeconds % 60 > 0) {
+      result = result + (duration.inMinutes % 60).toString() + 'sec ';
+    }
+
+    return result;
   }
 }
