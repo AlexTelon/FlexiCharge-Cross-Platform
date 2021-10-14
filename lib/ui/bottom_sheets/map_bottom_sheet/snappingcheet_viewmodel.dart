@@ -202,7 +202,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         // Reserve charger during payment
         print("Trying to connect to a charger with id: $id...");
         await _chargerAPI.reserveCharger(id);
-        await Future.delayed(Duration(seconds: 120));
         print("charger is reserved");
         print("starting the session..");
         // Create a transaction session

@@ -126,9 +126,11 @@ class KlarnaActivity : AppCompatActivity(), KlarnaPaymentViewCallback {
 
     override fun onErrorOccurred(view: KlarnaPaymentView, error: KlarnaPaymentsSDKError) {
         println("An error occurred: ${error.name} - ${error.message}")
-        if (error.isFatal) {
+       /* if (error.isFatal) {
             klarnaPaymentView.visibility = View.INVISIBLE
-        }
+
+
+        }*/
     }
 
     override fun onFinalized(view: KlarnaPaymentView, approved: Boolean, authToken: String?) {}

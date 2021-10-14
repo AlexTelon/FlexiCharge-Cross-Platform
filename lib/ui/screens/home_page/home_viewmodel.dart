@@ -110,13 +110,18 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<int> fetchChargingPercentage() async {
-    Transaction currentTransaction = await _transactionAPI
-        .getTransactionById(localData.transactionSession.transactionID);
+    try {
+      Transaction currentTransaction = await _transactionAPI
+          .getTransactionById(localData.transactionSession.transactionID);
 
-    int currentChargingPercentage =
-        currentTransaction.currentChargePercentage.round();
+      int currentChargingPercentage =
+          currentTransaction.currentChargePercentage.round();
+      return currentChargingPercentage;
+    } catch (e) {
+      print(e);
+    }
 
-    return currentChargingPercentage;
+    return 0;
   }
 
   Future<void> getTransaction() async {

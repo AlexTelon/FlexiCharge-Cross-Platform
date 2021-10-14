@@ -8,7 +8,6 @@ import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:stacked/stacked.dart';
-import 'package:intl/intl.dart';
 
 class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
@@ -28,11 +27,11 @@ class TopSheetViewModel extends BaseViewModel {
 
   // Dummy data
   String get chargingAdress {
-    var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+    /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
         .contains((charger) => charger.id == transactionSession.chargerID));
-
-    return chargerPoint.name;
+*/
+    return 'lite kvar';
   }
 
   String get timeUntilFullyCharged {
@@ -52,7 +51,6 @@ class TopSheetViewModel extends BaseViewModel {
   }
 
   Transaction get transactionSession => localData.transactionSession;
-
 
   void changeTopSheetSize() {
     switch (topSheetState) {
