@@ -33,7 +33,7 @@ dependencies:
   flutter_svg: ^0.22.0
   loading_overlay_pro: ^2.1.1
   splashscreen: ^1.2.0
-  qr_code_scanner: ^0.5.2
+  qr_code_scanner: ^1.0.0 #updated 2022
   gradient_widgets: ^0.6.0
   pin_code_fields: ^7.3.0
 

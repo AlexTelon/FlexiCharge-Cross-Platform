@@ -226,7 +226,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print('Done');
 
         print("auth token: " + authToken);
-        
 
         // Create transaction order with the auth token from klarna
         print("Trying to update our transaction session with Klarna order... ");

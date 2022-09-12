@@ -71,7 +71,7 @@ class _QRViewState extends State<QrScannerView> {
       //Prevents the qr-code from continuing to scan after we found a code
       if (!foundValid) {
         try {
-          var code = scanData.code.removeAllWhitespace
+          var code = scanData.code!.removeAllWhitespace
               .replaceAll(',', '')
               .replaceAll('[', '')
               .replaceAll(']', '')
