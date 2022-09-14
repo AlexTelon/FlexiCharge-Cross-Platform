@@ -9,7 +9,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  static const endPoint = "http://54.220.194.65:8080";
+  static const endPoint = "http://18.202.253.30:8080";
   http.Client client = new http.Client();
   var chargerPoint = new ChargerPoint();
   LocalData _localData = locator<LocalData>();
@@ -166,7 +166,7 @@ class ChargerApiService {
   }
 
   Future<void> reserveCharger(int id) async {
-    print("Reserve charger: "+id.toString());
+    print("Reserve charger: " + id.toString());
     var response = await client.put(
       Uri.parse('$endPoint/reservations/$id'),
       headers: <String, String>{

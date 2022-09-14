@@ -4,7 +4,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionApiService {
-  static const endPoint = "http://54.220.194.65:8080";
+  static const endPoint = "http://18.202.253.30:8080/";
   var client = new http.Client();
 
   Future<Transaction> getTransactionById(int id) async {
@@ -155,7 +155,7 @@ class TransactionApiService {
         }));
     switch (response.statusCode) {
       case 201:
-        var list = json.decode(response.body) as List<Map<String,dynamic>>;
+        var list = json.decode(response.body) as List<Map<String, dynamic>>;
         if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
         var parsedSession = Transaction.fromJson(list[0]);
 
