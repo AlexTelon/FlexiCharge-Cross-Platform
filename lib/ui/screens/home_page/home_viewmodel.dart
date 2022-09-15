@@ -121,6 +121,9 @@ class HomeViewModel extends BaseViewModel {
       print(e);
     }
 
+  Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
+    _bottomSheetService.showCustomSheet(
+        variant: SheetType.mapBottomSheet, data: chargerPointId);
     return 0;
   }
 

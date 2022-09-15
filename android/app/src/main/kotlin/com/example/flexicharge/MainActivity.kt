@@ -10,15 +10,17 @@ import io.flutter.plugin.common.MethodChannel
 import payment.KlarnaActivity
 
 class MainActivity: FlutterActivity() {
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (Intent.ACTION_VIEW.equals(intent.getAction())) {
+        getFlutterView().pushRoute("paymentDone");
 
     private val CHANNEL = "com.startActivity/klarnaChannel"
     var result:  MethodChannel.Result? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
-
     }
 
 
@@ -54,7 +56,8 @@ class MainActivity: FlutterActivity() {
         }
         if (resultCode == RESULT_CANCELED) {
             // Write your code if there's no result
-
         }
     }
 }
+
+
