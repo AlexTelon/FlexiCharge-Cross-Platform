@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
 class ChargingSummary extends StatelessWidget {
-  const ChargingSummary(
-      {Key? key,
-      required this.chargingDuration,
-      required this.energyUsed,
-      required this.totalCost,
-      required this.stopCharging})
-      : super(key: key);
+  const ChargingSummary({
+    Key? key,
+    required this.chargingDuration,
+    required this.energyUsed,
+    required this.totalCost,
+    required this.time,
+    required this.stopCharging,
+  }) : super(key: key);
 
   final String chargingDuration;
   final String energyUsed;
   final String totalCost;
+  final String time;
   final Function()? stopCharging;
 
   @override
@@ -26,7 +28,7 @@ class ChargingSummary extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Charging stopped at 16:41",
+                    "Charging stopped at $time",
                     style: Theme.of(context).textTheme.bodyText1,
                   ),
                 ],

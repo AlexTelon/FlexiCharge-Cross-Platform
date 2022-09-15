@@ -54,7 +54,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Charger _selectedCharger = Charger();
   ChargerPoint _selectedChargerPoint = ChargerPoint();
 
-  LatLng userLocation = LatLng(0, 0);
+  LatLng get userLocation => localData.userLocation;
 
   String _chargerCode = '';
   List<Charger> chargers = [];
@@ -130,12 +130,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((value) {
-        userLocation = LatLng(value.latitude, value.longitude);
-      });
-
   //function to calculate the distance between two points
   double getDistance(LatLng userLocation, LatLng chargerPoint) {
     double distanceInMeters = Geolocator.distanceBetween(userLocation.latitude,
@@ -167,7 +161,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           'distance': 1 <= distance % 1000
               ? '${(distance % 1000).toStringAsFixed(1)} km'
               : '${distance.toStringAsFixed(1)} m',
-          'location': '',
+          'location': chargerPoints[i].name,
         });
       }
     } catch (e) {
@@ -190,6 +184,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       if (selectedCharger.status == "Available") {
         isFirstView = false;
         showWideButton = true;
+        onlyPin = false;
+
         notifyListeners();
       }
       notifyListeners();
@@ -204,23 +200,56 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     if (selectedCharger.status == 'Available') {
       try {
         // Reserve charger during payment
-        print("Trying to connect to a charger...");
+        print("Trying to connect to a charger with id: $id...");
         await _chargerAPI.reserveCharger(id);
-        print("");
+        print("charger is reserved");
+        print("starting the session..");
         // Create a transaction session
+        print("Trying to create a transaction session... ");
         Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
+        print("TransactionID: " +
+            localData.transactionSession.transactionID.toString());
+        print("clientToken: " +
+            localData.transactionSession.clientToken.toString());
+
+        print('Done');
+
         // Send our transaction session to klarna widget and wait for auth token
+        print("transactionID:  " + transactionSession.transactionID.toString());
+        print("Getting auth token...");
+
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
+        print("authToken: " + authToken);
+        print('Done');
+
+        print("auth token: " + authToken);
 
         // Create transaction order with the auth token from klarna
+        print("Trying to update our transaction session with Klarna order... ");
         localData.transactionSession = await _transactionAPI.createKlarnaOrder(
             transactionSession.transactionID, authToken);
+        print("payment ID" + localData.transactionSession.paymentID.toString());
       } catch (e) {
         print(e);
       }
+    }
+    notifyListeners();
+  }
+
+  // Try to disconnect the charger and update the transactionSession
+  Future<void> disConnect(int id) async {
+    try {
+      // Reserve charger during payment
+      print("trying to disconnect the charger...");
+      localData.transactionSession = await _transactionAPI.stopCharging(id);
+      print("charger is disconnected");
+      print("paymentConfirmed: " +
+          localData.transactionSession.paymentConfirmed.toString());
+    } catch (e) {
+      print(e);
     }
     notifyListeners();
   }
@@ -229,8 +258,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     try {
       final String result = await platform
           .invokeMethod("StartKlarnaActivity", {'clientToken': clientToken});
-
-      debugPrint('Result: $result ');
       return result;
     } on PlatformException catch (e) {
       debugPrint("Error: '${e.message}'.");

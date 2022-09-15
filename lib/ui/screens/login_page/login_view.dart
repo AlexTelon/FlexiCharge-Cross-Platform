@@ -22,7 +22,7 @@ class LoginView extends StatelessWidget {
                 flex: 2,
                 child: Topbar(
                   text: "Log In",
-                  onTap: () => print("Back to previos page..."),
+                  onTap: () => print("Back to previous page..."),
                 ),
               ),
               // UPPP
@@ -76,7 +76,7 @@ class LoginView extends StatelessWidget {
                                 );
                               },
                               child: Text(
-                                'I forget my password',
+                                'I forgot my password',
                                 style: TextStyle(
                                   fontFamily: 'Lato',
                                   color: Color(0xff78bd76),
