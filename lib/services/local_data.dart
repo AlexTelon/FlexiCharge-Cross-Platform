@@ -1,47 +1,30 @@
+import 'dart:async';
+
+import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/models/charger_point.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class LocalData {
-  List<Charger> chargers = [
-    Charger.fromCharger(
-      id: 201820,
-      status: 1,
-      type: 'threePin',
-      capacity: 'threeKW',
-      cost: 'threeKrKWh',
-      location: LatLng(123.5, 1321.5),
-    ),
-    Charger.fromCharger(
-      id: 201820,
-      status: 0,
-      type: 'fourPin',
-      capacity: 'fourKW',
-      cost: 'fourKrKWh',
-      location: LatLng(321.5, 248.5),
-    ),
-    Charger.fromCharger(
-      id: 201820,
-      status: 2,
-      type: 'fivePin',
-      capacity: 'fiveKW',
-      cost: 'fiveKrKWh',
-      location: LatLng(444.8, 3331.6),
-    ),
-    Charger.fromCharger(
-      id: 201820,
-      status: 3,
-      type: 'sixPin',
-      capacity: 'sixKW',
-      cost: 'sixKrKWh',
-      location: LatLng(666.8, 555.6),
-    ),
-    Charger.fromCharger(
-      id: 201820,
-      status: 3,
-      type: 'sixPin',
-      capacity: 'sixKW',
-      cost: 'sixKrKWh',
-      location: LatLng(666.8, 555.6),
-    ),
-  ];
+  List<Charger> chargers = [];
+  String qrCode = '';
+  List<ChargerPoint> chargerPoints = [];
+  LatLng userLocation = LatLng(0, 0);
+  int chargingCharger = -1;
+  Transaction transactionSession = Transaction();
+  bool isButtonActive = true;
+  int chargingPercentage = 0;
+  late Timer timer;
+  late StreamController<EventType> controller;
+  late Stream stream;
+
+  LocalData() {
+    controller = StreamController.broadcast();
+    stream = controller.stream;
+  }
+
+  BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
+  BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
 }

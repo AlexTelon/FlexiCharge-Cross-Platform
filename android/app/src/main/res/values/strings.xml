@@ -1,0 +1,6 @@
+<resources>
+    <string name="return_url_host">kp</string>
+    <string name="return_url_scheme">kp-sample</string>
+    <string name="title_activity_klarna">Klarna</string>
+
+</resources>

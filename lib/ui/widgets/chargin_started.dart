@@ -1,7 +1,4 @@
-import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class ChargingStarted extends StatelessWidget {
   const ChargingStarted({
@@ -12,22 +9,27 @@ class ChargingStarted extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Container(
             child: Image(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.30,
                 image: AssetImage('assets/images/smallFlexiChargeLogo.png')),
           ),
           // Rectangle Copy 20
           // Fill 1
           Container(
               child: Image(
-            width: 50,
-            height: 50,
-            image: AssetImage('assets/images/white_arrow_right.png'),
+            width: MediaQuery.of(context).size.height * 0.1,
+            height: MediaQuery.of(context).size.height * 0.1,
+            image: AssetImage('assets/images/white_arrow.png'),
           )),
           Container(
-            child: Image(image: AssetImage('assets/images/whiteCheck.png')),
+            child: Image(
+                width: MediaQuery.of(context).size.width * 0.25,
+                height: MediaQuery.of(context).size.height * 0.30,
+                image: AssetImage('assets/images/whiteCheck.png')),
           ),
         ],
       ),
