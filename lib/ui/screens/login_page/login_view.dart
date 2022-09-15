@@ -1,4 +1,3 @@
-import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_view.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -23,7 +22,7 @@ class LoginView extends StatelessWidget {
                 flex: 2,
                 child: Topbar(
                   text: "Log In",
-                  onTap: () => print("Back to previos page..."),
+                  onTap: () => print("Back to previous page..."),
                 ),
               ),
               // UPPP
@@ -77,7 +76,7 @@ class LoginView extends StatelessWidget {
                                 );
                               },
                               child: Text(
-                                'I forget my password',
+                                'I forgot my password',
                                 style: TextStyle(
                                   fontFamily: 'Lato',
                                   color: Color(0xff78bd76),

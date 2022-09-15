@@ -18,7 +18,7 @@ class Plug extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          padding: const EdgeInsets.symmetric(horizontal: 14.0),
           child: Container(
             width: 130,
             height: 60,
@@ -41,7 +41,12 @@ class Plug extends StatelessWidget {
                       'assets/svg_images/charger_type.svg',
                       fit: BoxFit.scaleDown,
                     ),
-                    Text(charger.type),
+                    Text(charger.type,
+                        style: const TextStyle(
+                          fontFamily: "Lato-Regular",
+                          fontSize: 11.0,
+                          fontStyle: FontStyle.normal,
+                        )),
                   ],
                 ),
                 Column(
@@ -53,7 +58,7 @@ class Plug extends StatelessWidget {
                       style: const TextStyle(
                           color: const Color(0xff000000),
                           fontWeight: FontWeight.w400,
-                          fontFamily: "Lato",
+                          fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
                           fontSize: 11.0),
                     ), // capacity
@@ -62,31 +67,27 @@ class Plug extends StatelessWidget {
                       style: const TextStyle(
                           color: const Color(0xff000000),
                           fontWeight: FontWeight.w400,
-                          fontFamily: "Lato",
+                          fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
                           fontSize: 11.0),
                     ), // cost kr/kWh
                     Text(
-                      charger.cost,
+                      '${charger.cost} SEK',
                       style: const TextStyle(
                           color: const Color(0xff000000),
                           fontWeight: FontWeight.w400,
-                          fontFamily: "Lato",
+                          fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
                           fontSize: 11.0),
                     ), // status
                     Text(
-                      charger.status == 0
-                          ? 'occupid'
-                          : charger.status == 1
-                              ? 'available'
-                              : 'booked',
+                      charger.status, // Set
                       style: TextStyle(
-                        color: charger.status == 1
+                        color: charger.status == "Available"
                             ? Color(0xff78bd76)
                             : Colors.red,
                         fontWeight: FontWeight.w400,
-                        fontFamily: "Lato",
+                        fontFamily: "Lato-Regular",
                         fontStyle: FontStyle.normal,
                         fontSize: 11.0,
                       ),

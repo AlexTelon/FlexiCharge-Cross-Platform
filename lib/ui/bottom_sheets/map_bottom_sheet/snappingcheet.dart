@@ -1,13 +1,9 @@
-import 'package:flexicharge/app/app.locator.dart';
+import 'dart:ui';
+
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/nearest_chargers.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/select_charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
-import 'package:flexicharge/ui/widgets/charger_locations.dart';
-import 'package:flexicharge/ui/widgets/charging_station.dart';
-import 'package:flexicharge/ui/widgets/invoice_button.dart';
-import 'package:flexicharge/ui/widgets/plugs.dart';
-import 'package:flexicharge/ui/widgets/klarna_button.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -48,12 +44,28 @@ class CustomSnappingSheet extends StatelessWidget {
                 if (model.onlyPin)
                   Align(
                     alignment: Alignment.center,
-                    child: IconButton(
-                      onPressed: () => model.onlyPin = false,
-                      icon: Icon(
-                        Icons.keyboard_arrow_up_sharp,
-                        color: Colors.white,
-                      ),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        IconButton(
+                          onPressed: () => model.onlyPin = false,
+                          icon: Icon(
+                            Icons.keyboard_arrow_up_sharp,
+                            color: Colors.white,
+                          ),
+                        ),
+                        Text(
+                          'Chargers Near Me',
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: Color(0xffffffff),
+                            fontSize: 17,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                            letterSpacing: -0.408,
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 if (!model.onlyPin)
@@ -65,6 +77,10 @@ class CustomSnappingSheet extends StatelessWidget {
                   child: Align(
                     alignment: Alignment.center,
                     child: ChargerCodeInput(
+                      key:
+                          ValueKey<String>(model.selectedCharger.id.toString()),
+                      controller:
+                          TextEditingController(text: model.chargerCode),
                       onChanged: (input) => model.chargerCode = input,
                       validator: (input) {
                         if (input == null || input.length != 6) {
@@ -87,9 +103,16 @@ class CustomSnappingSheet extends StatelessWidget {
                 ),
                 SizedBox(height: 10),
                 WideButton(
+                  key: ValueKey<String>(model.selectedCharger.id.toString()),
                   color: model.wideButtonColor,
                   text: model.wideButtonText,
-                  onTap: () => model.updateStatus(0, model.selectedCharger.id),
+                  onTap: () async {
+                    await model.connect(model.selectedCharger.id);
+                    model.localData.chargingCharger = model.selectedCharger.id;
+                    model.localData.isButtonActive = false;
+                    completer(SheetResponse(data: true));
+                    print(model.selectedCharger.id);
+                  },
                   showWideButton: model.showWideButton,
                 ),
                 SizedBox(

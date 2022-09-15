@@ -5,18 +5,18 @@ import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:stacked/stacked.dart';
-import 'package:stacked_services/stacked_services.dart';
 
 class TopSheetView extends StatelessWidget {
-  const TopSheetView({
+  TopSheetView({
+    required this.complete,
     Key? key,
   }) : super(key: key);
-
+  Function() complete;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
+        onModelReady: (model) => model.init(),
         viewModelBuilder: () => TopSheetViewModel(),
         builder: (context, model, child) => AnimatedContainer(
               duration: const Duration(milliseconds: 100),
@@ -33,19 +33,15 @@ class TopSheetView extends StatelessWidget {
                   Container(
                       height: MediaQuery.of(context).size.height * 0.10,
                       child: FittedBox(
-                        fit: BoxFit.fitHeight,
-                        child: TextButton(
-                          // Todo: Change Textbutton() to Text() when finished with UI.
-                          onPressed: () => model.changeChargingState(false),
-                          child: Text(
-                            model.topSheetText,
-                            style: const TextStyle(
-                                color: const Color(0xffffffff),
-                                fontWeight: FontWeight.w700,
-                                fontFamily: "ITCAvantGardeStd",
-                                fontStyle: FontStyle.normal,
-                                fontSize: 17.0),
-                          ),
+                        fit: BoxFit.scaleDown,
+                        child: Text(
+                          model.topSheetText,
+                          style: const TextStyle(
+                              color: const Color(0xffffffff),
+                              fontWeight: FontWeight.w700,
+                              fontFamily: "ITCAvantGardeStd",
+                              fontStyle: FontStyle.normal,
+                              fontSize: 17.0),
                         ),
                       )),
                   if (model.chargingState == 1)
@@ -56,10 +52,10 @@ class TopSheetView extends StatelessWidget {
                     ),
                   if (model.chargingState == 2 || model.chargingState == 3)
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.125,
+                      height: MediaQuery.of(context).size.height * 0.09,
                       // Charging In Progress & Fully Charged
                       child: ChargingInProgress(
-                        batteryProcent: model.batteryProcent,
+                        batteryProcent: model.localData.chargingPercentage,
                         chargingAdress: model.chargingAdress,
                         timeUntilFullyCharged: model.timeUntilFullyCharged,
                         kilowattHours: model.kilowattHours,
@@ -91,11 +87,11 @@ class TopSheetView extends StatelessWidget {
                               children: [
                                 Text(model.expandButtonText,
                                     style: TextStyle(color: Colors.white)),
-                                Image(
-                                    width: 30,
-                                    height: 30,
-                                    image: AssetImage(
-                                        'assets/images/arrow_down.png'))
+                                Icon(
+                                  Icons.keyboard_arrow_down_rounded,
+                                  size: 30,
+                                  color: Colors.white,
+                                ),
                               ],
                             ),
                             onPressed: () {
@@ -106,10 +102,13 @@ class TopSheetView extends StatelessWidget {
                   if (model.chargingState == 4 && model.topSheetState == 3)
                     Expanded(
                       child: ChargingSummary(
-                        chargingDuration: "1hr 41min",
-                        energyUsed: "9.1kWh @ 3.00 kr kWh",
-                        totalCost: "27.3kr",
-                        stopCharging: () => model.changeChargingState(false),
+                        time: model.stopTime,
+                        chargingDuration: model.transactionSession.timestamp.parseTimeDiff(),
+                        energyUsed:
+                            "${model.transactionSession.kwhTransfered.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
+                        totalCost:
+                            "${(model.transactionSession.kwhTransfered * model.transactionSession.pricePerKwh).toStringAsFixed(2)}kr",
+                        stopCharging: complete,
                       ),
                     ),
                 ],

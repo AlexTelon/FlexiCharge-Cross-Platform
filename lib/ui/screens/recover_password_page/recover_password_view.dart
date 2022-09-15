@@ -1,4 +1,3 @@
-import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -21,7 +20,7 @@ class RecoverPasswordView extends StatelessWidget {
                 flex: 2,
                 child: Topbar(
                   text: "Recover Password",
-                  onTap: () => print("Back to previos page..."),
+                  onTap: () => print("Back to previous page..."),
                 ),
               ),
               // UPPP

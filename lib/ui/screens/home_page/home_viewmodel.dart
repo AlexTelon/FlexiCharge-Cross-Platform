@@ -1,20 +1,23 @@
 import 'dart:async';
-
+import 'package:flexicharge/enums/event_type.dart';
+import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/services/transaction_api_service.dart';
+import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
+import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
-import 'package:geocoding/geocoding.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _chagerAPI = locator<ChargerApiService>();
-  final _localData = locator<LocalData>();
+  final _transactionAPI = locator<TransactionApiService>();
+  final localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
 
@@ -22,22 +25,17 @@ class HomeViewModel extends BaseViewModel {
     try {
       getUserLocation();
       findUser();
-      getAddress();
-      greenMarkerIcon = await _greenMarkerIcon;
-      redMarkerIcon = await _redMarkerIcon;
-      blackMarkerIcon = await _blackMarkerIcon;
-      var allChargingPoints = await _chagerAPI.getChargerPoints();
-      _localData.chargerPoints = allChargingPoints;
-      allChargingPoints.forEach(
+
+      localData.chargerPoints.forEach(
         (chargingPoint) => markers.add(
           Marker(
             markerId: MarkerId(chargingPoint.chargerPointId.toString()),
             icon: chargingPoint.chargers
-                        .where((charger) => charger.status == 0)
+                        .where((charger) => charger.status != 'Available')
                         .length ==
                     chargingPoint.chargers.length
-                ? redMarkerIcon
-                : greenMarkerIcon,
+                ? localData.redMarkerIcon
+                : localData.greenMarkerIcon,
             onTap: () => openFindCharger(chargerPointId: chargingPoint),
             position: chargingPoint.coordinates,
             consumeTapEvents: true,
@@ -50,12 +48,9 @@ class HomeViewModel extends BaseViewModel {
     }
   }
 
-  BitmapDescriptor greenMarkerIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor redMarkerIcon = BitmapDescriptor.defaultMarker;
-  BitmapDescriptor blackMarkerIcon = BitmapDescriptor.defaultMarker;
   String title = '';
   Set<Marker> markers = {};
-  bool activeTopSheet = true;
+  bool activeTopSheet = false;
 
   Completer<GoogleMapController> controller = Completer();
   GoogleMapController? userLocateController;
@@ -64,42 +59,78 @@ class HomeViewModel extends BaseViewModel {
     target: LatLng(0, 0),
   );
 
-/*
-   void getDistance() {
-    double distanceInMeters = Geolocator.distanceBetween(
-        57.7786555, 14.1628453, 57.7801889, 14.1763385);
-    print('the distance between libriries $distanceInMeters/1000');
+  void getUserLocation() {
+    cameraPosition = CameraPosition(
+      target: LatLng(
+          localData.userLocation.latitude, localData.userLocation.longitude),
+      zoom: 14.5,
+    );
+    notifyListeners();
   }
-  */
 
-  void getUserLocation() =>
-      Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-          .then((value) {
-        cameraPosition = CameraPosition(
-          target: LatLng(value.latitude, value.longitude),
-          zoom: 14.5,
-        );
+  Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
+    _bottomSheetService
+        .showCustomSheet(
+            variant: SheetType.mapBottomSheet, data: chargerPointId)
+        .then((value) {
+      if (value != null && value.data == true) {
+        activeTopSheet = true;
+        startTimer();
         notifyListeners();
-      });
+      }
+    });
+  }
 
-  get _greenMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/green_marker.png',
-      );
+  void startTimer() {
+    print("Starting timer...");
+    int secondsPast = 0;
+    localData.chargingPercentage = 0;
 
-  get _redMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/red_marker.png',
-      );
+    localData.timer = new Timer.periodic(Duration(seconds: 2), (timer) async {
+      secondsPast += 2;
+      localData.chargingPercentage = await fetchChargingPercentage();
 
-  get _blackMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
-        'assets/images/black_marker.png',
-      );
+      if (secondsPast == 2) {
+        // Change to ChargeInProgress state when 2 seconds has past.
+        localData.controller.add(EventType.showCharging);
+      }
+
+      if (localData.chargingPercentage == 100) {
+        print("Fully charged! Stopping timer...");
+        localData.controller.add(EventType.stopTimer);
+        localData.timer.cancel();
+      }
+
+      print("Seconds: " +
+          secondsPast.toString() +
+          "Charging Percentage: " +
+          localData.chargingPercentage.toString());
+      notifyListeners();
+    });
+  }
+
+  Future<int> fetchChargingPercentage() async {
+    try {
+      Transaction currentTransaction = await _transactionAPI
+          .getTransactionById(localData.transactionSession.transactionID);
+
+      int currentChargingPercentage =
+          currentTransaction.currentChargePercentage.round();
+      return currentChargingPercentage;
+    } catch (e) {
+      print(e);
+    }
 
   Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService.showCustomSheet(
         variant: SheetType.mapBottomSheet, data: chargerPointId);
+    return 0;
+  }
+
+  Future<void> getTransaction() async {
+    // Testing transactionApiService
+    var transaction = await _transactionAPI.getTransactionById(1);
+    // transaction.printTransaction();
   }
 
   Future<void> findUser() async {
@@ -115,13 +146,20 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
-  Future<void> getAddress() async {
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
-        .then((value) async {
-      await placemarkFromCoordinates(value.latitude, value.longitude);
-      return placemarkFromCoordinates;
-    });
+  Future<void> doQrScan() async {
+    // Open qr scan and wait for data
+    await _navigationService.navigateTo(Routes.qrScannerView);
+    // Pass data to charger code input field
+    if (localData.qrCode.isNotEmpty) openChargerCodeInput(localData.qrCode);
+  }
+
+  Future<void> openChargerCodeInput(String? data) async {
+    _bottomSheetService.showCustomSheet(
+        variant: SheetType.mapBottomSheet, data: data);
+  }
+
+  completeTopSheet() {
+    activeTopSheet = false;
     notifyListeners();
-    print(placemarkFromCoordinates);
   }
 }

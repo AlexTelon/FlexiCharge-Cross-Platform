@@ -24,7 +24,6 @@ class Plugs extends StatelessWidget {
         children: chargers
             .map(
               (charger) => Plug(
-                
                 onTap: () => onTap != null ? onTap!(charger) : null,
                 isSelected: charger.id == selectedChargerId,
                 charger: charger,

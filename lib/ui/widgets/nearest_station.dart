@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 class NearestStation extends StatelessWidget {
   const NearestStation({
@@ -29,9 +28,9 @@ class NearestStation extends StatelessWidget {
               Text(
                 location,
                 style: TextStyle(
-                  fontFamily: 'Lato',
+                  fontFamily: 'Lato-Regular',
                   color: Color(0xffffffff),
-                  fontSize: 18,
+                  fontSize: 17,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
                 ),
@@ -41,11 +40,11 @@ class NearestStation extends StatelessWidget {
               ),
               chargers == 0
                   ? Text(
-                      'Sorry This Charging Station Contains No Available Chargers',
+                      'No Available Chargers',
                       style: TextStyle(
-                        fontFamily: 'Lato',
+                        fontFamily: 'Lato-Regular',
                         color: Colors.red,
-                        fontSize: 10,
+                        fontSize: 13,
                       ),
                     )
                   : Row(
