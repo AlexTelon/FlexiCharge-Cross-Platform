@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/nearest_chargers.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/select_charger.dart';
 import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';

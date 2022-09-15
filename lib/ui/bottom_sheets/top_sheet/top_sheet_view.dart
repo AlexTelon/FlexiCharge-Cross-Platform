@@ -4,7 +4,6 @@ import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
 import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetView extends StatelessWidget {
@@ -103,7 +102,8 @@ class TopSheetView extends StatelessWidget {
                     Expanded(
                       child: ChargingSummary(
                         time: model.stopTime,
-                        chargingDuration: model.transactionSession.timestamp.parseTimeDiff(),
+                        chargingDuration:
+                            model.transactionSession.timestamp.parseTimeDiff(),
                         energyUsed:
                             "${model.transactionSession.kwhTransfered.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
                         totalCost:
