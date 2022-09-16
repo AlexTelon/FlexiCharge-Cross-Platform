@@ -4,7 +4,6 @@ import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
