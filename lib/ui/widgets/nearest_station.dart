@@ -1,18 +1,18 @@
-import 'package:flexicharge/ui/icons_widgets/get_icon.dart';
 import 'package:flutter/material.dart';
 
 class NearestStation extends StatelessWidget {
   const NearestStation({
     required this.location,
-    required this.distance,
     required this.chargers,
     required this.onTap,
+    required this.distance,
     Key? key,
   }) : super(key: key);
 
-  final String location, distance;
+  final String location;
   final int chargers;
   final Function()? onTap;
+  final String distance;
 
   @override
   Widget build(BuildContext context) {
@@ -28,12 +28,39 @@ class NearestStation extends StatelessWidget {
               Text(
                 location,
                 style: TextStyle(
-                  fontFamily: 'Lato',
+                  fontFamily: 'Lato-Regular',
                   color: Color(0xffffffff),
                   fontSize: 17,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
                 ),
               ),
-              Image.asset("assets/images/charger_icon.png", width: 18, height: 16,fit: BoxFit.fill ),
+              SizedBox(
+                height: 5,
+              ),
+              chargers == 0
+                  ? Text(
+                      'No Available Chargers',
+                      style: TextStyle(
+                        fontFamily: 'Lato-Regular',
+                        color: Colors.red,
+                        fontSize: 13,
+                      ),
+                    )
+                  : Row(
+                      children: List<Widget>.generate(
+                        chargers,
+                        (index) => Padding(
+                          padding: const EdgeInsets.only(left: 4.0),
+                          child: Image.asset(
+                            "assets/images/charger_icon.png",
+                            width: 20,
+                            height: 20,
+                            fit: BoxFit.fill,
+                          ),
+                        ),
+                      ),
+                    ),
             ],
           ),
           Column(
@@ -43,7 +70,10 @@ class NearestStation extends StatelessWidget {
                 style: TextStyle(
                   fontFamily: 'Lato',
                   color: Color(0xffffffff),
-                  fontSize: 17,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  fontStyle: FontStyle.normal,
+                  letterSpacing: -0.408,
                 ),
               ),
               SizedBox(

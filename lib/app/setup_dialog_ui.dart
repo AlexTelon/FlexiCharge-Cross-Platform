@@ -8,8 +8,8 @@ void setupBottomSheetUi() {
   final bottomSheetService = locator<BottomSheetService>();
 
   final builders = {
-    BottomSheetType.mapBottomSheet: (context, sheetRequest, completer) =>
-        CustomSnappingSheet(request: sheetRequest, completer: completer)
+    SheetType.mapBottomSheet: (context, sheetRequest, completer) =>
+        CustomSnappingSheet(request: sheetRequest, completer: completer),
   };
 
   bottomSheetService.setCustomSheetBuilders(builders);
