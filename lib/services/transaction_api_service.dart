@@ -121,7 +121,7 @@ class TransactionApiService {
               'Content-Type': 'application/json; charset=UTF-8',
             },
             body: jsonEncode(<String, dynamic>{
-              'userID': userId,
+              'userID': userId.toString(),
               'chargerID': chargerId,
             }));
     switch (response.statusCode) {
