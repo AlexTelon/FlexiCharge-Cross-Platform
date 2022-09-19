@@ -79,7 +79,7 @@ class RegistrationView extends StatelessWidget {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => print('Register Button'),
+                    onTap: () => model.registerNewUser(),
                     showWideButton: true,
                   ),
                   SizedBox(height: 20.0),

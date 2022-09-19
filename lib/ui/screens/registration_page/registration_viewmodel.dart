@@ -9,4 +9,8 @@ class RegistrationViewmodel extends BaseViewModel {
   }
 
   bool get checked => _checked;
+
+  void registerNewUser() {
+    print('Register Func');
+  }
 }
