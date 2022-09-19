@@ -172,7 +172,8 @@ class ChargerApiService {
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
-      body: jsonEncode(<String, String>{
+      body: jsonEncode(<String, dynamic>{
+        "chargerId": id,
         "connectorId": "1",
         "idTag": "1",
         "reservationId": "1",

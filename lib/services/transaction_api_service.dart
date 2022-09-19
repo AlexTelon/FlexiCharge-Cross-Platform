@@ -4,7 +4,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
 class TransactionApiService {
-  static const endPoint = "http://18.202.253.30:8080/";
+  static const endPoint = "http://18.202.253.30:8080";
   var client = new http.Client();
 
   Future<Transaction> getTransactionById(int id) async {
@@ -120,8 +120,9 @@ class TransactionApiService {
             headers: <String, String>{
               'Content-Type': 'application/json; charset=UTF-8',
             },
-            body: jsonEncode(<String, dynamic>{
-              'userID': userId,
+            encoding: Encoding.getByName('utf-8'),
+            body: json.encode(<String, int>{
+              'userID': 1, //TODO This needs to be replaced with actual value
               'chargerID': chargerId,
             }));
     switch (response.statusCode) {
@@ -130,6 +131,8 @@ class TransactionApiService {
         var parsedSession = Transaction.fromJson(transaction);
         return parsedSession;
       case 400:
+        throw Exception(ErrorCodes.badRequest);
+      case 404:
         throw Exception(ErrorCodes.notFound);
       case 500:
         throw Exception(ErrorCodes.internalError);
