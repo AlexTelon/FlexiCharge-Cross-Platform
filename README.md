@@ -76,7 +76,6 @@ There exists no native implementation of Klarna within Flutter, therefore it is 
 |These Credit Card Details should be used for Klarna|
 |:--:|
 |![image-20211013123905119](https://user-images.githubusercontent.com/36575668/191029537-6165d5ee-df7f-48e7-8946-7814a75b327d.png)|
-|These Credit Card Details should be used for Klarna|
 
 # Contribution
 Follow the convention and coding style explained under chapter Architecture.
