@@ -2,6 +2,7 @@ import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/app/setup_dialog_ui.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
@@ -12,8 +13,8 @@ main() {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   setupLocator();
   setupBottomSheetUi();
-  runApp(MaterialApp(
-    home: MyApp(),
+  runApp(ProviderScope(
+    child: MyApp(),
   ));
 }
 

@@ -1,3 +1,4 @@
+import 'package:flexicharge/models/widget_keys.dart';
 import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
@@ -88,6 +89,7 @@ class HomeView extends StatelessWidget {
                                       fit: BoxFit.scaleDown)),
                             ]),
                         MapIcon(
+                          key: WidgetKeys.FindChargerButton,
                           onTap: () => model.openFindCharger(),
                           isActive: model.localData.isButtonActive,
                           isLarge: true,
