@@ -8,6 +8,11 @@ import 'package:stacked/stacked.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
+  String email = "";
+  String password = "";
+  TextEditingController textControllerEmail = TextEditingController();
+  TextEditingController textControllerPassword = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
@@ -38,17 +43,17 @@ class LoginView extends StatelessWidget {
                         child: Column(
                           children: [
                             TextInputWidget(
+                              controller: textControllerEmail,
                               labelText: 'Email',
                               hint: 'Enter Your Email',
-                              onChanged: (value) => print(
-                                  value), // Do a dynamic error message for the input field?
+                              onChanged: (value) => email = value,
                             ),
                             SizedBox(height: 30),
                             TextInputWidget(
+                              controller: textControllerPassword,
                               labelText: 'Password',
                               hint: 'Enter Your Password',
-                              onChanged: (value) => print(
-                                  value), // Do a dynamic error message for the input field?
+                              onChanged: (value) => password = value,
                               isPassword: true,
                             ),
                           ],
@@ -65,7 +70,9 @@ class LoginView extends StatelessWidget {
                               showWideButton: true,
                               onTap: () async {
                                 print("Trying to log in");
-                                await model.login("Xplat", "Asdqwe1231");
+                                print(email + " " + password);
+                                await model.login(textControllerEmail.text,
+                                    textControllerPassword.text);
                               },
                               color: Color(0xff78bd76),
                             ),

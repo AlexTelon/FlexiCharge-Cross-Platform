@@ -7,6 +7,8 @@ class LoginViewModel extends BaseViewModel {
   http.Client client = new http.Client();
 
   Future<void> login(String username, String password) async {
+    print("username: " + username);
+    print("password: " + password);
     try {
       var response = await client.post(
         Uri.parse('$endPoint/auth/sign-in'),
@@ -26,6 +28,7 @@ class LoginViewModel extends BaseViewModel {
             response.statusCode.toString());
       } else if (response.statusCode == 400) {
         print(errorMessage);
+        print(response.body);
       } else {
         print(errorMessage);
         print(response.body);

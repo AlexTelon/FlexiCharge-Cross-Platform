@@ -10,6 +10,7 @@ import 'package:stacked/stacked.dart';
 
 class RegistrationView extends StatelessWidget {
   bool checked = false;
+  TextEditingController textController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
@@ -26,12 +27,14 @@ class RegistrationView extends StatelessWidget {
                 children: [
                   // SizedBox(height: 1),
                   TextInputWidget(
+                    controller: textController,
                     labelText: 'Email',
                     hint: 'Enter Your Email',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: textController,
                     labelText: 'Mobile Number',
                     hint: 'Enter Your Mobile Number',
                     onChanged: (value) => print(value),
@@ -39,6 +42,7 @@ class RegistrationView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: textController,
                     labelText: 'Password',
                     hint: 'Enter Your Password',
                     onChanged: (value) => print(value),
@@ -46,6 +50,7 @@ class RegistrationView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: textController,
                     labelText: 'Repeat Password',
                     hint: 'Enter Your Repeat Password',
                     onChanged: (value) => print(value),

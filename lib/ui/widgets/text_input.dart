@@ -9,6 +9,7 @@ class TextInputWidget extends StatelessWidget {
     this.isPassword = false,
     this.isNumber = false,
     this.defaultInput,
+    required this.controller,
   }) : super(key: key);
 
   final String hint;
@@ -17,11 +18,14 @@ class TextInputWidget extends StatelessWidget {
   final bool isNumber;
   final String? defaultInput;
   final Function(String) onChanged;
+  final TextEditingController controller;
+
   @override
   Widget build(BuildContext context) {
     return FractionallySizedBox(
       widthFactor: 0.8,
       child: TextField(
+        controller: controller,
         obscureText: isPassword,
         onChanged: onChanged,
         keyboardType: isNumber ? TextInputType.number : TextInputType.text,
