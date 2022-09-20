@@ -35,22 +35,3 @@ class LoginViewModel extends BaseViewModel {
     }
   }
 }
-
-/*
-Future<void> createTransaction(
-      int chargerId, int userId, int meterStart) async {
-    await client
-        .post(
-          Uri.parse('$endPoint/transactions'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
-          body: jsonEncode(<String, int>{
-            'chargerID': chargerId,
-            'userID': userId,
-            'meterStart': meterStart,
-          }),
-        )
-        .then((result) => print(result));
-  }
-*/
