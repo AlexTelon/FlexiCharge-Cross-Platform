@@ -1,6 +1,11 @@
 # FlexiCharge-Cross-Platform
 A app written in Flutter for Flexicharge by third year students from Jönköping University (2021)
 
+## Build Status
+<a href="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/actions">
+    <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-my-app/badge.svg" alt="Build Status">
+</a>
+
 ## Setup
 Make sure flutter is installed on you system. Check for errors by running `flutter doctor` in a terminal. If Flutter is not installed, follow your respective operating system install guide in the file README_FLUTTER_SETUP.md
 
