@@ -10,6 +10,7 @@ import 'login_viewmodel.dart';
 class LoginView extends StatelessWidget {
   String email = "";
   String password = "";
+  bool _validate = false;
   TextEditingController textControllerEmail = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
@@ -46,15 +47,22 @@ class LoginView extends StatelessWidget {
                               controller: textControllerEmail,
                               labelText: 'Email',
                               hint: 'Enter Your Email',
-                              onChanged: (value) => email = value,
+                              onChanged: (value) => print(value),
                             ),
                             SizedBox(height: 30),
                             TextInputWidget(
                               controller: textControllerPassword,
                               labelText: 'Password',
                               hint: 'Enter Your Password',
-                              onChanged: (value) => password = value,
+                              onChanged: (value) => print(value),
                               isPassword: true,
+                            ),
+                            TextField(
+                              decoration: InputDecoration(
+                                labelText: '',
+                                errorText:
+                                    _validate ? 'Value Can\'t Be Empty' : null,
+                              ),
                             ),
                           ],
                         ),
@@ -73,6 +81,7 @@ class LoginView extends StatelessWidget {
                                 print(email + " " + password);
                                 await model.login(textControllerEmail.text,
                                     textControllerPassword.text);
+                                print("as " + _validate.toString());
                               },
                               color: Color(0xff78bd76),
                             ),
