@@ -63,7 +63,7 @@ class LoginView extends StatelessWidget {
                               showWideButton: true,
                               onTap: () async {
                                 print("Trying to log in");
-                                await model.login("Xplat", "Asdqwe123");
+                                await model.login("Xplat", "Asdqwe1231");
                               },
                               color: Color(0xff78bd76),
                             ),

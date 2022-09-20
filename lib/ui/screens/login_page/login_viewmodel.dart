@@ -18,10 +18,17 @@ class LoginViewModel extends BaseViewModel {
           'password': password,
         }),
       );
+
+      var jsonResponse = jsonDecode(response.body);
+
       if (response.statusCode == 200) {
-        print("You have been logged in");
+        print("You have been logged in, statudcode: " +
+            response.statusCode.toString());
+      } else if (response.statusCode == 400) {
+        var errorMessage = jsonResponse['message'];
+        print(errorMessage);
       } else {
-        print(response.statusCode);
+        print(response.body);
       }
     } catch (e) {
       print(e);
