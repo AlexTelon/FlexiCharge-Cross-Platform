@@ -40,13 +40,15 @@ class LoginView extends StatelessWidget {
                             TextInputWidget(
                               labelText: 'Email',
                               hint: 'Enter Your Email',
-                              onChanged: (value) => print(value),
+                              onChanged: (value) => print(
+                                  value), // Do a dynamic error message for the input field?
                             ),
                             SizedBox(height: 30),
                             TextInputWidget(
                               labelText: 'Password',
                               hint: 'Enter Your Password',
-                              onChanged: (value) => print(value),
+                              onChanged: (value) => print(
+                                  value), // Do a dynamic error message for the input field?
                               isPassword: true,
                             ),
                           ],
