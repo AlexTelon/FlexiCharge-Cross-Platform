@@ -16,14 +16,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flexicharge/main.dart';
 
 void main() {
-  testWidgets('Verify that Flexicharge logo is displayed in Splash Screen',
-      (WidgetTester tester) async {
+  setUp(() {
     WidgetsFlutterBinding.ensureInitialized();
     SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
     setupLocator();
     setupBottomSheetUi();
-
+  });
+  testWidgets('Verify that Flexicharge logo is displayed in Splash Screen',
+      (WidgetTester tester) async {
     await tester.pumpWidget(ProviderScope(child: MyApp()));
 
     final splashScreenImage = find.byKey(WidgetKeys.SplashScreenImage);
