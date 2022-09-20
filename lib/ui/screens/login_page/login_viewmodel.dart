@@ -20,14 +20,14 @@ class LoginViewModel extends BaseViewModel {
       );
 
       var jsonResponse = jsonDecode(response.body);
-
+      var errorMessage = jsonResponse['message'];
       if (response.statusCode == 200) {
         print("You have been logged in, statudcode: " +
             response.statusCode.toString());
       } else if (response.statusCode == 400) {
-        var errorMessage = jsonResponse['message'];
         print(errorMessage);
       } else {
+        print(errorMessage);
         print(response.body);
       }
     } catch (e) {
