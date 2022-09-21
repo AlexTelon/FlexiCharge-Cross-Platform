@@ -1,3 +1,4 @@
+import 'package:flexicharge/models/widget_keys.dart';
 import 'package:flexicharge/ui/screens/launch/launch_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -20,6 +21,7 @@ class LaunchView extends StatelessWidget {
                     Image.asset(
                       'assets/images/splash_image.png',
                       height: 200,
+                      key: WidgetKeys.SplashScreenImage,
                     ),
                     SizedBox(
                       height: 30,

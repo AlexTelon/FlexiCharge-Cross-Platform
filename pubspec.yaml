@@ -36,6 +36,7 @@ dependencies:
   qr_code_scanner: ^1.0.0
   gradient_widgets: ^0.6.0
   pin_code_fields: ^7.3.0
+  flutter_riverpod: ^2.0.0-dev.9
 
 
 
