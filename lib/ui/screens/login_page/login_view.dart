@@ -4,6 +4,7 @@ import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import 'package:email_validator/email_validator.dart';
 
 import 'login_viewmodel.dart';
 
@@ -89,11 +90,11 @@ class _LoginViewState extends State<LoginView> {
                                         BorderRadius.all(Radius.circular(10)),
                                   ),
                                 ),
-                                validator: (value) {
-                                  if (value != null &&
-                                      value.length < 7 &&
-                                      value.isNotEmpty) {
-                                    return 'Email must be min. 7 characters';
+                                validator: (email) {
+                                  if (email != null &&
+                                      !EmailValidator.validate(email) &&
+                                      email.isNotEmpty) {
+                                    return 'Enter a valid Email';
                                   } else {
                                     return null;
                                   }
@@ -138,10 +139,10 @@ class _LoginViewState extends State<LoginView> {
                                   //  onChanged: (value) => print(value),
                                   //  isPassword: true,
                                 ),
-                                validator: (value) {
-                                  if (value != null &&
-                                      value.length < 3 &&
-                                      value.isNotEmpty) {
+                                validator: (password) {
+                                  if (password != null &&
+                                      password.length < 3 &&
+                                      password.isNotEmpty) {
                                     return 'Enter min. 3 characters';
                                   } else {
                                     return null;
