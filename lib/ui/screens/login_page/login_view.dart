@@ -7,10 +7,17 @@ import 'package:stacked/stacked.dart';
 
 import 'login_viewmodel.dart';
 
-class LoginView extends StatelessWidget {
+class LoginView extends StatefulWidget {
+  @override
+  State<LoginView> createState() => _LoginViewState();
+}
+
+class _LoginViewState extends State<LoginView> {
   String email = "";
   String password = "";
   bool _validate = false;
+  final _formKey = GlobalKey<FormState>();
+
   TextEditingController textControllerEmail = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
