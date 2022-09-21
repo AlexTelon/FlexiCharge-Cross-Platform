@@ -14,6 +14,11 @@ class LoginView extends StatelessWidget {
   TextEditingController textControllerEmail = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
+  //test variables
+  bool _isChecking = false;
+  dynamic _validationMsg;
+  final _usernameCtrl = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
@@ -57,13 +62,6 @@ class LoginView extends StatelessWidget {
                               onChanged: (value) => print(value),
                               isPassword: true,
                             ),
-                            TextField(
-                              decoration: InputDecoration(
-                                labelText: '',
-                                errorText:
-                                    _validate ? 'Value Can\'t Be Empty' : null,
-                              ),
-                            ),
                           ],
                         ),
                       ),
@@ -79,9 +77,11 @@ class LoginView extends StatelessWidget {
                               onTap: () async {
                                 print("Trying to log in");
                                 print(email + " " + password);
-                                await model.login(textControllerEmail.text,
+                                _validate = await model.validateLogin(
+                                    textControllerEmail.text,
                                     textControllerPassword.text);
-                                print("as " + _validate.toString());
+                                print("validation bool:  " +
+                                    _validate.toString());
                               },
                               color: Color(0xff78bd76),
                             ),
