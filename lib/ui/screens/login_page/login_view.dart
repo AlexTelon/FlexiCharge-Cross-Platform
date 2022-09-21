@@ -16,6 +16,7 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   String email = "";
   String password = "";
+  String errorMsg = "";
   bool _validate = false;
   final _formKey = GlobalKey<FormState>();
 
@@ -159,6 +160,7 @@ class _LoginViewState extends State<LoginView> {
                         flex: 1,
                         child: Column(
                           children: [
+                            Text(errorMsg),
                             WideButton(
                               text: 'Log in',
                               showWideButton: true,
@@ -166,9 +168,25 @@ class _LoginViewState extends State<LoginView> {
                                 print("Trying to log in");
                                 print(email + " " + password);
 
-                                _validate = await model.validateLogin(
+                                var loginData = await model.validateLogin(
                                     textControllerEmail.text,
                                     textControllerPassword.text);
+                                print("loginData in view: " +
+                                    loginData.toString());
+                                print("login contains isValid? : " +
+                                    loginData
+                                        .contains('errorMessage')
+                                        .toString());
+                                _validate = loginData.elementAt(0);
+                                if (!_validate) {
+                                  setState(() {
+                                    errorMsg = loginData.elementAt(1);
+                                  });
+                                } else {
+                                  setState(() {
+                                    errorMsg = "";
+                                  });
+                                }
 
                                 print("validation bool:  " +
                                     _validate.toString());
