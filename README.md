@@ -3,7 +3,7 @@ A app written in Flutter for Flexicharge by third year students from Jönköping
 
 ## Build Status
 <a href="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/actions">
-    <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-my-app/badge.svg" alt="Build Status">
+    <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-flexicharge-cross-platform/badge.svg" alt="Build Status">
 </a>
 
 ## Setup
