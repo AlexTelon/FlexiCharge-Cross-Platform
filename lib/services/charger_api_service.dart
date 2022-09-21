@@ -165,25 +165,24 @@ class ChargerApiService {
             });
   }
 
-  Future<void> reserveCharger(int id) async {
-    print("Reserve charger: " + id.toString());
+  Future<void> reserveCharger(int chargerId) async {
     var response = await client.put(
-      Uri.parse('$endPoint/reservations/$id'),
+      Uri.parse('$endPoint/reservations'),
       headers: <String, String>{
         'Content-Type': 'application/json; charset=UTF-8',
       },
       body: jsonEncode(<String, dynamic>{
-        "chargerId": id,
-        "connectorId": "1",
-        "idTag": "1",
-        "reservationId": "1",
-        "parentIdTag": "1"
+        "chargerId": chargerId,
+        "userId": 1, //TODO replace with actual userId
+        "start": 200,
+        "end": 300,
       }),
     );
     switch (response.statusCode) {
-      case 404: // Not able to connect to charger
+      case 400: // Not able to connect to charger
         throw Exception("Statuscode: " + response.statusCode.toString());
-      //break;
+      case 404:
+        throw Exception(ErrorCodes.notFound);
       case 500: // Internal server error
         throw Exception(ErrorCodes.internalError);
     }

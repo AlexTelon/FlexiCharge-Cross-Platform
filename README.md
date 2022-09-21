@@ -74,6 +74,13 @@ In snappingsheet_viewmodel.dart, the connect function solves this.
 
 ## Klarna Payment
 There exists no native implementation of Klarna within Flutter, therefore it is implemented in native Android and IOS. 
+|When making a reservation for a charger, use the following personal details in Klarna|
+|:--:|
+|![image-20211011145831799](https://user-images.githubusercontent.com/36575668/191029596-67f4a817-e1b6-4fe6-8343-44c93b69e6a3.png)|
+
+|These Credit Card Details should be used for Klarna|
+|:--:|
+|![image-20211013123905119](https://user-images.githubusercontent.com/36575668/191029537-6165d5ee-df7f-48e7-8946-7814a75b327d.png)|
 
 # Contribution
 Follow the convention and coding style explained under chapter Architecture.
