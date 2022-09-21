@@ -1,4 +1,4 @@
-// This is a basic Flutter unit test.
+// This file contains a basic Flutter unit test.
 //
 
 import 'package:flutter_test/flutter_test.dart';

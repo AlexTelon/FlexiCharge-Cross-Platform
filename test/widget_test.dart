@@ -43,22 +43,29 @@ void main() {
 
   testWidgets('Verify that Flexicharge logo is displayed in Splash Screen',
       (WidgetTester tester) async {
+    //ARRANGE
     await tester.pumpWidget(createWidgetForTesting(
       child: LaunchView(),
     ));
 
+    //ACT
     final splashScreenImage = find.byKey(WidgetKeys.SplashScreenImage);
 
+    //ASSERT
     expect(splashScreenImage, findsOneWidget);
   });
 
-  testWidgets('Test home screen', (WidgetTester tester) async {
+  testWidgets('Verify that Find Charger Button can be found in Home Screen',
+      (WidgetTester tester) async {
+    //ARRANGE
     await tester.pumpWidget(createWidgetForTesting(
       child: HomeView(),
     ));
 
+    //ACT
     final findChargerButton = find.byKey(WidgetKeys.FindChargerButton);
 
+    //ASSERT
     expect(findChargerButton, findsOneWidget);
   });
 }
