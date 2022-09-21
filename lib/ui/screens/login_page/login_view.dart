@@ -31,7 +31,9 @@ class _LoginViewState extends State<LoginView> {
     return ViewModelBuilder<LoginViewModel>.reactive(
       viewModelBuilder: () => LoginViewModel(),
       builder: (context, model, child) => Scaffold(
-        body: Center(
+        body: Form(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
@@ -55,19 +57,97 @@ class _LoginViewState extends State<LoginView> {
                         flex: 3,
                         child: Column(
                           children: [
-                            TextInputWidget(
-                              controller: textControllerEmail,
-                              labelText: 'Email',
-                              hint: 'Enter Your Email',
-                              onChanged: (value) => print(value),
+                            FractionallySizedBox(
+                              widthFactor: 0.8,
+                              child: TextFormField(
+                                controller: textControllerEmail,
+                                decoration: const InputDecoration(
+                                  hintText: 'Enter Your Email',
+                                  labelText: 'Email',
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                ),
+                                validator: (value) {
+                                  if (value != null &&
+                                      value.length < 7 &&
+                                      value.isNotEmpty) {
+                                    return 'Email must be min. 7 characters';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
                             ),
                             SizedBox(height: 30),
-                            TextInputWidget(
-                              controller: textControllerPassword,
-                              labelText: 'Password',
-                              hint: 'Enter Your Password',
-                              onChanged: (value) => print(value),
-                              isPassword: true,
+                            FractionallySizedBox(
+                              widthFactor: 0.8,
+                              child: TextFormField(
+                                controller: textControllerPassword,
+                                obscureText: true,
+                                decoration: const InputDecoration(
+                                  hintText: 'Enter Your Password',
+                                  labelText: 'Password',
+
+                                  border: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  enabledBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  errorBorder: OutlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Color(0xff292b2b)),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(10)),
+                                  ),
+                                  // hint: 'Enter Your Password',
+                                  //  onChanged: (value) => print(value),
+                                  //  isPassword: true,
+                                ),
+                                validator: (value) {
+                                  if (value != null &&
+                                      value.length < 3 &&
+                                      value.isNotEmpty) {
+                                    return 'Enter min. 3 characters';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ),
                             ),
                           ],
                         ),
@@ -84,11 +164,16 @@ class _LoginViewState extends State<LoginView> {
                               onTap: () async {
                                 print("Trying to log in");
                                 print(email + " " + password);
+
                                 _validate = await model.validateLogin(
                                     textControllerEmail.text,
                                     textControllerPassword.text);
+
                                 print("validation bool:  " +
                                     _validate.toString());
+
+                                final isValidForm =
+                                    _formKey.currentState!.validate();
                               },
                               color: Color(0xff78bd76),
                             ),
