@@ -156,6 +156,7 @@ class TransactionApiService {
           'transactionID': transactionId,
           'authorization_token': authToken
         }));
+
     switch (response.statusCode) {
       case 201:
         var list = json.decode(response.body) as List<Map<String, dynamic>>;
@@ -198,6 +199,8 @@ class TransactionApiService {
             parsedSession.paymentConfirmed.toString());
         return parsedSession;
       case 400:
+        throw Exception(ErrorCodes.badRequest);
+      case 404:
         throw Exception(ErrorCodes.notFound);
       case 500:
         throw Exception(ErrorCodes.internalError);
