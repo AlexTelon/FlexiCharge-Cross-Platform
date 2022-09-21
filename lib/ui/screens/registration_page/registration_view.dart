@@ -89,7 +89,7 @@ class RegistrationView extends StatelessWidget {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => model.registerNewUser(
+                    onTap: () async => await model.registerNewUser(
                         emailController.text,
                         mobileNumberController.text,
                         passwordController.text,
