@@ -56,7 +56,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       ///Contains the TextInputs
                       Flexible(
-                        flex: 3,
+                        flex: 2,
                         child: Column(
                           children: [
                             FractionallySizedBox(
@@ -160,7 +160,11 @@ class _LoginViewState extends State<LoginView> {
                         flex: 1,
                         child: Column(
                           children: [
-                            Text(errorMsg),
+                            Text(
+                              errorMsg,
+                              style: TextStyle(color: Colors.red),
+                            ),
+                            Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                             WideButton(
                               text: 'Log in',
                               showWideButton: true,
