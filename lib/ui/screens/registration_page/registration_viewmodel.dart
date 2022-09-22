@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:flexicharge/enums/userChangeNotifier.dart';
 import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
 
@@ -23,30 +22,28 @@ class RegistrationViewmodel extends BaseViewModel {
     String password,
     String repeatedPassword,
   ) async {
-    print('Register Func');
-    print(""" 
-    email: $email
-    mobile number: $mobileNumber
-    password: $password
-    repeated password: $repeatedPassword
-    """);
-
+//registrationData according to FlexiCharge API
     final Map<String, dynamic> registrationData = {
-      //change
-      "username": "asd",
-      "password": "123",
+      "username": "asdasdasdasdasd",
+      "password": "Asd123456",
       "email": "email@email.com",
       "name": "asd",
       "family_name": "asd"
     };
 
-    notifyListeners();
-
-    var response = await post(UserApiService.register,
+    Response response = await post(UserApiService.register,
         body: json.encode(registrationData),
         headers: {'Content-Type': 'application/json'});
 
-    print(response.body);
-    print(response.statusCode);
+    if (response.statusCode == 200) {
+      //TODO:
+      //1.Save user state and keep the user logged in
+      //2. Redirect to "Setup Invoice"
+      print("success");
+    } else {
+      //TODO:
+      //1. Display error to user
+      print("failure");
+    }
   }
 }
