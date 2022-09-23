@@ -1,7 +1,7 @@
 # FlexiCharge-Cross-Platform
 A app written in Flutter for Flexicharge by third year students from Jönköping University (2021)
 
-## Build Status
+## Test Status
 <a href="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/actions">
     <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-flexicharge-cross-platform/badge.svg" alt="Build Status">
 </a>
@@ -11,7 +11,7 @@ Make sure flutter is installed on you system. Check for errors by running `flutt
 
 Download the project by either cloning it or by downloading the zip-file. After extracting the project, open it up with Visual Studio Code.
 
-### VSCode
+### VS Code
 Make sure that the extention Flutter (version: v3.27.0) is installed and enabled.
 
 If you get prompted that some packages are missing, press download. Else, go to pubspec.yaml and and download the packages from there, or download from the terminal by entering `flutter pub get`
@@ -40,7 +40,7 @@ Supports IOS versions
 TODO
 https://www.filledstacks.com/post/flutter-and-provider-architecture-using-stacked/
 
-### Naming convention
+### Naming Convention
 - Files: snake_case
 - Classes: PascalCase
 - General variables: camelCase
@@ -59,7 +59,7 @@ A way to map data to a class. Used to map json-objects from the API into usable 
 # Workflow
 Documentation about how certain actions are performed within the app, steps needed and in what order etc.
 
-## Connect to charger
+## Connect to Charger
 When a valid charger ID has been entered we want to reserve the charger during the payment process.
 To enter a charger, we need the charger ID. We can get this from three different ways.
 1. Scan QR code on the charger, which automatically enters the charger ID into the PIN input field.
