@@ -23,6 +23,7 @@ import KlarnaMobileSDK
           
           if (call.method == "StartKlarnaActivity"){
               //TODO show Klarna payment view
+              
           }
       })
       
