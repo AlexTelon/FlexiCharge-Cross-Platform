@@ -1,8 +1,7 @@
 import UIKit
 import Flutter
 import GoogleMaps
-
-
+import KlarnaMobileSDK
 
 @UIApplicationMain
 @objc class AppDelegate: FlutterAppDelegate {
