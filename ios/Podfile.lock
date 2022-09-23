@@ -10,6 +10,9 @@ PODS:
   - GoogleMaps/Base (4.1.0)
   - GoogleMaps/Maps (4.1.0):
     - GoogleMaps/Base
+  - KlarnaMobileSDK (2.0.18):
+    - KlarnaMobileSDK/xcode-11.5-fat-basic (= 2.0.18)
+  - KlarnaMobileSDK/xcode-11.5-fat-basic (2.0.18)
   - MTBBarcodeScanner (5.0.11)
   - qr_code_scanner (0.2.0):
     - Flutter
@@ -19,11 +22,13 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
+  - KlarnaMobileSDK
   - qr_code_scanner (from `.symlinks/plugins/qr_code_scanner/ios`)
 
 SPEC REPOS:
   trunk:
     - GoogleMaps
+    - KlarnaMobileSDK
     - MTBBarcodeScanner
 
 EXTERNAL SOURCES:
@@ -41,9 +46,10 @@ SPEC CHECKSUMS:
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleMaps: 008e2c80e38605b56b560e8deb73d4194ff30bef
+  KlarnaMobileSDK: d439a3abbc11cd86d3c015fbbff9fbde8f7e8d9a
   MTBBarcodeScanner: f453b33c4b7dfe545d8c6484ed744d55671788cb
   qr_code_scanner: bb67d64904c3b9658ada8c402e8b4d406d5d796e
 
-PODFILE CHECKSUM: aafe91acc616949ddb318b77800a7f51bffa2a4c
+PODFILE CHECKSUM: 7107a25515e9626c161fea4d2ce37c1f6d722d92
 
 COCOAPODS: 1.11.3
