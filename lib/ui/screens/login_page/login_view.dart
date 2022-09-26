@@ -8,6 +8,8 @@ import 'package:stacked/stacked.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatelessWidget {
+  TextEditingController temporaryController =
+      new TextEditingController(); //Change
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<LoginViewModel>.reactive(
@@ -38,12 +40,14 @@ class LoginView extends StatelessWidget {
                         child: Column(
                           children: [
                             TextInputWidget(
+                              controller: temporaryController,
                               labelText: 'Email',
                               hint: 'Enter Your Email',
                               onChanged: (value) => print(value),
                             ),
                             SizedBox(height: 30),
                             TextInputWidget(
+                              controller: temporaryController,
                               labelText: 'Password',
                               hint: 'Enter Your Password',
                               onChanged: (value) => print(value),
