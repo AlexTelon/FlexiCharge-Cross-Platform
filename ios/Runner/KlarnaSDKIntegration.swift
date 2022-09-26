@@ -4,7 +4,7 @@
 //
 //  Created by Daniel Göthe on 2021-09-27.
 //
-// Modified by Gustav Persson on 2022-09-23.
+// Modified by Gustav Persson on 2022-09-23
 //
 import Foundation
 import KlarnaMobileSDK
