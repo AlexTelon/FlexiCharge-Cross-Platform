@@ -3,7 +3,7 @@ A app written in Flutter for Flexicharge by third year students from Jönköping
 
 ## Build Status
 <a href="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/actions">
-    <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-my-app/badge.svg" alt="Build Status">
+    <img src="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/workflows/test-flexicharge-cross-platform/badge.svg" alt="Build Status">
 </a>
 
 ## Setup
@@ -84,3 +84,9 @@ There exists no native implementation of Klarna within Flutter, therefore it is 
 
 # Contribution
 Follow the convention and coding style explained under chapter Architecture.
+
+# Testing
+Test cases are located in the top level folder `test` and are divided into separate files for Widget tests and Unit tests. At the time of writing, only Widget tests are created since most of the code can not be tested with Unit tests easily. Integration tests is a goal to implement in the future.
+
+## Automated testing
+A GitHub actions workflow is implemented and gets triggered for each push- and merge to the main-branch. The workflow runs all tests.
