@@ -6,8 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class RecoverPasswordView extends StatelessWidget {
-  TextEditingController temporaryController =
-      new TextEditingController(); //Change
+
+  TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +38,9 @@ class RecoverPasswordView extends StatelessWidget {
                         child: Column(
                           children: [
                             TextInputWidget(
-                              controller: temporaryController,
+
+                              controller: textController,
+
                               labelText: 'Email',
                               hint: 'Enter Your Email',
                               onChanged: (value) => print(value),
