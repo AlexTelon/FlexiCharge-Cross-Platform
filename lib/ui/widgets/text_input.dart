@@ -10,7 +10,6 @@ class TextInputWidget extends StatelessWidget {
     this.isPassword = false,
     this.isNumber = false,
     this.defaultInput,
-    required this.controller,
   }) : super(key: key);
 
   final TextEditingController controller;
@@ -20,7 +19,6 @@ class TextInputWidget extends StatelessWidget {
   final bool isNumber;
   final String? defaultInput;
   final Function(String) onChanged;
-
 
   @override
   Widget build(BuildContext context) {
