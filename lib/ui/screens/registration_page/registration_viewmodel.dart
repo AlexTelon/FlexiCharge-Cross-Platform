@@ -24,7 +24,7 @@ class RegistrationViewmodel extends BaseViewModel {
   ) async {
 //registrationData according to FlexiCharge API
     final Map<String, dynamic> registrationData = {
-      "username": "asdasdasdasdasd",
+      "username": "asdasdasdasdasdasd",
       "password": "Asd123456",
       "email": "email@email.com",
       "name": "asd",
@@ -36,11 +36,13 @@ class RegistrationViewmodel extends BaseViewModel {
         headers: {'Content-Type': 'application/json'});
 
     if (response.statusCode == 200) {
+      print(response.body);
       //TODO:
       //1.Save user state and keep the user logged in
       //2. Redirect to "Setup Invoice"
       print("success");
     } else {
+      print(response.body);
       //TODO:
       //1. Display error to user
       print("failure");

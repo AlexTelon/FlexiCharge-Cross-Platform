@@ -8,12 +8,21 @@ import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
 
-class RegistrationView extends StatelessWidget {
+class RegistrationView extends StatefulWidget {
+  @override
+  State<RegistrationView> createState() => _RegistrationViewState();
+}
+
+class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
+  var errorMsg = "";
 
   TextEditingController emailController = new TextEditingController();
+
   TextEditingController mobileNumberController = new TextEditingController();
+
   TextEditingController passwordController = new TextEditingController();
+
   TextEditingController repeatPasswordController = new TextEditingController();
 
   @override
@@ -89,11 +98,12 @@ class RegistrationView extends StatelessWidget {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () async => await model.registerNewUser(
-                        emailController.text,
-                        mobileNumberController.text,
-                        passwordController.text,
-                        repeatPasswordController.text),
+                    onTap: () => model.registerNewUser(
+                      emailController.text,
+                      mobileNumberController.text,
+                      passwordController.text,
+                      repeatPasswordController.text,
+                    ),
                     showWideButton: true,
                   ),
                   SizedBox(height: 20.0),
