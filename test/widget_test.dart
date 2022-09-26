@@ -5,26 +5,67 @@
 // gestures. You can also use WidgetTester to find child widgets in the widget
 // tree, read text, and verify that the values of widget properties are correct.
 
+import 'package:flexicharge/app/app.locator.dart';
+import 'package:flexicharge/app/setup_dialog_ui.dart';
+import 'package:flexicharge/models/widget_keys.dart';
+import 'package:flexicharge/ui/screens/home_page/home_view.dart';
+import 'package:flexicharge/ui/screens/launch/launch_view.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:flexicharge/main.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 void main() {
-  /*testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+  /// Setting up the test environment (same setup as in main.dart)
+  /// This function is called once before the tests run.
+  setUpAll(() {
+    WidgetsFlutterBinding.ensureInitialized();
+    SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    setupLocator();
+    setupBottomSheetUi();
+  });
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+  /// `createWidgetForTesting` is a convenience function that takes a `Widget` as a required parameter and returns a
+  /// `Widget` that is wrapped in a `ProviderScope` and a `MaterialApp`
+  ///
+  /// Args:
+  ///   child (Widget): The widget that will be wrapped by the ProviderScope.
+  ///
+  /// Returns:
+  ///   A MaterialApp with a home property that is the child.
+  Widget createWidgetForTesting({required Widget child}) {
+    return ProviderScope(
+        child: MaterialApp(
+      home: child,
+    ));
+  }
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+  testWidgets('Verify that Flexicharge logo is displayed in Splash Screen',
+      (WidgetTester tester) async {
+    //ARRANGE
+    await tester.pumpWidget(createWidgetForTesting(
+      child: LaunchView(),
+    ));
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
-  });*/
+    //ACT
+    final splashScreenImage = find.byKey(WidgetKeys.SplashScreenImage);
+
+    //ASSERT
+    expect(splashScreenImage, findsOneWidget);
+  });
+
+  testWidgets('Verify that Find Charger Button can be found in Home Screen',
+      (WidgetTester tester) async {
+    //ARRANGE
+    await tester.pumpWidget(createWidgetForTesting(
+      child: HomeView(),
+    ));
+
+    //ACT
+    final findChargerButton = find.byKey(WidgetKeys.FindChargerButton);
+
+    //ASSERT
+    expect(findChargerButton, findsOneWidget);
+  });
 }

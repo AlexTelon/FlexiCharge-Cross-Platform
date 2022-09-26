@@ -84,3 +84,9 @@ There exists no native implementation of Klarna within Flutter, therefore it is 
 
 # Contribution
 Follow the convention and coding style explained under chapter Architecture.
+
+# Testing
+Test cases are located in the top level folder `test` and are divided into separate files for Widget tests and Unit tests. At the time of writing, only Widget tests are created since most of the code can not be tested with Unit tests easily. Integration tests is a goal to implement in the future.
+
+## Automated testing
+A GitHub actions workflow is implemented and gets triggered for each push- and merge to the main-branch. The workflow runs all tests.
