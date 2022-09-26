@@ -8,9 +8,25 @@ import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
 
-class RegistrationView extends StatelessWidget {
+class RegistrationView extends StatefulWidget {
+  @override
+  State<RegistrationView> createState() => _RegistrationViewState();
+}
+
+class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
-  TextEditingController textController = TextEditingController();
+
+  var errorMsg = "";
+
+  TextEditingController emailController = new TextEditingController();
+
+  TextEditingController mobileNumberController = new TextEditingController();
+
+  TextEditingController passwordController = new TextEditingController();
+
+  TextEditingController repeatPasswordController = new TextEditingController();
+
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
@@ -27,14 +43,18 @@ class RegistrationView extends StatelessWidget {
                 children: [
                   // SizedBox(height: 1),
                   TextInputWidget(
-                    controller: textController,
+
+                    controller: emailController,
+
                     labelText: 'Email',
                     hint: 'Enter Your Email',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-                    controller: textController,
+
+                    controller: mobileNumberController,
+
                     labelText: 'Mobile Number',
                     hint: 'Enter Your Mobile Number',
                     onChanged: (value) => print(value),
@@ -42,7 +62,9 @@ class RegistrationView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-                    controller: textController,
+
+                    controller: passwordController,
+
                     labelText: 'Password',
                     hint: 'Enter Your Password',
                     onChanged: (value) => print(value),
@@ -50,7 +72,9 @@ class RegistrationView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-                    controller: textController,
+
+                    controller: repeatPasswordController,
+
                     labelText: 'Repeat Password',
                     hint: 'Enter Your Repeat Password',
                     onChanged: (value) => print(value),
@@ -84,7 +108,12 @@ class RegistrationView extends StatelessWidget {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => print('Register Button'),
+                    onTap: () => model.registerNewUser(
+                      emailController.text,
+                      mobileNumberController.text,
+                      passwordController.text,
+                      repeatPasswordController.text,
+                    ),
                     showWideButton: true,
                   ),
                   SizedBox(height: 20.0),

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 class TextInputWidget extends StatelessWidget {
   const TextInputWidget({
     Key? key,
+    required this.controller,
     required this.labelText,
     required this.hint,
     required this.onChanged,
@@ -12,13 +13,14 @@ class TextInputWidget extends StatelessWidget {
     required this.controller,
   }) : super(key: key);
 
+  final TextEditingController controller;
   final String hint;
   final String labelText;
   final bool isPassword;
   final bool isNumber;
   final String? defaultInput;
   final Function(String) onChanged;
-  final TextEditingController controller;
+
 
   @override
   Widget build(BuildContext context) {

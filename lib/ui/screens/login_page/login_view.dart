@@ -8,6 +8,7 @@ import 'package:email_validator/email_validator.dart';
 
 import 'login_viewmodel.dart';
 
+
 class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -59,6 +60,7 @@ class _LoginViewState extends State<LoginView> {
                         flex: 2,
                         child: Column(
                           children: [
+
                             FractionallySizedBox(
                               widthFactor: 0.8,
                               child: TextFormField(
@@ -150,6 +152,7 @@ class _LoginViewState extends State<LoginView> {
                                   }
                                 },
                               ),
+
                             ),
                           ],
                         ),
