@@ -57,7 +57,7 @@ final class KlarnaSDKIntegration: ObservableObject {
     }
     
     func SendKlarnaToken(transactionID: Int, authorization_token: String, completion: @escaping (String) -> Void){
-        guard let url = URL(string: "http://54.220.194.65:8080/transactions/start/:" + String(transactionID)) else { return }
+        guard let url = URL(string: "http://18.202.253.30:8080/transactions/start/:" + String(transactionID)) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.allHTTPHeaderFields = [
