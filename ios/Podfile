@@ -40,4 +40,4 @@ post_install do |installer|
   end
 end
 
-pod "KlarnaMobileSDK"
+pod "KlarnaMobileSDK", "2.2.3"

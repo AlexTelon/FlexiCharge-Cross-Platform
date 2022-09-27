@@ -34,7 +34,7 @@ class FLNativeView: NSObject, FlutterPlatformView {
     private var _view: UIView
     
     @State var chargerIdInput: String = ""
-    @State var isKlarnaPresented: Bool = false
+    @State var isKlarnaPresented: Bool = true
     @State var klarnaStatus: String = ""
     @State var transactionID: Int = 0
 
@@ -48,7 +48,7 @@ class FLNativeView: NSObject, FlutterPlatformView {
         super.init()
         // iOS views can be created here
         createNativeView(view: _view)
-        InitializeKlarna(isPresented: $isKlarnaPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID)
+        //InitializeKlarna(isPresented: $isKlarnaPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID)
     }
 
     func view() -> UIView {

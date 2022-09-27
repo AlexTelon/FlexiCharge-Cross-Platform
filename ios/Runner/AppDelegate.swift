@@ -14,7 +14,7 @@ import KlarnaMobileSDK
     GMSServices.provideAPIKey("AIzaSyAsWiiZLhjHhTj830uzF-LsmXZFfrbl8g4")
     GeneratedPluginRegistrant.register(with: self)
       
-      let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
+      /*let controller : FlutterViewController = window?.rootViewController as! FlutterViewController
       
       let METHOD_CHANNEL_NAME = "com.startActivity/klarnaChannel"
       
@@ -28,20 +28,21 @@ import KlarnaMobileSDK
               if let args = call.arguments as? Dictionary<String, Any>,
                 let clientToken = args["clientToken"] as? String {
                   
-                  weak var registrar = self.registrar(forPlugin: "plugin-name")
                   
-                  let factory = FLNativeViewFactory(messenger: registrar!.messenger())
-                  self.registrar(forPlugin: "<plugin-name>")!.register(
-                      factory,
-                      withId: "<platform-view-type>")
-                  
-                  result("Klarna Finished!")
+                  //result("Klarna Finished!")
                   
               } else {
                 result(FlutterError.init(code: "errorSetDebug", message: "data or format error", details: nil))
               }
           }
-      })
+      })*/
+      
+      weak var registrar = self.registrar(forPlugin: "plugin-name")
+      
+      let factory = FLNativeViewFactory(messenger: registrar!.messenger())
+      self.registrar(forPlugin: "<plugin-name>")!.register(
+          factory,
+          withId: "<platform-view-type>")
       
       return super.application(application, didFinishLaunchingWithOptions: launchOptions)
       
