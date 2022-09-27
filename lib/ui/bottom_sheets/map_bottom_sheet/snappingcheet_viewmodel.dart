@@ -230,7 +230,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         } else if (Platform.isIOS) {
           Navigator.push(context,
               MaterialPageRoute(builder: (context) => IOSCompositionWidget()));
-          await Future.delayed(Duration(seconds: 10));
+          await Future.delayed(Duration(seconds: 60));
           authToken = "Noob";
         }
         print("authToken: " + authToken);
