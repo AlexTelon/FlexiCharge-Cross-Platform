@@ -22,7 +22,7 @@ class VerifyRegistrationViewModel extends BaseViewModel {
   //   notifyListeners();
   // }
 
-  void verifyAccount(verificationCode) {
+  void verifyAccount() {
     try {
       String verificationCodeConverted = this.verificationController.text;
       // print(verificationCodeConverted);

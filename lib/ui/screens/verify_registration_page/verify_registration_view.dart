@@ -120,10 +120,10 @@ class VerifyRegistrationView extends StatelessWidget {
                                   //  onChanged: (value) => print(value),
                                   //  isPassword: true,
                                 ),
-                                validator: (password) {
-                                  if (password != null &&
-                                      password.length < 6 &&
-                                      password.isNotEmpty) {
+                                validator: (verificationCode) {
+                                  if (verificationCode != null &&
+                                      verificationCode.length < 6 &&
+                                      verificationCode.isNotEmpty) {
                                     return 'Enter min. 6 characters';
                                   } else {
                                     return null;
@@ -136,12 +136,13 @@ class VerifyRegistrationView extends StatelessWidget {
                               text: 'Verify Account',
                               color: Color(0xff78bd76),
                               onTap: () => {
-                                model.verifyAccount(model.verificationCode),
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginView()),
-                                )
+                                model.verifyAccount()
+
+                                // Navigator.push(
+                                //   context,
+                                //   MaterialPageRoute(
+                                //       builder: (context) => LoginView()),
+                                // )
                               },
                               showWideButton: true,
                             ),
