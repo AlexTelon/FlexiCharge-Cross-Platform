@@ -12,6 +12,7 @@ import 'package:stacked/stacked.dart';
 
 class SetupInvoicingView extends StatelessWidget {
   bool checked = false;
+  TextEditingController TemporaryController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SetupInvoicingViewmodel>.reactive(
@@ -77,18 +78,21 @@ class SetupInvoicingView extends StatelessWidget {
                   ),
                   SizedBox(height: 20.0),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Name',
                     hint: 'Enter Your Name',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Adress',
                     hint: 'Enter Your Adress',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Postcode',
                     hint: 'Enter Your Postcode',
                     onChanged: (value) => print(value),
@@ -96,6 +100,7 @@ class SetupInvoicingView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Town',
                     hint: 'Enter Your Town',
                     onChanged: (value) => print(value),
