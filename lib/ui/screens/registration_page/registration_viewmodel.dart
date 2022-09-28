@@ -21,13 +21,15 @@ class RegistrationViewmodel extends BaseViewModel {
     String password,
     String repeatedPassword,
   ) async {
-//registrationData according to FlexiCharge API
+/*registrationData according to FlexiCharge API
+  {
+    "username": "mustBeEmail",
+    "password": "password"
+  }
+*/
     final Map<String, dynamic> registrationData = {
-      "username": "asdasdasdasdasdasd",
-      "password": "Asd123456",
-      "email": "email@email.com",
-      "name": "asd",
-      "family_name": "asd"
+      "username": email,
+      "password": password,
     };
 
     Response response = await post(UserApiService.register,
