@@ -1,6 +1,7 @@
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
+import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -99,14 +100,22 @@ class _RegistrationViewState extends State<RegistrationView> {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => model.registerNewUser(
-                      emailController.text,
-                      mobileNumberController.text,
-                      passwordController.text,
-                      repeatPasswordController.text,
-                    ),
+                    onTap: () => {
+                      model.registerNewUser(
+                        emailController.text,
+                        mobileNumberController.text,
+                        passwordController.text,
+                        repeatPasswordController.text,
+                      ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyRegistrationView()),
+                      )
+                    },
                     showWideButton: true,
                   ),
+
                   SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
