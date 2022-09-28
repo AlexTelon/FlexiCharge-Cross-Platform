@@ -166,8 +166,6 @@ class SetupInvoicingView extends StatelessWidget {
 }
 
 /*
-
-
                 TextInputWidget(
                     labelText: 'Town',
                     hint: 'Enter Your Town',
@@ -184,7 +182,7 @@ class SetupInvoicingView extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              /*
+
               Column(
                 children: [
                   Text(
@@ -201,7 +199,7 @@ class SetupInvoicingView extends StatelessWidget {
               SizedBox(
                 height: 30,
               ),
-              */
+
             ],
           ),
         ),
