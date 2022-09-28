@@ -3,7 +3,6 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class UserSecureStorage {
   // Create storage
   static final _storage = FlutterSecureStorage();
-
   static const _userAccessToken = "token";
 
 // Write value
