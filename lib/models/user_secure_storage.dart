@@ -1,3 +1,5 @@
+/// A class that stores the user's access token in the device's secure storage.
+/// This is class that could be extended to store all user information
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class UserSecureStorage {
