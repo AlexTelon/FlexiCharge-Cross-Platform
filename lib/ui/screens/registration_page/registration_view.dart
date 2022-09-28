@@ -1,6 +1,7 @@
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
+import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -26,7 +27,6 @@ class _RegistrationViewState extends State<RegistrationView> {
 
   TextEditingController repeatPasswordController = new TextEditingController();
 
-
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
@@ -43,18 +43,14 @@ class _RegistrationViewState extends State<RegistrationView> {
                 children: [
                   // SizedBox(height: 1),
                   TextInputWidget(
-
                     controller: emailController,
-
                     labelText: 'Email',
                     hint: 'Enter Your Email',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-
                     controller: mobileNumberController,
-
                     labelText: 'Mobile Number',
                     hint: 'Enter Your Mobile Number',
                     onChanged: (value) => print(value),
@@ -62,9 +58,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-
                     controller: passwordController,
-
                     labelText: 'Password',
                     hint: 'Enter Your Password',
                     onChanged: (value) => print(value),
@@ -72,9 +66,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
-
                     controller: repeatPasswordController,
-
                     labelText: 'Repeat Password',
                     hint: 'Enter Your Repeat Password',
                     onChanged: (value) => print(value),
@@ -108,14 +100,22 @@ class _RegistrationViewState extends State<RegistrationView> {
                   WideButton(
                     text: 'Register',
                     color: Color(0xff78bd76),
-                    onTap: () => model.registerNewUser(
-                      emailController.text,
-                      mobileNumberController.text,
-                      passwordController.text,
-                      repeatPasswordController.text,
-                    ),
+                    onTap: () => {
+                      model.registerNewUser(
+                        emailController.text,
+                        mobileNumberController.text,
+                        passwordController.text,
+                        repeatPasswordController.text,
+                      ),
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => VerifyRegistrationView()),
+                      )
+                    },
                     showWideButton: true,
                   ),
+
                   SizedBox(height: 20.0),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
