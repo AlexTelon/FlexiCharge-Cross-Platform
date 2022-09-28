@@ -6,21 +6,22 @@ class UserSecureStorage {
 
   static const _userAccessToken = "token";
 
-// Read all values
-//Map<String, String> allValues = await storage.readAll();
-
-// Delete value
-//await storage.delete(key: key);
-
-// Delete all
-//await storage.deleteAll();
-
 // Write value
   static Future setUserAccessToken(String AccessToken) async =>
       await _storage.write(key: _userAccessToken, value: AccessToken);
 
 // Read value
-  static Future<String?> getUserAccessToken() async {
-    await _storage.read(key: _userAccessToken);
-  }
+  static Future<String?> getUserAccessToken() async =>
+      await _storage.read(key: _userAccessToken);
+
+// Delete value
+  static Future deleteUserAccessToken() async =>
+      await _storage.delete(key: _userAccessToken);
+
+// Read all values
+//Map<String, String> allValues = await storage.readAll();
+
+// Delete all
+//await storage.deleteAll();
+
 }
