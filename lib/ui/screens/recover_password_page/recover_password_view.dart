@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class RecoverPasswordView extends StatelessWidget {
+
+  TextEditingController textController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RecoverPasswordViewModel>.reactive(
@@ -35,6 +38,9 @@ class RecoverPasswordView extends StatelessWidget {
                         child: Column(
                           children: [
                             TextInputWidget(
+
+                              controller: textController,
+
                               labelText: 'Email',
                               hint: 'Enter Your Email',
                               onChanged: (value) => print(value),
