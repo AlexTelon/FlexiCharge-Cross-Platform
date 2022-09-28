@@ -17,14 +17,8 @@ class RegistrationView extends StatefulWidget {
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
 
-  var errorMsg = "";
-
   TextEditingController emailController = new TextEditingController();
-
-  TextEditingController mobileNumberController = new TextEditingController();
-
   TextEditingController passwordController = new TextEditingController();
-
   TextEditingController repeatPasswordController = new TextEditingController();
 
   @override
@@ -47,14 +41,6 @@ class _RegistrationViewState extends State<RegistrationView> {
                     labelText: 'Email',
                     hint: 'Enter Your Email',
                     onChanged: (value) => print(value),
-                  ),
-                  SizedBox(height: 20),
-                  TextInputWidget(
-                    controller: mobileNumberController,
-                    labelText: 'Mobile Number',
-                    hint: 'Enter Your Mobile Number',
-                    onChanged: (value) => print(value),
-                    isNumber: true,
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
@@ -103,7 +89,6 @@ class _RegistrationViewState extends State<RegistrationView> {
                     onTap: () => {
                       model.registerNewUser(
                         emailController.text,
-                        mobileNumberController.text,
                         passwordController.text,
                         repeatPasswordController.text,
                       ),

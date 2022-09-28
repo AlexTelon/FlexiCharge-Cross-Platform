@@ -18,7 +18,6 @@ class RegistrationViewmodel extends BaseViewModel {
 
   Future<FutureOr> registerNewUser(
     String email,
-    String mobileNumber,
     String password,
     String repeatedPassword,
   ) async {
