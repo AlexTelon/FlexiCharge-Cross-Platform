@@ -13,6 +13,7 @@ import 'package:flexicharge/models/registration.dart';
 //   ERROR = 2
 // }
 
+/// This class is responsible for the business logic of the verify registration page
 class VerifyRegistrationViewModel extends BaseViewModel {
   var emailController = TextEditingController();
   var verificationController = TextEditingController();
@@ -21,18 +22,6 @@ class VerifyRegistrationViewModel extends BaseViewModel {
   bool isAccountVerified = false;
   var apiService = UserApiService();
 
-  // set email(newState) {
-  //   print(newState);
-  //   _email = newState;
-  //   notifyListeners();
-  // }
-
-  // set verificationCode(newState) {
-  //   print(newState);
-  //   _verificationCode = newState;
-  //   notifyListeners();
-  // }
-
   Future<void> verifyAccount() async {
     try {
       var result = await apiService.verifyAccount(
@@ -40,22 +29,7 @@ class VerifyRegistrationViewModel extends BaseViewModel {
       this.isAccountVerified = true;
       return;
     } catch (error) {
-      // error.m
-      // print("ERR:");Fruit f = Fruit.values.firstWhere((e) => e.toString() == 'Fruit.' + str);
-      var errorString = error.toString().substring(11);
-      ErrorCodes errorCode = ErrorCodes.values
-          .firstWhere((enumValue) => enumValue.toString() == errorString);
-
-      switch (errorCode) {
-        case ErrorCodes.badRequest:
-          throw "Invalid verification code.";
-        case ErrorCodes.notFound:
-          throw "Account could not be created";
-        case ErrorCodes.internalError:
-          throw "The server could not process your request.";
-        default:
-          throw "Unknown fault.";
-      }
+      throw error;
     }
   }
 
