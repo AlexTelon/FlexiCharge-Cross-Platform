@@ -34,7 +34,7 @@ struct KlarnaView: View {
     var body: some View {
         VStack {
             Spacer()
-            Image("klarna-logo-pink")
+            AsyncImage(url: URL(string: "https://i.imgur.com/bYV3h6Q.png")).frame(maxWidth: 300, maxHeight: 200)
             Spacer()
             ProgressView().progressViewStyle(CircularProgressViewStyle())
             Spacer()

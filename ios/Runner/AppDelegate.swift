@@ -27,6 +27,8 @@ import KlarnaMobileSDK
               if let args = call.arguments as? Dictionary<String, Any>,
                 let clientToken = args["clientToken"] as? String {
                   
+                  let klarnaHostingController = UIHostingController(rootView: KlarnaWrapperView())
+                  
                   let parent = UIViewController()
                   klarnaHostingController.view.translatesAutoresizingMaskIntoConstraints = false
                   klarnaHostingController.view.frame = parent.view.bounds
