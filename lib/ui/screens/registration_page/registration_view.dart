@@ -6,7 +6,7 @@ import 'package:flexicharge/ui/screens/verify_registration_page/verify_registrat
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
-import 'package:flexicharge/ui/widgets/user_input.dart';
+import 'package:flexicharge/ui/widgets/user_form_input.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
@@ -41,11 +41,12 @@ class _RegistrationViewState extends State<RegistrationView> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      UserInput(
+                      UserFormInput(
                         controller: emailController,
                         labelText: 'Email',
                         hint: 'Enter Your Email',
                         validator: (email) {
+                          // Flytta till egen fil, gör en funktion
                           if (email != null &&
                               !EmailValidator.validate(email) &&
                               email.isNotEmpty) {
@@ -56,12 +57,18 @@ class _RegistrationViewState extends State<RegistrationView> {
                         },
                       ),
                       SizedBox(height: 20),
-                      TextInputWidget(
+                      UserFormInput(
                         controller: passwordController,
                         labelText: 'Password',
                         hint: 'Enter Your Password',
-                        onChanged: (value) => print(value),
                         isPassword: true,
+                        validator: (password) {
+                          if (password != null && password.isNotEmpty) {
+                            return 'Enter a valid Password';
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
                       SizedBox(height: 20),
                       TextInputWidget(

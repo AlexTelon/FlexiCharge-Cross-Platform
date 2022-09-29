@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 
 /// A class that is used to create a text field for user input.
-class UserInput extends StatelessWidget {
-  const UserInput({
+class UserFormInput extends StatelessWidget {
+  const UserFormInput({
     Key? key,
     required this.controller,
     required this.labelText,
