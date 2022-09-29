@@ -25,21 +25,19 @@ class UserApiService {
           'username': email,
           'code': verificationCode,
         }));
+
+    var responseJson = json.decode(response.body);
     switch (response.statusCode) {
       case 200:
         var registration = json.decode(response.body);
         var parsedRegistration = Registration.fromJson(registration);
-        print(parsedRegistration.toString());
         return parsedRegistration;
       case 400:
-        print(response.body);
-        throw Exception(ErrorCodes.badRequest);
+        throw responseJson['message'];
       case 404:
-        print(response.body);
-        throw Exception(ErrorCodes.notFound);
+        throw responseJson['message'];
       case 500:
-        print(response.body);
-        throw Exception(ErrorCodes.internalError);
+        throw responseJson['message'];
       default:
         throw Exception("default: " + ErrorCodes.internalError.toString());
     }
