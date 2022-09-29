@@ -3,19 +3,37 @@ import 'package:flexicharge/models/user_secure_storage.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
-class LoginViewModel extends BaseViewModel {
-  static const endPoint = "http://18.202.253.30:8080";
-  http.Client client = new http.Client();
+import '../../../services/user_api_service.dart';
 
+class LoginViewModel extends BaseViewModel {
+  // static const endPoint = "http://18.202.253.30:8080";
+  // http.Client client = new http.Client();
+
+  void validatLogIn() {}
   Future<Set> validateLogin(String username, String password) async {
     bool _isValid = false;
     var errorMessage = "";
 
-    print("username: " + username);
-    print("password: " + password);
+    try {
+      UserApiService().verifyLogin(username, password);
+    } catch (error) {
+      print("error e: " + error.toString());
+      errorMessage = error.toString();
+      var loginData = {_isValid, errorMessage};
+      return loginData;
+    }
+    var loginData = {_isValid, errorMessage};
+    return loginData;
+  }
+}
+/*
+Future<Set> validateLogin(String username, String password) async {
+    bool _isValid = false;
+    var errorMessage = "";
+
     try {
       var response = await client.post(
-        Uri.parse('$endPoint/auth/sign-in'),
+        UserApiService.login,
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8',
         },
@@ -50,5 +68,4 @@ class LoginViewModel extends BaseViewModel {
 
     var loginData = {_isValid, errorMessage};
     return loginData;
-  }
-}
+  }*/
