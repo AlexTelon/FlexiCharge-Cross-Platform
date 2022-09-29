@@ -74,46 +74,6 @@ class _LoginViewState extends State<LoginView> {
                                   }
                                 },
                               ),
-                              /*   TextFormField(
-                                controller: textControllerEmail,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter Your Email',
-                                  labelText: 'Email',
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                ),
-                                validator: (email) {
-                                  if (email != null &&
-                                      !EmailValidator.validate(email) &&
-                                      email.isNotEmpty) {
-                                    return 'Enter a valid Email';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),*/
                             ),
                             SizedBox(height: 30),
                             FractionallySizedBox(
@@ -131,51 +91,7 @@ class _LoginViewState extends State<LoginView> {
                                     return null;
                                   }
                                 },
-                              ), /*TextFormField(
-                                controller: textControllerPassword,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter Your Password',
-                                  labelText: 'Password',
-
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  // hint: 'Enter Your Password',
-                                  //  onChanged: (value) => print(value),
-                                  //  isPassword: true,
-                                ),
-                                validator: (password) {
-                                  if (password != null &&
-                                      password.length < 3 &&
-                                      password.isNotEmpty) {
-                                    return 'Enter min. 3 characters';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),*/
+                              ),
                             ),
                           ],
                         ),
