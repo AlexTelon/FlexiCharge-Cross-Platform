@@ -8,16 +8,17 @@ import '../../../services/user_api_service.dart';
 class LoginViewModel extends BaseViewModel {
   // static const endPoint = "http://18.202.253.30:8080";
   // http.Client client = new http.Client();
+  bool _isValid = false;
 
-  void validatLogIn() {}
   Future<Set> validateLogin(String username, String password) async {
-    bool _isValid = false;
     var errorMessage = "";
 
     try {
-      UserApiService().verifyLogin(username, password);
+      _isValid = await UserApiService().verifyLogin(username, password);
     } catch (error) {
+      print("------------------");
       print("error e: " + error.toString());
+      print("------------------");
       errorMessage = error.toString();
       var loginData = {_isValid, errorMessage};
       return loginData;

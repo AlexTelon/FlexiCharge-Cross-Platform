@@ -10,10 +10,10 @@ class UserApiService {
       "http://18.202.253.30:8080"; //Live FlexiCharge API
   http.Client client = new http.Client();
 
-  /*static final headers : <String, String> {
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },*/
+  static final headers = <String, String>{
+    'Content-Type': 'application/json',
+    'accept': 'application/json',
+  };
 
   static final Uri register = Uri.parse(baseURL + "/auth/sign-up");
   static final Uri login = Uri.parse('$baseURL/auth/sign-in');
@@ -23,39 +23,40 @@ class UserApiService {
     String password,
   ) async {
     bool _isValid = false;
-    var errorMessage = "";
 
     var response = await client.post(
       login,
-      headers: <String, String>{
-        'Content-Type': 'application/json',
-        'accept': 'application/json',
-      },
+      headers: headers,
       body: jsonEncode(<String, String>{
         'username': username,
         'password': password,
       }),
     );
-    var jsonResponse = json.decode(response.body);
+    var jsonDecoded = json.decode(response.body);
 
     switch (response.statusCode) {
       case 200:
         _isValid = true;
-        UserSecureStorage.setUserAccessToken(jsonResponse['accessToken']);
+        UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.getUserAccessToken();
+        print("Log in successfull");
 
         return _isValid;
       case 400:
+        // jsonResponse['message'];
         print(response.body);
-        throw Exception(ErrorCodes.badRequest);
+        throw jsonDecoded['message'];
       case 404:
         print(response.body);
-        throw Exception(ErrorCodes.notFound);
+        throw jsonDecoded['message'];
+      // throw Exception(ErrorCodes.notFound);
       case 500:
         print(response.body);
-        throw Exception(ErrorCodes.internalError);
+        throw jsonDecoded['message'];
+      //  throw Exception(ErrorCodes.internalError);
       default:
-        throw Exception("default: " + ErrorCodes.internalError.toString());
+        throw jsonDecoded['message'];
+      //throw Exception("default: " + ErrorCodes.internalError.toString());
     }
   }
 }
