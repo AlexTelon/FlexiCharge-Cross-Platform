@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
@@ -6,8 +8,14 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 
-class VerifyRegistrationView extends StatelessWidget {
+class VerifyRegistrationView extends StatefulWidget {
+  @override
+  State<VerifyRegistrationView> createState() => _VerifyRegistrationViewState();
+}
+
+class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<VerifyRegistrationViewModel>.reactive(
@@ -135,17 +143,28 @@ class VerifyRegistrationView extends StatelessWidget {
                             WideButton(
                               text: 'Verify Account',
                               color: Color(0xff78bd76),
-                              onTap: () => {
-                                model.verifyAccount()
+                              onTap: () async {
+                                try {
+                                  setState(() {
+                                    model.errors = "";
+                                  });
 
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => LoginView()),
-                                // )
+                                  await model.verifyAccount();
+                                  Navigator.pop(context);
+                                } catch (errors) {
+                                  setState(() {
+                                    model.errors = errors.toString();
+                                  });
+                                }
                               },
                               showWideButton: true,
                             ),
+                            if (!model.isAccountVerified &&
+                                model.errors.isNotEmpty)
+                              Text(model.errors,
+                                  style: TextStyle(color: Colors.red)),
+
+                            // Text(model.errors.toString())
                           ],
                         ),
                       ),
