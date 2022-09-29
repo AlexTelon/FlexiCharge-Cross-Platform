@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
+import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -31,7 +32,9 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                 flex: 2,
                 child: Topbar(
                   text: "Verify account",
-                  onTap: () => print("Back to previous page..."),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               // UPPP
@@ -141,24 +144,26 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                             ),
                             SizedBox(height: 30.0),
                             WideButton(
-                              text: 'Verify Account',
-                              color: Color(0xff78bd76),
-                              onTap: () async {
-                                try {
-                                  setState(() {
-                                    model.errors = "";
-                                  });
+                                text: 'Verify Account',
+                                color: Color(0xff78bd76),
+                                onTap: () async {
+                                  try {
+                                    setState(() {
+                                      model.errors = "";
+                                    });
 
-                                  await model.verifyAccount();
-                                  Navigator.pop(context);
-                                } catch (errors) {
-                                  setState(() {
-                                    model.errors = errors.toString();
-                                  });
-                                }
-                              },
-                              showWideButton: true,
-                            ),
+                                    await model.verifyAccount();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfileView()),
+                                    );
+                                  } catch (errors) {
+                                    setState(() {
+                                      model.errors = errors.toString();
+                                    });
+                                  }
+                                }),
                             if (!model.isAccountVerified &&
                                 model.errors.isNotEmpty)
                               Text(model.errors,
