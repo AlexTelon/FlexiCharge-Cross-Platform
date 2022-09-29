@@ -13,6 +13,7 @@
 		404FBA2128DDB07B00349587 /* KlarnaPaymentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404FBA2028DDB07B00349587 /* KlarnaPaymentView.swift */; };
 		404FBA2328DDC07700349587 /* KlarnaSDKIntegration.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404FBA2228DDC07700349587 /* KlarnaSDKIntegration.swift */; };
 		404FBA2928DE1DC900349587 /* KlarnaWrapperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 404FBA2828DE1DC900349587 /* KlarnaWrapperView.swift */; };
+		40CB704A28E381C500120DD9 /* IntroductionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 40CB704928E381C500120DD9 /* IntroductionViewController.swift */; };
 		74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 74858FAE1ED2DC5600515810 /* AppDelegate.swift */; };
 		8E6B6203F50869C316F5B53A /* Pods_Runner.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F9E3B7FF5330ADADDBB68B01 /* Pods_Runner.framework */; };
 		97C146FC1CF9000F007C117D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 97C146FA1CF9000F007C117D /* Main.storyboard */; };
@@ -42,6 +43,7 @@
 		404FBA2028DDB07B00349587 /* KlarnaPaymentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlarnaPaymentView.swift; sourceTree = "<group>"; };
 		404FBA2228DDC07700349587 /* KlarnaSDKIntegration.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlarnaSDKIntegration.swift; sourceTree = "<group>"; };
 		404FBA2828DE1DC900349587 /* KlarnaWrapperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KlarnaWrapperView.swift; sourceTree = "<group>"; };
+		40CB704928E381C500120DD9 /* IntroductionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntroductionViewController.swift; sourceTree = "<group>"; };
 		74858FAD1ED2DC5600515810 /* Runner-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Runner-Bridging-Header.h"; sourceTree = "<group>"; };
 		74858FAE1ED2DC5600515810 /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7AFA3C8E1D35360C0083082E /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = Flutter/Release.xcconfig; sourceTree = "<group>"; };
@@ -122,6 +124,7 @@
 				404FBA2228DDC07700349587 /* KlarnaSDKIntegration.swift */,
 				404FBA2828DE1DC900349587 /* KlarnaWrapperView.swift */,
 				403656ED28E22266002D3E7E /* FLNativeViewFactory.swift */,
+				40CB704928E381C500120DD9 /* IntroductionViewController.swift */,
 			);
 			path = Runner;
 			sourceTree = "<group>";
@@ -302,6 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				403656EE28E22266002D3E7E /* FLNativeViewFactory.swift in Sources */,
+				40CB704A28E381C500120DD9 /* IntroductionViewController.swift in Sources */,
 				74858FAF1ED2DC5600515810 /* AppDelegate.swift in Sources */,
 				1498D2341E8E89220040F4C2 /* GeneratedPluginRegistrant.m in Sources */,
 				404FBA2328DDC07700349587 /* KlarnaSDKIntegration.swift in Sources */,

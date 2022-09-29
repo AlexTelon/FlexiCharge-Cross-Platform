@@ -21,7 +21,7 @@ final class KlarnaSDKIntegration: ObservableObject {
     func getKlarnaSession(chargerIdInput: Binding<String>) {
 
         let chargerId: String? = chargerIdInput.wrappedValue
-        guard let url = URL(string: "http://54.220.194.65:8080/transactions/session") else { return }
+        guard let url = URL(string: "http://18.202.253.30:8080/transactions/session") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = [

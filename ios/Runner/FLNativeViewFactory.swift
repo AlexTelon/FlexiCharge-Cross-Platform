@@ -74,6 +74,9 @@ class FLNativeView: NSObject, FlutterPlatformView {
         parent.addChild(klarnaHostingController)
         
         _view.addSubview(parent.view)
+        
+        
+        //_view.addSubview(controller.view)
     }
 }
 
