@@ -7,6 +7,7 @@ import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
 
 import '../../widgets/user_form_input.dart';
+import '../home_page/home_view.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
@@ -105,6 +106,11 @@ class _LoginViewState extends State<LoginView> {
                                 setState(() {
                                   errorMsg = "";
                                 });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeView()),
+                                );
                               }
                               final isValidForm =
                                   _formKey.currentState!.validate();
