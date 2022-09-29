@@ -9,7 +9,7 @@ import SwiftUI
 
 struct KlarnaWrapperView: View {
     @State var chargerIdInput: String = ""
-    @State var isKlarnaPresented: Bool = false
+    @State var isKlarnaPresented: Bool = true
     @State var klarnaStatus: String = ""
     @State var transactionID: Int = 750
     
@@ -23,3 +23,5 @@ struct KlarnaWrapperView_Previews: PreviewProvider {
         KlarnaWrapperView()
     }
 }
+
+var klarnaHostingController = UIHostingController(rootView: KlarnaWrapperView())

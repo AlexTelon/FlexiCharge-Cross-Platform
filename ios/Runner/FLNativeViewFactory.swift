@@ -62,7 +62,18 @@ class FLNativeView: NSObject, FlutterPlatformView {
         nativeLabel.textColor = UIColor.white
         nativeLabel.textAlignment = .center
         nativeLabel.frame = CGRect(x: 0, y: 0, width: 180, height: 48.0)
-        _view.addSubview(nativeLabel)
+
+        //_view.addSubview(nativeLabel)
+        
+        var parent = UIViewController()
+        klarnaHostingController.view.translatesAutoresizingMaskIntoConstraints = false
+        klarnaHostingController.view.frame = parent.view.bounds
+        // First, add the view of the child to the view of the parent
+        parent.view.addSubview(klarnaHostingController.view)
+        // Then, add the child to the parent
+        parent.addChild(klarnaHostingController)
+        
+        _view.addSubview(parent.view)
     }
 }
 
