@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
 
+import '../../widgets/user_form_input.dart';
 import 'login_viewmodel.dart';
 
 class LoginView extends StatefulWidget {
@@ -61,7 +62,21 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             FractionallySizedBox(
                               widthFactor: 0.8,
-                              child: TextFormField(
+                              child: UserFormInput(
+                                controller: textControllerPassword,
+                                isPassword: false,
+                                hint: 'Enter Your Email',
+                                labelText: 'Email',
+                                validator: (email) {
+                                  if (email != null &&
+                                      !EmailValidator.validate(email) &&
+                                      email.isNotEmpty) {
+                                    return 'Enter a valid Email';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ), /*TextFormField(
                                 controller: textControllerEmail,
                                 decoration: const InputDecoration(
                                   hintText: 'Enter Your Email',
@@ -100,12 +115,26 @@ class _LoginViewState extends State<LoginView> {
                                     return null;
                                   }
                                 },
-                              ),
+                              ),*/
                             ),
                             SizedBox(height: 30),
                             FractionallySizedBox(
                               widthFactor: 0.8,
-                              child: TextFormField(
+                              child: UserFormInput(
+                                controller: textControllerPassword,
+                                isPassword: true,
+                                hint: 'Enter Your Password',
+                                labelText: 'Password',
+                                validator: (password) {
+                                  if (password != null &&
+                                      password.length < 3 &&
+                                      password.isNotEmpty) {
+                                    return 'Enter min. 3 characters';
+                                  } else {
+                                    return null;
+                                  }
+                                },
+                              ), /*TextFormField(
                                 controller: textControllerPassword,
                                 obscureText: true,
                                 decoration: const InputDecoration(
@@ -149,7 +178,7 @@ class _LoginViewState extends State<LoginView> {
                                     return null;
                                   }
                                 },
-                              ),
+                              ),*/
                             ),
                           ],
                         ),
