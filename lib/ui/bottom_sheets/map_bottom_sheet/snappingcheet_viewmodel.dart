@@ -222,17 +222,8 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("transactionID:  " + transactionSession.transactionID.toString());
         print("Getting auth token...");
 
-        String authToken = "";
-
-        if (Platform.isAndroid) {
-          authToken =
-              await _startKlarnaActivity(transactionSession.clientToken);
-        } else if (Platform.isIOS) {
-          Navigator.push(context,
-              MaterialPageRoute(builder: (context) => IOSCompositionWidget()));
-          await Future.delayed(Duration(seconds: 60));
-          authToken = "Noob";
-        }
+        String authToken =
+            await _startKlarnaActivity(transactionSession.clientToken);
         print("authToken: " + authToken);
         print('Done');
 
