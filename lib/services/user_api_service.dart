@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
-
 import '../models/user_secure_storage.dart';
 
 /// This class is used to store the User API endpoints for the application
@@ -18,6 +17,15 @@ class UserApiService {
   static final Uri register = Uri.parse(baseURL + "/auth/sign-up");
   static final Uri login = Uri.parse('$baseURL/auth/sign-in');
 
+  /// It takes a username and password, sends a POST request to the server, and returns a boolean value
+  /// based on the response
+  ///
+  /// Args:
+  ///   username (String): The username of the user
+  ///   password (String): "123456"
+  ///
+  /// Returns:
+  ///   A Future<bool>
   Future<bool> verifyLogin(
     String username,
     String password,
@@ -36,11 +44,9 @@ class UserApiService {
 
     switch (response.statusCode) {
       case 200:
+        print("Log in successfull");
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
-        UserSecureStorage.getUserAccessToken();
-        print("Log in successfull");
-
         return _isValid;
       case 400:
         throw jsonDecoded['message'];
