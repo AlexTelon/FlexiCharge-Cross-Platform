@@ -12,6 +12,7 @@ import 'login_viewmodel.dart';
 /// The class is a StatefulWidget that has a form with two text fields and a button. The button calls a
 /// function in the ViewModel that validates the input and returns a bool and a string. The bool is used
 /// to determine if the form is valid or not and the string is used to display an error message
+
 class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -62,6 +63,7 @@ class _LoginViewState extends State<LoginView> {
                                   return null;
                                 }
                               },
+
                             ),
                           ),
                           SizedBox(height: 30),

@@ -17,6 +17,7 @@ class LoginViewModel extends BaseViewModel {
       errorMessage = error.toString();
       var loginData = {false, errorMessage};
       return loginData;
+
     }
     var loginData = {_isValid, errorMessage};
     return loginData;
