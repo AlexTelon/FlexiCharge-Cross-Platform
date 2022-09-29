@@ -37,11 +37,7 @@ class _LoginViewState extends State<LoginView> {
                 Topbar(
                     text: "Log In",
                     onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => RegistrationView()),
-                      );
+                      Navigator.pop(context);
                     }),
                 Container(
                   child: Column(

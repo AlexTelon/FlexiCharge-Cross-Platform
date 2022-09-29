@@ -43,20 +43,13 @@ class UserApiService {
 
         return _isValid;
       case 400:
-        // jsonResponse['message'];
-        print(response.body);
         throw jsonDecoded['message'];
       case 404:
-        print(response.body);
         throw jsonDecoded['message'];
-      // throw Exception(ErrorCodes.notFound);
       case 500:
-        print(response.body);
         throw jsonDecoded['message'];
-      //  throw Exception(ErrorCodes.internalError);
       default:
-        throw jsonDecoded['message'];
-      //throw Exception("default: " + ErrorCodes.internalError.toString());
+        throw Exception("default: " + ErrorCodes.internalError.toString());
     }
   }
 }
