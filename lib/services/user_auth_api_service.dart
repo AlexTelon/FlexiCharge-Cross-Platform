@@ -12,26 +12,6 @@ class UserApiService {
   var chargerPoint = new ChargerPoint();
   LocalData _localData = locator<LocalData>();
 
-//   Future<List<Charger>> register(registrationDetails) async {
-//     var chargers = <Charger>[];
-//     var response = await client.post(Uri.parse('$endPoint/auth'), [], );
-//     switch (response.statusCode) {
-//       case 200:
-//         var parsed = json.decode(response.body) as List<dynamic>;
-//         for (var charger in parsed) {
-//           chargers.add(Charger.fromJson(charger));
-//         }
-//         return chargers;
-//       case 500:
-//         throw Exception(ErrorCodes.internalError);
-//       default:
-//         throw Exception(ErrorCodes.internalError);
-//     }
-//   }
-// }
-
-  // The request returns the updated transaction object,
-  // If everything goes as expected, it will contain a paymentId.
   Future<Registration> verifyAccount(
     String email,
     String verificationCode,
@@ -45,14 +25,11 @@ class UserApiService {
           'username': email,
           'code': verificationCode,
         }));
-
     switch (response.statusCode) {
       case 200:
         var registration = json.decode(response.body);
         var parsedRegistration = Registration.fromJson(registration);
-        print("Created account ");
         print(parsedRegistration.toString());
-
         return parsedRegistration;
       case 400:
         print(response.body);
