@@ -96,17 +96,10 @@ class _LoginViewState extends State<LoginView> {
                             text: 'Log in',
                             showWideButton: true,
                             onTap: () async {
-                              print("Trying to log in");
-
                               var loginData = await model.validateLogin(
                                   textControllerEmail.text,
                                   textControllerPassword.text);
-                              print(
-                                  "loginData in view: " + loginData.toString());
-                              print("login contains isValid? : " +
-                                  loginData
-                                      .contains('errorMessage')
-                                      .toString());
+
                               _validate = loginData.elementAt(0);
                               if (!_validate) {
                                 setState(() {
@@ -117,9 +110,6 @@ class _LoginViewState extends State<LoginView> {
                                   errorMsg = "";
                                 });
                               }
-                              print(
-                                  "validation bool:  " + _validate.toString());
-
                               final isValidForm =
                                   _formKey.currentState!.validate();
                             },
