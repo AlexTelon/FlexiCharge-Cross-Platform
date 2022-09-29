@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flexicharge/models/user_secure_storage.dart';
 import 'package:stacked/stacked.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,6 +31,8 @@ class LoginViewModel extends BaseViewModel {
         print("You have been logged in, statudcode: " +
             response.statusCode.toString());
         _isValid = true;
+        UserSecureStorage.setUserAccessToken(jsonResponse['accessToken']);
+        UserSecureStorage.getUserAccessToken();
       } else if (response.statusCode == 400) {
         print(errorMessage);
         print(response.body);
