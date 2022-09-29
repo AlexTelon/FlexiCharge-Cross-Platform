@@ -1,4 +1,5 @@
 import 'package:email_validator/email_validator.dart';
+import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
@@ -19,6 +20,9 @@ class RegistrationView extends StatefulWidget {
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
   final _formKey = GlobalKey<FormState>();
+  late String _password;
+
+  bool val = false;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
@@ -64,20 +68,36 @@ class _RegistrationViewState extends State<RegistrationView> {
                         isPassword: true,
                         validator: (password) {
                           if (password != null && password.isNotEmpty) {
-                            return 'Enter a valid Password';
+                            var input = UserInputValidator();
+                            input.passwordIsValid(password);
+
+                            if (input.passwordIsValid(password)) {
+                              return input.passwordErrors.first;
+                            } else {
+                              _password = password;
+                              return null;
+                            }
                           } else {
                             return null;
                           }
                         },
                       ),
                       SizedBox(height: 20),
-                      TextInputWidget(
-                        controller: repeatPasswordController,
-                        labelText: 'Repeat Password',
-                        hint: 'Enter Your Repeat Password',
-                        onChanged: (value) => print(value),
-                        isPassword: true,
-                      ),
+                      UserFormInput(
+                          controller: repeatPasswordController,
+                          labelText: 'Repeat Password',
+                          hint: 'Enter Your Repeat Password',
+                          isPassword: true,
+                          validator: (repeatedPassword) {
+                            if (repeatedPassword != null &&
+                                repeatedPassword.isNotEmpty) {
+                              if (_password != repeatedPassword) {
+                                return 'Fields do not match';
+                              }
+                            } else {
+                              return null;
+                            }
+                          }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
