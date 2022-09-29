@@ -15,8 +15,6 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  String email = "";
-  String password = "";
   String errorMsg = "";
   bool _validate = false;
   final _formKey = GlobalKey<FormState>();
@@ -62,7 +60,7 @@ class _LoginViewState extends State<LoginView> {
                           children: [
                             FractionallySizedBox(
                               child: UserFormInput(
-                                controller: textControllerPassword,
+                                controller: textControllerEmail,
                                 isPassword: false,
                                 hint: 'Enter Your Email',
                                 labelText: 'Email',
@@ -198,7 +196,6 @@ class _LoginViewState extends State<LoginView> {
                               showWideButton: true,
                               onTap: () async {
                                 print("Trying to log in");
-                                print(email + " " + password);
 
                                 var loginData = await model.validateLogin(
                                     textControllerEmail.text,
