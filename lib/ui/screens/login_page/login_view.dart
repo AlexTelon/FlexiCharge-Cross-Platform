@@ -61,7 +61,6 @@ class _LoginViewState extends State<LoginView> {
                         child: Column(
                           children: [
                             FractionallySizedBox(
-                              widthFactor: 0.8,
                               child: UserFormInput(
                                 controller: textControllerPassword,
                                 isPassword: false,
@@ -76,7 +75,8 @@ class _LoginViewState extends State<LoginView> {
                                     return null;
                                   }
                                 },
-                              ), /*TextFormField(
+                              ),
+                              /*   TextFormField(
                                 controller: textControllerEmail,
                                 decoration: const InputDecoration(
                                   hintText: 'Enter Your Email',
@@ -119,7 +119,6 @@ class _LoginViewState extends State<LoginView> {
                             ),
                             SizedBox(height: 30),
                             FractionallySizedBox(
-                              widthFactor: 0.8,
                               child: UserFormInput(
                                 controller: textControllerPassword,
                                 isPassword: true,
