@@ -1,17 +1,21 @@
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
-import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
-import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stacked/stacked.dart';
+
+/// SetupInvoicingView is a stateless widget that contains a scaffold with a single child scroll view
+/// that contains a column with a topbar, a sized box, a column with a column with a rich text, a sized
+/// box, a column with a rich text, a sized box, a text input widget, a sized box, a text input widget,
+/// a sized box, a text input widget, a sized box, a text input widget, a sized box, a wide button, a
+/// sized box, an ink well, a sized box, a column with a rich text, a sized box
 
 class SetupInvoicingView extends StatelessWidget {
   bool checked = false;
+  TextEditingController TemporaryController = new TextEditingController();
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<SetupInvoicingViewmodel>.reactive(
@@ -21,7 +25,12 @@ class SetupInvoicingView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Topbar(text: "Setup Invoicing"),
+              Topbar(
+                text: "Setup Invoicing",
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
               SizedBox(height: 30),
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -77,18 +86,21 @@ class SetupInvoicingView extends StatelessWidget {
                   ),
                   SizedBox(height: 20.0),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Name',
                     hint: 'Enter Your Name',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Adress',
                     hint: 'Enter Your Adress',
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Postcode',
                     hint: 'Enter Your Postcode',
                     onChanged: (value) => print(value),
@@ -96,6 +108,7 @@ class SetupInvoicingView extends StatelessWidget {
                   ),
                   SizedBox(height: 20),
                   TextInputWidget(
+                    controller: TemporaryController,
                     labelText: 'Town',
                     hint: 'Enter Your Town',
                     onChanged: (value) => print(value),
@@ -164,44 +177,3 @@ class SetupInvoicingView extends StatelessWidget {
     );
   }
 }
-
-/*
-                TextInputWidget(
-                    labelText: 'Town',
-                    hint: 'Enter Your Town',
-                    onChanged: (value) => print(value)),
-                WideButton(
-                  text: 'Continue',
-                  color: Color(0xff78bd76),
-                  onTap: () => print(
-                      'Line 58, setup_invoicing_view.dart, Register Button'),
-                  showWideButton: true,
-                ),
-                Spacer(),
-              ]),
-              SizedBox(
-                height: 30,
-              ),
-
-              Column(
-                children: [
-                  Text(
-                      "If you choose not to invoice, you will be asked to pay each time using Swish",
-                      style: const TextStyle(
-                          color: Color.fromARGB(255, 43, 47, 43),
-                          fontWeight: FontWeight.w500,
-                          fontFamily: "Lato",
-                          fontStyle: FontStyle.normal,
-                          fontSize: 13.0),
-                      textAlign: TextAlign.center),
-                ],
-              ),
-              SizedBox(
-                height: 30,
-              ),
-
-            ],
-          ),
-        ),
-      
-      */
