@@ -67,12 +67,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                         hint: 'Enter Your Password',
                         isPassword: true,
                         validator: (password) {
+                          final validator = UserInputValidator();
                           if (password != null && password.isNotEmpty) {
-                            var input = UserInputValidator();
-                            input.passwordIsValid(password);
-
-                            if (input.passwordIsValid(password)) {
-                              return input.passwordErrors.first;
+                            if (!validator.passwordIsValid(password)) {
+                              return validator.passwordErrors.first;
                             } else {
                               _password = password;
                               return null;

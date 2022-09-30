@@ -1,8 +1,9 @@
 //Call this class for validating the user input in register, login, verify registration etc.
 import 'dart:async';
 import 'dart:developer';
+import 'package:flutter/cupertino.dart';
 
-class UserInputValidator {
+class UserInputValidator extends ChangeNotifier {
 //Declare bools and error messages here
 //Declare validation functions here
 
@@ -16,7 +17,7 @@ class UserInputValidator {
   late bool emailIsValid;
 
   late bool passwordInputsAreEqual;
-  late var passwordErrors = <String>[];
+  final List<String> passwordErrors = [];
 
   Future<FutureOr> emailValidation(
     String password,
@@ -27,10 +28,12 @@ class UserInputValidator {
     String password,
   ) {
     passwordErrors.clear();
+    notifyListeners();
 
     if (password.length <= _passwordMinLength) {
       passwordErrors.add(
           'Must be at least' + _passwordMinLength.toString() + 'characters');
+      notifyListeners();
     }
 
     int numberOfInt = 0;
@@ -61,24 +64,28 @@ class UserInputValidator {
     if (numberOfInt < _passwordMinNumberOfInt) {
       passwordErrors.add(
           'Must have at least' + _passwordMinNumberOfInt.toString() + 'number');
+      notifyListeners();
     }
 
     if (numberOfSpecialChar < _passwordMinNumberOfSpecialChar) {
       passwordErrors.add('Must have at least' +
           _passwordMinNumberOfSpecialChar.toString() +
           'special character');
+      notifyListeners();
     }
 
     if (numberOfUppercaseChar < _passwordMinNumberOfUppercaseChar) {
       passwordErrors.add('Must have at least' +
           _passwordMinNumberOfUppercaseChar.toString() +
           'uppercase letter');
+      notifyListeners();
     }
 
     if (numberOfLowercaseChar < _passwordMinNumberOfLowercaseChar) {
       passwordErrors.add('Must have at least' +
           _passwordMinNumberOfLowercaseChar.toString() +
           'lowercase letter');
+      notifyListeners();
     }
 
     if (passwordErrors.length > 0) {
