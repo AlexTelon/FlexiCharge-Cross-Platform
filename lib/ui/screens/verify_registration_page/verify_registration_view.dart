@@ -144,6 +144,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                             ),
                             SizedBox(height: 30.0),
                             WideButton(
+                                showWideButton: true,
                                 text: 'Verify Account',
                                 color: Color(0xff78bd76),
                                 onTap: () async {
@@ -164,6 +165,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                     });
                                   }
                                 }),
+
                             if (!model.isAccountVerified &&
                                 model.errors.isNotEmpty)
                               Text(model.errors,
