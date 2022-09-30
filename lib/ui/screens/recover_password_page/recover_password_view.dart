@@ -1,3 +1,4 @@
+import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_view.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -6,7 +7,6 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class RecoverPasswordView extends StatelessWidget {
-
   TextEditingController textController = TextEditingController();
 
   @override
@@ -38,9 +38,7 @@ class RecoverPasswordView extends StatelessWidget {
                         child: Column(
                           children: [
                             TextInputWidget(
-
                               controller: textController,
-
                               labelText: 'Email',
                               hint: 'Enter Your Email',
                               onChanged: (value) => print(value),
@@ -66,7 +64,13 @@ class RecoverPasswordView extends StatelessWidget {
                         child: WideButton(
                           text: 'Send',
                           showWideButton: true,
-                          onTap: () => ('Send'),
+                          onTap: () => {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => RecoverEmailSentView()),
+                            )
+                          },
                           color: Color(0xff78bd76),
                         ),
                       ),
