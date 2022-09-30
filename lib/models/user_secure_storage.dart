@@ -13,14 +13,14 @@ class UserSecureStorage {
   static const _userIsLoggedIn = "false";
 
 // Write value
-  static Future setUserAccessToken(String AccessToken) async =>
-      await _storage.write(key: _userAccessToken, value: AccessToken);
+  static Future setUserAccessToken(String accessToken) async =>
+      await _storage.write(key: _userAccessToken, value: accessToken);
 
   static Future setUserId(String userId) async =>
       await _storage.write(key: _userId, value: userId);
 
-  static Future setUserIsLoggedIn(bool BoolisUserLoggedIn) async {
-    String isUserLoggedIn = BoolisUserLoggedIn.toString();
+  static Future setUserIsLoggedIn(bool boolIsUserLoggedIn) async {
+    String isUserLoggedIn = boolIsUserLoggedIn.toString();
     print("The user is loggedg in? : " + isUserLoggedIn);
     await _storage.write(key: _userIsLoggedIn, value: isUserLoggedIn);
   }
@@ -46,6 +46,5 @@ class UserSecureStorage {
 //Map<String, String> allValues = await storage.readAll();
 
 // Delete all
-//await storage.deleteAll();
-
+  static Future deleteAllUserStorage() async => await _storage.deleteAll();
 }
