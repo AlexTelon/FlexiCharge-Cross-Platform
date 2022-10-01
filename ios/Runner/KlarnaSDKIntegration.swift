@@ -16,12 +16,13 @@ final class KlarnaSDKIntegration: ObservableObject {
     @Published var klarnaStatus: String = ""
     @Published var thisTransactionID: Int?
     private(set) var paymentView: KlarnaPaymentView?
+    private let flexiChargeApiUrl = "http://18.202.253.30:8080"
     var result: AnyObject?
     
     func getKlarnaSession(chargerIdInput: Binding<String>) {
 
         let chargerId: String? = chargerIdInput.wrappedValue
-        guard let url = URL(string: "http://18.202.253.30:8080/transactions/session") else { return }
+        guard let url = URL(string: "\(flexiChargeApiUrl)/transactions/session") else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.allHTTPHeaderFields = [
@@ -57,7 +58,7 @@ final class KlarnaSDKIntegration: ObservableObject {
     }
     
     func SendKlarnaToken(transactionID: Int, authorization_token: String, completion: @escaping (String) -> Void){
-        guard let url = URL(string: "http://18.202.253.30:8080/transactions/start/:" + String(transactionID)) else { return }
+        guard let url = URL(string: "\(flexiChargeApiUrl)/transactions/start/:" + String(transactionID)) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.allHTTPHeaderFields = [

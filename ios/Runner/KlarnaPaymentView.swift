@@ -9,6 +9,7 @@
 import UIKit
 import SwiftUI
 import KlarnaMobileSDK
+import Flutter
 
 
 public protocol ViewControllerDelegate: AnyObject {
@@ -17,17 +18,20 @@ public protocol ViewControllerDelegate: AnyObject {
 
 
 struct KlarnaView: View {
+    @Binding var result: FlutterResult
     @Binding var isPresented: Bool
     @Binding var klarnaStatus: String
     @Binding var chargerIdInput: String
     @Binding var transactionID: Int
     @ObservedObject var sdkIntegration: KlarnaSDKIntegration = KlarnaSDKIntegration()
+    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
 
-    init(isPresented: Binding<Bool>, klarnaStatus: Binding<String>, chargerIdInput: Binding<String>, transactionID: Binding<Int>) {
+    init(isPresented: Binding<Bool>, klarnaStatus: Binding<String>, chargerIdInput: Binding<String>, transactionID: Binding<Int>, result: Binding<FlutterResult>) {
         self._isPresented = isPresented
         self._klarnaStatus = klarnaStatus
         self._chargerIdInput = chargerIdInput
         self._transactionID = transactionID
+        self._result = result
         sdkIntegration.getKlarnaSession(chargerIdInput: chargerIdInput)
     }
     
@@ -43,6 +47,8 @@ struct KlarnaView: View {
             klarnaStatus = sdkIntegration.klarnaStatus
             transactionID = sdkIntegration.thisTransactionID ?? 0
             isPresented = false
+            result(transactionID)
+            self.presentationMode.wrappedValue.dismiss()
         })
     }
 }
@@ -53,9 +59,10 @@ struct InitializeKlarna: UIViewControllerRepresentable, View {
     @Binding var klarnaStatus: String
     @Binding var chargerIdInput: String
     @Binding var transactionID: Int
+    @Binding var result: FlutterResult
 
     func makeUIViewController(context: UIViewControllerRepresentableContext<InitializeKlarna>) -> UIHostingController<KlarnaView> {
-        return UIHostingController(rootView: KlarnaView(isPresented: $isPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID))
+        return UIHostingController(rootView: KlarnaView(isPresented: $isPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID, result: $result))
     }
 
     func updateUIViewController(_ uiViewController: UIHostingController<KlarnaView>, context: UIViewControllerRepresentableContext<InitializeKlarna>) {

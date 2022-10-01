@@ -27,33 +27,23 @@ import KlarnaMobileSDK
               if let args = call.arguments as? Dictionary<String, Any>,
                 let clientToken = args["clientToken"] as? String {
                   
-                  let klarnaHostingController = UIHostingController(rootView: KlarnaWrapperView())
+                  let klarnaHostingController = UIHostingController(rootView: KlarnaWrapperView(result: result))
                   
-                  let parent = UIViewController()
+                  let parentViewController = UIViewController()
                   klarnaHostingController.view.translatesAutoresizingMaskIntoConstraints = false
-                  klarnaHostingController.view.frame = parent.view.bounds
+                  klarnaHostingController.view.frame = parentViewController.view.bounds
                   // First, add the view of the child to the view of the parent
-                  parent.view.addSubview(klarnaHostingController.view)
+                  parentViewController.view.addSubview(klarnaHostingController.view)
                   // Then, add the child to the parent
-                  parent.addChild(klarnaHostingController)
+                  parentViewController.addChild(klarnaHostingController)
                   
-                  controller.view.addSubview(parent.view)
-                  
-                  
-                  //result("Klarna Finished!")
+                  controller.view.addSubview(parentViewController.view)
                   
               } else {
                 result(FlutterError.init(code: "errorSetDebug", message: "data or format error", details: nil))
               }
           }
       })
-      
-      /*weak var registrar = self.registrar(forPlugin: "plugin-name")
-      
-      let factory = FLNativeViewFactory(messenger: registrar!.messenger())
-      self.registrar(forPlugin: "<plugin-name>")!.register(
-          factory,
-          withId: "<platform-view-type>")*/
       
       GeneratedPluginRegistrant.register(with: self)
       return super.application(application, didFinishLaunchingWithOptions: launchOptions)

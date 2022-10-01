@@ -12,14 +12,9 @@ struct KlarnaWrapperView: View {
     @State var isKlarnaPresented: Bool = true
     @State var klarnaStatus: String = ""
     @State var transactionID: Int = 750
+    @State var result: FlutterResult
     
     var body: some View {
-        InitializeKlarna(isPresented: $isKlarnaPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID)
-    }
-}
-
-struct KlarnaWrapperView_Previews: PreviewProvider {
-    static var previews: some View {
-        KlarnaWrapperView()
+        InitializeKlarna(isPresented: $isKlarnaPresented, klarnaStatus: $klarnaStatus, chargerIdInput: $chargerIdInput, transactionID: $transactionID, result: $result)
     }
 }
