@@ -57,8 +57,8 @@ final class KlarnaSDKIntegration: ObservableObject {
         self.paymentView!.initialize(clientToken: result!["client_token"] as! String, returnUrl: URL(string:"flexiChargeUrl://")!)
     }
     
-    func SendKlarnaToken(transactionID: Int, authorization_token: String, completion: @escaping (String) -> Void){
-        guard let url = URL(string: "\(flexiChargeApiUrl)/transactions/start/:" + String(transactionID)) else { return }
+    func sendKlarnaToken(transactionID: Int, authorization_token: String, completion: @escaping (String) -> Void){
+        guard let url = URL(string: "\(flexiChargeApiUrl)/transactions/start/" + String(transactionID)) else { return }
         var request = URLRequest(url: url)
         request.httpMethod = "PUT"
         request.allHTTPHeaderFields = [
@@ -75,6 +75,9 @@ final class KlarnaSDKIntegration: ObservableObject {
                 return
             }
             if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
+                //This code is only a temporary fix since API endpoint for transaction start is not working
+                completion("Accepted ...NOT!")
+                
                 guard responseCode == 201 else {
                     return
                 }
@@ -106,7 +109,7 @@ extension KlarnaSDKIntegration: KlarnaPaymentEventListener {
     func klarnaAuthorized(paymentView: KlarnaPaymentView, approved: Bool, authToken: String?, finalizeRequired: Bool) {
         if let token = authToken {
             let transactionID = result!["transactionID"] as! Int
-            SendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
+            sendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
                 DispatchQueue.main.async {
                     self.isKlarnaPaymentDone = true
                     self.klarnaStatus = "Accepted"
@@ -122,7 +125,7 @@ extension KlarnaSDKIntegration: KlarnaPaymentEventListener {
     func klarnaReauthorized(paymentView: KlarnaPaymentView, approved: Bool, authToken: String?) {
         if let token = authToken {
             let transactionID = result!["transactionID"] as! Int
-            SendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
+            sendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
                 DispatchQueue.main.async {
                     self.isKlarnaPaymentDone = true
                     self.klarnaStatus = "Accepted"
@@ -134,7 +137,7 @@ extension KlarnaSDKIntegration: KlarnaPaymentEventListener {
     func klarnaFinalized(paymentView: KlarnaPaymentView, approved: Bool, authToken: String?) {
         if let token = authToken {
             let transactionID = result!["transactionID"] as! Int
-            SendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
+            sendKlarnaToken(transactionID: transactionID, authorization_token: token) { _ in
                 DispatchQueue.main.async {
                     self.isKlarnaPaymentDone = true
                     self.klarnaStatus = "Accepted"
