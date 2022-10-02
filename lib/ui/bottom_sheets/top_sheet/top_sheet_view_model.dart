@@ -81,7 +81,7 @@ class TopSheetViewModel extends BaseViewModel {
       chargingState = 4;
       changeTopSheetState(3);
       try {
-        transactionApiService
+        await transactionApiService
             .stopCharging(localData.transactionSession.transactionID);
       } catch (error) {
         print("Could not stop charging");
