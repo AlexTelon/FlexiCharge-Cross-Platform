@@ -37,19 +37,18 @@ struct KlarnaView: View {
     
     var body: some View {
         VStack {
-            /*AsyncImage(url: URL(string: "https://i.imgur.com/bYV3h6Q.png")).frame(maxWidth: 300, maxHeight: 200)
+            AsyncImage(url: URL(string: "https://i.imgur.com/bYV3h6Q.png")).frame(maxWidth: 300, maxHeight: 200)
             Spacer()
             ProgressView().progressViewStyle(CircularProgressViewStyle())
             Spacer()
-            Spacer()*/
+            Spacer()
         }.onChange(of: sdkIntegration.isKlarnaPaymentDone, perform: { _ in
             klarnaStatus = sdkIntegration.klarnaStatus
             transactionID = sdkIntegration.thisTransactionID ?? 0
             isPresented = false
-            result(transactionID)
             self.presentationMode.wrappedValue.dismiss()
+            result(transactionID)
         })
-        .hidden()
     }
 }
 

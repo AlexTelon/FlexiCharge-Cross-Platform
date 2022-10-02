@@ -76,7 +76,7 @@ final class KlarnaSDKIntegration: ObservableObject {
             }
             if let responseCode = (response as? HTTPURLResponse)?.statusCode, let responseData = responseData {
                 //This code is only a temporary fix since API endpoint for transaction start is not working
-                completion("Accepted ...NOT!")
+                completion("1020")
                 
                 guard responseCode == 201 else {
                     return
