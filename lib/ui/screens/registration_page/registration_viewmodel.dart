@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../../models/user_input_validator.dart';
 import '../../../services/user_api_service.dart';
 
 class RegistrationViewmodel extends BaseViewModel {
