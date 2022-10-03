@@ -95,3 +95,4 @@ class UserInputValidator extends ChangeNotifier {
     } else
       return true;
   }
+}

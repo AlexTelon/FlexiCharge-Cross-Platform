@@ -136,7 +136,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                             context,
                             MaterialPageRoute(
                                 builder: (context) => VerifyRegistrationView()),
-                          )
+                          );
                         },
                         showWideButton: true,
                       ),
