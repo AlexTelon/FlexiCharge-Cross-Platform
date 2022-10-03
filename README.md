@@ -12,7 +12,7 @@ Make sure flutter is installed on you system. Check for errors by running `flutt
 Download the project by either cloning it or by downloading the zip-file. After extracting the project, open it up with Visual Studio Code.
 
 ### VS Code
-Make sure that the extention Flutter (version: v3.27.0) is installed and enabled.
+Make sure that the extension Flutter (version: v3.27.0) is installed and enabled.
 
 If you get prompted that some packages are missing, press download. Else, go to pubspec.yaml and and download the packages from there, or download from the terminal by entering `flutter pub get`
 
