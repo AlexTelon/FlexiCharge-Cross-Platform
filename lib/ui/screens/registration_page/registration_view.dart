@@ -1,9 +1,13 @@
+import 'package:email_validator/email_validator.dart';
+import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
+import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
+import 'package:flexicharge/ui/widgets/user_form_input.dart';
 import 'package:flutter/material.dart';
 
 import 'package:stacked/stacked.dart';
@@ -15,17 +19,14 @@ class RegistrationView extends StatefulWidget {
 
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
+  final _formKey = GlobalKey<FormState>();
+  late String _password;
 
-  var errorMsg = "";
+  bool val = false;
 
   TextEditingController emailController = new TextEditingController();
-
-  TextEditingController mobileNumberController = new TextEditingController();
-
   TextEditingController passwordController = new TextEditingController();
-
   TextEditingController repeatPasswordController = new TextEditingController();
-
 
   @override
   Widget build(BuildContext context) {
@@ -33,145 +34,168 @@ class _RegistrationViewState extends State<RegistrationView> {
       viewModelBuilder: () => RegistrationViewmodel(),
       builder: (context, model, child) => Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Topbar(text: "Register"),
-              SizedBox(height: 30),
-              Column(
-                mainAxisAlignment: MainAxisAlignment.start,
+          child: Form(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // SizedBox(height: 1),
-                  TextInputWidget(
-
-                    controller: emailController,
-
-                    labelText: 'Email',
-                    hint: 'Enter Your Email',
-                    onChanged: (value) => print(value),
-                  ),
-                  SizedBox(height: 20),
-                  TextInputWidget(
-
-                    controller: mobileNumberController,
-
-                    labelText: 'Mobile Number',
-                    hint: 'Enter Your Mobile Number',
-                    onChanged: (value) => print(value),
-                    isNumber: true,
-                  ),
-                  SizedBox(height: 20),
-                  TextInputWidget(
-
-                    controller: passwordController,
-
-                    labelText: 'Password',
-                    hint: 'Enter Your Password',
-                    onChanged: (value) => print(value),
-                    isPassword: true,
-                  ),
-                  SizedBox(height: 20),
-                  TextInputWidget(
-
-                    controller: repeatPasswordController,
-
-                    labelText: 'Repeat Password',
-                    hint: 'Enter Your Repeat Password',
-                    onChanged: (value) => print(value),
-                    isPassword: true,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  Topbar(text: "Register"),
+                  SizedBox(height: 30),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Container(
-                        height: 60,
-                        decoration: BoxDecoration(),
-                        child: Checkbox(
-                            value: model.checked,
-                            checkColor: Colors.black,
-                            activeColor: Colors.white,
-                            side: BorderSide(color: Colors.black),
-                            onChanged: (newState) => model.checked = newState),
+                      UserFormInput(
+                        controller: emailController,
+                        labelText: 'Email',
+                        hint: 'Enter Your Email',
+                        validator: (email) {
+                          // Flytta till egen fil, gör en funktion
+                          if (email != null &&
+                              !EmailValidator.validate(email) &&
+                              email.isNotEmpty) {
+                            return 'Enter a valid Email';
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
-                      Text(
-                        "I agree to the terms and conditions",
-                        style: const TextStyle(
-                            color: const Color(0xff212121),
-                            fontWeight: FontWeight.w400,
-                            fontFamily: "Lato",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 13.0),
-                      )
-                    ],
-                  ),
-                  SizedBox(height: 30.0),
-                  WideButton(
-                    text: 'Register',
-                    color: Color(0xff78bd76),
-                    onTap: () => model.registerNewUser(
-                      emailController.text,
-                      mobileNumberController.text,
-                      passwordController.text,
-                      repeatPasswordController.text,
-                    ),
-                    showWideButton: true,
-                  ),
-                  SizedBox(height: 20.0),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        'Already have an account? ',
-                        style: TextStyle(
-                          fontFamily: 'Lato',
-                          color: Color(0xff212121),
-                          fontSize: 13,
-                          fontWeight: FontWeight.w400,
-                          fontStyle: FontStyle.normal,
-                        ),
+                      SizedBox(height: 20),
+                      UserFormInput(
+                        controller: passwordController,
+                        labelText: 'Password',
+                        hint: 'Enter Your Password',
+                        isPassword: true,
+                        validator: (password) {
+                          final validator = UserInputValidator();
+                          if (password != null && password.isNotEmpty) {
+                            if (!validator.passwordIsValid(password)) {
+                              return validator.passwordErrors.first;
+                            } else {
+                              _password = password;
+                              return null;
+                            }
+                          } else {
+                            return null;
+                          }
+                        },
                       ),
+                      SizedBox(height: 20),
+                      UserFormInput(
+                          controller: repeatPasswordController,
+                          labelText: 'Repeat Password',
+                          hint: 'Enter Your Repeat Password',
+                          isPassword: true,
+                          validator: (repeatedPassword) {
+                            if (repeatedPassword != null &&
+                                repeatedPassword.isNotEmpty) {
+                              if (_password != repeatedPassword) {
+                                return 'Fields do not match';
+                              }
+                            } else {
+                              return null;
+                            }
+                          }),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            height: 60,
+                            decoration: BoxDecoration(),
+                            child: Checkbox(
+                                value: model.checked,
+                                checkColor: Colors.black,
+                                activeColor: Colors.white,
+                                side: BorderSide(color: Colors.black),
+                                onChanged: (newState) =>
+                                    model.checked = newState),
+                          ),
+                          Text(
+                            "I agree to the terms and conditions",
+                            style: const TextStyle(
+                                color: const Color(0xff212121),
+                                fontWeight: FontWeight.w400,
+                                fontFamily: "Lato",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 13.0),
+                          )
+                        ],
+                      ),
+                      SizedBox(height: 30.0),
+                      WideButton(
+                        text: 'Register',
+                        color: Color(0xff78bd76),
+                        onTap: () async {
+                          await model.registerNewUser(
+                            emailController.text,
+                            passwordController.text,
+                            repeatPasswordController.text,
+                          );
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => VerifyRegistrationView()),
+                          );
+                        },
+                        showWideButton: true,
+                      ),
+                      SizedBox(height: 20.0),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'Already have an account? ',
+                            style: TextStyle(
+                              fontFamily: 'Lato',
+                              color: Color(0xff212121),
+                              fontSize: 13,
+                              fontWeight: FontWeight.w400,
+                              fontStyle: FontStyle.normal,
+                            ),
+                          ),
+                          InkWell(
+                            onTap: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => LoginView()),
+                              );
+                            },
+                            child: Text(
+                              'Log In',
+                              style: TextStyle(
+                                fontFamily: 'Lato',
+                                color: Color(0xff78bd76),
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                fontStyle: FontStyle.normal,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 20.0),
                       InkWell(
                         onTap: () {
                           Navigator.push(
                             context,
-                            MaterialPageRoute(
-                                builder: (context) => LoginView()),
+                            MaterialPageRoute(builder: (context) => HomeView()),
                           );
                         },
-                        child: Text(
-                          'Log In',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Color(0xff78bd76),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w700,
-                            fontStyle: FontStyle.normal,
-                          ),
-                        ),
-                      ),
+                        child: Text("Continue as Guest",
+                            style: const TextStyle(
+                                color: const Color(0xff78bd76),
+                                fontWeight: FontWeight.w700,
+                                fontFamily: "Lato",
+                                fontStyle: FontStyle.normal,
+                                fontSize: 13.0),
+                            textAlign: TextAlign.center),
+                      )
                     ],
                   ),
-                  SizedBox(height: 20.0),
-                  InkWell(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => HomeView()),
-                      );
-                    },
-                    child: Text("Continue as Guest",
-                        style: const TextStyle(
-                            color: const Color(0xff78bd76),
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "Lato",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 13.0),
-                        textAlign: TextAlign.center),
-                  )
                 ],
-              ),
-            ],
-          ),
+              )),
         ),
       ),
     );
