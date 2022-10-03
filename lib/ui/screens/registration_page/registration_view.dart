@@ -132,11 +132,11 @@ class _RegistrationViewState extends State<RegistrationView> {
                             repeatPasswordController.text,
                           );
 
-                          /*Navigator.push(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => VerifyRegistrationView()),
-                          )*/
+                          )
                         },
                         showWideButton: true,
                       ),
