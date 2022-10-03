@@ -1,4 +1,7 @@
+import 'dart:convert';
+
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
+import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -6,8 +9,14 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
 
-class VerifyRegistrationView extends StatelessWidget {
+class VerifyRegistrationView extends StatefulWidget {
+  @override
+  State<VerifyRegistrationView> createState() => _VerifyRegistrationViewState();
+}
+
+class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<VerifyRegistrationViewModel>.reactive(
@@ -23,7 +32,9 @@ class VerifyRegistrationView extends StatelessWidget {
                 flex: 2,
                 child: Topbar(
                   text: "Verify account",
-                  onTap: () => print("Back to previous page..."),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
                 ),
               ),
               // UPPP
@@ -133,19 +144,34 @@ class VerifyRegistrationView extends StatelessWidget {
                             ),
                             SizedBox(height: 30.0),
                             WideButton(
-                              text: 'Verify Account',
-                              color: Color(0xff78bd76),
-                              onTap: () => {
-                                model.verifyAccount()
+                                showWideButton: true,
+                                text: 'Verify Account',
+                                color: Color(0xff78bd76),
+                                onTap: () async {
+                                  try {
+                                    setState(() {
+                                      model.errors = "";
+                                    });
 
-                                // Navigator.push(
-                                //   context,
-                                //   MaterialPageRoute(
-                                //       builder: (context) => LoginView()),
-                                // )
-                              },
-                              showWideButton: true,
-                            ),
+                                    await model.verifyAccount();
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) => ProfileView()),
+                                    );
+                                  } catch (errors) {
+                                    setState(() {
+                                      model.errors = errors.toString();
+                                    });
+                                  }
+                                }),
+
+                            if (!model.isAccountVerified &&
+                                model.errors.isNotEmpty)
+                              Text(model.errors,
+                                  style: TextStyle(color: Colors.red)),
+
+                            // Text(model.errors.toString())
                           ],
                         ),
                       ),

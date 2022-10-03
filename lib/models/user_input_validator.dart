@@ -1,4 +1,5 @@
 //Call this class for validating the user input in register, login, verify registration etc.
+
 import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/cupertino.dart';
@@ -94,4 +95,3 @@ class UserInputValidator extends ChangeNotifier {
     } else
       return true;
   }
-}
