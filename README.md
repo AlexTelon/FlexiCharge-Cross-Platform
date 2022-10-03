@@ -1,5 +1,5 @@
 # FlexiCharge-Cross-Platform
-A app written in Flutter for Flexicharge by third year students from Jönköping University (2021)
+A app written in Flutter for Flexicharge by third year students from Jönköping University (2021 and 2022)
 
 ## Test Status
 <a href="https://github.com/knowitrickard/FlexiCharge-Cross-Platform/actions">
