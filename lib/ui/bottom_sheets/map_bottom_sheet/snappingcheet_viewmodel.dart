@@ -5,12 +5,14 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
+import 'package:flexicharge/ui/widgets/ios_composition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 import 'package:flutter/services.dart';
+import 'dart:io' show Platform;
 
 class CustomSnappingSheetViewModel extends BaseViewModel {
   final _chargerAPI = locator<ChargerApiService>();
@@ -196,7 +198,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   }
 
   // Try to reserve a charger and get a transaction going
-  Future<void> connect(int id) async {
+  Future<void> connect(int id, BuildContext context) async {
     if (selectedCharger.status == 'Available') {
       try {
         // Reserve charger during payment
@@ -223,15 +225,20 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         String authToken =
             await _startKlarnaActivity(transactionSession.clientToken);
         print("authToken: " + authToken);
-        print('Done');
 
         print("auth token: " + authToken);
 
-        // Create transaction order with the auth token from klarna
-        print("Trying to update our transaction session with Klarna order... ");
-        localData.transactionSession = await _transactionAPI.createKlarnaOrder(
-            transactionSession.transactionID, authToken);
-        print("payment ID" + localData.transactionSession.paymentID.toString());
+        if (Platform.isAndroid) {
+          // Klarna iOS integration handles transaction start by itself,
+          // however the Android integration does not.
+          // Create transaction order with the auth token from klarna
+          print(
+              "Trying to update our transaction session with Klarna order... ");
+          localData.transactionSession = await _transactionAPI
+              .createKlarnaOrder(transactionSession.transactionID, authToken);
+          print(
+              "payment ID" + localData.transactionSession.paymentID.toString());
+        }
       } catch (e) {
         print(e);
       }
