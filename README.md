@@ -33,7 +33,7 @@ Supports Android versions
 - targetSdkVersion 32, upgraded from 30 in 2022
 
 Supports IOS versions
-- Non set
+- 15.0
 
 ## Architecture
 ### Stacked Architecture
