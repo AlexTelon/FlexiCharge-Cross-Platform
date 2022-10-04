@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
+
+import '../../../models/user_secure_storage.dart';
 // import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
 /*class SplashScreen extends StatelessWidget {
@@ -83,7 +85,7 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
-                                  isActive: model.localData.isButtonActive,
+                                  isActive: false,
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
@@ -105,6 +107,7 @@ class HomeView extends StatelessWidget {
                                     builder: (context) => ProfileView()),
                               );
                             },
+                            isActive: false,
                             isLarge: false,
                             icon: SvgPicture.asset(
                                 'assets/svg_images/person.svg',
