@@ -3,34 +3,11 @@ import 'package:flexicharge/services/map_style.dart';
 import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
-// import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../models/user_secure_storage.dart';
-import '../login_page/login_view.dart';
-// import 'package:loading_overlay_pro/loading_overlay_pro.dart';
-
-/*class SplashScreen extends StatelessWidget {
-  SplashScreen() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('Home'),
-      ),
-      body: Center(
-        child: Text('Hello world!'),
-      ),
-    );
-  }
-}*/
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -109,11 +86,6 @@ class HomeView extends StatelessWidget {
                                       builder: (context) => ProfileView()),
                                 );
                               } else {
-                                /* Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => LoginView()),
-                                );*/
                                 Navigator.pop(context);
                               }
                             },
