@@ -1,3 +1,4 @@
+import 'package:email_validator/email_validator.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_view.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
@@ -6,8 +7,10 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/user_form_input.dart';
+
 class RecoverPasswordView extends StatelessWidget {
-  TextEditingController textController = TextEditingController();
+  TextEditingController textControllerEmail = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -37,11 +40,20 @@ class RecoverPasswordView extends StatelessWidget {
                         flex: 5,
                         child: Column(
                           children: [
-                            TextInputWidget(
-                              controller: textController,
-                              labelText: 'Email',
+                            UserFormInput(
+                              controller: textControllerEmail,
+                              isPassword: false,
                               hint: 'Enter Your Email',
-                              onChanged: (value) => print(value),
+                              labelText: 'Email',
+                              validator: (email) {
+                                if (email != null &&
+                                    !EmailValidator.validate(email) &&
+                                    email.isNotEmpty) {
+                                  return 'Enter a valid Email';
+                                } else {
+                                  return null;
+                                }
+                              },
                             ),
                             SizedBox(height: 30),
                             Text(
