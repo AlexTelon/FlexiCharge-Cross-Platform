@@ -47,6 +47,9 @@ class UserApiService {
         print("Log in successfull");
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
+        UserSecureStorage.setUserId(jsonDecoded['user_id']);
+        UserSecureStorage.setUserIsLoggedIn(_isValid);
+
         return _isValid;
       case 400:
         throw jsonDecoded['message'];
