@@ -84,7 +84,8 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => RecoverEmailSentView()),
+                                builder: (context) => RecoverEmailSentView(
+                                    mail: textControllerEmail.text)),
                           );
                         },
                         color: Color(0xff78bd76),

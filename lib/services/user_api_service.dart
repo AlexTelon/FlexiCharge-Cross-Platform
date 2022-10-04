@@ -76,6 +76,38 @@ class UserApiService {
     switch (response.statusCode) {
       case 200:
         print("Email with verification code is successfully sent");
+        print("jsonDecode: " + jsonDecoded.toString());
+        break;
+      case 400:
+        throw jsonDecoded['message'];
+      case 404:
+        throw jsonDecoded['message'];
+      case 500:
+        throw jsonDecoded['message'];
+      default:
+        throw Exception("default: " + ErrorCodes.internalError.toString());
+    }
+  }
+
+  Future<void> verifyPasswordReset(
+    String email,
+    String password,
+    String code,
+  ) async {
+    var response =
+        await client.post(Uri.parse('$baseURL/auth/confirm-forgot-password'),
+            headers: headers,
+            body: jsonEncode(<String, String>{
+              'username': email,
+              'password': password,
+              'confirmationCode': code,
+            }));
+
+    var jsonDecoded = json.decode(response.body);
+    print("jsonDecode: " + jsonDecoded.toString());
+    switch (response.statusCode) {
+      case 200:
+        print("new password sent");
         break;
       case 400:
         throw jsonDecoded['message'];

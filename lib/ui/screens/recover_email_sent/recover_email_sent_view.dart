@@ -1,18 +1,28 @@
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_viewmodel.dart';
+import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+import '../../widgets/user_form_input.dart';
+
 // temp dummy data
 
 class Global {
-  static var theEmail = 'yourEmail@email.com';
+  static var theEmail = RecoverPasswordViewModel().email;
 }
 
 class RecoverEmailSentView extends StatelessWidget {
+  TextEditingController textController = TextEditingController();
+  TextEditingController textControllerPassword = TextEditingController();
+  TextEditingController textControllerRepeatPassword = TextEditingController();
+
+  RecoverEmailSentView({Key? key, required this.mail}) : super(key: key);
+
+  final String mail;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RecoverEmailSentViewModel>.reactive(
@@ -28,8 +38,6 @@ class RecoverEmailSentView extends StatelessWidget {
                   text: "Recover Email Sent",
                   onTap: () {
                     Navigator.pop(context);
-                    print(
-                        "Line 24, recover_email_view.dart, Back to previous page...");
                   },
                 ),
               ),
@@ -59,7 +67,7 @@ class RecoverEmailSentView extends StatelessWidget {
                         flex: 18,
                         child: Column(
                           children: [
-                            Text(Global.theEmail,
+                            Text(mail,
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                   fontFamily: 'Lato',
@@ -68,6 +76,52 @@ class RecoverEmailSentView extends StatelessWidget {
                                   fontWeight: FontWeight.w700,
                                   fontStyle: FontStyle.normal,
                                 )),
+                            SizedBox(height: 30),
+                            UserFormInput(
+                              controller: textControllerPassword,
+                              isPassword: true,
+                              hint: 'Enter New Password',
+                              labelText: 'New Password',
+                              validator: (password) {
+                                if (password != null &&
+                                    password.length < 3 &&
+                                    password.isNotEmpty) {
+                                  return 'Enter min. 3 characters';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 30),
+                            UserFormInput(
+                              controller: textControllerRepeatPassword,
+                              isPassword: true,
+                              hint: 'Repeat New Password',
+                              labelText: 'Repeat Password',
+                              validator: (password) {
+                                if (password != null &&
+                                    password.length < 3 &&
+                                    password.isNotEmpty) {
+                                  return 'Enter min. 3 characters';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
+                            SizedBox(height: 30),
+                            UserFormInput(
+                              controller: textController,
+                              isPassword: false,
+                              hint: 'Enter Your Verification code',
+                              labelText: 'Verification code',
+                              validator: (code) {
+                                if (code != null && code.length < 5) {
+                                  return 'Verification code needs to be 6 characters';
+                                } else {
+                                  return null;
+                                }
+                              },
+                            ),
                           ],
                         ),
                       ),
@@ -76,12 +130,17 @@ class RecoverEmailSentView extends StatelessWidget {
                         child: WideButton(
                           text: 'Back to Log In',
                           showWideButton: true,
-                          onTap: () => {
+                          onTap: () async {
+                            await model.verifyPassword(
+                                mail,
+                                textControllerPassword.text,
+                                textControllerRepeatPassword.text,
+                                textController.text);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
                                   builder: (context) => LoginView()),
-                            )
+                            );
                           },
                           color: Color(0xff78bd76),
                         ),
