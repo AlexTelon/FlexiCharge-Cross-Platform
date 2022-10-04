@@ -16,6 +16,7 @@ class UserApiService {
 
   static final Uri register = Uri.parse(baseURL + "/auth/sign-up");
   static final Uri login = Uri.parse('$baseURL/auth/sign-in');
+  // static final Uri forgotPassword = Uri.parse('$baseURL/auth/forgot-password');
 
   /// It takes a username and password, sends a POST request to the server, and returns a boolean value
   /// based on the response
@@ -51,6 +52,31 @@ class UserApiService {
         UserSecureStorage.setUserIsLoggedIn(_isValid);
 
         return _isValid;
+      case 400:
+        throw jsonDecoded['message'];
+      case 404:
+        throw jsonDecoded['message'];
+      case 500:
+        throw jsonDecoded['message'];
+      default:
+        throw Exception("default: " + ErrorCodes.internalError.toString());
+    }
+  }
+
+  Future<void> sendNewPassword(
+    String email,
+  ) async {
+    print("inne i user api");
+    var response = await client.post(
+      Uri.parse('$baseURL/auth/forgot-password/$email'),
+      headers: headers,
+    );
+    var jsonDecoded = json.decode(response.body);
+
+    switch (response.statusCode) {
+      case 200:
+        print("Email with verification code is successfully sent");
+        break;
       case 400:
         throw jsonDecoded['message'];
       case 404:
