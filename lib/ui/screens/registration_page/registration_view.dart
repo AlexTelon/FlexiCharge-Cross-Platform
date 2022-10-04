@@ -118,6 +118,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                         ],
                       ),
                       SizedBox(height: 30.0),
+                      //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
                       WideButton(
                         text: 'Register',
                         color: Color(0xff78bd76),
