@@ -11,6 +11,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../../models/user_secure_storage.dart';
+import '../login_page/login_view.dart';
 // import 'package:loading_overlay_pro/loading_overlay_pro.dart';
 
 /*class SplashScreen extends StatelessWidget {
@@ -100,14 +101,23 @@ class HomeView extends StatelessWidget {
                               fit: BoxFit.scaleDown),
                         ),
                         MapIcon(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => ProfileView()),
-                              );
+                            onTap: () async {
+                              if (await model.isUserloggedIn()) {
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => ProfileView()),
+                                );
+                              } else {
+                                /* Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => LoginView()),
+                                );*/
+                                Navigator.pop(context);
+                              }
                             },
-                            isActive: false,
+                            isActive: true,
                             isLarge: false,
                             icon: SvgPicture.asset(
                                 'assets/svg_images/person.svg',

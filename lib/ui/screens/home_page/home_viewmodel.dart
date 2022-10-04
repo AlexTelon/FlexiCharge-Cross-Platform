@@ -25,7 +25,6 @@ class HomeViewModel extends BaseViewModel {
     try {
       getUserLocation();
       findUser();
-      isUserloggedIn();
 
       localData.chargerPoints.forEach(
         (chargingPoint) => markers.add(
