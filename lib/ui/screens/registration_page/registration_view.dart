@@ -16,6 +16,7 @@ class RegistrationView extends StatefulWidget {
 
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
+  bool _registrationIsValid = false;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
@@ -24,7 +25,8 @@ class _RegistrationViewState extends State<RegistrationView> {
   final _formKey = GlobalKey<FormState>();
   final userInputValidator = UserInputValidator();
 
-  late String _password;
+  late String _password = "";
+  late String errorMsg = "";
 
   @override
   Widget build(BuildContext context) {
@@ -117,26 +119,43 @@ class _RegistrationViewState extends State<RegistrationView> {
                           )
                         ],
                       ),
+                      Text(
+                        errorMsg,
+                        style: TextStyle(color: Colors.red),
+                      ),
                       SizedBox(height: 30.0),
                       //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
                       WideButton(
-                        text: 'Register',
-                        color: Color(0xff78bd76),
-                        onTap: () async {
-                          await model.registerNewUser(
-                            emailController.text,
-                            passwordController.text,
-                            repeatPasswordController.text,
-                          );
+                          showWideButton: true,
+                          text: 'Register',
+                          color: Color(0xff78bd76),
+                          onTap: () async {
+                            var registerData = await model.registerNewUser(
+                              emailController.text,
+                              passwordController.text,
+                              repeatPasswordController.text,
+                            );
 
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VerifyRegistrationView()),
-                          );
-                        },
-                        showWideButton: true,
-                      ),
+                            _registrationIsValid = registerData.elementAt(0);
+
+                            if (!_registrationIsValid) {
+                              setState(() {
+                                print(_registrationIsValid);
+                                errorMsg = registerData.elementAt(1);
+                              });
+                            } else {
+                              setState(() {
+                                errorMsg = "";
+                              });
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        VerifyRegistrationView()),
+                              );
+                            }
+                          }),
                       SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
