@@ -90,7 +90,8 @@ class ProfileView extends StatelessWidget {
                       WideButton(
                         text: 'Log Out',
                         color: Color.fromARGB(239, 234, 96, 62),
-                        onTap: () {
+                        onTap: () async {
+                          await model.Logout();
                           Navigator.push(
                             context,
                             MaterialPageRoute(

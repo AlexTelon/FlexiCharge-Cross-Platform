@@ -48,6 +48,11 @@ class UserApiService {
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.setUserId(jsonDecoded['user_id']);
+        UserSecureStorage.setUserIsLoggedIn(_isValid);
+
+        print("isLoged in?");
+        print(await UserSecureStorage.getUserIsLoggedIn());
+        print("-------------");
         //Todo set a boolean "isUserLoggedIn = true"
         return _isValid;
       case 400:
