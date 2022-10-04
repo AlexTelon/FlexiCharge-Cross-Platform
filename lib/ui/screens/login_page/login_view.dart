@@ -48,6 +48,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       Column(
                         children: [
+                          SizedBox(height: 30),
                           FractionallySizedBox(
                             child: UserFormInput(
                               controller: textControllerEmail,
@@ -63,7 +64,6 @@ class _LoginViewState extends State<LoginView> {
                                   return null;
                                 }
                               },
-
                             ),
                           ),
                           SizedBox(height: 30),
@@ -88,6 +88,7 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Column(
                         children: [
+                          SizedBox(height: 90),
                           Text(
                             errorMsg,
                             style: TextStyle(color: Colors.red),
