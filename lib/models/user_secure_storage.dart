@@ -1,7 +1,6 @@
 /// A class that stores the user's access token in the device's secure storage.
 /// This is class that could be extended to store all user information
 /// The package flutter_secure_storage only supports storeing strings
-import 'dart:ffi';
 
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
@@ -21,7 +20,6 @@ class UserSecureStorage {
 
   static Future setUserIsLoggedIn(bool boolIsUserLoggedIn) async {
     String isUserLoggedIn = boolIsUserLoggedIn.toString();
-    print("The user is loggedg in? : " + isUserLoggedIn);
     await _storage.write(key: _userIsLoggedIn, value: isUserLoggedIn);
   }
 
@@ -35,16 +33,15 @@ class UserSecureStorage {
   static Future<bool> getUserIsLoggedIn() async {
     var userIsLoggedIn = await _storage.read(key: _userIsLoggedIn);
     return userIsLoggedIn.toString().toLowerCase() == 'true';
-    //  bool BoolisUserLoggedIn = await _storage.read(key: _userIsLoggedIn).toString().toLowerCase() == 'true';
   }
+
+// Read all values
+//Map<String, String> allValues = await storage.readAll();
 
 // Delete value
   static Future deleteUserAccessToken() async =>
       await _storage.delete(key: _userAccessToken);
 
-// Read all values
-//Map<String, String> allValues = await storage.readAll();
-
-// Delete all
+// Delete all values
   static Future deleteAllUserStorage() async => await _storage.deleteAll();
 }

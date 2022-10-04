@@ -91,7 +91,7 @@ class ProfileView extends StatelessWidget {
                         text: 'Log Out',
                         color: Color.fromARGB(239, 234, 96, 62),
                         onTap: () async {
-                          await model.Logout();
+                          await model.logout();
                           Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
                                   builder: (context) => LoginView()),

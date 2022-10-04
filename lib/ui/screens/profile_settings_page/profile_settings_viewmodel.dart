@@ -12,15 +12,5 @@ class ProfileViewModel extends BaseViewModel {
 
   bool get checked => _checked;
 
-  Future<void> Logout() async {
-    print("isLoged in?");
-    print(await UserSecureStorage.getUserIsLoggedIn());
-    print("-------------");
-
-    await UserSecureStorage.deleteAllUserStorage();
-
-    print("isLoged in? should be false");
-    print(await UserSecureStorage.getUserIsLoggedIn());
-    print("------false?-------");
-  }
+  Future<void> logout() async => await UserSecureStorage.deleteAllUserStorage();
 }
