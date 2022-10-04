@@ -1,14 +1,10 @@
 import 'dart:async';
-import 'dart:convert';
-
-import 'package:http/http.dart';
 import 'package:stacked/stacked.dart';
-
-import '../../../models/user_input_validator.dart';
 import '../../../services/user_api_service.dart';
 
 class RegistrationViewmodel extends BaseViewModel {
   bool _checked = false;
+  bool _registrationIsValid = false;
 
   set checked(newState) {
     _checked = newState;
@@ -17,37 +13,22 @@ class RegistrationViewmodel extends BaseViewModel {
 
   bool get checked => _checked;
 
-  Future<FutureOr> registerNewUser(
+  Future<Set> registerNewUser(
     String email,
     String password,
     String repeatedPassword,
   ) async {
-/*registrationData according to FlexiCharge API
-  {
-    "username": "mustBeEmail",
-    "password": "password"
-  }
-*/
-    final Map<String, dynamic> registrationData = {
-      "username": email,
-      "password": password,
-    };
+    String errorMessage = "";
 
-    Response response = await post(UserApiService.register,
-        body: json.encode(registrationData),
-        headers: {'Content-Type': 'application/json'});
-
-    if (response.statusCode == 200) {
-      print(response.body);
-      //TODO:
-      //1.Save user state and keep the user logged in
-      //2. Redirect to "Setup Invoice"
-      print("success");
-    } else {
-      print(response.body);
-      //TODO:
-      //1. Display error to user
-      print("failure");
+    try {
+      _registrationIsValid =
+          await UserApiService().verifyRegister(email, password);
+    } catch (error) {
+      errorMessage = error.toString();
+      var registerData = {false, errorMessage};
+      return registerData;
     }
+    var registerData = {_registrationIsValid, errorMessage};
+    return registerData;
   }
 }
