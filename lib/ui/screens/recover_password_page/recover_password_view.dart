@@ -78,12 +78,14 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                       WideButton(
                         text: 'Send',
                         showWideButton: true,
-                        onTap: () => {
+                        onTap: () async {
+                          await model
+                              .sendResetPassword(textControllerEmail.text);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => RecoverEmailSentView()),
-                          )
+                          );
                         },
                         color: Color(0xff78bd76),
                       ),
