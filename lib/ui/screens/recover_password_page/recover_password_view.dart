@@ -22,7 +22,7 @@ class RecoverPasswordView extends StatelessWidget {
                 flex: 2,
                 child: Topbar(
                   text: "Recover Password",
-                  onTap: () => print("Back to previous page..."),
+                  onTap: () => Navigator.pop(context),
                 ),
               ),
               // UPPP
