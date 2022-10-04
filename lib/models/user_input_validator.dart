@@ -14,6 +14,13 @@ class UserInputValidator extends ChangeNotifier {
   //It is called in registration_view to show the first error in array.
   final List<String> passwordErrors = [];
 
+  bool emailIsValid(String email) {
+    if (EmailValidator.validate(email)) {
+      return true;
+    } else
+      return false;
+  }
+
   bool passwordIsValid(
     String password,
   ) {
