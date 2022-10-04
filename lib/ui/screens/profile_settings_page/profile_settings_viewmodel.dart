@@ -16,5 +16,11 @@ class ProfileViewModel extends BaseViewModel {
     print("isLoged in?");
     print(await UserSecureStorage.getUserIsLoggedIn());
     print("-------------");
+
+    await UserSecureStorage.deleteAllUserStorage();
+
+    print("isLoged in? should be false");
+    print(await UserSecureStorage.getUserIsLoggedIn());
+    print("------false?-------");
   }
 }
