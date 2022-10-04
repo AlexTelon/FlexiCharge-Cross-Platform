@@ -1,15 +1,12 @@
-import 'package:email_validator/email_validator.dart';
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
 import 'package:flutter/material.dart';
-
 import 'package:stacked/stacked.dart';
 
 class RegistrationView extends StatefulWidget {
@@ -19,14 +16,15 @@ class RegistrationView extends StatefulWidget {
 
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
-  final _formKey = GlobalKey<FormState>();
-  late String _password;
-
-  bool val = false;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController repeatPasswordController = new TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  final userInputValidator = UserInputValidator();
+
+  late String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -50,11 +48,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                         labelText: 'Email',
                         hint: 'Enter Your Email',
                         validator: (email) {
-                          // Flytta till egen fil, gör en funktion
                           if (email != null &&
-                              !EmailValidator.validate(email) &&
-                              email.isNotEmpty) {
-                            return 'Enter a valid Email';
+                              email.isNotEmpty &&
+                              !userInputValidator.emailIsValid(email)) {
+                            return 'Enter a valid email';
                           } else {
                             return null;
                           }
@@ -67,10 +64,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                         hint: 'Enter Your Password',
                         isPassword: true,
                         validator: (password) {
-                          final validator = UserInputValidator();
                           if (password != null && password.isNotEmpty) {
-                            if (!validator.passwordIsValid(password)) {
-                              return validator.passwordErrors.first;
+                            if (!userInputValidator.passwordIsValid(password)) {
+                              return userInputValidator.passwordErrors.first;
                             } else {
                               _password = password;
                               return null;
@@ -88,10 +84,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                           isPassword: true,
                           validator: (repeatedPassword) {
                             if (repeatedPassword != null &&
-                                repeatedPassword.isNotEmpty) {
-                              if (_password != repeatedPassword) {
-                                return 'Fields do not match';
-                              }
+                                repeatedPassword.isNotEmpty &&
+                                !userInputValidator.passwordsAreEqual(
+                                    _password, repeatedPassword)) {
+                              return 'Passwords do not match';
                             } else {
                               return null;
                             }
