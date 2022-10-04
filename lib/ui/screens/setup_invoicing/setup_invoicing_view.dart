@@ -1,5 +1,4 @@
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
-import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
