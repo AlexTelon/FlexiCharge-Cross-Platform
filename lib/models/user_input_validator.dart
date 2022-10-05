@@ -1,29 +1,25 @@
-//Call this class for validating the user input in register, login, verify registration etc.
-
-import 'dart:async';
-import 'dart:developer';
+import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 
+//Call this class for validating the user input in register, login and verify registration.
 class UserInputValidator extends ChangeNotifier {
-//Declare bools and error messages here
-//Declare validation functions here
-
-  //Private password requirments
+  //Password requirments are provided from the database squad.
   var _passwordMinLength = 8;
   var _passwordMinNumberOfInt = 1;
   var _passwordMinNumberOfSpecialChar = 1;
   var _passwordMinNumberOfUppercaseChar = 1;
   var _passwordMinNumberOfLowercaseChar = 1;
 
-  late bool emailIsValid;
-
-  late bool passwordInputsAreEqual;
+  //This array temporarily stores all password error during real time validation.
+  //It is called in registration_view to show the first error in array.
   final List<String> passwordErrors = [];
 
-  Future<FutureOr> emailValidation(
-    String password,
-    String repeatedPassword,
-  ) async {}
+  bool emailIsValid(String email) {
+    if (EmailValidator.validate(email)) {
+      return true;
+    } else
+      return false;
+  }
 
   bool passwordIsValid(
     String password,
@@ -31,68 +27,77 @@ class UserInputValidator extends ChangeNotifier {
     passwordErrors.clear();
     notifyListeners();
 
-    if (password.length <= _passwordMinLength) {
-      passwordErrors.add(
-          'Must be at least' + _passwordMinLength.toString() + 'characters');
-      notifyListeners();
-    }
-
     int numberOfInt = 0;
     int numberOfSpecialChar = 0;
     int numberOfUppercaseChar = 0;
     int numberOfLowercaseChar = 0;
 
+    if (password.length < _passwordMinLength) {
+      passwordErrors.add(
+          'Must be at least ' + _passwordMinLength.toString() + ' characters');
+      notifyListeners();
+    }
+
+    //Checking if password requirments are met by comparing code units (ASCII) of each character in password.
     password.codeUnits.forEach((char) {
-      if (char < 58 && char > 47) {
+      if (char > 47 && char < 58) {
         numberOfInt++;
       }
 
-      if (char < 48 && char > 23 ||
-          char < 97 && char > 90 ||
-          char < 127 && char > 122) {
+      if (char > 32 && char < 48 ||
+          char > 57 && char < 65 ||
+          char > 90 && char < 97 ||
+          char > 122 && char < 127) {
         numberOfSpecialChar++;
       }
 
-      if (char < 91 && char > 64) {
+      if (char > 64 && char < 91) {
         numberOfUppercaseChar++;
       }
 
-      if (char < 123 && char > 96) {
+      if (char > 96 && char < 123) {
         numberOfLowercaseChar++;
       }
     });
 
     if (numberOfInt < _passwordMinNumberOfInt) {
-      passwordErrors.add(
-          'Must have at least' + _passwordMinNumberOfInt.toString() + 'number');
+      passwordErrors.add('Must have at least ' +
+          _passwordMinNumberOfInt.toString() +
+          ' number');
       notifyListeners();
     }
 
     if (numberOfSpecialChar < _passwordMinNumberOfSpecialChar) {
-      passwordErrors.add('Must have at least' +
+      passwordErrors.add('Must have at least ' +
           _passwordMinNumberOfSpecialChar.toString() +
-          'special character');
+          ' special character');
       notifyListeners();
     }
 
     if (numberOfUppercaseChar < _passwordMinNumberOfUppercaseChar) {
-      passwordErrors.add('Must have at least' +
+      passwordErrors.add('Must have at least ' +
           _passwordMinNumberOfUppercaseChar.toString() +
-          'uppercase letter');
+          ' uppercase letter');
       notifyListeners();
     }
 
     if (numberOfLowercaseChar < _passwordMinNumberOfLowercaseChar) {
-      passwordErrors.add('Must have at least' +
+      passwordErrors.add('Must have at least ' +
           _passwordMinNumberOfLowercaseChar.toString() +
-          'lowercase letter');
+          ' lowercase letter');
       notifyListeners();
     }
 
     if (passwordErrors.length > 0) {
-      log(passwordErrors.first);
       return false;
     } else
       return true;
+  }
+
+  bool passwordsAreEqual(String password, String repeatedPassword) {
+    if (password == repeatedPassword) {
+      return true;
+    } else
+      return false;
   }
 }

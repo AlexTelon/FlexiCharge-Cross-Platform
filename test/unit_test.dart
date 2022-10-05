@@ -1,6 +1,7 @@
 // This file contains a Flutter unit test.
 
 import 'package:flexicharge/models/user_input_validator.dart';
+import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
