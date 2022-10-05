@@ -48,6 +48,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: emailController,
                         labelText: 'Email',
                         hint: 'Enter Your Email',
+                        suffixIcon: Align(
+                          widthFactor: 1.0,
+                          heightFactor: 1.0,
+                        ),
                         validator: (email) {
                           var message = model.validateEmail(email);
                           return message;
@@ -59,6 +63,13 @@ class _RegistrationViewState extends State<RegistrationView> {
                         labelText: 'Password',
                         hint: 'Enter Your Password',
                         isPassword: true,
+                        suffixIcon: Align(
+                          widthFactor: 1.0,
+                          heightFactor: 1.0,
+                          child: Icon(
+                            Icons.remove_red_eye,
+                          ),
+                        ),
                         validator: (password) {
                           var message = model.validatePassword(password);
                           return message;
@@ -70,6 +81,13 @@ class _RegistrationViewState extends State<RegistrationView> {
                           labelText: 'Repeat Password',
                           hint: 'Enter Your Repeat Password',
                           isPassword: true,
+                          suffixIcon: Align(
+                            widthFactor: 1.0,
+                            heightFactor: 1.0,
+                            child: Icon(
+                              Icons.remove_red_eye,
+                            ),
+                          ),
                           validator: (repeatedPassword) {
                             var message = model
                                 .validateRepeatedPassword(repeatedPassword);

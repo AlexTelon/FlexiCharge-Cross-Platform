@@ -21,8 +21,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   String errorMsg = "";
   bool _validate = false;
+  bool _passwordVisible = true;
   final _formKey = GlobalKey<FormState>();
-
   TextEditingController textControllerEmail = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
@@ -57,6 +57,10 @@ class _LoginViewState extends State<LoginView> {
                               isPassword: false,
                               hint: 'Enter Your Email',
                               labelText: 'Email',
+                              suffixIcon: Align(
+                                widthFactor: 1.0,
+                                heightFactor: 1.0,
+                              ),
                               validator: (email) {
                                 if (email != null &&
                                     !EmailValidator.validate(email) &&
@@ -72,9 +76,22 @@ class _LoginViewState extends State<LoginView> {
                           FractionallySizedBox(
                             child: UserFormInput(
                               controller: textControllerPassword,
-                              isPassword: true,
+                              isPassword: _passwordVisible,
                               hint: 'Enter Your Password',
                               labelText: 'Password',
+                              suffixIcon: IconButton(
+                                icon: Icon(
+                                  !_passwordVisible
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: Theme.of(context).primaryColorDark,
+                                ),
+                                onPressed: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                              ),
                               validator: (password) {
                                 if (password != null &&
                                     password.length < 3 &&
