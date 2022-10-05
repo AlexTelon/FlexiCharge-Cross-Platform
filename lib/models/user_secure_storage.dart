@@ -28,8 +28,7 @@ class UserSecureStorage {
   static Future<String?> getUserAccessToken() async =>
       await _storage.read(key: _userAccessToken);
 
-  static Future<String?> getUserUserId() async =>
-      await _storage.read(key: _userId);
+  static Future<String?> getUserId() async => await _storage.read(key: _userId);
 
   static Future<bool> getIsUserLoggedIn() async {
     var userIsLoggedIn = await _storage.read(key: _userIsLoggedIn);
@@ -44,5 +43,5 @@ class UserSecureStorage {
       await _storage.delete(key: _userAccessToken);
 
 // Delete all values
-  static Future deleteAllUserStorage() async => await _storage.deleteAll();
+  static Future deleteUserSecureStorage() async => await _storage.deleteAll();
 }
