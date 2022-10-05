@@ -17,6 +17,7 @@ class RegistrationView extends StatefulWidget {
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
   bool _registrationIsValid = false;
+  bool _passwordVisible = true;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
@@ -62,13 +63,19 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: passwordController,
                         labelText: 'Password',
                         hint: 'Enter Your Password',
-                        isPassword: true,
-                        suffixIcon: Align(
-                          widthFactor: 1.0,
-                          heightFactor: 1.0,
-                          child: Icon(
-                            Icons.remove_red_eye,
+                        isPassword: _passwordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            !_passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Color(0xff868686),
                           ),
+                          onPressed: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
                         ),
                         validator: (password) {
                           var message = model.validatePassword(password);
@@ -80,13 +87,19 @@ class _RegistrationViewState extends State<RegistrationView> {
                           controller: repeatPasswordController,
                           labelText: 'Repeat Password',
                           hint: 'Enter Your Repeat Password',
-                          isPassword: true,
-                          suffixIcon: Align(
-                            widthFactor: 1.0,
-                            heightFactor: 1.0,
-                            child: Icon(
-                              Icons.remove_red_eye,
+                          isPassword: _passwordVisible,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              !_passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color(0xff868686),
                             ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
                           ),
                           validator: (repeatedPassword) {
                             var message = model
