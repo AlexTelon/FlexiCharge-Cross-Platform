@@ -12,6 +12,7 @@ import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
+import '../../../models/user_secure_storage.dart';
 
 class HomeViewModel extends BaseViewModel {
   final _chagerAPI = locator<ChargerApiService>();
@@ -153,6 +154,9 @@ class HomeViewModel extends BaseViewModel {
     _bottomSheetService.showCustomSheet(
         variant: SheetType.mapBottomSheet, data: data);
   }
+
+  Future<bool> isUserloggedIn() async =>
+      await UserSecureStorage.getUserIsLoggedIn();
 
   completeTopSheet() {
     activeTopSheet = false;

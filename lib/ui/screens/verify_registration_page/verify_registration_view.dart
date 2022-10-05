@@ -11,6 +11,8 @@ import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/user_form_input.dart';
+
 class VerifyRegistrationView extends StatefulWidget {
   @override
   State<VerifyRegistrationView> createState() => _VerifyRegistrationViewState();
@@ -52,95 +54,25 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                           children: [
                             FractionallySizedBox(
                               widthFactor: 0.8,
-                              child: TextFormField(
-                                controller: model.emailController,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter Your Email',
+                              child: UserFormInput(
+                                  controller: model.emailController,
+                                  isPassword: false,
+                                  hint: 'Enter your Email',
                                   labelText: 'Email',
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                ),
-                                validator: (email) {
-                                  if (email != null &&
-                                      !EmailValidator.validate(email) &&
-                                      email.isNotEmpty) {
-                                    return 'Enter a valid Email';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
+                                  validator: (email) =>
+                                      model.emailValidator(email)),
                             ),
                             SizedBox(height: 30),
                             FractionallySizedBox(
                               widthFactor: 0.8,
-                              child: TextFormField(
-                                controller: model.verificationController,
-                                obscureText: true,
-                                decoration: const InputDecoration(
-                                  hintText: 'Enter Your verification code',
+                              child: UserFormInput(
+                                  controller: model.verificationController,
+                                  isPassword: true,
+                                  hint: 'Enter the verification code',
                                   labelText: 'Verification Code',
-
-                                  border: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  enabledBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  focusedBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  errorBorder: OutlineInputBorder(
-                                    borderSide:
-                                        BorderSide(color: Color(0xff292b2b)),
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(10)),
-                                  ),
-                                  // hint: 'Enter Your Password',
-                                  //  onChanged: (value) => print(value),
-                                  //  isPassword: true,
-                                ),
-                                validator: (verificationCode) {
-                                  if (verificationCode != null &&
-                                      verificationCode.length < 6 &&
-                                      verificationCode.isNotEmpty) {
-                                    return 'Enter min. 6 characters';
-                                  } else {
-                                    return null;
-                                  }
-                                },
-                              ),
+                                  validator: (verificationCode) =>
+                                      model.verificationCodeValidator(
+                                          verificationCode)),
                             ),
                             SizedBox(height: 30.0),
                             WideButton(
