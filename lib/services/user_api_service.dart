@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
+import 'package:http/http.dart';
 import '../models/user_secure_storage.dart';
 
 /// This class is used to store the User API endpoints for the application
@@ -49,7 +50,7 @@ class UserApiService {
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.setUserId(jsonDecoded['user_id']);
-        UserSecureStorage.setUserIsLoggedIn(_isValid);
+        UserSecureStorage.setIsUserLoggedIn(_isValid);
 
         return _isValid;
       case 400:
@@ -115,6 +116,38 @@ class UserApiService {
         throw jsonDecoded['message'];
       case 500:
         throw jsonDecoded['message'];
+        
+  Future<bool> verifyRegister(
+    String email,
+    String password,
+  ) async {
+    //Message that is seen in UI.
+    String responseMsg = "";
+
+    //registrationData according to FlexiCharge API
+    final Map<String, dynamic> registrationData = {
+      "username": email,
+      "password": password,
+    };
+
+    Response response = await post(UserApiService.register,
+        body: json.encode(registrationData),
+        headers: {'Content-Type': 'application/json'});
+
+    /// Checking if the response body is empty before decoding. Otherwise, an error accurs.
+    if (response.body.isNotEmpty) {
+      responseMsg = json.decode(response.body)['message'];
+    }
+
+    switch (response.statusCode) {
+      case 200:
+        print("Log in successfull");
+        return true;
+      case 400:
+        print(responseMsg);
+        throw responseMsg;
+      case 500:
+        throw responseMsg;
       default:
         throw Exception("default: " + ErrorCodes.internalError.toString());
     }

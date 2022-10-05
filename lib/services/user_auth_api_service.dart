@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flexicharge/models/registration.dart';
+import 'package:flexicharge/models/userVerificationData.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -12,7 +12,7 @@ class UserApiService {
   var chargerPoint = new ChargerPoint();
   LocalData _localData = locator<LocalData>();
 
-  Future<Registration> verifyAccount(
+  Future<UserVerificationData> verifyAccount(
     String email,
     String verificationCode,
   ) async {
@@ -30,7 +30,7 @@ class UserApiService {
     switch (response.statusCode) {
       case 200:
         var registration = json.decode(response.body);
-        var parsedRegistration = Registration.fromJson(registration);
+        var parsedRegistration = UserVerificationData.fromJson(registration);
         return parsedRegistration;
       case 400:
         throw responseJson['message'];
