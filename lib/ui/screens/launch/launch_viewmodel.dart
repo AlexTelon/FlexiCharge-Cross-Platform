@@ -33,7 +33,7 @@ class LaunchViewModel extends BaseViewModel {
       indication = 0.7;
       _localData.chargerPoints = await _chagerAPI.getChargerPoints();
       indication = 0;
-      if (await UserSecureStorage.getUserIsLoggedIn()) {
+      if (await UserSecureStorage.getIsUserLoggedIn()) {
         _navigationService.replaceWith(
           Routes.homeView,
         );

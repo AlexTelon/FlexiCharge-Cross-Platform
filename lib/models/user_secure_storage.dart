@@ -19,7 +19,7 @@ class UserSecureStorage {
   static Future setUserId(String userId) async =>
       await _storage.write(key: _userId, value: userId);
 
-  static Future setUserIsLoggedIn(bool boolIsUserLoggedIn) async {
+  static Future setIsUserLoggedIn(bool boolIsUserLoggedIn) async {
     String isUserLoggedIn = boolIsUserLoggedIn.toString();
     await _storage.write(key: _userIsLoggedIn, value: isUserLoggedIn);
   }
@@ -31,7 +31,7 @@ class UserSecureStorage {
   static Future<String?> getUserUserId() async =>
       await _storage.read(key: _userId);
 
-  static Future<bool> getUserIsLoggedIn() async {
+  static Future<bool> getIsUserLoggedIn() async {
     var userIsLoggedIn = await _storage.read(key: _userIsLoggedIn);
     return userIsLoggedIn.toString().toLowerCase() == 'true';
   }
