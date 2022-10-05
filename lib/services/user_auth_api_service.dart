@@ -12,7 +12,7 @@ class UserApiService {
   var chargerPoint = new ChargerPoint();
   LocalData _localData = locator<LocalData>();
 
-  Future<Registration> verifyAccount(
+  Future<UserVerificationData> verifyAccount(
     String email,
     String verificationCode,
   ) async {
@@ -30,7 +30,7 @@ class UserApiService {
     switch (response.statusCode) {
       case 200:
         var registration = json.decode(response.body);
-        var parsedRegistration = Registration.fromJson(registration);
+        var parsedRegistration = UserVerificationData.fromJson(registration);
         return parsedRegistration;
       case 400:
         throw responseJson['message'];
