@@ -1,28 +1,26 @@
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_viewmodel.dart';
-import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-
 import '../../widgets/user_form_input.dart';
 
-// temp dummy data
-
-class Global {
-  static var theEmail = RecoverPasswordViewModel().email;
-}
+/// A class that creates a view when a reset password verification code was sent to the email provided.
+/// The email will be displated in this view and the user will have input fields to type in the
+/// new password, repeat new password and the verification code. The email, password and verification
+/// code will be sent to the provided endpoint to update the existing password.
+/// Once reset password was successful the user vill be navigated to teh page
 
 class RecoverEmailSentView extends StatelessWidget {
+  String viewTitle = "Recover Email Sent";
   TextEditingController textController = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
   TextEditingController textControllerRepeatPassword = TextEditingController();
 
   RecoverEmailSentView({Key? key, required this.mail}) : super(key: key);
   final String mail;
-  String viewTitle = "Recover Email Sent";
   final _formKey = GlobalKey<FormState>();
   late String _password;
 
