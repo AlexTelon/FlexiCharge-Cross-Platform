@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
@@ -6,8 +8,6 @@ import 'package:flexicharge/ui/screens/verify_registration_page/verify_registrat
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 
 class RegistrationView extends StatefulWidget {
   @override
@@ -25,7 +25,6 @@ class _RegistrationViewState extends State<RegistrationView> {
   final _formKey = GlobalKey<FormState>();
   final userInputValidator = UserInputValidator();
 
-  late String _password = "";
   late String errorMsg = "";
 
   @override
@@ -50,13 +49,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                         labelText: 'Email',
                         hint: 'Enter Your Email',
                         validator: (email) {
-                          if (email != null &&
-                              email.isNotEmpty &&
-                              !userInputValidator.emailIsValid(email)) {
-                            return 'Enter a valid email';
-                          } else {
-                            return null;
-                          }
+                          var message = model.validateEmail(email);
+                          return message;
                         },
                       ),
                       SizedBox(height: 20),
@@ -66,16 +60,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                         hint: 'Enter Your Password',
                         isPassword: true,
                         validator: (password) {
-                          if (password != null && password.isNotEmpty) {
-                            if (!userInputValidator.passwordIsValid(password)) {
-                              return userInputValidator.passwordErrors.first;
-                            } else {
-                              _password = password;
-                              return null;
-                            }
-                          } else {
-                            return null;
-                          }
+                          var message = model.validatePassword(password);
+                          return message;
                         },
                       ),
                       SizedBox(height: 20),
@@ -85,14 +71,9 @@ class _RegistrationViewState extends State<RegistrationView> {
                           hint: 'Enter Your Repeat Password',
                           isPassword: true,
                           validator: (repeatedPassword) {
-                            if (repeatedPassword != null &&
-                                repeatedPassword.isNotEmpty &&
-                                !userInputValidator.passwordsAreEqual(
-                                    _password, repeatedPassword)) {
-                              return 'Passwords do not match';
-                            } else {
-                              return null;
-                            }
+                            var message = model
+                                .validateRepeatedPassword(repeatedPassword);
+                            return message;
                           }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
