@@ -13,15 +13,27 @@ import '../../widgets/user_form_input.dart';
 /// code will be sent to the provided endpoint to update the existing password.
 /// Once reset password was successful the user vill be navigated to teh page
 
-class RecoverEmailSentView extends StatelessWidget {
-  String viewTitle = "Recover Email Sent";
-  TextEditingController textController = TextEditingController();
-  TextEditingController textControllerPassword = TextEditingController();
-  TextEditingController textControllerRepeatPassword = TextEditingController();
-
+class RecoverEmailSentView extends StatefulWidget {
   RecoverEmailSentView({Key? key, required this.mail}) : super(key: key);
   final String mail;
+
+  @override
+  State<RecoverEmailSentView> createState() => _RecoverEmailSentViewState();
+}
+
+class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
+  String viewTitle = "Recover Email Sent";
+
+  bool _passwordVisible = true;
+
+  TextEditingController textController = TextEditingController();
+
+  TextEditingController textControllerPassword = TextEditingController();
+
+  TextEditingController textControllerRepeatPassword = TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
+
   late String _password;
 
   @override
@@ -77,7 +89,7 @@ class RecoverEmailSentView extends StatelessWidget {
                               textAlign: TextAlign.center,
                               text: TextSpan(
                                 children: [
-                                  TextSpan(text: mail),
+                                  TextSpan(text: widget.mail),
                                 ],
                                 style: TextStyle(
                                   fontFamily: 'Lato',
@@ -93,10 +105,22 @@ class RecoverEmailSentView extends StatelessWidget {
                         SizedBox(height: 20.0),
                         UserFormInput(
                           controller: textControllerPassword,
-                          isPassword: true,
-                          suffixIcon: Icon(null),
+                          isPassword: _passwordVisible,
                           hint: 'Enter New Password',
                           labelText: 'New Password',
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              !_passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color(0xff868686),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                           validator: (password) {
                             final validator = UserInputValidator();
                             if (password != null && password.isNotEmpty) {
@@ -114,16 +138,28 @@ class RecoverEmailSentView extends StatelessWidget {
                         SizedBox(height: 10),
                         UserFormInput(
                             controller: textControllerRepeatPassword,
-                            isPassword: true,
-                            suffixIcon: Icon(null),
+                            isPassword: _passwordVisible,
                             hint: 'Repeat New Password',
                             labelText: 'Repeat Password',
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                !_passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Color(0xff868686),
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _passwordVisible = !_passwordVisible;
+                                });
+                              },
+                            ),
                             validator: (repeatedPassword) {
                               if (repeatedPassword != null &&
                                   repeatedPassword.isNotEmpty) {
-                                if (_password != repeatedPassword) {
+                                /*  if (_password != repeatedPassword) { This gives a bugg due to _password not being initialized
                                   return 'Fields do not match';
-                                }
+                                }*/
                               } else {
                                 return null;
                               }
@@ -136,7 +172,9 @@ class RecoverEmailSentView extends StatelessWidget {
                           hint: 'Enter Your Verification code',
                           labelText: 'Verification code',
                           validator: (code) {
-                            if (code != null && code.length < 5) {
+                            if (code != null &&
+                                code.isNotEmpty &&
+                                code.length < 5) {
                               return 'Verification code needs to be 6 characters';
                             } else {
                               return null;
@@ -152,7 +190,7 @@ class RecoverEmailSentView extends StatelessWidget {
                                 showWideButton: true,
                                 onTap: () async {
                                   await model.verifyPassword(
-                                      mail,
+                                      widget.mail,
                                       textControllerPassword.text,
                                       textControllerRepeatPassword.text,
                                       textController.text);
