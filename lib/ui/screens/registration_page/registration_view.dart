@@ -49,10 +49,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: emailController,
                         labelText: 'Email',
                         hint: 'Enter Your Email',
-                        suffixIcon: Align(
-                          widthFactor: 1.0,
-                          heightFactor: 1.0,
-                        ),
+                        suffixIcon: Icon(null),
                         validator: (email) {
                           var message = model.validateEmail(email);
                           return message;

@@ -57,10 +57,7 @@ class _LoginViewState extends State<LoginView> {
                               isPassword: false,
                               hint: 'Enter Your Email',
                               labelText: 'Email',
-                              suffixIcon: Align(
-                                widthFactor: 1.0,
-                                heightFactor: 1.0,
-                              ),
+                              suffixIcon: Icon(null),
                               validator: (email) {
                                 if (email != null &&
                                     !EmailValidator.validate(email) &&
