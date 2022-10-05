@@ -116,7 +116,9 @@ class UserApiService {
         throw jsonDecoded['message'];
       case 500:
         throw jsonDecoded['message'];
-        
+    }
+  }
+
   Future<bool> verifyRegister(
     String email,
     String password,

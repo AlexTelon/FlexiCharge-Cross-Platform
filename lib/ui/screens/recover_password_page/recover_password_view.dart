@@ -49,6 +49,7 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                             isPassword: false,
                             hint: 'Enter Your Email',
                             labelText: 'Email',
+                            suffixIcon: Icon(null),
                             validator: (email) {
                               if (email != null &&
                                   !EmailValidator.validate(email) &&

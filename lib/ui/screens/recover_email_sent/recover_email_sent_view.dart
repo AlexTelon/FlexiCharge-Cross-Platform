@@ -94,6 +94,7 @@ class RecoverEmailSentView extends StatelessWidget {
                         UserFormInput(
                           controller: textControllerPassword,
                           isPassword: true,
+                          suffixIcon: Icon(null),
                           hint: 'Enter New Password',
                           labelText: 'New Password',
                           validator: (password) {
@@ -114,6 +115,7 @@ class RecoverEmailSentView extends StatelessWidget {
                         UserFormInput(
                             controller: textControllerRepeatPassword,
                             isPassword: true,
+                            suffixIcon: Icon(null),
                             hint: 'Repeat New Password',
                             labelText: 'Repeat Password',
                             validator: (repeatedPassword) {
@@ -130,6 +132,7 @@ class RecoverEmailSentView extends StatelessWidget {
                         UserFormInput(
                           controller: textController,
                           isPassword: false,
+                          suffixIcon: Icon(null),
                           hint: 'Enter Your Verification code',
                           labelText: 'Verification code',
                           validator: (code) {
