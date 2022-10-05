@@ -9,6 +9,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 
+import '../registration_page/registration_view.dart';
+
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
   @override
@@ -86,7 +88,11 @@ class HomeView extends StatelessWidget {
                                       builder: (context) => ProfileView()),
                                 );
                               } else {
-                                Navigator.pop(context);
+                                Navigator.of(context).pushAndRemoveUntil(
+                                    MaterialPageRoute(
+                                        builder: (context) =>
+                                            RegistrationView()),
+                                    (Route route) => route.isFirst);
                               }
                             },
                             isActive: true,

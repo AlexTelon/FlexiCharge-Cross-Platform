@@ -8,6 +8,8 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../models/user_secure_storage.dart';
+
 class LaunchViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _localData = locator<LocalData>();
@@ -31,9 +33,15 @@ class LaunchViewModel extends BaseViewModel {
       indication = 0.7;
       _localData.chargerPoints = await _chagerAPI.getChargerPoints();
       indication = 0;
-      _navigationService.replaceWith(
-        Routes.registrationView,
-      );
+      if (await UserSecureStorage.getIsUserLoggedIn()) {
+        _navigationService.replaceWith(
+          Routes.homeView,
+        );
+      } else {
+        _navigationService.replaceWith(
+          Routes.registrationView,
+        );
+      }
     } catch (e) {
       print(e);
     }

@@ -156,7 +156,7 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<bool> isUserloggedIn() async =>
-      await UserSecureStorage.getUserIsLoggedIn();
+      await UserSecureStorage.getIsUserLoggedIn();
 
   completeTopSheet() {
     activeTopSheet = false;
