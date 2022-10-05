@@ -50,7 +50,9 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                   children: [
                     Topbar(
                       text: viewTitle,
-                      onTap: () {},
+                      onTap: () {
+                        Navigator.pop(context);
+                      },
                     ),
                     SizedBox(height: 10),
                     Column(
