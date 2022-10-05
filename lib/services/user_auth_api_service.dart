@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:flexicharge/models/registration.dart';
+import 'package:flexicharge/models/userVerificationData.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger_point.dart';
