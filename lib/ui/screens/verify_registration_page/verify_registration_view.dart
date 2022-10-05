@@ -82,7 +82,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                 onTap: () async {
                                   try {
                                     setState(() {
-                                      model.errors = "";
+                                      model.verificationErrors = "";
                                     });
 
                                     await model.verifyAccount();
@@ -93,14 +93,15 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                     );
                                   } catch (errors) {
                                     setState(() {
-                                      model.errors = errors.toString();
+                                      model.verificationErrors =
+                                          errors.toString();
                                     });
                                   }
                                 }),
 
                             if (!model.isAccountVerified &&
-                                model.errors.isNotEmpty)
-                              Text(model.errors,
+                                model.verificationErrors.isNotEmpty)
+                              Text(model.verificationErrors,
                                   style: TextStyle(color: Colors.red)),
 
                             // Text(model.errors.toString())
