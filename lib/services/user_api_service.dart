@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:http/http.dart';
+import '../models/registration.dart';
 import '../models/user_secure_storage.dart';
 
 /// This class is used to store the User API endpoints for the application
@@ -91,6 +92,41 @@ class UserApiService {
         return true;
       case 400:
         print(responseMsg);
+        throw responseMsg;
+      case 500:
+        throw responseMsg;
+      default:
+        throw Exception("default: " + ErrorCodes.internalError.toString());
+    }
+  }
+
+  Future<void> verifyAccount(
+    String email,
+    String verificationCode,
+  ) async {
+    var response = await client.post(Uri.parse('$baseURL/auth/verify'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': email,
+          'code': verificationCode,
+        }));
+
+    var responseMsg = "";
+    if (response.body.isNotEmpty) {
+      responseMsg = json.decode(response.body)['message'];
+    }
+
+    switch (response.statusCode) {
+      case 200:
+        // var registration = json.decode(response.body);
+        // var parsedRegistration = Registration.fromJson(registration);
+        return;
+      case 400:
+        throw responseMsg;
+      case 404:
         throw responseMsg;
       case 500:
         throw responseMsg;

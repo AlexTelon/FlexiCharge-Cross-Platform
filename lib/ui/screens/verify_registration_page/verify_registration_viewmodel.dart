@@ -4,7 +4,7 @@ import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flexicharge/services/user_auth_api_service.dart';
+import 'package:flexicharge/services/user_api_service.dart';
 import 'package:flexicharge/models/registration.dart';
 import 'package:email_validator/email_validator.dart';
 
@@ -35,6 +35,14 @@ class VerifyRegistrationViewModel extends BaseViewModel {
           this.emailController.text, this.verificationController.text);
       this.isAccountVerified = true;
       return;
+    } catch (error) {
+      throw error;
+    }
+  }
+
+  Future<void> login(String password) async {
+    try {
+      apiService.verifyLogin(this.emailController.text, password);
     } catch (error) {
       throw error;
     }

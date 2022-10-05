@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
@@ -14,6 +15,9 @@ import 'package:flutter/material.dart';
 import '../../widgets/user_form_input.dart';
 
 class VerifyRegistrationView extends StatefulWidget {
+  final String password;
+
+  const VerifyRegistrationView({super.key, required this.password});
   @override
   State<VerifyRegistrationView> createState() => _VerifyRegistrationViewState();
 }
@@ -86,10 +90,12 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                     });
 
                                     await model.verifyAccount();
+                                    await model.login(this.widget.password);
+
                                     Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                          builder: (context) => ProfileView()),
+                                          builder: (context) => HomeView()),
                                     );
                                   } catch (errors) {
                                     setState(() {
