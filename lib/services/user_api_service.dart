@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:http/http.dart';
 import '../models/user_secure_storage.dart';
+import 'package:flexicharge/models/userVerificationData.dart';
 
 /// This class is used to store the User API endpoints for the application
 class UserApiService {
@@ -94,6 +95,37 @@ class UserApiService {
         throw responseMsg;
       case 500:
         throw responseMsg;
+      default:
+        throw Exception("default: " + ErrorCodes.internalError.toString());
+    }
+  }
+
+  Future<UserVerificationData> verifyAccount(
+    String email,
+    String verificationCode,
+  ) async {
+    var response = await client.post(Uri.parse('$baseURL/auth/verify'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': email,
+          'code': verificationCode,
+        }));
+
+    var responseJson = json.decode(response.body);
+    switch (response.statusCode) {
+      case 200:
+        var registration = json.decode(response.body);
+        var parsedRegistration = UserVerificationData.fromJson(registration);
+        return parsedRegistration;
+      case 400:
+        throw responseJson['message'];
+      case 404:
+        throw responseJson['message'];
+      case 500:
+        throw responseJson['message'];
       default:
         throw Exception("default: " + ErrorCodes.internalError.toString());
     }
