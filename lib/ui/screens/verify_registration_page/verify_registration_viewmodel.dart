@@ -5,8 +5,9 @@ import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flexicharge/services/user_auth_api_service.dart';
-import 'package:flexicharge/models/registration.dart';
+import 'package:flexicharge/models/userVerificationData.dart';
 import 'package:email_validator/email_validator.dart';
+
 
 // ignore: camel_case_types
 // enum VERIFICATION_STATUS {
