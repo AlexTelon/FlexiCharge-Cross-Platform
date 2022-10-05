@@ -59,6 +59,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                   isPassword: false,
                                   hint: 'Enter your Email',
                                   labelText: 'Email',
+                                  suffixIcon: Icon(null),
                                   validator: (email) =>
                                       model.emailValidator(email)),
                             ),
@@ -68,6 +69,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                               child: UserFormInput(
                                   controller: model.verificationController,
                                   isPassword: true,
+                                  suffixIcon: Icon(null),
                                   hint: 'Enter the verification code',
                                   labelText: 'Verification Code',
                                   validator: (verificationCode) =>
