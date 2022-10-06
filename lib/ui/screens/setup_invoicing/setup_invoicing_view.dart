@@ -6,8 +6,6 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
-import '../../widgets/error_text.dart';
-
 /// SetupInvoicingView is a stateless widget that contains a scaffold with a single child scroll view
 /// that contains a column with a topbar, a sized box, a column with a column with a rich text, a sized
 /// box, a column with a rich text, a sized box, a text input widget, a sized box, a text input widget,
@@ -127,7 +125,10 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                     onChanged: (value) => print(value),
                   ),
                   SizedBox(height: 20),
-                  ErrorText(errorMessage: errorText),
+                  Text(
+                    errorText,
+                    style: TextStyle(color: Colors.red),
+                  ),
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                   WideButton(
                     text: 'Continue',

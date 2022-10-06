@@ -1,13 +1,12 @@
-import 'package:flexicharge/ui/screens/recover_password_page/recover_password_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
-import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 import '../home_page/home_view.dart';
+import '../recover_password_page/recover_password_view.dart';
 import 'login_viewmodel.dart';
 
 /// The class is a StatefulWidget that has a form with two text fields and a button. The button calls a
@@ -52,6 +51,7 @@ class _LoginViewState extends State<LoginView> {
                     children: [
                       Column(
                         children: [
+                          SizedBox(height: 30),
                           FractionallySizedBox(
                             child: UserFormInput(
                               controller: textControllerEmail,
@@ -105,7 +105,11 @@ class _LoginViewState extends State<LoginView> {
                       ),
                       Column(
                         children: [
-                          ErrorText(errorMessage: errorMsg),
+                          SizedBox(height: 90),
+                          Text(
+                            errorMsg,
+                            style: TextStyle(color: Colors.red),
+                          ),
                           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                           WideButton(
                             text: 'Log in',
