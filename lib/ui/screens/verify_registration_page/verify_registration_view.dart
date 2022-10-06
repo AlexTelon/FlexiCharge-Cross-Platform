@@ -1,17 +1,13 @@
 import 'dart:convert';
-
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-
+import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 import '../home_page/home_view.dart';
 
@@ -64,7 +60,6 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                   isPassword: false,
                                   hint: 'Enter your Email',
                                   labelText: 'Email',
-                                  suffixIcon: Icon(null),
                                   validator: (email) =>
                                       model.emailValidator(email)),
                             ),
@@ -74,13 +69,16 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                               child: UserFormInput(
                                   controller: model.verificationController,
                                   isPassword: true,
-                                  suffixIcon: Icon(null),
                                   hint: 'Enter the verification code',
                                   labelText: 'Verification Code',
                                   validator: (verificationCode) =>
                                       model.verificationCodeValidator(
                                           verificationCode)),
                             ),
+                            SizedBox(height: 30.0),
+                            if (!model.isAccountVerified &&
+                                model.verificationErrors.isNotEmpty)
+                              ErrorText(errorMessage: model.verificationErrors),
                             SizedBox(height: 30.0),
                             WideButton(
                                 showWideButton: true,
@@ -99,6 +97,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                       MaterialPageRoute(
                                           builder: (context) =>
                                               SetupInvoicingView()),
+
                                     );
                                   } catch (errors) {
                                     setState(() {
@@ -114,6 +113,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                   style: TextStyle(color: Colors.red)),
 
                             // Text(model.errors.toString())
+
                           ],
                         ),
                       ),

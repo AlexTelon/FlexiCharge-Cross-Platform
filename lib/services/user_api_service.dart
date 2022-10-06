@@ -40,36 +40,46 @@ class UserApiService {
 
   BEWARE: The status code that are handled blow are implemented according to backend. Some responses are not correct and will be changed in the backend, then the frontend must change accordingly.
   */
+
   Future<bool> verifyLogin(
     String email,
     String password,
   ) async {
     final Map<String, String> loginData = {
+
       'username': email,
       'password': password,
     };
+
 
     bool _isValid = false;
     Response response = await client.post(
       _login,
       headers: _headers,
       body: jsonEncode(loginData),
+
     );
     var jsonDecoded = json.decode(response.body);
 
+    if (response.body.isNotEmpty) {
+      responseMsg = json.decode(response.body)['message'];
+    }
+
     switch (response.statusCode) {
       case 200:
+
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.setUserId(jsonDecoded['user_id']);
         UserSecureStorage.setIsUserLoggedIn(_isValid);
         return _isValid;
+
       case 400:
-        throw jsonDecoded['message'];
+        throw responseMsg;
       case 404:
-        throw jsonDecoded['message'];
+        throw responseMsg;
       case 500:
-        throw jsonDecoded['message'];
+        throw responseMsg;
       default:
         throw exeptionMsg;
     }

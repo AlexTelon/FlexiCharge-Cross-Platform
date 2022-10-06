@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:stacked/stacked.dart';
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
@@ -8,6 +6,10 @@ import 'package:flexicharge/ui/screens/verify_registration_page/verify_registrat
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
+
+import '../../widgets/error_text.dart';
 
 class RegistrationView extends StatefulWidget {
   @override
@@ -17,7 +19,6 @@ class RegistrationView extends StatefulWidget {
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
   bool _registrationIsValid = false;
-  bool _passwordVisible = true;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
@@ -26,6 +27,7 @@ class _RegistrationViewState extends State<RegistrationView> {
   final _formKey = GlobalKey<FormState>();
   final userInputValidator = UserInputValidator();
 
+  late String _password = "";
   late String errorMsg = "";
 
   @override
@@ -49,10 +51,14 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: emailController,
                         labelText: 'Email',
                         hint: 'Enter Your Email',
-                        suffixIcon: Icon(null),
                         validator: (email) {
-                          var message = model.validateEmail(email);
-                          return message;
+                          if (email != null &&
+                              email.isNotEmpty &&
+                              !userInputValidator.emailIsValid(email)) {
+                            return 'Enter a valid email';
+                          } else {
+                            return null;
+                          }
                         },
                       ),
                       SizedBox(height: 20),
@@ -60,23 +66,18 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: passwordController,
                         labelText: 'Password',
                         hint: 'Enter Your Password',
-                        isPassword: _passwordVisible,
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            !_passwordVisible
-                                ? Icons.visibility
-                                : Icons.visibility_off,
-                            color: Color(0xff868686),
-                          ),
-                          onPressed: () {
-                            setState(() {
-                              _passwordVisible = !_passwordVisible;
-                            });
-                          },
-                        ),
+                        isPassword: true,
                         validator: (password) {
-                          var message = model.validatePassword(password);
-                          return message;
+                          if (password != null && password.isNotEmpty) {
+                            if (!userInputValidator.passwordIsValid(password)) {
+                              return userInputValidator.passwordErrors.first;
+                            } else {
+                              _password = password;
+                              return null;
+                            }
+                          } else {
+                            return null;
+                          }
                         },
                       ),
                       SizedBox(height: 20),
@@ -84,24 +85,16 @@ class _RegistrationViewState extends State<RegistrationView> {
                           controller: repeatPasswordController,
                           labelText: 'Repeat Password',
                           hint: 'Enter Your Repeat Password',
-                          isPassword: _passwordVisible,
-                          suffixIcon: IconButton(
-                            icon: Icon(
-                              !_passwordVisible
-                                  ? Icons.visibility
-                                  : Icons.visibility_off,
-                              color: Color(0xff868686),
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _passwordVisible = !_passwordVisible;
-                              });
-                            },
-                          ),
+                          isPassword: true,
                           validator: (repeatedPassword) {
-                            var message = model
-                                .validateRepeatedPassword(repeatedPassword);
-                            return message;
+                            if (repeatedPassword != null &&
+                                repeatedPassword.isNotEmpty &&
+                                !userInputValidator.passwordsAreEqual(
+                                    _password, repeatedPassword)) {
+                              return 'Passwords do not match';
+                            } else {
+                              return null;
+                            }
                           }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -128,10 +121,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                           )
                         ],
                       ),
-                      Text(
-                        errorMsg,
-                        style: TextStyle(color: Colors.red),
-                      ),
+                      ErrorText(errorMessage: errorMsg),
                       SizedBox(height: 30.0),
                       //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
                       WideButton(
