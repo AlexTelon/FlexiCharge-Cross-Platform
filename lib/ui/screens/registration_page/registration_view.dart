@@ -1,16 +1,13 @@
-import 'package:email_validator/email_validator.dart';
+import 'package:flutter/material.dart';
+import 'package:stacked/stacked.dart';
 import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
-import 'package:flutter/material.dart';
-
-import 'package:stacked/stacked.dart';
 
 class RegistrationView extends StatefulWidget {
   @override
@@ -19,14 +16,17 @@ class RegistrationView extends StatefulWidget {
 
 class _RegistrationViewState extends State<RegistrationView> {
   bool checked = false;
-  final _formKey = GlobalKey<FormState>();
-  late String _password;
-
-  bool val = false;
+  bool _registrationIsValid = false;
+  bool _passwordVisible = true;
 
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController repeatPasswordController = new TextEditingController();
+
+  final _formKey = GlobalKey<FormState>();
+  final userInputValidator = UserInputValidator();
+
+  late String errorMsg = "";
 
   @override
   Widget build(BuildContext context) {
@@ -49,15 +49,10 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: emailController,
                         labelText: 'Email',
                         hint: 'Enter Your Email',
+                        suffixIcon: Icon(null),
                         validator: (email) {
-                          // Flytta till egen fil, gör en funktion
-                          if (email != null &&
-                              !EmailValidator.validate(email) &&
-                              email.isNotEmpty) {
-                            return 'Enter a valid Email';
-                          } else {
-                            return null;
-                          }
+                          var message = model.validateEmail(email);
+                          return message;
                         },
                       ),
                       SizedBox(height: 20),
@@ -65,19 +60,23 @@ class _RegistrationViewState extends State<RegistrationView> {
                         controller: passwordController,
                         labelText: 'Password',
                         hint: 'Enter Your Password',
-                        isPassword: true,
+                        isPassword: _passwordVisible,
+                        suffixIcon: IconButton(
+                          icon: Icon(
+                            !_passwordVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off,
+                            color: Color(0xff868686),
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              _passwordVisible = !_passwordVisible;
+                            });
+                          },
+                        ),
                         validator: (password) {
-                          final validator = UserInputValidator();
-                          if (password != null && password.isNotEmpty) {
-                            if (!validator.passwordIsValid(password)) {
-                              return validator.passwordErrors.first;
-                            } else {
-                              _password = password;
-                              return null;
-                            }
-                          } else {
-                            return null;
-                          }
+                          var message = model.validatePassword(password);
+                          return message;
                         },
                       ),
                       SizedBox(height: 20),
@@ -85,16 +84,24 @@ class _RegistrationViewState extends State<RegistrationView> {
                           controller: repeatPasswordController,
                           labelText: 'Repeat Password',
                           hint: 'Enter Your Repeat Password',
-                          isPassword: true,
+                          isPassword: _passwordVisible,
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              !_passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Color(0xff868686),
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _passwordVisible = !_passwordVisible;
+                              });
+                            },
+                          ),
                           validator: (repeatedPassword) {
-                            if (repeatedPassword != null &&
-                                repeatedPassword.isNotEmpty) {
-                              if (_password != repeatedPassword) {
-                                return 'Fields do not match';
-                              }
-                            } else {
-                              return null;
-                            }
+                            var message = model
+                                .validateRepeatedPassword(repeatedPassword);
+                            return message;
                           }),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -121,25 +128,43 @@ class _RegistrationViewState extends State<RegistrationView> {
                           )
                         ],
                       ),
-                      SizedBox(height: 30.0),
-                      WideButton(
-                        text: 'Register',
-                        color: Color(0xff78bd76),
-                        onTap: () async {
-                          await model.registerNewUser(
-                            emailController.text,
-                            passwordController.text,
-                            repeatPasswordController.text,
-                          );
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => VerifyRegistrationView()),
-                          );
-                        },
-                        showWideButton: true,
+                      Text(
+                        errorMsg,
+                        style: TextStyle(color: Colors.red),
                       ),
+                      SizedBox(height: 30.0),
+                      //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
+                      WideButton(
+                          showWideButton: true,
+                          text: 'Register',
+                          color: Color(0xff78bd76),
+                          onTap: () async {
+                            var registerData = await model.registerNewUser(
+                              emailController.text,
+                              passwordController.text,
+                              repeatPasswordController.text,
+                            );
+
+                            _registrationIsValid = registerData.elementAt(0);
+
+                            if (!_registrationIsValid) {
+                              setState(() {
+                                print(_registrationIsValid);
+                                errorMsg = registerData.elementAt(1);
+                              });
+                            } else {
+                              setState(() {
+                                errorMsg = "";
+                              });
+
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>
+                                        VerifyRegistrationView()),
+                              );
+                            }
+                          }),
                       SizedBox(height: 20.0),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
