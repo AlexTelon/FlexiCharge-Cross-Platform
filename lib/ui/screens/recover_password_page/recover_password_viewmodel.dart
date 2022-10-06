@@ -16,7 +16,7 @@ class RecoverPasswordViewModel extends BaseViewModel {
     _email = email;
 
     try {
-      await UserApiService().sendNewPassword(email);
+      await UserApiService().verifyMailNewPassword(email);
     } catch (error) {
       print(error);
     }
