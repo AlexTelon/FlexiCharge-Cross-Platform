@@ -81,8 +81,8 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                             ),
                             SizedBox(height: 30.0),
                             if (!model.isAccountVerified &&
-                                model.errors.isNotEmpty)
-                              ErrorText(errorMessage: model.errors),
+                                model.verificationErrors.isNotEmpty)
+                              ErrorText(errorMessage: model.verificationErrors),
                             SizedBox(height: 30.0),
                             WideButton(
                                 showWideButton: true,

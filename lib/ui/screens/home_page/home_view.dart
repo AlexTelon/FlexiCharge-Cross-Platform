@@ -63,7 +63,7 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
-                                  isActive: false,
+                                  isActive: model.localData.isButtonActive,
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
