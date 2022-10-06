@@ -1,4 +1,3 @@
-import 'package:flexicharge/ui/screens/recover_password_page/recover_password_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -121,14 +120,6 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           SizedBox(height: 20),
                           InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        RecoverPasswordView()),
-                              );
-                            },
                             child: Text(
                               'I forgot my password',
                               style: TextStyle(
