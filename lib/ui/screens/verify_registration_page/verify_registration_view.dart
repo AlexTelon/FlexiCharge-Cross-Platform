@@ -11,6 +11,7 @@ import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/material.dart';
 
+import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 
 class VerifyRegistrationView extends StatefulWidget {
@@ -77,6 +78,10 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                           verificationCode)),
                             ),
                             SizedBox(height: 30.0),
+                            if (!model.isAccountVerified &&
+                                model.errors.isNotEmpty)
+                              ErrorText(errorMessage: model.errors),
+                            SizedBox(height: 30.0),
                             WideButton(
                                 showWideButton: true,
                                 text: 'Verify Account',
@@ -99,13 +104,6 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                                     });
                                   }
                                 }),
-
-                            if (!model.isAccountVerified &&
-                                model.errors.isNotEmpty)
-                              Text(model.errors,
-                                  style: TextStyle(color: Colors.red)),
-
-                            // Text(model.errors.toString())
                           ],
                         ),
                       ),

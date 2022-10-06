@@ -108,7 +108,7 @@ class _LoginViewState extends State<LoginView> {
                         children: [
                           SizedBox(height: 90),
                           ErrorText(errorMessage: errorMsg),
-                          Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
+                          SizedBox(height: 30.0),
                           WideButton(
                             text: 'Log in',
                             showWideButton: true,
