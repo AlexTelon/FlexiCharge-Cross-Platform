@@ -46,28 +46,20 @@ class UserApiService {
     String password,
   ) async {
     final Map<String, String> loginData = {
-
       'username': email,
       'password': password,
     };
-
 
     bool _isValid = false;
     Response response = await client.post(
       _login,
       headers: _headers,
       body: jsonEncode(loginData),
-
     );
     var jsonDecoded = json.decode(response.body);
 
-    if (response.body.isNotEmpty) {
-      responseMsg = json.decode(response.body)['message'];
-    }
-
     switch (response.statusCode) {
       case 200:
-
         _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.setUserId(jsonDecoded['user_id']);
@@ -75,11 +67,11 @@ class UserApiService {
         return _isValid;
 
       case 400:
-        throw responseMsg;
+        throw json.decode(response.body)['message'];
       case 404:
-        throw responseMsg;
+        throw json.decode(response.body)['message'];
       case 500:
-        throw responseMsg;
+        throw json.decode(response.body)['message'];
       default:
         throw exeptionMsg;
     }
