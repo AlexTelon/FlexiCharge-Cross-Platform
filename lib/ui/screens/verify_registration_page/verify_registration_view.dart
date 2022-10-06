@@ -1,17 +1,9 @@
-import 'dart:convert';
-
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
-import 'package:flexicharge/ui/screens/login_page/login_view.dart';
-import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-
 import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 
@@ -81,8 +73,8 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                             ),
                             SizedBox(height: 30.0),
                             if (!model.isAccountVerified &&
-                                model.errors.isNotEmpty)
-                              ErrorText(errorMessage: model.errors),
+                                model.verificationErrors.isNotEmpty)
+                              ErrorText(errorMessage: model.verificationErrors),
                             SizedBox(height: 30.0),
                             WideButton(
                                 showWideButton: true,
