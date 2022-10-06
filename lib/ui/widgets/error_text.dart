@@ -16,7 +16,10 @@ class ErrorText extends StatelessWidget {
       widthFactor: 0.8,
       child: Text(
         errorMessage,
-        style: TextStyle(color: Colors.red),
+        style: TextStyle(
+          color: Colors.red,
+          fontSize: 15,
+        ),
         textAlign: TextAlign.center,
       ),
     );
