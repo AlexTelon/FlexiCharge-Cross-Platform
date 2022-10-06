@@ -41,18 +41,23 @@ class UserApiService {
   BEWARE: The status code that are handled blow are implemented according to backend. Some responses are not correct and will be changed in the backend, then the frontend must change accordingly.
   */
 
-  Future<bool> verifyLogin(String email, String password) async {
-    final Map<String, dynamic> loginData = {
+  Future<bool> verifyLogin(
+    String email,
+    String password,
+  ) async {
+    final Map<String, String> loginData = {
+
       'username': email,
       'password': password,
     };
 
-    String responseMsg = "";
-    bool isValid = false;
+
+    bool _isValid = false;
     Response response = await client.post(
       _login,
       headers: _headers,
-      body: json.encode(loginData),
+      body: jsonEncode(loginData),
+
     );
     var jsonDecoded = json.decode(response.body);
 
@@ -62,11 +67,13 @@ class UserApiService {
 
     switch (response.statusCode) {
       case 200:
-        isValid = true;
+
+        _isValid = true;
         UserSecureStorage.setUserAccessToken(jsonDecoded['accessToken']);
         UserSecureStorage.setUserId(jsonDecoded['user_id']);
-        UserSecureStorage.setIsUserLoggedIn(isValid);
-        return isValid;
+        UserSecureStorage.setIsUserLoggedIn(_isValid);
+        return _isValid;
+
       case 400:
         throw responseMsg;
       case 404:
@@ -175,7 +182,7 @@ class UserApiService {
     }
   }
 
-  Future<UserVerificationData> verifyAccount2(
+  Future<void> verifyAccount(
     String email,
     String verificationCode,
   ) async {
@@ -197,9 +204,9 @@ class UserApiService {
 
     switch (response.statusCode) {
       case 200:
-        var registration = json.decode(response.body);
-        var parsedRegistration = UserVerificationData.fromJson(registration);
-        return parsedRegistration;
+        //  var registration = json.decode(response.body);
+        // var parsedRegistration = UserVerificationData.fromJson(registration);
+        break; // return parsedRegistration;
       case 400:
         throw responseMsg;
       case 404:
@@ -208,41 +215,6 @@ class UserApiService {
         throw responseMsg;
       default:
         throw exeptionMsg;
-    }
-  }
-
-  Future<void> verifyAccount(
-    String email,
-    String verificationCode,
-  ) async {
-    var response = await client.post(Uri.parse('$_baseURL/auth/verify'),
-        headers: <String, String>{
-          'Content-Type': 'application/json',
-          'accept': 'application/json',
-        },
-        body: jsonEncode(<String, dynamic>{
-          'username': email,
-          'code': verificationCode,
-        }));
-
-    var responseMsg = "";
-    if (response.body.isNotEmpty) {
-      responseMsg = json.decode(response.body)['message'];
-    }
-
-    switch (response.statusCode) {
-      case 200:
-        // var registration = json.decode(response.body);
-        // var parsedRegistration = Registration.fromJson(registration);
-        return;
-      case 400:
-        throw responseMsg;
-      case 404:
-        throw responseMsg;
-      case 500:
-        throw responseMsg;
-      default:
-        throw Exception("default: " + ErrorCodes.internalError.toString());
     }
   }
 }
