@@ -9,8 +9,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 
-import '../registration_page/registration_view.dart';
-
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
   @override
@@ -65,7 +63,7 @@ class HomeView extends StatelessWidget {
                               SizedBox(height: 30),
                               MapIcon(
                                   onTap: () => model.doQrScan(),
-                                  isActive: model.localData.isButtonActive,
+                                  isActive: false,
                                   isLarge: false,
                                   icon: SvgPicture.asset(
                                       'assets/svg_images/camera.svg',
@@ -88,11 +86,7 @@ class HomeView extends StatelessWidget {
                                       builder: (context) => ProfileView()),
                                 );
                               } else {
-                                Navigator.of(context).pushAndRemoveUntil(
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            RegistrationView()),
-                                    (Route route) => route.isFirst);
+                                Navigator.pop(context);
                               }
                             },
                             isActive: true,

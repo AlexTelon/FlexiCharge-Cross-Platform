@@ -8,7 +8,6 @@ class UserFormInput extends StatelessWidget {
     required this.labelText,
     required this.hint,
     required this.validator,
-    required this.suffixIcon,
     this.isPassword = false,
     this.defaultInput,
   }) : super(key: key);
@@ -19,7 +18,6 @@ class UserFormInput extends StatelessWidget {
   final bool isPassword;
   final String? defaultInput;
   final String? Function(String?)? validator;
-  final Widget? suffixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +30,6 @@ class UserFormInput extends StatelessWidget {
         decoration: InputDecoration(
             labelText: labelText,
             hintText: hint,
-            suffixIcon: suffixIcon,
             border: OutlineInputBorder(
               borderSide: BorderSide(color: Color(0xff292b2b)),
               borderRadius: BorderRadius.all(Radius.circular(10)),

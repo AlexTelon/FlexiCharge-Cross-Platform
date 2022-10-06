@@ -175,7 +175,7 @@ class UserApiService {
     }
   }
 
-  Future<UserVerificationData> verifyAccount(
+  Future<UserVerificationData> verifyAccount2(
     String email,
     String verificationCode,
   ) async {
@@ -208,6 +208,41 @@ class UserApiService {
         throw responseMsg;
       default:
         throw exeptionMsg;
+    }
+  }
+
+  Future<void> verifyAccount(
+    String email,
+    String verificationCode,
+  ) async {
+    var response = await client.post(Uri.parse('$_baseURL/auth/verify'),
+        headers: <String, String>{
+          'Content-Type': 'application/json',
+          'accept': 'application/json',
+        },
+        body: jsonEncode(<String, dynamic>{
+          'username': email,
+          'code': verificationCode,
+        }));
+
+    var responseMsg = "";
+    if (response.body.isNotEmpty) {
+      responseMsg = json.decode(response.body)['message'];
+    }
+
+    switch (response.statusCode) {
+      case 200:
+        // var registration = json.decode(response.body);
+        // var parsedRegistration = Registration.fromJson(registration);
+        return;
+      case 400:
+        throw responseMsg;
+      case 404:
+        throw responseMsg;
+      case 500:
+        throw responseMsg;
+      default:
+        throw Exception("default: " + ErrorCodes.internalError.toString());
     }
   }
 }

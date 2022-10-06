@@ -32,6 +32,14 @@ class VerifyRegistrationViewModel extends BaseViewModel {
     }
   }
 
+  Future<void> login(String password) async {
+    try {
+      _apiService.verifyLogin(this.emailController.text, password);
+    } catch (error) {
+      throw error;
+    }
+  }
+
   /// Velidation of user input.
   String? emailValidator(email) {
     bool validEmail = this._inputValidator.emailIsValid(email);
