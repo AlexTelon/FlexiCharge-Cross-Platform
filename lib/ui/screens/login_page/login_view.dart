@@ -1,4 +1,3 @@
-import 'package:flexicharge/ui/screens/recover_password_page/recover_password_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -22,8 +21,8 @@ class LoginView extends StatefulWidget {
 class _LoginViewState extends State<LoginView> {
   String errorMsg = "";
   bool _validate = false;
-  bool _passwordVisible = true;
   final _formKey = GlobalKey<FormState>();
+
   TextEditingController textControllerEmail = TextEditingController();
   TextEditingController textControllerPassword = TextEditingController();
 
@@ -42,24 +41,19 @@ class _LoginViewState extends State<LoginView> {
                 Topbar(
                     text: "Log In",
                     onTap: () {
-                      Navigator.of(context).pushAndRemoveUntil(
-                          MaterialPageRoute(
-                              builder: (context) => RegistrationView()),
-                          (Route route) => route.isFirst);
+                      Navigator.pop(context);
                     }),
                 Container(
                   child: Column(
                     children: [
                       Column(
                         children: [
-                          SizedBox(height: 30),
                           FractionallySizedBox(
                             child: UserFormInput(
                               controller: textControllerEmail,
                               isPassword: false,
                               hint: 'Enter Your Email',
                               labelText: 'Email',
-                              suffixIcon: Icon(null),
                               validator: (email) {
                                 if (email != null &&
                                     !EmailValidator.validate(email) &&
@@ -69,28 +63,16 @@ class _LoginViewState extends State<LoginView> {
                                   return null;
                                 }
                               },
+
                             ),
                           ),
                           SizedBox(height: 30),
                           FractionallySizedBox(
                             child: UserFormInput(
                               controller: textControllerPassword,
-                              isPassword: _passwordVisible,
+                              isPassword: true,
                               hint: 'Enter Your Password',
                               labelText: 'Password',
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  !_passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: Color(0xff868686),
-                                ),
-                                onPressed: () {
-                                  setState(() {
-                                    _passwordVisible = !_passwordVisible;
-                                  });
-                                },
-                              ),
                               validator: (password) {
                                 if (password != null &&
                                     password.length < 3 &&
@@ -137,14 +119,6 @@ class _LoginViewState extends State<LoginView> {
                           ),
                           SizedBox(height: 20),
                           InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        RecoverPasswordView()),
-                              );
-                            },
                             child: Text(
                               'I forgot my password',
                               style: TextStyle(

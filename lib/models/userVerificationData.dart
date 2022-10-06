@@ -1,3 +1,5 @@
+import 'package:flexicharge/services/user_api_service.dart';
+
 class UserVerificationData {
   String email = '';
   String verificationCode = '';

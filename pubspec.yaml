@@ -33,6 +33,7 @@ dependencies:
   flutter_svg: ^0.22.0
   loading_overlay_pro: ^2.1.1
   splashscreen: ^1.2.0
+  qr_code_scanner: ^1.0.0
   gradient_widgets: ^0.6.0
   pin_code_fields: ^7.3.0
 
@@ -42,7 +43,6 @@ dependencies:
   provider: ^5.0.0 
   shared_preferences: ^2.0.0
   flutter_riverpod: ^2.0.0-dev.9
-  mobile_scanner: ^2.0.0
 
 
 dev_dependencies:
