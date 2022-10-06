@@ -9,6 +9,8 @@ import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
 
+import '../../widgets/error_text.dart';
+
 class RegistrationView extends StatefulWidget {
   @override
   State<RegistrationView> createState() => _RegistrationViewState();
@@ -128,10 +130,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                           )
                         ],
                       ),
-                      Text(
-                        errorMsg,
-                        style: TextStyle(color: Colors.red),
-                      ),
+                      ErrorText(errorMessage: errorMsg),
                       SizedBox(height: 30.0),
                       //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
                       WideButton(
