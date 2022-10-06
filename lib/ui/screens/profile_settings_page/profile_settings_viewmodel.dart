@@ -12,5 +12,6 @@ class ProfileViewModel extends BaseViewModel {
 
   bool get checked => _checked;
 
-  Future<void> logout() async => await UserSecureStorage.deleteAllUserStorage();
+  Future<void> logout() async =>
+      await UserSecureStorage.deleteUserSecureStorage();
 }

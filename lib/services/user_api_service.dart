@@ -175,7 +175,7 @@ class UserApiService {
     }
   }
 
-  Future<UserVerificationData> verifyAccount(
+  Future<UserVerificationData> verifyAccount2(
     String email,
     String verificationCode,
   ) async {
