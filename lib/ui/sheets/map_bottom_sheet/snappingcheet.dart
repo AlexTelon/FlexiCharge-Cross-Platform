@@ -1,6 +1,6 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/nearest_chargers.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/select_charger.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/nearest_chargers.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/select_charger.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';

@@ -75,13 +75,17 @@ class HomeViewModel extends BaseViewModel {
         .then((value) {
       if (value != null && value.data == true) {
         activeTopSheet = true;
-        startTimer();
+        //startTimer();
         notifyListeners();
       }
     });
   }
 
-  void startTimer() {
+  /// This function is commented only because the charging status is controlled
+  /// via a different temporary timer until the Live Metrics-feature is completed.
+  /// This is a timer that runs on an interval and is used to update
+  /// the charging percentage.
+  /*void startTimer() {
     print("Starting timer...");
     int secondsPast = 0;
     localData.chargingPercentage = 0;
@@ -107,7 +111,7 @@ class HomeViewModel extends BaseViewModel {
           localData.chargingPercentage.toString());
       notifyListeners();
     });
-  }
+  }*/
 
   Future<int> fetchChargingPercentage() async {
     try {
@@ -122,12 +126,6 @@ class HomeViewModel extends BaseViewModel {
     }
 
     return 0;
-  }
-
-  Future<void> getTransaction() async {
-    // Testing transactionApiService
-    var transaction = await _transactionAPI.getTransactionById(1);
-    // transaction.printTransaction();
   }
 
   Future<void> findUser() async {
@@ -160,6 +158,7 @@ class HomeViewModel extends BaseViewModel {
 
   completeTopSheet() {
     activeTopSheet = false;
+    localData.chargingPercentage = 0;
     notifyListeners();
   }
 }

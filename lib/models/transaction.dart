@@ -8,7 +8,7 @@ class Transaction {
   bool paymentConfirmed = false;
   bool isKlarnaPayment = true;
   int timestamp = 0;
-  double kwhTransfered = 0;
+  double kwhTransferred = 0;
   int currentChargePercentage = 0;
   String paymentID = '';
 
@@ -24,7 +24,7 @@ class Transaction {
     required this.paymentConfirmed,
     required this.isKlarnaPayment,
     required this.timestamp,
-    required this.kwhTransfered,
+    required this.kwhTransferred,
     required this.currentChargePercentage,
     required this.paymentID,
   });
@@ -33,13 +33,13 @@ class Transaction {
     transactionID = json['transactionID'] ?? 0;
     userID = json['userID'] ?? '';
     chargerID = json['chargerID'] ?? 0;
-    pricePerKwh = double.parse (json['pricePerKwh'] ?? '0.0');
+    pricePerKwh = double.parse(json['pricePerKwh'] ?? '0.0');
     sessionID = json['session_id'];
     clientToken = json['client_token'];
     paymentConfirmed = json['paymentConfirmed'] ?? false;
     isKlarnaPayment = json['isKlarnaPayment'] ?? true;
     timestamp = json['timestamp'] ?? 0;
-    kwhTransfered = json['kwhTransfered'] ?? 0;
+    kwhTransferred = json['kwhTransfered'] ?? 0;
     currentChargePercentage = json['currentChargePercentage'] ?? 0;
     paymentID = json['paymentID'] ?? '';
   }

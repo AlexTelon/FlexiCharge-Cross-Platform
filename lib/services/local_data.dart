@@ -15,7 +15,7 @@ class LocalData {
   Transaction transactionSession = Transaction();
   bool isButtonActive = true;
   int chargingPercentage = 0;
-  late Timer timer;
+  //late Timer timer;
   late StreamController<EventType> controller;
   late Stream stream;
 
