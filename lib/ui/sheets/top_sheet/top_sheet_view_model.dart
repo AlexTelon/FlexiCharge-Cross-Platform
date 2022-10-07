@@ -60,7 +60,7 @@ class TopSheetViewModel extends BaseViewModel {
   }
 
   String get kilowattHours =>
-      "${transactionSession.kwhTransfered} kWh transferred";
+      "${transactionSession.kwhTransferred} kWh transferred";
 
   /// It changes the state of the top sheet and notifies the listeners
   ///
