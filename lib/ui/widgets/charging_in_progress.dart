@@ -4,13 +4,13 @@ import 'package:flutter/material.dart';
 class ChargingInProgress extends StatelessWidget {
   const ChargingInProgress(
       {Key? key,
-      required this.batteryProcent,
+      required this.batteryPercent,
       required this.chargingAdress,
       required this.timeUntilFullyCharged,
       required this.kilowattHours})
       : super(key: key);
 
-  final int batteryProcent;
+  final int batteryPercent;
   final String chargingAdress;
   final String timeUntilFullyCharged;
   final String kilowattHours;
@@ -26,7 +26,7 @@ class ChargingInProgress extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.10,
             width: MediaQuery.of(context).size.height * 0.10,
             child: CircularLoadingBar(
-              loadingPercentage: batteryProcent / 100,
+              loadingPercentage: batteryPercent / 100,
             ),
           ),
           FittedBox(

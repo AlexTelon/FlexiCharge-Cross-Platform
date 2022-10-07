@@ -1,6 +1,6 @@
 import 'package:flexicharge/models/widget_keys.dart';
 import 'package:flexicharge/services/map_style.dart';
-import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view.dart';
+import 'package:flexicharge/ui/sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/widgets/map_icon_button.dart';
