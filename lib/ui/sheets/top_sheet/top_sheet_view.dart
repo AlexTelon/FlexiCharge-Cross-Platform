@@ -30,6 +30,7 @@ class TopSheetView extends StatelessWidget {
           //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Container(
+              margin: EdgeInsets.only(top: 20),
               height: MediaQuery.of(context).size.height * 0.10,
               child: FittedBox(
                 fit: BoxFit.scaleDown,
