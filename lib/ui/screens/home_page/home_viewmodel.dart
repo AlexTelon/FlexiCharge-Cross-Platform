@@ -147,8 +147,12 @@ class HomeViewModel extends BaseViewModel {
   }
 
   Future<void> openChargerCodeInput(String? data) async {
-    _bottomSheetService.showCustomSheet(
-        variant: SheetType.mapBottomSheet, data: data);
+    _bottomSheetService
+        .showCustomSheet(variant: SheetType.mapBottomSheet, data: data)
+        .then((value) {
+      activeTopSheet = true;
+      notifyListeners();
+    });
   }
 
   Future<bool> isUserloggedIn() async =>

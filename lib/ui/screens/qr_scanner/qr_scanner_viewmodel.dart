@@ -12,13 +12,14 @@ class QrScannerViewModel extends BaseViewModel {
 
   void init() {}
 
-  void onDetectQrCode(Barcode barcode, MobileScannerArguments? args) {
+  void onDetectQrCode(Barcode barcode, MobileScannerArguments? args) async {
     if (barcode.rawValue == null) {
       debugPrint('Failed to scan QR Code');
     } else {
       final String code = barcode.rawValue!;
       debugPrint('QR code found! $code');
       localData.qrCode = code;
+      notifyListeners();
       _navigationService.back();
     }
   }
