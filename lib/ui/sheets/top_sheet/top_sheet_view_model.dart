@@ -21,20 +21,37 @@ class TopSheetViewModel extends BaseViewModel {
   String expandButtonText = "";
   DateTime? fullychargedTime;
   String stopTime = '';
+  Timer? timer;
 
   init() {
     streamListener();
+
+    timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => incrementChargingPercentage());
   }
 
-  // Dummy data
+  /// If the charging percentage is less than 100, increment it by 1. If it's not, cancel the timer and
+  /// change the charging state to true
+  void incrementChargingPercentage() {
+    if (localData.chargingPercentage < 100) {
+      localData.chargingPercentage += 1;
+      notifyListeners();
+    } else {
+      timer?.cancel();
+      changeChargingState(true);
+    }
+  }
+
+  /// A getter that returns the address of the charger.
   String get chargingAdress {
     /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
         .contains((charger) => charger.id == transactionSession.chargerID));
-*/
-    return 'lite kvar';
+    */
+    return 'Kungsgatan 1a, Jönköping';
   }
 
+  /// Returns amount of seconds left until fully charged expressed as readable text
   String get timeUntilFullyCharged {
     var goal = 100;
     var percentage = transactionSession.currentChargePercentage;
@@ -45,6 +62,10 @@ class TopSheetViewModel extends BaseViewModel {
   String get kilowattHours =>
       "${transactionSession.kwhTransfered} kWh transferred";
 
+  /// It changes the state of the top sheet and notifies the listeners
+  ///
+  /// Args:
+  ///   state: The state of the top sheet.
   void changeTopSheetState(state) {
     topSheetState = state;
     notifyListeners();
@@ -53,6 +74,7 @@ class TopSheetViewModel extends BaseViewModel {
 
   Transaction get transactionSession => localData.transactionSession;
 
+  /// It changes the size of the top sheet based on the state of the top sheet
   void changeTopSheetSize() {
     switch (topSheetState) {
       case 1:
@@ -77,7 +99,7 @@ class TopSheetViewModel extends BaseViewModel {
   Future<void> changeChargingState(bool finishedCharging) async {
     if (finishedCharging) {
       print("Stopping timer...");
-      localData.timer.cancel();
+      //localData.timer.cancel();
       chargingState = 4;
       changeTopSheetState(3);
       try {

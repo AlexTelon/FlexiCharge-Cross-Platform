@@ -15,104 +15,107 @@ class TopSheetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
-        onModelReady: (model) => model.init(),
-        viewModelBuilder: () => TopSheetViewModel(),
-        builder: (context, model, child) => AnimatedContainer(
-              duration: const Duration(milliseconds: 100),
-              curve: Curves.linear,
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height * model.topSheetSize,
-              decoration: BoxDecoration(
-                color: const Color(0xff333333),
-                borderRadius: BorderRadius.circular(5),
+      onModelReady: (model) => model.init(),
+      viewModelBuilder: () => TopSheetViewModel(),
+      builder: (context, model, child) => AnimatedContainer(
+        duration: const Duration(milliseconds: 100),
+        curve: Curves.linear,
+        width: MediaQuery.of(context).size.width,
+        height: MediaQuery.of(context).size.height * model.topSheetSize,
+        decoration: BoxDecoration(
+          color: const Color(0xff333333),
+          borderRadius: BorderRadius.circular(5),
+        ),
+        child: Column(
+          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Container(
+              height: MediaQuery.of(context).size.height * 0.10,
+              child: FittedBox(
+                fit: BoxFit.scaleDown,
+                child: Text(
+                  model.topSheetText,
+                  style: const TextStyle(
+                      color: const Color(0xffffffff),
+                      fontWeight: FontWeight.w700,
+                      fontFamily: "ITCAvantGardeStd",
+                      fontStyle: FontStyle.normal,
+                      fontSize: 17.0),
+                ),
               ),
-              child: Column(
-                //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Container(
-                      height: MediaQuery.of(context).size.height * 0.10,
-                      child: FittedBox(
-                        fit: BoxFit.scaleDown,
-                        child: Text(
-                          model.topSheetText,
-                          style: const TextStyle(
-                              color: const Color(0xffffffff),
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "ITCAvantGardeStd",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 17.0),
-                        ),
-                      )),
-                  if (model.chargingState == 1)
-                    Container(
-                      // Charging Started
-                      height: MediaQuery.of(context).size.height * 0.15,
-                      child: ChargingStarted(),
-                    ),
-                  if (model.chargingState == 2 || model.chargingState == 3)
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.09,
-                      // Charging In Progress & Fully Charged
-                      child: ChargingInProgress(
-                        batteryProcent: model.localData.chargingPercentage,
-                        chargingAdress: model.chargingAdress,
-                        timeUntilFullyCharged: model.timeUntilFullyCharged,
-                        kilowattHours: model.kilowattHours,
-                      ),
-                    ),
-                  if (model.topSheetState == 2 &&
-                      (model.chargingState == 2 || model.chargingState == 3))
-                    Expanded(
-                      child: Container(
-                        // Stop charging button
-                        height: MediaQuery.of(context).size.height * 0.225,
-                        child: Align(
-                          alignment: Alignment.center,
-                          child: StopChargingButton(
-                              onPressed: () => model.changeChargingState(true),
-                              buttonText: model.stopChargingButtonText),
-                        ),
-                      ),
-                    ),
-                  if ((model.chargingState == 2 || model.chargingState == 3) &&
-                      model.topSheetState != 2)
-                    // Push down button
-                    Container(
-                        height: MediaQuery.of(context).size.height * 0.075,
-                        child: FittedBox(
-                          fit: BoxFit.fitHeight,
-                          child: TextButton(
-                            child: Column(
-                              children: [
-                                Text(model.expandButtonText,
-                                    style: TextStyle(color: Colors.white)),
-                                Icon(
-                                  Icons.keyboard_arrow_down_rounded,
-                                  size: 30,
-                                  color: Colors.white,
-                                ),
-                              ],
-                            ),
-                            onPressed: () {
-                              model.changeTopSheetState(2);
-                            },
-                          ),
-                        )),
-                  if (model.chargingState == 4 && model.topSheetState == 3)
-                    Expanded(
-                      child: ChargingSummary(
-                        time: model.stopTime,
-                        chargingDuration:
-                            model.transactionSession.timestamp.parseTimeDiff(),
-                        energyUsed:
-                            "${model.transactionSession.kwhTransfered.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
-                        totalCost:
-                            "${(model.transactionSession.kwhTransfered * model.transactionSession.pricePerKwh).toStringAsFixed(2)}kr",
-                        stopCharging: complete,
-                      ),
-                    ),
-                ],
+            ),
+            /*if (model.chargingState == 1)
+              Container(
+                // Charging Started
+                height: MediaQuery.of(context).size.height * 0.15,
+                child: ChargingStarted(),
               ),
-            ));
+            if (model.chargingState == 2 || model.chargingState == 3)*/
+            Container(
+              height: MediaQuery.of(context).size.height * 0.09,
+              // Charging In Progress & Fully Charged
+              child: ChargingInProgress(
+                batteryPercent: model.localData.chargingPercentage,
+                chargingAdress: model.chargingAdress,
+                timeUntilFullyCharged: model.timeUntilFullyCharged,
+                kilowattHours: model.kilowattHours,
+              ),
+            ),
+            if (model.topSheetState == 2 &&
+                (model.chargingState == 2 || model.chargingState == 3))
+              Expanded(
+                child: Container(
+                  // Stop charging button
+                  height: MediaQuery.of(context).size.height * 0.225,
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: StopChargingButton(
+                        onPressed: () => model.changeChargingState(true),
+                        buttonText: model.stopChargingButtonText),
+                  ),
+                ),
+              ),
+            if ((model.chargingState == 2 || model.chargingState == 3) &&
+                model.topSheetState != 2)
+              // Push down button
+              Container(
+                height: MediaQuery.of(context).size.height * 0.075,
+                child: FittedBox(
+                  fit: BoxFit.fitHeight,
+                  child: TextButton(
+                    child: Column(
+                      children: [
+                        Text(model.expandButtonText,
+                            style: TextStyle(color: Colors.white)),
+                        Icon(
+                          Icons.keyboard_arrow_down_rounded,
+                          size: 30,
+                          color: Colors.white,
+                        ),
+                      ],
+                    ),
+                    onPressed: () {
+                      model.changeTopSheetState(2);
+                    },
+                  ),
+                ),
+              ),
+            if (model.chargingState == 4 && model.topSheetState == 3)
+              Expanded(
+                child: ChargingSummary(
+                  time: model.stopTime,
+                  chargingDuration:
+                      model.transactionSession.timestamp.parseTimeDiff(),
+                  energyUsed:
+                      "${model.transactionSession.kwhTransfered.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
+                  totalCost:
+                      "${(model.transactionSession.kwhTransfered * model.transactionSession.pricePerKwh).toStringAsFixed(2)}kr",
+                  stopCharging: complete,
+                ),
+              ),
+          ],
+        ),
+      ),
+    );
   }
 }

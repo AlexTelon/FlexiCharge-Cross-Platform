@@ -45,7 +45,7 @@ class ChargingInProgress extends StatelessWidget {
                           height: 20,
                           image: AssetImage('assets/images/white_marker.png')),
                       Text(
-                        "Kungsgatan 1a, Jönköping",
+                        chargingAdress,
                         style: Theme.of(context).textTheme.bodyText1,
                       ),
                     ],

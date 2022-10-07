@@ -33,7 +33,7 @@ class Transaction {
     transactionID = json['transactionID'] ?? 0;
     userID = json['userID'] ?? '';
     chargerID = json['chargerID'] ?? 0;
-    pricePerKwh = double.parse (json['pricePerKwh'] ?? '0.0');
+    pricePerKwh = double.parse(json['pricePerKwh'] ?? '0.0');
     sessionID = json['session_id'];
     clientToken = json['client_token'];
     paymentConfirmed = json['paymentConfirmed'] ?? false;
