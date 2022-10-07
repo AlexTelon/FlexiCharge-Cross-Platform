@@ -1,4 +1,4 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/klarna_button.dart';
@@ -23,7 +23,6 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
           chargers: model.selectedChargerPoint.chargers,
           onTap: (charger) => model.getChargerById(charger.id),
           selectedChargerId: model.selectedCharger.id,
-          
         ),
         SizedBox(height: 20),
         Text(

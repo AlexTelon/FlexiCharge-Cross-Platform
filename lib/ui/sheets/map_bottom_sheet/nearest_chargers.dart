@@ -1,4 +1,4 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';

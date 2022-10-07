@@ -1,4 +1,4 @@
-import 'package:flexicharge/ui/bottom_sheets/top_sheet/top_sheet_view_model.dart';
+import 'package:flexicharge/ui/sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/widgets/chargin_started.dart';
 import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
 import 'package:flexicharge/ui/widgets/charging_summary.dart';
