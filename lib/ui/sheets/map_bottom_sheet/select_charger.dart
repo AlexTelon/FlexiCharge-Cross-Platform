@@ -45,14 +45,14 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
               KlarnaButton(
                 onTap: () {
                   model.isSwishActive = true;
-                  print("Swish Payment In Progress");
+                  print("Klarna Payment Selected");
                 },
                 isSelected: model.isSwishActive,
               ),
               InvoiceButton(
                 onTap: () {
                   model.isSwishActive = false;
-                  print("Swish Payment In Progress");
+                  print("Invoice Payment Selected");
                 },
                 isSelected: !model.isSwishActive,
               ),
