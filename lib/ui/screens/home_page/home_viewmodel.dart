@@ -81,6 +81,8 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  /// This function is commented only because the charging status is controlled
+  /// via a different temporary timer until the Live Metrics-feature is completed.
   /// This is a timer that runs on an interval and is used to update
   /// the charging percentage.
   /*void startTimer() {
