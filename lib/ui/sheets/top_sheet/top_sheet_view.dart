@@ -45,6 +45,8 @@ class TopSheetView extends StatelessWidget {
                 ),
               ),
             ),
+            //This Widget is commented out temporarily because it shows
+            //instead of the Widget below which shows the charging percent etc
             /*if (model.chargingState == 1)
               Container(
                 // Charging Started
