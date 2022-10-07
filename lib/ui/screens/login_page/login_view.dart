@@ -4,6 +4,7 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
+import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 import '../home_page/home_view.dart';
 import '../recover_password_page/recover_password_view.dart';
@@ -106,10 +107,7 @@ class _LoginViewState extends State<LoginView> {
                       Column(
                         children: [
                           SizedBox(height: 90),
-                          Text(
-                            errorMsg,
-                            style: TextStyle(color: Colors.red),
-                          ),
+                          ErrorText(errorMessage: errorMsg),
                           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                           WideButton(
                             text: 'Log in',
