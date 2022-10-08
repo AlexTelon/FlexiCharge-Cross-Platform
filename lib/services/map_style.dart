@@ -1,5 +1,5 @@
 class MapStyle {
-  String SilverMode = ''' 
+  static const String SilverMode = ''' 
 [
   {
     "elementType": "geometry",

@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
               model.getUserLocation();
               model.controller.complete(_controller);
               model.userLocateController = _controller;
-              _controller.setMapStyle(MapStyle().SilverMode);
+              _controller.setMapStyle(MapStyle.SilverMode);
               _controller.animateCamera(
                 CameraUpdate.newCameraPosition(model.cameraPosition),
               );
