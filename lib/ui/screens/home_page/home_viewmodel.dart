@@ -1,12 +1,10 @@
 import 'dart:async';
-import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/bottom_sheet_type.dart';
-import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -15,7 +13,6 @@ import 'package:stacked_services/stacked_services.dart';
 import '../../../models/user_secure_storage.dart';
 
 class HomeViewModel extends BaseViewModel {
-  final _chagerAPI = locator<ChargerApiService>();
   final _transactionAPI = locator<TransactionApiService>();
   final localData = locator<LocalData>();
   final _bottomSheetService = locator<BottomSheetService>();
