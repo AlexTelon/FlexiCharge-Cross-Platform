@@ -1,10 +1,7 @@
 import 'dart:convert';
-
-import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flexicharge/services/local_data.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
@@ -12,7 +9,6 @@ class ChargerApiService {
   static const endPoint = "http://18.202.253.30:8080";
   http.Client client = new http.Client();
   var chargerPoint = new ChargerPoint();
-  LocalData _localData = locator<LocalData>();
 
   Future<List<Charger>> getChargers() async {
     var chargers = <Charger>[];
@@ -173,7 +169,7 @@ class ChargerApiService {
       },
       body: jsonEncode(<String, dynamic>{
         "chargerId": chargerId,
-        "userId": 1, //TODO replace with actual userId
+        "userId": 1,
         "start": 200,
         "end": 300,
       }),
