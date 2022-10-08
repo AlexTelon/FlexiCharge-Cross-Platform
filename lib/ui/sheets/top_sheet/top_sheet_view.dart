@@ -1,5 +1,4 @@
 import 'package:flexicharge/ui/sheets/top_sheet/top_sheet_view_model.dart';
-import 'package:flexicharge/ui/widgets/chargin_started.dart';
 import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
 import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
@@ -7,11 +6,11 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class TopSheetView extends StatelessWidget {
-  TopSheetView({
+  const TopSheetView({
     required this.complete,
     Key? key,
   }) : super(key: key);
-  Function() complete;
+  final Function() complete;
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<TopSheetViewModel>.reactive(
