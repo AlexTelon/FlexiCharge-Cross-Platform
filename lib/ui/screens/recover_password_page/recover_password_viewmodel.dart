@@ -1,13 +1,9 @@
-import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_view.dart';
-import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import '../../../services/user_api_service.dart';
-
 import '../../../services/user_api_service.dart';
 
 class RecoverPasswordViewModel extends BaseViewModel {
   bool _checked = false;
-  String _email = "test";
+  String _email = "";
 
   set checked(newState) {
     _checked = newState;
@@ -15,7 +11,6 @@ class RecoverPasswordViewModel extends BaseViewModel {
   }
 
   Future<void> sendResetPassword(String email) async {
-
     _email = email;
 
     try {

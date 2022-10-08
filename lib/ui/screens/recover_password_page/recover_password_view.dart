@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_view.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';

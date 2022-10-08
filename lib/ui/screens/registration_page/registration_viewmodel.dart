@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'package:flutter/animation.dart';
 import 'package:stacked/stacked.dart';
 import '../../../services/user_api_service.dart';
 import '../../../models/user_input_validator.dart';
@@ -70,5 +71,40 @@ class RegistrationViewmodel extends BaseViewModel {
     }
     var registerData = {_registrationIsValid, errorMessage};
     return registerData;
+  }
+
+  Color showButtonColor(email, password, repeatedPassword) {
+    if (_checked) {
+      return Color(0xff78bd76);
+    } else {
+      return Color.fromARGB(255, 157, 160, 159);
+    }
+  }
+
+  bool checkEmail(email) {
+    if (email != null &&
+        email.isNotEmpty &&
+        _userInputValidator.emailIsValid(email)) {
+      return true;
+    }
+    return false;
+  }
+
+  bool checkPassword(password) {
+    if (password != null &&
+        password.isNotEmpty &&
+        _userInputValidator.passwordIsValid(password)) {
+      return true;
+    }
+    return false;
+  }
+
+  bool checkRepeatPassword(repeatedPassword) {
+    if (repeatedPassword != null &&
+        repeatedPassword.isNotEmpty &&
+        _userInputValidator.passwordsAreEqual(_password, repeatedPassword)) {
+      return true;
+    }
+    return false;
   }
 }

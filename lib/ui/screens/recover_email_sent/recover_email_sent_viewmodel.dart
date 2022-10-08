@@ -1,4 +1,5 @@
 import 'package:flexicharge/models/user_input_validator.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../services/user_api_service.dart';
 
@@ -9,6 +10,9 @@ class RecoverEmailSentViewModel extends BaseViewModel {
   String _password = "";
   final _userInputValidator = UserInputValidator();
 
+  TextEditingController textController = TextEditingController();
+  TextEditingController textControllerPassword = TextEditingController();
+  TextEditingController textControllerRepeatPassword = TextEditingController();
   set checked(newState) {
     _checked = newState;
     notifyListeners();
