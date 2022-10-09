@@ -48,11 +48,10 @@ dependencies:
 dev_dependencies:
   stacked_generator: ^0.5.1
   build_runner: ^2.1.2
-
+  flutter_launcher_icons: "^0.10.0"
 
   flutter_test:
     sdk: flutter
-
 
   flutter_native_splash: ^1.2.3
 
@@ -63,6 +62,13 @@ flutter_native_splash:
   ios: true
   android_gravity: center
   ios_content_mode: center
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/images/icon_foreground.png"
+  adaptive_icon_background: "#333333"
+  adaptive_icon_foreground: "assets/images/icon_foreground.png"
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
