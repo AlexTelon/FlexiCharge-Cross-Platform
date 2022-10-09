@@ -4,6 +4,10 @@ import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:stacked/stacked.dart';
 
+/// This class is a StatefulWidget that uses a ViewModelBuilder to create a
+/// ViewModel and then uses that ViewModel to create a Scaffold with an AppBar
+/// and a body. The body is a MobileScanner widget that uses the
+/// cameraController from the ViewModel to create a QR scanner
 class QrScannerView extends StatefulWidget {
   State<StatefulWidget> createState() => _QRViewState();
 }

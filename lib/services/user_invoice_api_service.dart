@@ -3,9 +3,21 @@ import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/api.dart';
 import 'package:http/http.dart' as http;
 
+/// It takes 4 strings as parameters, and returns a boolean
 class UserInvoiceSetupApiService {
   http.Client client = new http.Client();
 
+  /// It takes 4 strings as parameters, and returns a boolean
+  /// Returns true if the invoice setup is successful
+  ///
+  /// Args:
+  ///   name (String): String
+  ///   address (String): "string"
+  ///   postcode (String): "12345"
+  ///   town (String): "London"
+  ///
+  /// Returns:
+  ///   The response from the server.
   Future<bool> verifyInvoiceSetup(
     String name,
     String address,

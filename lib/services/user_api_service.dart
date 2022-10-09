@@ -26,11 +26,14 @@ class UserApiService {
 
   /*
   Most class functions below consist of:
-    -A variabel "responseMsg" is the error message that is seen in UI.
-    -A null check for response message. Response body is wrapped in null check before decoding the message of the body, otherwise an error will accur.
-    -Map data is written according to FlexiCharge API.
+    - A variabel "responseMsg" is the error message that is seen in UI.
+    - A null check for response message. Response body is wrapped in null check 
+     before decoding the message of the body, otherwise an error will accur.
+    - Map data is written according to FlexiCharge API.
 
-  BEWARE: The status code that are handled blow are implemented according to backend. Some responses are not correct and will be changed in the backend, then the frontend must change accordingly.
+  BEWARE: The status code that are handled blow are implemented according 
+          to backend. Some responses are not correct and will be changed in 
+          the backend, then the frontend must change accordingly.
   */
   Future<bool> verifyLogin(
     String email,
@@ -67,6 +70,13 @@ class UserApiService {
     }
   }
 
+  /// It sends a POST request to the server with the user's email address,
+  /// and the server sends an email to the user with a link to reset their
+  /// password
+  ///
+  /// Args:
+  ///   email (String): The email address of the user who wants to reset their
+  ///   password.
   Future<void> verifyMailNewPassword(
     String email,
   ) async {
@@ -96,6 +106,14 @@ class UserApiService {
     }
   }
 
+  /// It takes in an email, password, and code, and then sends a POST request
+  /// to the API with the email,
+  /// password, and code as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   password (String): The new password for the user.
+  ///   code (String): The code sent to the user's email address.
   Future<void> verifyPasswordReset(
     String email,
     String password,
@@ -132,6 +150,15 @@ class UserApiService {
     }
   }
 
+  /// It takes an email and password, and sends a POST request to the backend
+  /// with the email and password as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   password (String): The password of the user.
+  ///
+  /// Returns:
+  ///   A Future<bool>
   Future<bool> verifyRegister(
     String email,
     String password,
@@ -164,6 +191,14 @@ class UserApiService {
     }
   }
 
+  /// It takes an email and a verification code, and sends a POST request to the
+  /// server with the email and
+  /// verification code as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   verificationCode (String): The code that was sent to the user's
+  ///   email address.
   Future<void> verifyAccount(
     String email,
     String verificationCode,
