@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/qr_scanner/qr_scanner_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
@@ -14,7 +15,7 @@ class _QRViewState extends State<QrScannerView> {
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF78BD76),
+          backgroundColor: FlexiChargeTheme.green,
           title: const Text('Scan Charger QR'),
           actions: [
             IconButton(

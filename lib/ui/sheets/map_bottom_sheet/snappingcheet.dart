@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/sheets/map_bottom_sheet/nearest_chargers.dart';
 import 'package:flexicharge/ui/sheets/map_bottom_sheet/select_charger.dart';
 import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
@@ -27,8 +28,7 @@ class CustomSnappingSheet extends StatelessWidget {
         ),
         height: model.onlyPin ? 250 : 1500,
         decoration: BoxDecoration(
-          //color: Color(0xff333333),
-          color: Colors.grey.shade900,
+          color: FlexiChargeTheme.darkGrey,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(5),
             topRight: Radius.circular(5),
@@ -56,7 +56,7 @@ class CustomSnappingSheet extends StatelessWidget {
                           'Chargers Near Me',
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xffffffff),
+                            color: FlexiChargeTheme.white,
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,

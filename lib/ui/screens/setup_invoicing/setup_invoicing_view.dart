@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
@@ -62,7 +63,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                           ],
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xff212121),
+                            color: FlexiChargeTheme.darkGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -87,7 +88,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                           ],
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xff212121),
+                            color: FlexiChargeTheme.darkGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -132,7 +133,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                   WideButton(
                     text: 'Continue',
-                    color: Color(0xff78bd76),
+                    color: FlexiChargeTheme.green,
                     onTap: () async {
                       var invoiceData = await model.validateSetupInvoice(
                           nameController.text,
@@ -165,7 +166,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                     },
                     child: Text("No Thanks",
                         style: const TextStyle(
-                            color: const Color(0xff78bd76),
+                            color: FlexiChargeTheme.green,
                             fontWeight: FontWeight.w700,
                             fontFamily: "Lato",
                             fontStyle: FontStyle.normal,
@@ -188,7 +189,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                             ],
                             style: TextStyle(
                               fontFamily: 'Lato',
-                              color: Color(0xff212121),
+                              color: FlexiChargeTheme.black,
                               fontSize: 13,
                               fontWeight: FontWeight.w400,
                               fontStyle: FontStyle.normal,

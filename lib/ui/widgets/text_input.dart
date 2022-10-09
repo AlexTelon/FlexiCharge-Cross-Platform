@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 class TextInputWidget extends StatelessWidget {
@@ -34,11 +35,11 @@ class TextInputWidget extends StatelessWidget {
           hintText: hint,
           border: UnderlineInputBorder(),
           enabledBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xff292b2b)),
+            borderSide: BorderSide(color: FlexiChargeTheme.darkGrey),
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide: BorderSide(color: Color(0xff292b2b)),
+            borderSide: BorderSide(color: FlexiChargeTheme.darkGrey),
             borderRadius: BorderRadius.all(Radius.circular(10)),
           ),
         ),

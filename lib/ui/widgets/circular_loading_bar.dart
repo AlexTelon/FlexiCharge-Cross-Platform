@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 class CircularLoadingBar extends StatelessWidget {
@@ -18,7 +19,7 @@ class CircularLoadingBar extends StatelessWidget {
           child: CircularProgressIndicator(
             strokeWidth: 10,
             value: loadingPercentage,
-            color: Color(0xff333333),
+            color: FlexiChargeTheme.midGrey,
             valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
           ),
         ),

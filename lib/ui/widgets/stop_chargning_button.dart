@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 class StopChargingButton extends StatelessWidget {
@@ -18,7 +19,7 @@ class StopChargingButton extends StatelessWidget {
           decoration: BoxDecoration(
               border: Border.all(color: Colors.white),
               borderRadius: BorderRadius.all(Radius.circular(30)),
-              color: const Color(0xff333333)),
+              color: FlexiChargeTheme.midGrey),
           child: TextButton(
             onPressed: onPressed,
             child: Text(

@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 class NearestStation extends StatelessWidget {
@@ -29,7 +30,7 @@ class NearestStation extends StatelessWidget {
                 location,
                 style: TextStyle(
                   fontFamily: 'Lato-Regular',
-                  color: Color(0xffffffff),
+                  color: FlexiChargeTheme.white,
                   fontSize: 17,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
@@ -69,7 +70,7 @@ class NearestStation extends StatelessWidget {
                 distance,
                 style: TextStyle(
                   fontFamily: 'Lato',
-                  color: Color(0xffffffff),
+                  color: FlexiChargeTheme.white,
                   fontSize: 18,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,

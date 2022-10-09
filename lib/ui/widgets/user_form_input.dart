@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 /// A class that is used to create a text field for user input.
@@ -34,19 +35,19 @@ class UserFormInput extends StatelessWidget {
             hintText: hint,
             suffixIcon: suffixIcon,
             border: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff292b2b)),
+              borderSide: BorderSide(color: FlexiChargeTheme.midGrey),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             enabledBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff292b2b)),
+              borderSide: BorderSide(color: FlexiChargeTheme.midGrey),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff292b2b)),
+              borderSide: BorderSide(color: FlexiChargeTheme.midGrey),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             ),
             errorBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Color(0xff292b2b)),
+              borderSide: BorderSide(color: FlexiChargeTheme.midGrey),
               borderRadius: BorderRadius.all(Radius.circular(10)),
             )),
       ),
