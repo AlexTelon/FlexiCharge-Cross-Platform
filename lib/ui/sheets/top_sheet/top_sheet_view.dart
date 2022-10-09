@@ -6,6 +6,8 @@ import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+/// It's a StatelessWidget that shows a TopSheet with different content
+/// depending on the chargingState
 class TopSheetView extends StatelessWidget {
   const TopSheetView({
     required this.complete,

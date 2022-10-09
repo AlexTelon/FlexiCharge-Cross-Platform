@@ -1,6 +1,7 @@
 import 'package:flexicharge/ui/widgets/circular_loading_bar.dart';
 import 'package:flutter/material.dart';
 
+/// This class is a widget that displays a circular progress bar, and some text
 class ChargingInProgress extends StatelessWidget {
   const ChargingInProgress(
       {Key? key,

@@ -8,6 +8,8 @@ import 'package:stacked_services/stacked_services.dart';
 
 import 'app/app.router.dart';
 
+/// `main()` is the entry point of the app. It is the first function that
+/// is called when the app is launched
 main() {
   WidgetsFlutterBinding.ensureInitialized();
   SystemChrome.setPreferredOrientations(

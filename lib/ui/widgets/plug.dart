@@ -3,6 +3,11 @@ import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+/// The class is a stateless widget that takes in a charger object, a boolean
+/// value and a function. The function is called when the widget is tapped.
+/// The widget is a container with a border and a row with two columns.
+/// The first column has an svg image and a text widget. The second column has
+/// four text widgets
 class Plug extends StatelessWidget {
   const Plug(
       {required this.onTap,

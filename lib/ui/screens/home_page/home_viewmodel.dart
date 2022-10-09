@@ -18,6 +18,8 @@ class HomeViewModel extends BaseViewModel {
   final _bottomSheetService = locator<BottomSheetService>();
   final _navigationService = locator<NavigationService>();
 
+  /// It gets the user's location, finds the nearest charging point,
+  /// and adds markers to the map
   init() async {
     try {
       getUserLocation();
@@ -56,6 +58,7 @@ class HomeViewModel extends BaseViewModel {
     target: LatLng(0, 0),
   );
 
+  /// It takes the user's location and sets the camera position to that location
   void getUserLocation() {
     cameraPosition = CameraPosition(
       target: LatLng(
@@ -65,6 +68,7 @@ class HomeViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  //Shows the bottom sheet, with an optional preselected charger point
   Future<void> openFindCharger({ChargerPoint? chargerPointId}) async {
     _bottomSheetService
         .showCustomSheet(
@@ -110,6 +114,11 @@ class HomeViewModel extends BaseViewModel {
     });
   }*/
 
+  /// It fetches the current charging percentage of the car from the API and
+  /// returns it
+  ///
+  /// Returns:
+  ///   The current charging percentage of the car.
   Future<int> fetchChargingPercentage() async {
     try {
       Transaction currentTransaction = await _transactionAPI
@@ -125,6 +134,8 @@ class HomeViewModel extends BaseViewModel {
     return 0;
   }
 
+  /// It gets the current location of the user and then moves the camera to
+  /// that location
   Future<void> findUser() async {
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.best)
         .then((value) async {
@@ -138,6 +149,8 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  /// Open the QR scanner, wait for the user to scan a QR code, then pass the
+  /// QR code to the charger code input field.
   Future<void> doQrScan() async {
     // Open qr scan and wait for data
     await _navigationService.navigateTo(Routes.qrScannerView);
@@ -145,6 +158,11 @@ class HomeViewModel extends BaseViewModel {
     if (localData.qrCode.isNotEmpty) openChargerCodeInput(localData.qrCode);
   }
 
+  /// It opens a bottom sheet, and when the bottom sheet is opened,
+  /// it displays the top sheet
+  ///
+  /// Args:
+  ///   data (String): data is the data that is passed to the bottom sheet.
   Future<void> openChargerCodeInput(String? data) async {
     _bottomSheetService
         .showCustomSheet(variant: SheetType.mapBottomSheet, data: data)
@@ -154,6 +172,8 @@ class HomeViewModel extends BaseViewModel {
     });
   }
 
+  /// If the user is logged in, then set the charging percentage to 0
+  /// and notify listeners.
   Future<bool> isUserloggedIn() async =>
       await UserSecureStorage.getIsUserLoggedIn();
 

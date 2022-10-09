@@ -1,6 +1,7 @@
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A button that has a text and an optional undertext
 class InvoiceButton extends StatelessWidget {
   const InvoiceButton(
       {Key? key, required this.onTap, this.underText, this.isSelected = false})

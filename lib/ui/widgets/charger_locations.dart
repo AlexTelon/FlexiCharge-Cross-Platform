@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 import 'package:flexicharge/ui/widgets/nearest_station.dart';
 
+/// It takes a list of maps, each map containing a ChargerPoint and a Location,
+/// and displays a list of NearestStation widgets, each of which displays the
+/// distance to the location and the number of available chargers at
+/// the ChargerPoint
 class ChargerLocations extends StatelessWidget {
   const ChargerLocations({
     required this.chargerPoints,
@@ -30,22 +34,3 @@ class ChargerLocations extends StatelessWidget {
     );
   }
 }
-
-
-/*
-class Charger {
-  String id = '';
-  ChargerStatus status = ChargerStatus.available;
-  LatLng location = LatLng(0, 0);
-
-  Charger(this.id, this.status, this.location);
-}
-
- List<Charger> chargers = [
-      Charger('5412345', ChargerStatus.booked, LatLng(0023, 1230)),
-      Charger('1234543', ChargerStatus.occupied, LatLng(123, 1230)),
-      Charger('1225453', ChargerStatus.available, LatLng(5463, 1230)),
-      Charger('1234543', ChargerStatus.available, LatLng(2433, 1230)),
-      Charger('1654654', ChargerStatus.available, LatLng(2343, 1230)),
-    ];
-    */

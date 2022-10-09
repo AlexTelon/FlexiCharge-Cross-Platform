@@ -1,6 +1,12 @@
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays a text input field with a label and a hint
+/// This class is a stateless widget that takes in a text editing controller,
+/// a label text, a hint, a boolean for whether or not the text is a password,
+/// a boolean for whether or not the text is a
+/// number, a default input, and a function that
+/// takes in a string and returns nothing
 class TextInputWidget extends StatelessWidget {
   const TextInputWidget({
     Key? key,
