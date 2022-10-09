@@ -14,7 +14,7 @@
 
     <application
         android:icon="@mipmap/ic_launcher"
-        android:label="Flexicharge">
+        android:label="FlexiCharge">
 
 
         <activity
