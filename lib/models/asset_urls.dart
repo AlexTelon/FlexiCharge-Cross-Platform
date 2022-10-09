@@ -1,3 +1,5 @@
+/// The above class is a Dart class that is used to parse the JSON data
+/// from the API
 class AssetsUrls {
   String descriptive = "";
   String standard = "";

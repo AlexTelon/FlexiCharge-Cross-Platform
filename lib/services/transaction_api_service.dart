@@ -4,6 +4,7 @@ import 'package:flexicharge/models/api.dart';
 import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
+/// It's a class that makes requests to the server and returns a Transaction object
 class TransactionApiService {
   var client = new http.Client();
 

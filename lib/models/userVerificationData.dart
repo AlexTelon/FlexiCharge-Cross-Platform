@@ -1,3 +1,5 @@
+/// This class is used to store the data that is sent to the server when a
+/// user is verified
 class UserVerificationData {
   String email = '';
   String verificationCode = '';

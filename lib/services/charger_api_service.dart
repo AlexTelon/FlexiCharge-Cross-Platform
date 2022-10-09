@@ -6,6 +6,7 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
+/// It makes requests to the API and returns the response
 class ChargerApiService {
   http.Client client = new http.Client();
   var chargerPoint = new ChargerPoint();
