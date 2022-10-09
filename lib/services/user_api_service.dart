@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:flexicharge/models/api.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
@@ -12,20 +13,13 @@ import 'package:flexicharge/models/user_secure_storage.dart';
 class UserApiService {
   http.Client client = new http.Client();
 
-  ///Live FlexiCharge API from Swagger.
-  static const String _baseURL = "http://18.202.253.30:8080";
-  static const _headers = <String, String>{
-    'Content-Type': 'application/json',
-    'accept': 'application/json',
-  };
-
-  static final Uri _register = Uri.parse('$_baseURL/auth/sign-up');
-  static final Uri _login = Uri.parse('$_baseURL/auth/sign-in');
-  static final Uri _accountVerification = Uri.parse('$_baseURL/auth/verify');
+  static final Uri _register = Uri.parse('${API.url}/auth/sign-up');
+  static final Uri _login = Uri.parse('${API.url}/auth/sign-in');
+  static final Uri _accountVerification = Uri.parse('${API.url}/auth/verify');
   static final Uri _forgotPassword =
-      Uri.parse('$_baseURL/auth/forgot-password/');
+      Uri.parse('${API.url}/auth/forgot-password/');
   static final Uri _passwordReset =
-      Uri.parse('$_baseURL/auth/confirm-forgot-password');
+      Uri.parse('${API.url}/auth/confirm-forgot-password');
 
   static final Exception exeptionMsg =
       Exception("default: " + ErrorCodes.internalError.toString());
@@ -50,7 +44,7 @@ class UserApiService {
     bool _isValid = false;
     Response response = await client.post(
       _login,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: jsonEncode(loginData),
     );
     var jsonDecoded = json.decode(response.body);
@@ -81,7 +75,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       mailNewPassword,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
     );
 
     if (response.body.isNotEmpty) {
@@ -116,7 +110,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       _passwordReset,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(passwordResetData),
     );
 
@@ -150,7 +144,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await post(
       _register,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(registerData),
     );
 
@@ -182,7 +176,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       _accountVerification,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(accountVerificationData),
     );
 

@@ -1,18 +1,18 @@
 import 'dart:convert';
 import 'package:flexicharge/enums/error_codes.dart';
+import 'package:flexicharge/models/api.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
 class ChargerApiService {
-  static const endPoint = "http://18.202.253.30:8080";
   http.Client client = new http.Client();
   var chargerPoint = new ChargerPoint();
 
   Future<List<Charger>> getChargers() async {
     var chargers = <Charger>[];
-    var response = await client.get(Uri.parse('$endPoint/chargers'));
+    var response = await client.get(Uri.parse('${API.url}/chargers'));
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
@@ -31,7 +31,7 @@ class ChargerApiService {
     List<ChargerPoint> chargerPoints = [];
 
     try {
-      var response = await client.get(Uri.parse('$endPoint/chargers'));
+      var response = await client.get(Uri.parse('${API.url}/chargers'));
       switch (response.statusCode) {
         case 200:
           List<dynamic> chargers = json.decode(response.body);
@@ -90,7 +90,7 @@ class ChargerApiService {
   Future<ChargerPoint> getChargerPoint(int id) async {
     ChargerPoint chargerPoint = ChargerPoint();
     try {
-      var response = await client.get(Uri.parse('$endPoint/chargePoints/$id'));
+      var response = await client.get(Uri.parse('${API.url}/chargePoints/$id'));
       if (response.statusCode == 200) {
         return ChargerPoint.fromJson(json.decode(response.body));
       }
@@ -104,7 +104,7 @@ class ChargerApiService {
   /// Remove .first from the return when you use the flexi charger Api
   Future<Charger> getChargerById(int id) async {
     // print(id);
-    var response = await client.get(Uri.parse('$endPoint/chargers/$id'));
+    var response = await client.get(Uri.parse('${API.url}/chargers/$id'));
     // print(response.body);
     switch (response.statusCode) {
       case 200:
@@ -120,7 +120,7 @@ class ChargerApiService {
 
   Future<List<Charger>> getAllAvailableChargers() async {
     var chargers = <Charger>[];
-    var response = await client.get(Uri.parse('$endPoint/chargers/available'));
+    var response = await client.get(Uri.parse('${API.url}/chargers/available'));
     switch (response.statusCode) {
       case 200:
         var parsed = json.decode(response.body) as List<dynamic>;
@@ -137,7 +137,7 @@ class ChargerApiService {
 
   // The function don't work yet...
   Future<Charger> getChargersByChargerPointId(chargerPointId) async {
-    var response = await client.get(Uri.parse('$endPoint/chargers'));
+    var response = await client.get(Uri.parse('${API.url}/chargers'));
     return Charger.fromJson(jsonDecode(response.body));
   }
 
@@ -147,10 +147,8 @@ class ChargerApiService {
     print("Id: " + id.toString());
     await client
         .put(
-          Uri.parse('$endPoint/chargers/$id'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
+          Uri.parse('${API.url}/chargers/$id'),
+          headers: API.defaultRequestHeaders,
           body: jsonEncode(<String, String>{
             'status': status,
           }),
@@ -163,10 +161,8 @@ class ChargerApiService {
 
   Future<void> reserveCharger(int chargerId) async {
     var response = await client.put(
-      Uri.parse('$endPoint/reservations'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
+      Uri.parse('${API.url}/reservations'),
+      headers: API.defaultRequestHeaders,
       body: jsonEncode(<String, dynamic>{
         "chargerId": chargerId,
         "userId": 1,
