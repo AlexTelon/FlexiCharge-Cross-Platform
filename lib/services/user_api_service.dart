@@ -3,13 +3,11 @@ import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/user_secure_storage.dart';
-import 'package:flexicharge/models/userVerificationData.dart';
 
-/* This class is used for:
-    1. Storing User API endpoints .
-    2. Sending requests.
-    3. Verifying and handeling responses.
-*/
+//This class is used for:
+//    1. Storing User API endpoints.
+//    2. Sending requests.
+//    3. Verifying and handling responses.
 
 class UserApiService {
   http.Client client = new http.Client();

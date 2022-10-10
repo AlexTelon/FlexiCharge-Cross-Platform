@@ -5,7 +5,6 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
-import 'package:flexicharge/ui/widgets/ios_composition_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -58,7 +57,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   LatLng get userLocation => localData.userLocation;
 
-  String _chargerCode = '';
+  String chargerCode = '';
   List<Charger> chargers = [];
   List<LatLng> chargerLocations = [];
 
@@ -67,7 +66,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   bool get showWideButton => _showWideButton;
   bool get isFirstView => _isFirstView;
   bool get onlyPin => _onlyPin;
-  String get chargerCode => _chargerCode;
 
   set showWideButton(bool newState) {
     _showWideButton = newState;
@@ -172,8 +170,6 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     return result;
   }
 
-  set chargerCode(String value) => _chargerCode = value;
-
   Future<List<Charger>> getChargers() => _chargerAPI.getChargers();
 
   Future<void> getChargerById(int id) async {
@@ -203,7 +199,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       try {
         // Reserve charger during payment
         print("Trying to connect to a charger with id: $id...");
-        //await _chargerAPI.reserveCharger(id); TODO this API endpoint is not working
+        //await _chargerAPI.reserveCharger(id); This API endpoint is not working
         print("charger is reserved");
         print("starting the session..");
         // Create a transaction session

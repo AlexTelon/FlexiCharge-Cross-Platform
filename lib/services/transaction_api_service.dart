@@ -121,8 +121,10 @@ class TransactionApiService {
               'Content-Type': 'application/json; charset=UTF-8',
             },
             encoding: Encoding.getByName('utf-8'),
+            //These parameters do not appear to make a difference
+            //since the functionality on the backend is not implemented.
             body: json.encode(<String, int>{
-              'userID': 1, //TODO This needs to be replaced with actual value
+              'userID': 1,
               'chargerID': chargerId,
             }));
     switch (response.statusCode) {

@@ -1,5 +1,5 @@
 import 'package:flexicharge/models/widget_keys.dart';
-import 'package:flexicharge/services/map_style.dart';
+import 'package:flexicharge/models/map_style.dart';
 import 'package:flexicharge/ui/sheets/top_sheet/top_sheet_view.dart';
 import 'package:flexicharge/ui/screens/home_page/home_viewmodel.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
@@ -27,7 +27,7 @@ class HomeView extends StatelessWidget {
               model.getUserLocation();
               model.controller.complete(_controller);
               model.userLocateController = _controller;
-              _controller.setMapStyle(MapStyle().SilverMode);
+              _controller.setMapStyle(MapStyle.SilverMode);
               _controller.animateCamera(
                 CameraUpdate.newCameraPosition(model.cameraPosition),
               );
