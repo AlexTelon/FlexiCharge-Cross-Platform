@@ -9,6 +9,7 @@ import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flexicharge/ui/widgets/user_form_input.dart';
 
+import '../../../theme.dart';
 import '../../widgets/error_text.dart';
 
 class RegistrationView extends StatefulWidget {
@@ -98,7 +99,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                               !_passwordVisible
                                   ? Icons.visibility
                                   : Icons.visibility_off,
-                              color: Color(0xff868686),
+                              color: FlexiChargeTheme.lightMidGrey,
                             ),
                             onPressed: () {
                               setState(() {

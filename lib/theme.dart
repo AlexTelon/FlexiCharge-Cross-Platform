@@ -5,6 +5,7 @@ class FlexiChargeTheme {
   static const black = Color(0xff0000000);
   static const darkGrey = Color(0xff212121);
   static const midGrey = Color(0xff333333);
+  static const lightMidGrey = Color(0xff868686);
   static const lightGrey = Color(0xffe5e5e5);
   static const white = Color(0xffffffff);
   static const green = Color(0xff78bd76);

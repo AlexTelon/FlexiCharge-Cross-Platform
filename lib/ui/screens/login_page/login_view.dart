@@ -84,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                                   !_passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: FlexiChargeTheme.lightGrey,
+                                  color: FlexiChargeTheme.lightMidGrey,
                                 ),
                                 onPressed: () {
                                   setState(() {
