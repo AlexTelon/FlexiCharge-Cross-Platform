@@ -5,7 +5,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
-import 'package:flexicharge/ui/widgets/ios_composition_widget.dart';
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -21,6 +21,12 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   static const platform =
       const MethodChannel('com.startActivity/klarnaChannel');
 
+  /// If the data is a ChargerPoint, then set the selectedChargerPoint to the data.
+  /// If the data is a String, then get the charger by the id and
+  /// set the selectedChargerPoint to the chargerPointId of the selectedCharger
+  ///
+  /// Args:
+  ///   request (SheetRequest): The request object that is passed to the view model.
   init(SheetRequest request) async {
     if (request.data != null && request.data is ChargerPoint) {
       _selectedChargerPoint = request.data;
@@ -48,7 +54,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
-  bool _isSwishActive = false;
+  bool _isKlarnaActive = false;
   bool _showWideButton = false;
   bool _isFirstView = true;
   bool _onlyPin = true;
@@ -58,16 +64,15 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
 
   LatLng get userLocation => localData.userLocation;
 
-  String _chargerCode = '';
+  String chargerCode = '';
   List<Charger> chargers = [];
   List<LatLng> chargerLocations = [];
 
   List<ChargerPoint> get nearestLocation => localData.chargerPoints;
-  bool get isSwishActive => _isSwishActive;
+  bool get isSwishActive => _isKlarnaActive;
   bool get showWideButton => _showWideButton;
   bool get isFirstView => _isFirstView;
   bool get onlyPin => _onlyPin;
-  String get chargerCode => _chargerCode;
 
   set showWideButton(bool newState) {
     _showWideButton = newState;
@@ -75,7 +80,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   }
 
   set isSwishActive(bool newState) {
-    _isSwishActive = newState;
+    _isKlarnaActive = newState;
     notifyListeners();
   }
 
@@ -92,15 +97,17 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   Charger get selectedCharger => _selectedCharger;
   ChargerPoint get selectedChargerPoint => _selectedChargerPoint;
 
+  /// A getter function that returns a color based on the status of the charger.
   Color get wideButtonColor {
     if (selectedCharger.status == "Available")
-      return Color.fromRGBO(120, 189, 118, 1);
+      return FlexiChargeTheme.green;
     else if (selectedCharger.status == "Unavailable")
-      return Color.fromRGBO(239, 96, 72, 1);
+      return FlexiChargeTheme.red;
     else
-      return Color.fromRGBO(229, 229, 229, 1);
+      return FlexiChargeTheme.lightGrey;
   }
 
+  /// A getter function that returns a string based on the status of the charger.
   String get wideButtonText {
     switch (selectedCharger.status) {
       case "Available":
@@ -120,6 +127,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
+  /// Setting the selected charger to the new charger and then it is setting
+  /// the charger code to the id of the charger. Then it is calling the
+  /// getChargerById function with the id of the charger.
   set selectedCharger(Charger newCharger) {
     _selectedCharger = newCharger;
     chargerCode = _selectedCharger.id.toString();
@@ -139,7 +149,9 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     return distanceInMeters / 1000;
   }
 
-  ///getSortedChargerPoints function returns sorted nearest locations  type of [Map] and it containes {
+  /// getSortedChargerPoints function returns sorted nearest locations type
+  /// of [Map] and it containes
+  /// {
   ///       'chargerPoint': [String],
   ///       'distance': [String],
   ///       'location': [String]
@@ -172,10 +184,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     return result;
   }
 
-  set chargerCode(String value) => _chargerCode = value;
-
   Future<List<Charger>> getChargers() => _chargerAPI.getChargers();
 
+  /// It gets a charger by its id, and if the charger is available, it sets the
+  /// isFirstView to false, showWideButton to true, and onlyPin to false
+  ///
+  /// Args:
+  ///   id (int): the id of the charger
   Future<void> getChargerById(int id) async {
     try {
       selectedCharger = await _chargerAPI.getChargerById(id);
@@ -203,7 +218,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
       try {
         // Reserve charger during payment
         print("Trying to connect to a charger with id: $id...");
-        //await _chargerAPI.reserveCharger(id); TODO this API endpoint is not working
+        //await _chargerAPI.reserveCharger(id); This API endpoint is not working
         print("charger is reserved");
         print("starting the session..");
         // Create a transaction session
@@ -261,6 +276,14 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// It calls the native code and passes the client token as a parameter
+  ///
+  /// Args:
+  ///   clientToken (String): The client token you get from the server.
+  ///
+  /// Returns:
+  ///   The result is a JSON string that contains the payment method and the
+  ///   payment method details.
   Future<String> _startKlarnaActivity(String clientToken) async {
     try {
       final String result = await platform

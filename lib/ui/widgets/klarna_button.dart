@@ -1,6 +1,10 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// KlarnaButton is a stateless widget that takes a
+/// function and a boolean as parameters and returns a
+/// container with a svg image inside.
 class KlarnaButton extends StatelessWidget {
   const KlarnaButton({Key? key, required this.onTap, this.isSelected = false})
       : super(key: key);
@@ -17,9 +21,9 @@ class KlarnaButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: isSelected == true
-              ? Border.all(color: const Color(0xff78bd76), width: 3)
+              ? Border.all(color: FlexiChargeTheme.green, width: 3)
               : null,
-          color: const Color(0xffffffff),
+          color: FlexiChargeTheme.white,
         ),
         // child: image,
         child: Padding(

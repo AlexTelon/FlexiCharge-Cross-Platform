@@ -1,5 +1,7 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+/// The class has a constructor that takes a map of strings to dynamic objects.
+/// The constructor then assigns the values of the map to the class properties
 class Charger {
   int id = -1;
   int chargerPointId = 0;
@@ -26,11 +28,3 @@ class Charger {
     status = json['status'] ?? '';
   }
 }
-
-/*
-  "chargerID": 1,
-  "location": "string",
-  "cooidinates": "57.999, 50.67",
-  "chargePointID": 3,
-  "status": 1  
- */

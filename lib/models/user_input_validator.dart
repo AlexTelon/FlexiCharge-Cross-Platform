@@ -1,7 +1,8 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flutter/cupertino.dart';
 
-//Call this class for validating the user input in register, login and verify registration.
+//Call this class for validating the user input in register, login and
+//verify registration.
 class UserInputValidator extends ChangeNotifier {
   //Password requirments are provided from the database squad.
   var _passwordMinLength = 8;
@@ -38,7 +39,8 @@ class UserInputValidator extends ChangeNotifier {
       notifyListeners();
     }
 
-    //Checking if password requirments are met by comparing code units (ASCII) of each character in password.
+    /// Checking if password requirments are met by comparing code units (ASCII)
+    /// of each character in password.
     password.codeUnits.forEach((char) {
       if (char > 47 && char < 58) {
         numberOfInt++;

@@ -1,4 +1,5 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/theme.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
 import 'package:flexicharge/ui/widgets/klarna_button.dart';
@@ -6,6 +7,8 @@ import 'package:flexicharge/ui/widgets/plugs.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+/// This class is a stateless widget that is responsible for displaying the
+/// charging station, plugs, payment options and the charging button
 class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
   const BeginCharging({Key? key}) : super(key: key);
 
@@ -23,14 +26,13 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
           chargers: model.selectedChargerPoint.chargers,
           onTap: (charger) => model.getChargerById(charger.id),
           selectedChargerId: model.selectedCharger.id,
-          
         ),
         SizedBox(height: 20),
         Text(
           "Payment",
           style: TextStyle(
             fontFamily: 'Lato-Regular',
-            color: Color(0xffffffff),
+            color: FlexiChargeTheme.white,
             fontSize: 17,
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.normal,
@@ -46,14 +48,14 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
               KlarnaButton(
                 onTap: () {
                   model.isSwishActive = true;
-                  print("Swish Payment In Progress");
+                  print("Klarna Payment Selected");
                 },
                 isSelected: model.isSwishActive,
               ),
               InvoiceButton(
                 onTap: () {
                   model.isSwishActive = false;
-                  print("Swish Payment In Progress");
+                  print("Invoice Payment Selected");
                 },
                 isSelected: !model.isSwishActive,
               ),

@@ -8,6 +8,11 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../../../models/user_secure_storage.dart';
+
+/// The class is responsible for loading the user's location, loading the icons
+/// for the markers, loading the charger points and then navigating to the
+/// registration view
 class LaunchViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final _localData = locator<LocalData>();
@@ -20,6 +25,9 @@ class LaunchViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// It gets the user's location, then gets the charger points from the API,
+  /// then navigates to the
+  /// registration view
   init() async {
     try {
       await getUserLocation();
@@ -31,29 +39,43 @@ class LaunchViewModel extends BaseViewModel {
       indication = 0.7;
       _localData.chargerPoints = await _chagerAPI.getChargerPoints();
       indication = 0;
-      _navigationService.replaceWith(
-        Routes.registrationView,
-      );
+      if (await UserSecureStorage.getIsUserLoggedIn()) {
+        _navigationService.replaceWith(
+          Routes.homeView,
+        );
+      } else {
+        _navigationService.replaceWith(
+          Routes.registrationView,
+        );
+      }
     } catch (e) {
       print(e);
     }
   }
 
+  /// Loading the icons for the markers.
   get _greenMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
+        ImageConfiguration(
+          size: Size(25, 25),
+        ),
         'assets/images/green_marker.png',
       );
 
   get _redMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
+        ImageConfiguration(
+          size: Size(25, 25),
+        ),
         'assets/images/red_marker.png',
       );
 
   get _blackMarkerIcon => BitmapDescriptor.fromAssetImage(
-        ImageConfiguration(size: Size(25, 25)),
+        ImageConfiguration(
+          size: Size(25, 25),
+        ),
         'assets/images/black_marker.png',
       );
 
+  /// This function gets the user's current location and stores it in the _localData object
   Future<void> getUserLocation() async {
     var position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.reduced);

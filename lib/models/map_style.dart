@@ -1,5 +1,7 @@
+/// This class defines the map style which the Google Map with charger icons
+/// should have
 class MapStyle {
-  String SilverMode = ''' 
+  static const String SilverMode = ''' 
 [
   {
     "elementType": "geometry",

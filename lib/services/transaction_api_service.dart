@@ -1,14 +1,23 @@
 import 'dart:convert';
 import 'package:flexicharge/enums/error_codes.dart';
+import 'package:flexicharge/models/api.dart';
 import 'package:flexicharge/models/transaction.dart';
 import 'package:http/http.dart' as http;
 
+/// It's a class that makes requests to the server and returns a Transaction object
 class TransactionApiService {
-  static const endPoint = "http://18.202.253.30:8080";
   var client = new http.Client();
 
+  /// It takes an id, makes a get request to the server, and returns a
+  /// transaction object
+  ///
+  /// Args:
+  ///   id (int): The id of the transaction to be retrieved
+  ///
+  /// Returns:
+  ///   A Future<Transaction>
   Future<Transaction> getTransactionById(int id) async {
-    var response = await client.get(Uri.parse('$endPoint/transactions/$id'));
+    var response = await client.get(Uri.parse('${API.url}/transactions/$id'));
 
     switch (response.statusCode) {
       case 200:
@@ -24,10 +33,18 @@ class TransactionApiService {
     }
   }
 
+  /// It takes an id, makes a get request to the server, and returns a list
+  /// of transactions
+  ///
+  /// Args:
+  ///   id (int): the id of the user
+  ///
+  /// Returns:
+  ///   A list of transactions.
   Future<List<Transaction>> getTransactionsByUserId(int id) async {
     var transactions = <Transaction>[];
     var response = await client
-        .get(Uri.parse('$endPoint/transactions/userTransactions/$id'));
+        .get(Uri.parse('${API.url}/transactions/userTransactions/$id'));
 
     switch (response.statusCode) {
       case 200:
@@ -45,10 +62,18 @@ class TransactionApiService {
     }
   }
 
+  /// It takes an id, makes a get request to the server, and returns a list
+  /// of transactions
+  ///
+  /// Args:
+  ///   id (int): the id of the charger
+  ///
+  /// Returns:
+  ///   A list of transactions.
   Future<List<Transaction>> getTransactionsByChargerId(int id) async {
     var transactions = <Transaction>[];
     var response = await client
-        .get(Uri.parse('$endPoint/transactions/chargerTransactions/$id'));
+        .get(Uri.parse('${API.url}/transactions/chargerTransactions/$id'));
 
     switch (response.statusCode) {
       case 200:
@@ -66,14 +91,19 @@ class TransactionApiService {
     }
   }
 
+  /// It takes in 3 parameters, chargerId, userId, and meterStart. It then
+  /// sends a POST request to the server with the parameters as the body
+  ///
+  /// Args:
+  ///   chargerId (int): The id of the charger that the user is charging at
+  ///   userId (int): The user's ID
+  ///   meterStart (int): The meter reading when the user starts charging.
   Future<void> createTransaction(
       int chargerId, int userId, int meterStart) async {
     await client
         .post(
-          Uri.parse('$endPoint/transactions'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
+          Uri.parse('${API.url}/transactions'),
+          headers: API.defaultRequestHeaders,
           body: jsonEncode(<String, int>{
             'chargerID': chargerId,
             'userID': userId,
@@ -83,14 +113,18 @@ class TransactionApiService {
         .then((result) => print(result));
   }
 
+  /// It takes a transactionId and a meterStop, and updates the meterStop of
+  /// the transaction with the given transactionId
+  ///
+  /// Args:
+  ///   transactionId (int): The id of the transaction that you want to update.
+  ///   meterStop (int): The meter stop value to be updated
   Future<void> updateMeterStopForTransaction(
       int transactionId, int meterStop) async {
     await client
         .put(
-          Uri.parse('$endPoint/transactions/meter/$transactionId'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
+          Uri.parse('${API.url}/transactions/meter/$transactionId'),
+          headers: API.defaultRequestHeaders,
           body: jsonEncode(<String, int>{
             'meterStop': meterStop,
           }),
@@ -98,14 +132,18 @@ class TransactionApiService {
         .then((result) => print(result));
   }
 
+  /// It takes a transactionId and a paymentId and updates the transaction
+  /// with the paymentId
+  ///
+  /// Args:
+  ///   transactionId (int): The id of the transaction that you want to update.
+  ///   paymentId (int): The id of the payment that was created
   Future<void> updatePaymentIdForTransaction(
       int transactionId, int paymentId) async {
     await client
         .put(
-          Uri.parse('$endPoint/transactions/payment/$transactionId'),
-          headers: <String, String>{
-            'Content-Type': 'application/json; charset=UTF-8',
-          },
+          Uri.parse('${API.url}/transactions/payment/$transactionId'),
+          headers: API.defaultRequestHeaders,
           body: jsonEncode(<String, int>{
             'paymentID': paymentId,
           }),
@@ -113,16 +151,25 @@ class TransactionApiService {
         .then((result) => print(result));
   }
 
+  /// It takes two parameters, userId and chargerId, and returns a Transaction
+  /// object
+  ///
+  /// Args:
+  ///   userId (int): 1
+  ///   chargerId (int): 1
+  ///
+  /// Returns:
+  ///   The response is a JSON object containing the following:
   Future<Transaction> createKlarnaPaymentSession(
       int? userId, int chargerId) async {
     var response =
-        await client.post(Uri.parse('$endPoint/transactions/session'),
-            headers: <String, String>{
-              'Content-Type': 'application/json; charset=UTF-8',
-            },
+        await client.post(Uri.parse('${API.url}/transactions/session'),
+            headers: API.defaultRequestHeaders,
             encoding: Encoding.getByName('utf-8'),
+            //These parameters do not appear to make a difference
+            //since the functionality on the backend is not implemented.
             body: json.encode(<String, int>{
-              'userID': 1, //TODO This needs to be replaced with actual value
+              'userID': 1,
               'chargerID': chargerId,
             }));
     switch (response.statusCode) {
@@ -141,17 +188,15 @@ class TransactionApiService {
     }
   }
 
-  // The request returns the updated transaction object,
-  // If everything goes as expected, it will contain a paymentId.
+  /// The request returns the updated transaction object,
+  /// If everything goes as expected, it will contain a paymentId.
   Future<Transaction> createKlarnaOrder(
     int transactionId,
     String authToken,
   ) async {
     var response = await client.put(
-        Uri.parse('$endPoint/transactions/start/$transactionId'),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
+        Uri.parse('${API.url}/transactions/start/$transactionId'),
+        headers: API.defaultRequestHeaders,
         body: jsonEncode(<String, dynamic>{
           'transactionID': transactionId,
           'authorization_token': authToken
@@ -180,14 +225,12 @@ class TransactionApiService {
     }
   }
 
-  //the request will return an updated transaction object which contains paymentConfirmed == true.
+  /// The request will return an updated transaction object which contains
+  /// paymentConfirmed == true.
   Future<Transaction> stopCharging(int transactionId) async {
-    var response = await client
-        .put(Uri.parse('$endPoint/transactions/stop/$transactionId'));
-    //headers: <String, String>{
-    //  'Content-Type': 'application/json; charset=UTF-8',
-    //}));
-    //body: jsonEncode(<String, int>{'transactionID': transactionId}));
+    var response = await client.put(
+        Uri.parse('${API.url}/transactions/stop/$transactionId'),
+        headers: API.defaultRequestHeaders);
 
     switch (response.statusCode) {
       case 200:

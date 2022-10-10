@@ -9,6 +9,7 @@ import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:stacked/stacked.dart';
 
+/// It's a view model that is used to control the top sheet
 class TopSheetViewModel extends BaseViewModel {
   final chargerApiService = locator<ChargerApiService>();
   final transactionApiService = locator<TransactionApiService>();
@@ -21,20 +22,41 @@ class TopSheetViewModel extends BaseViewModel {
   String expandButtonText = "";
   DateTime? fullychargedTime;
   String stopTime = '';
+  Timer? timer;
 
+  /// The function starts a stream listener that listens for changes in the
+  /// battery level and charging status. It also starts a timer that increments
+  /// the charging percentage every second
   init() {
-    streamListener();
+    startStreamListener();
+
+    timer = Timer.periodic(
+        Duration(seconds: 1), (Timer t) => incrementChargingPercentage());
   }
 
-  // Dummy data
+  /// If the charging percentage is less than 100, increment it by 1.
+  /// If it's not, cancel the timer and change the charging state to true
+  void incrementChargingPercentage() {
+    if (localData.chargingPercentage < 100) {
+      localData.chargingPercentage += 1;
+      notifyListeners();
+    } else {
+      timer?.cancel();
+      changeChargingState(true);
+    }
+  }
+
+  /// A getter that returns the address of the charger.
   String get chargingAdress {
     /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
         .contains((charger) => charger.id == transactionSession.chargerID));
-*/
-    return 'lite kvar';
+    */
+    return 'Kungsgatan 1a, Jönköping';
   }
 
+  /// Returns amount of seconds left until fully charged expressed as
+  /// readable text
   String get timeUntilFullyCharged {
     var goal = 100;
     var percentage = transactionSession.currentChargePercentage;
@@ -42,9 +64,14 @@ class TopSheetViewModel extends BaseViewModel {
     return '${(goal - percentage).toStringAsFixed(0)} seconds left';
   }
 
+  /// It's a getter that returns the amount of kilowatt hours transferred.
   String get kilowattHours =>
-      "${transactionSession.kwhTransfered} kWh transferred";
+      "${transactionSession.kwhTransferred} kWh transferred";
 
+  /// It changes the state of the top sheet and notifies the listeners
+  ///
+  /// Args:
+  ///   state: The state of the top sheet.
   void changeTopSheetState(state) {
     topSheetState = state;
     notifyListeners();
@@ -53,6 +80,7 @@ class TopSheetViewModel extends BaseViewModel {
 
   Transaction get transactionSession => localData.transactionSession;
 
+  /// It changes the size of the top sheet based on the state of the top sheet
   void changeTopSheetSize() {
     switch (topSheetState) {
       case 1:
@@ -74,10 +102,15 @@ class TopSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
+  /// It's a function that is called every second to update the charging
+  /// state of the app
+  /// Args:
+  ///   finishedCharging (bool): A boolean that determines whether the
+  /// charging has finished or not.
   Future<void> changeChargingState(bool finishedCharging) async {
     if (finishedCharging) {
       print("Stopping timer...");
-      localData.timer.cancel();
+      //localData.timer.cancel();
       chargingState = 4;
       changeTopSheetState(3);
       try {
@@ -102,6 +135,9 @@ class TopSheetViewModel extends BaseViewModel {
     displayChargingState();
   }
 
+  /// It takes an integer as an argument and based on the integer value,
+  /// it changes the value of the variables that are used to display the text
+  /// on the screen
   void displayChargingState() {
     switch (chargingState) {
       case 1:
@@ -145,7 +181,10 @@ class TopSheetViewModel extends BaseViewModel {
     notifyListeners();
   }
 
-  void streamListener() {
+  /// Listening to the stream and if the event is stopTimer, it will change
+  /// the charging state to false and notify the listeners. If the event is
+  /// showCharging, it will change the charging state to false.
+  void startStreamListener() {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
@@ -158,6 +197,8 @@ class TopSheetViewModel extends BaseViewModel {
   }
 }
 
+/// It's an extension method that is used to parse the time difference between
+/// two dates.
 extension TimeParser on int {
   DateTime parseUNIXTimestamp() {
     return DateTime.fromMicrosecondsSinceEpoch(this * 1000);

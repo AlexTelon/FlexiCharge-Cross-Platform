@@ -1,18 +1,20 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:email_validator/email_validator.dart';
+import '../../widgets/error_text.dart';
 import '../../widgets/user_form_input.dart';
 import '../home_page/home_view.dart';
 import '../recover_password_page/recover_password_view.dart';
 import 'login_viewmodel.dart';
 
-/// The class is a StatefulWidget that has a form with two text fields and a button. The button calls a
-/// function in the ViewModel that validates the input and returns a bool and a string. The bool is used
-/// to determine if the form is valid or not and the string is used to display an error message
-
+/// The class is a StatefulWidget that has a form with two text fields and a
+/// button. The button calls a function in the ViewModel that validates the
+/// input and returns a bool and a string. The bool is used to determine if the
+/// form is valid or not and the string is used to display an error message
 class LoginView extends StatefulWidget {
   @override
   State<LoginView> createState() => _LoginViewState();
@@ -82,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                                   !_passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Color(0xff868686),
+                                  color: FlexiChargeTheme.lightMidGrey,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -106,10 +108,7 @@ class _LoginViewState extends State<LoginView> {
                       Column(
                         children: [
                           SizedBox(height: 90),
-                          Text(
-                            errorMsg,
-                            style: TextStyle(color: Colors.red),
-                          ),
+                          ErrorText(errorMessage: errorMsg),
                           Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                           WideButton(
                             text: 'Log in',
@@ -135,7 +134,7 @@ class _LoginViewState extends State<LoginView> {
                                 );
                               }
                             },
-                            color: Color(0xff78bd76),
+                            color: FlexiChargeTheme.green,
                           ),
                           SizedBox(height: 20),
                           InkWell(
@@ -151,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
                               'I forgot my password',
                               style: TextStyle(
                                 fontFamily: 'Lato',
-                                color: Color(0xff78bd76),
+                                color: FlexiChargeTheme.green,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 fontStyle: FontStyle.normal,

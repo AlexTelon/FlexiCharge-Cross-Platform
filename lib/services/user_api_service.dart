@@ -1,44 +1,39 @@
 import 'dart:convert';
+import 'package:flexicharge/models/api.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/user_secure_storage.dart';
-import 'package:flexicharge/models/userVerificationData.dart';
 
-/* This class is used for:
-    1. Storing User API endpoints .
-    2. Sending requests.
-    3. Verifying and handeling responses.
-*/
+//This class is used for:
+//    1. Storing User API endpoints.
+//    2. Sending requests.
+//    3. Verifying and handling responses.
 
 class UserApiService {
   http.Client client = new http.Client();
 
-  ///Live FlexiCharge API from Swagger.
-  static const String _baseURL = "http://18.202.253.30:8080";
-  static const _headers = <String, String>{
-    'Content-Type': 'application/json',
-    'accept': 'application/json',
-  };
-
-  static final Uri _register = Uri.parse('$_baseURL/auth/sign-up');
-  static final Uri _login = Uri.parse('$_baseURL/auth/sign-in');
-  static final Uri _accountVerification = Uri.parse('$_baseURL/auth/verify');
+  static final Uri _register = Uri.parse('${API.url}/auth/sign-up');
+  static final Uri _login = Uri.parse('${API.url}/auth/sign-in');
+  static final Uri _accountVerification = Uri.parse('${API.url}/auth/verify');
   static final Uri _forgotPassword =
-      Uri.parse('$_baseURL/auth/forgot-password/');
+      Uri.parse('${API.url}/auth/forgot-password/');
   static final Uri _passwordReset =
-      Uri.parse('$_baseURL/auth/confirm-forgot-password');
+      Uri.parse('${API.url}/auth/confirm-forgot-password');
 
   static final Exception exeptionMsg =
       Exception("default: " + ErrorCodes.internalError.toString());
 
   /*
   Most class functions below consist of:
-    -A variabel "responseMsg" is the error message that is seen in UI.
-    -A null check for response message. Response body is wrapped in null check before decoding the message of the body, otherwise an error will accur.
-    -Map data is written according to FlexiCharge API.
+    - A variabel "responseMsg" is the error message that is seen in UI.
+    - A null check for response message. Response body is wrapped in null check 
+     before decoding the message of the body, otherwise an error will accur.
+    - Map data is written according to FlexiCharge API.
 
-  BEWARE: The status code that are handled blow are implemented according to backend. Some responses are not correct and will be changed in the backend, then the frontend must change accordingly.
+  BEWARE: The status code that are handled blow are implemented according 
+          to backend. Some responses are not correct and will be changed in 
+          the backend, then the frontend must change accordingly.
   */
   Future<bool> verifyLogin(
     String email,
@@ -52,7 +47,7 @@ class UserApiService {
     bool _isValid = false;
     Response response = await client.post(
       _login,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: jsonEncode(loginData),
     );
     var jsonDecoded = json.decode(response.body);
@@ -75,6 +70,13 @@ class UserApiService {
     }
   }
 
+  /// It sends a POST request to the server with the user's email address,
+  /// and the server sends an email to the user with a link to reset their
+  /// password
+  ///
+  /// Args:
+  ///   email (String): The email address of the user who wants to reset their
+  ///   password.
   Future<void> verifyMailNewPassword(
     String email,
   ) async {
@@ -83,7 +85,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       mailNewPassword,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
     );
 
     if (response.body.isNotEmpty) {
@@ -104,6 +106,14 @@ class UserApiService {
     }
   }
 
+  /// It takes in an email, password, and code, and then sends a POST request
+  /// to the API with the email,
+  /// password, and code as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   password (String): The new password for the user.
+  ///   code (String): The code sent to the user's email address.
   Future<void> verifyPasswordReset(
     String email,
     String password,
@@ -118,7 +128,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       _passwordReset,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(passwordResetData),
     );
 
@@ -140,6 +150,15 @@ class UserApiService {
     }
   }
 
+  /// It takes an email and password, and sends a POST request to the backend
+  /// with the email and password as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   password (String): The password of the user.
+  ///
+  /// Returns:
+  ///   A Future<bool>
   Future<bool> verifyRegister(
     String email,
     String password,
@@ -152,7 +171,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await post(
       _register,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(registerData),
     );
 
@@ -172,6 +191,14 @@ class UserApiService {
     }
   }
 
+  /// It takes an email and a verification code, and sends a POST request to the
+  /// server with the email and
+  /// verification code as the body
+  ///
+  /// Args:
+  ///   email (String): The email address of the user.
+  ///   verificationCode (String): The code that was sent to the user's
+  ///   email address.
   Future<void> verifyAccount(
     String email,
     String verificationCode,
@@ -184,7 +211,7 @@ class UserApiService {
     String responseMsg = "";
     Response response = await client.post(
       _accountVerification,
-      headers: _headers,
+      headers: API.defaultRequestHeaders,
       body: json.encode(accountVerificationData),
     );
 

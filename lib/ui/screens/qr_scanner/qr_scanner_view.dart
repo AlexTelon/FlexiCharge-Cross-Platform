@@ -1,8 +1,13 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/qr_scanner/qr_scanner_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:stacked/stacked.dart';
 
+/// This class is a StatefulWidget that uses a ViewModelBuilder to create a
+/// ViewModel and then uses that ViewModel to create a Scaffold with an AppBar
+/// and a body. The body is a MobileScanner widget that uses the
+/// cameraController from the ViewModel to create a QR scanner
 class QrScannerView extends StatefulWidget {
   State<StatefulWidget> createState() => _QRViewState();
 }
@@ -14,7 +19,7 @@ class _QRViewState extends State<QrScannerView> {
       onModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
-          backgroundColor: Color(0xFF78BD76),
+          backgroundColor: FlexiChargeTheme.green,
           title: const Text('Scan Charger QR'),
           actions: [
             IconButton(

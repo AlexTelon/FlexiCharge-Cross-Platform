@@ -1,5 +1,7 @@
 import 'package:flexicharge/models/asset_urls.dart';
 
+/// The class PaymentMethodCategory has a property of type AssetsUrls,
+/// which is a class that has a property of type String
 class PaymentMethodCategory {
   String id = "";
   String name = "";

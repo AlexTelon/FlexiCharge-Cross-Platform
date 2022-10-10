@@ -1,5 +1,7 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// This class is a stateless widget that displays the charging summary
 class ChargingSummary extends StatelessWidget {
   const ChargingSummary({
     Key? key,
@@ -23,32 +25,34 @@ class ChargingSummary extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Expanded(
-              flex: 1,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Charging stopped at $time",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                ],
-              )),
+            flex: 1,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  "Charging stopped at $time",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+              ],
+            ),
+          ),
           Expanded(
-              flex: 1,
-              child: Row(
-                // Displaying charging duration.
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  Text(
-                    "Duration ",
-                    style: Theme.of(context).textTheme.bodyText1,
-                  ),
-                  Text(
-                    chargingDuration,
-                    style: Theme.of(context).textTheme.bodyText1,
-                  )
-                ],
-              )),
+            flex: 1,
+            child: Row(
+              // Displaying charging duration.
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Text(
+                  "Duration ",
+                  style: Theme.of(context).textTheme.bodyText1,
+                ),
+                Text(
+                  chargingDuration,
+                  style: Theme.of(context).textTheme.bodyText1,
+                )
+              ],
+            ),
+          ),
           Expanded(
             flex: 1,
             child: Row(
@@ -77,8 +81,8 @@ class ChargingSummary extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                     border:
-                        Border.all(color: const Color(0xffe5e5e5), width: 1),
-                    color: const Color(0xffffffff)),
+                        Border.all(color: FlexiChargeTheme.lightGrey, width: 1),
+                    color: FlexiChargeTheme.white),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
@@ -108,11 +112,12 @@ class ChargingSummary extends StatelessWidget {
             child: TextButton(
               onPressed: stopCharging,
               child: Container(
-                  child: Image(
-                width: 50,
-                height: 50,
-                image: AssetImage('assets/images/white_x_icon.png'),
-              )),
+                child: Image(
+                  width: 50,
+                  height: 50,
+                  image: AssetImage('assets/images/white_x_icon.png'),
+                ),
+              ),
             ),
           ),
         ],

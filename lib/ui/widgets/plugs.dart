@@ -2,6 +2,7 @@ import 'package:flexicharge/models/charger.dart';
 import 'package:flutter/material.dart';
 import 'plug.dart';
 
+/// Plugs is a stateless widget that displays a list of chargers horizontally.
 class Plugs extends StatelessWidget {
   const Plugs({
     required this.onTap,
@@ -34,19 +35,3 @@ class Plugs extends StatelessWidget {
     );
   }
 }
-
-/*
-chargers
-            .map(
-              (charger) => Container(
-                color: Colors.blue,
-                width: 160.0,
-                height: 200,
-                child: Row(
-                  children: [Text('available'), Text(charger.id)],
-                ),
-              ),
-            )
-            .toList(),
-
-*/ 

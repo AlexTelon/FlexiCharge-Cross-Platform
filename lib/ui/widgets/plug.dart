@@ -1,7 +1,13 @@
 import 'package:flexicharge/models/charger.dart';
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 
+/// The class is a stateless widget that takes in a charger object, a boolean
+/// value and a function. The function is called when the widget is tapped.
+/// The widget is a container with a border and a row with two columns.
+/// The first column has an svg image and a text widget. The second column has
+/// four text widgets
 class Plug extends StatelessWidget {
   const Plug(
       {required this.onTap,
@@ -27,9 +33,9 @@ class Plug extends StatelessWidget {
                 Radius.circular(5),
               ),
               border: isSelected
-                  ? Border.all(color: const Color(0xff78bd76), width: 3)
+                  ? Border.all(color: FlexiChargeTheme.green, width: 3)
                   : null,
-              color: const Color(0xffffffff),
+              color: FlexiChargeTheme.white,
             ),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -56,7 +62,7 @@ class Plug extends StatelessWidget {
                     Text(
                       charger.id.toString(),
                       style: const TextStyle(
-                          color: const Color(0xff000000),
+                          color: FlexiChargeTheme.black,
                           fontWeight: FontWeight.w400,
                           fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
@@ -65,7 +71,7 @@ class Plug extends StatelessWidget {
                     Text(
                       charger.capacity,
                       style: const TextStyle(
-                          color: const Color(0xff000000),
+                          color: FlexiChargeTheme.black,
                           fontWeight: FontWeight.w400,
                           fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
@@ -74,7 +80,7 @@ class Plug extends StatelessWidget {
                     Text(
                       '${charger.cost} SEK',
                       style: const TextStyle(
-                          color: const Color(0xff000000),
+                          color: FlexiChargeTheme.black,
                           fontWeight: FontWeight.w400,
                           fontFamily: "Lato-Regular",
                           fontStyle: FontStyle.normal,
@@ -84,8 +90,8 @@ class Plug extends StatelessWidget {
                       charger.status, // Set
                       style: TextStyle(
                         color: charger.status == "Available"
-                            ? Color(0xff78bd76)
-                            : Colors.red,
+                            ? FlexiChargeTheme.green
+                            : FlexiChargeTheme.red,
                         fontWeight: FontWeight.w400,
                         fontFamily: "Lato-Regular",
                         fontStyle: FontStyle.normal,

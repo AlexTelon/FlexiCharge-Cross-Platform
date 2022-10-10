@@ -1,7 +1,6 @@
 import 'package:email_validator/email_validator.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_view.dart';
 import 'package:flexicharge/ui/screens/recover_password_page/recover_password_viewmodel.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
@@ -9,6 +8,9 @@ import 'package:stacked/stacked.dart';
 
 import '../../widgets/user_form_input.dart';
 
+/// I have a form with a textfield and a button. When the button is pressed,
+/// the textfield is validated and if it's valid, the button's onTap function
+/// is called
 class RecoverPasswordView extends StatefulWidget {
   @override
   State<RecoverPasswordView> createState() => _RecoverPasswordViewState();

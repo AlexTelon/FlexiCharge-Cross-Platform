@@ -1,5 +1,8 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays a circular progress indicator with a percentage value and an image in the
+/// center
 class CircularLoadingBar extends StatelessWidget {
   const CircularLoadingBar({Key? key, required this.loadingPercentage})
       : super(key: key);
@@ -18,7 +21,7 @@ class CircularLoadingBar extends StatelessWidget {
           child: CircularProgressIndicator(
             strokeWidth: 10,
             value: loadingPercentage,
-            color: Color(0xff333333),
+            color: FlexiChargeTheme.midGrey,
             valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
           ),
         ),

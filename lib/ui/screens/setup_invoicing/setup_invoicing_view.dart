@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/text_input.dart';
@@ -8,12 +9,13 @@ import 'package:stacked/stacked.dart';
 
 import '../../widgets/error_text.dart';
 
-/// SetupInvoicingView is a stateless widget that contains a scaffold with a single child scroll view
-/// that contains a column with a topbar, a sized box, a column with a column with a rich text, a sized
-/// box, a column with a rich text, a sized box, a text input widget, a sized box, a text input widget,
-/// a sized box, a text input widget, a sized box, a text input widget, a sized box, a wide button, a
-/// sized box, an ink well, a sized box, a column with a rich text, a sized box
-
+/// SetupInvoicingView is a stateless widget that contains a scaffold with a
+/// single child scroll view that contains a column with a topbar, a sized box,
+/// a column with a column with a rich text, a sized box, a column with a
+/// rich text, a sized box, a text input widget, a sized box, a text input
+/// widget, a sized box, a text input widget, a sized box, a text input widget,
+/// a sized box, a wide button, a sized box, an ink well, a sized box,
+/// a column with a rich text, a sized box
 class SetupInvoicingView extends StatefulWidget {
   @override
   _SetupInvoicingViewState createState() => _SetupInvoicingViewState();
@@ -62,7 +64,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                           ],
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xff212121),
+                            color: FlexiChargeTheme.darkGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -87,7 +89,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                           ],
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xff212121),
+                            color: FlexiChargeTheme.darkGrey,
                             fontSize: 13,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,
@@ -132,7 +134,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                   WideButton(
                     text: 'Continue',
-                    color: Color(0xff78bd76),
+                    color: FlexiChargeTheme.green,
                     onTap: () async {
                       var invoiceData = await model.validateSetupInvoice(
                           nameController.text,
@@ -165,7 +167,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                     },
                     child: Text("No Thanks",
                         style: const TextStyle(
-                            color: const Color(0xff78bd76),
+                            color: FlexiChargeTheme.green,
                             fontWeight: FontWeight.w700,
                             fontFamily: "Lato",
                             fontStyle: FontStyle.normal,
@@ -177,23 +179,24 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       RichText(
-                          softWrap: true,
-                          textAlign: TextAlign.center,
-                          text: TextSpan(
-                            children: [
-                              TextSpan(
-                                  text:
-                                      'If you choose not to invoice, \nyou will be asked to pay each time using Swish'),
-                              TextSpan()
-                            ],
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Color(0xff212121),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w400,
-                              fontStyle: FontStyle.normal,
-                            ),
-                          ))
+                        softWrap: true,
+                        textAlign: TextAlign.center,
+                        text: TextSpan(
+                          children: [
+                            TextSpan(
+                                text:
+                                    'If you choose not to invoice, \nyou will be asked to pay each time using Swish'),
+                            TextSpan()
+                          ],
+                          style: TextStyle(
+                            fontFamily: 'Lato',
+                            color: FlexiChargeTheme.black,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w400,
+                            fontStyle: FontStyle.normal,
+                          ),
+                        ),
+                      )
                     ],
                   ),
                   SizedBox(height: 20.0),

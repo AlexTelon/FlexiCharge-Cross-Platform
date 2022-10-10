@@ -1,5 +1,7 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A button that has a text and an optional undertext
 class InvoiceButton extends StatelessWidget {
   const InvoiceButton(
       {Key? key, required this.onTap, this.underText, this.isSelected = false})
@@ -18,9 +20,9 @@ class InvoiceButton extends StatelessWidget {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: isSelected == true
-              ? Border.all(color: const Color(0xff78bd76), width: 3)
+              ? Border.all(color: FlexiChargeTheme.green, width: 3)
               : null,
-          color: const Color(0xffffffff),
+          color: FlexiChargeTheme.white,
         ),
         // child: image,
         child: Column(
@@ -29,7 +31,7 @@ class InvoiceButton extends StatelessWidget {
             Text("Invoice",
                 style: TextStyle(
                   fontFamily: 'Lato',
-                  color: Color(0xff212121),
+                  color: FlexiChargeTheme.darkGrey,
                   fontSize: 17,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,
@@ -40,7 +42,7 @@ class InvoiceButton extends StatelessWidget {
                 underText!,
                 style: TextStyle(
                   fontFamily: 'Lato',
-                  color: Color(0xff212121),
+                  color: FlexiChargeTheme.darkGrey,
                   fontSize: 11,
                   fontWeight: FontWeight.w400,
                   fontStyle: FontStyle.normal,

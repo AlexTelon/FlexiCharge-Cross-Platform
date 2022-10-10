@@ -1,12 +1,16 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/nearest_chargers.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/select_charger.dart';
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/theme.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/nearest_chargers.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/select_charger.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_code_input.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+/// I have a custom snapping sheet that has a text field and a button. When
+/// the user enters a valid code, the button changes color and text. When the
+/// user enters an invalid code, the button is hidden
 class CustomSnappingSheet extends StatelessWidget {
   const CustomSnappingSheet({
     required this.request,
@@ -27,8 +31,7 @@ class CustomSnappingSheet extends StatelessWidget {
         ),
         height: model.onlyPin ? 250 : 1500,
         decoration: BoxDecoration(
-          //color: Color(0xff333333),
-          color: Colors.grey.shade900,
+          color: FlexiChargeTheme.darkGrey,
           borderRadius: BorderRadius.only(
             topLeft: Radius.circular(5),
             topRight: Radius.circular(5),
@@ -56,7 +59,7 @@ class CustomSnappingSheet extends StatelessWidget {
                           'Chargers Near Me',
                           style: TextStyle(
                             fontFamily: 'Lato',
-                            color: Color(0xffffffff),
+                            color: FlexiChargeTheme.white,
                             fontSize: 17,
                             fontWeight: FontWeight.w400,
                             fontStyle: FontStyle.normal,

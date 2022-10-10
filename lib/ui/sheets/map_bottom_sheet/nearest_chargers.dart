@@ -1,9 +1,10 @@
-import 'package:flexicharge/ui/bottom_sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
+import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charger_locations.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+/// It's a widget that displays a list of charging points
 class NearestChargers extends ViewModelWidget<CustomSnappingSheetViewModel> {
   const NearestChargers({required this.completer, Key? key}) : super(key: key);
   final Function(SheetResponse) completer;

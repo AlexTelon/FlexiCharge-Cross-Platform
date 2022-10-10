@@ -21,7 +21,7 @@ The app can now be started with either the command `flutter run` or by going to 
 ### Versions
 Developed with Flutter version 
 
-- 3.3.1, upgraded from 2.2.1 in 2022
+- 3.3.1
 
 Developed with Dart version
 
@@ -30,10 +30,10 @@ Developed with Dart version
 Supports Android versions
 
 - minSdkVersion 26
-- targetSdkVersion 32, upgraded from 30 in 2022
+- targetSdkVersion 32
 
 Supports iOS versions
 - 15.0
 
 # Contribution
-Follow the convention and coding style explained under chapter Architecture.
+Follow the convention and coding style explained under chapter Architecture in the documentation PDF.

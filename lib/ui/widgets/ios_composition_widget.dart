@@ -1,6 +1,9 @@
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
+/// `IOSCompositionWidget` is a `StatelessWidget` that returns a `UiKitView`
+/// with the `viewType` of `<platform-view-type>`
+/// and the `creationParams` of `<creation-params>`
 class IOSCompositionWidget extends StatelessWidget {
   const IOSCompositionWidget({super.key});
 

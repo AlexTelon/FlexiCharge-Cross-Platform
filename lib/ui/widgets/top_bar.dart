@@ -1,5 +1,8 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays a top bar with a title and an optional back button.
+/// </code>
 class Topbar extends StatelessWidget {
   const Topbar({Key? key, required this.text, this.onTap}) : super(key: key);
   final String text;
@@ -12,7 +15,7 @@ class Topbar extends StatelessWidget {
         Container(
             width: double.infinity,
             height: 228,
-            decoration: BoxDecoration(color: Color(0xff292b2b)),
+            decoration: BoxDecoration(color: FlexiChargeTheme.darkGrey),
             padding: EdgeInsets.all(10),
             transform: Matrix4.skewY(-0.2)),
         Column(children: [
@@ -27,7 +30,7 @@ class Topbar extends StatelessWidget {
                     child: Icon(
                       Icons.arrow_back_ios_sharp,
                       size: 30,
-                      color: Color(0xffffffff),
+                      color: FlexiChargeTheme.white,
                     ),
                   ),
                 Expanded(
@@ -35,7 +38,7 @@ class Topbar extends StatelessWidget {
                     text,
                     style: TextStyle(
                       fontFamily: 'ITCAvantGardeStd-Bold',
-                      color: Color(0xffffffff),
+                      color: FlexiChargeTheme.white,
                       fontSize: 36,
                       fontWeight: FontWeight.w700,
                       fontStyle: FontStyle.normal,
