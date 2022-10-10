@@ -1,4 +1,3 @@
-import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/recover_email_sent/recover_email_sent_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
