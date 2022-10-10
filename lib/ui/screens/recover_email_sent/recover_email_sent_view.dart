@@ -8,10 +8,10 @@ import 'package:stacked/stacked.dart';
 import '../../widgets/user_form_input.dart';
 
 /// A class that creates a view when a reset password verification code was sent to the email provided.
-/// The email will be displated in this view and the user will have input fields to type in the
+/// The email will be displayed in this view and the user will have input fields to type in the
 /// new password, repeat new password and the verification code. The email, password and verification
 /// code will be sent to the provided endpoint to update the existing password.
-/// Once reset password was successful the user vill be navigated to teh page
+/// Once reset password was successful the user will be navigated to teh page
 
 class RecoverEmailSentView extends StatefulWidget {
   RecoverEmailSentView({Key? key, required this.mail}) : super(key: key);
@@ -23,14 +23,8 @@ class RecoverEmailSentView extends StatefulWidget {
 
 class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
   String viewTitle = "Recover Email Sent";
-
-  bool _passwordVisible = true;
-
-  TextEditingController textController = TextEditingController();
-  TextEditingController textControllerPassword = TextEditingController();
-  TextEditingController textControllerRepeatPassword = TextEditingController();
-
   final _formKey = GlobalKey<FormState>();
+  bool _passwordVisible = true;
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +93,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                         ),
                         SizedBox(height: 20.0),
                         UserFormInput(
-                          controller: textController,
+                          controller: model.textController,
                           isPassword: false,
                           suffixIcon: Icon(null),
                           hint: 'Enter Your Verification code',
@@ -112,7 +106,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                         ),
                         SizedBox(height: 30),
                         UserFormInput(
-                          controller: textControllerPassword,
+                          controller: model.textControllerPassword,
                           isPassword: _passwordVisible,
                           hint: 'Enter New Password',
                           labelText: 'New Password',
@@ -136,7 +130,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                         ),
                         SizedBox(height: 10),
                         UserFormInput(
-                            controller: textControllerRepeatPassword,
+                            controller: model.textControllerRepeatPassword,
                             isPassword: _passwordVisible,
                             hint: 'Repeat New Password',
                             labelText: 'Repeat Password',
@@ -168,9 +162,9 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                                 onTap: () async {
                                   await model.verifyPassword(
                                       widget.mail,
-                                      textControllerPassword.text,
-                                      textControllerRepeatPassword.text,
-                                      textController.text);
+                                      model.textControllerPassword.text,
+                                      model.textControllerRepeatPassword.text,
+                                      model.textController.text);
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

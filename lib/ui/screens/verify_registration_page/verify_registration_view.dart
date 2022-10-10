@@ -1,19 +1,10 @@
-import 'dart:convert';
-
-import 'package:flexicharge/ui/screens/login_page/login_view.dart';
-import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_view.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
-import 'package:flexicharge/ui/widgets/text_input.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:email_validator/email_validator.dart';
-import 'package:flutter/material.dart';
-
 import '../../widgets/user_form_input.dart';
-import '../home_page/home_view.dart';
 
 class VerifyRegistrationView extends StatefulWidget {
   final String password;
@@ -24,104 +15,83 @@ class VerifyRegistrationView extends StatefulWidget {
 }
 
 class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
+  String viewTitle = "Verify account";
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<VerifyRegistrationViewModel>.reactive(
       viewModelBuilder: () => VerifyRegistrationViewModel(),
       builder: (context, model, child) => Scaffold(
-        body: Form(
-          autovalidateMode: AutovalidateMode.onUserInteraction,
-          key: model.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Flexible(
-                flex: 2,
-                child: Topbar(
-                  text: "Verify account",
+        body: SingleChildScrollView(
+          child: Form(
+            autovalidateMode: AutovalidateMode.onUserInteraction,
+            key: model.formKey,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Topbar(
+                  text: viewTitle,
                   onTap: () {
                     Navigator.pop(context);
                   },
                 ),
-              ),
-              // UPPP
-              // SizedBox(height: 30),
-              Flexible(
-                flex: 4,
-                child: Container(
-                  child: Column(
-                    // crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      ///Contains the TextInputs
-                      Flexible(
-                        flex: 2,
-                        child: Column(
-                          children: [
-                            FractionallySizedBox(
-                              widthFactor: 0.8,
-                              child: UserFormInput(
-                                  controller: model.emailController,
-                                  isPassword: false,
-                                  hint: 'Enter your Email',
-                                  labelText: 'Email',
-                                  suffixIcon: Icon(null),
-                                  validator: (email) =>
-                                      model.emailValidator(email)),
-                            ),
-                            SizedBox(height: 30),
-                            FractionallySizedBox(
-                              widthFactor: 0.8,
-                              child: UserFormInput(
-                                  controller: model.verificationController,
-                                  isPassword: true,
-                                  suffixIcon: Icon(null),
-                                  hint: 'Enter the verification code',
-                                  labelText: 'Verification Code',
-                                  validator: (verificationCode) =>
-                                      model.verificationCodeValidator(
-                                          verificationCode)),
-                            ),
-                            SizedBox(height: 30.0),
-                            WideButton(
-                                showWideButton: true,
-                                text: 'Verify Account',
-                                color: Color(0xff78bd76),
-                                onTap: () async {
-                                  try {
-                                    setState(() {
-                                      model.verificationErrors = "";
-                                    });
-
-                                    await model.verifyAccount();
-                                    await model.login(this.widget.password);
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) =>
-                                              SetupInvoicingView()),
-                                    );
-                                  } catch (errors) {
-                                    setState(() {
-                                      model.verificationErrors =
-                                          errors.toString();
-                                    });
-                                  }
-                                }),
-
-                            if (!model.isAccountVerified &&
-                                model.verificationErrors.isNotEmpty)
-                              Text(model.verificationErrors,
-                                  style: TextStyle(color: Colors.red)),
-
-                            // Text(model.errors.toString())
-                          ],
-                        ),
-                      ),
-                    ],
-                  ),
+                SizedBox(height: 20),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ///Contains the TextInputs
+                    UserFormInput(
+                        controller: model.emailController,
+                        isPassword: false,
+                        hint: 'Enter your Email',
+                        labelText: 'Email',
+                        suffixIcon: Icon(null),
+                        validator: (email) => model.emailValidator(email)),
+                    SizedBox(height: 30),
+                    UserFormInput(
+                        controller: model.verificationController,
+                        isPassword: true,
+                        suffixIcon: Icon(null),
+                        hint: 'Enter the verification code',
+                        labelText: 'Verification Code',
+                        validator: (verificationCode) =>
+                            model.verificationCodeValidator(verificationCode)),
+                    SizedBox(height: 30.0),
+                    WideButton(
+                        showWideButton: true,
+                        text: 'Verify Account',
+                        color: Color(0xff78bd76),
+                        onTap: () async {
+                          try {
+                            setState(() {
+                              model.verificationErrors = "";
+                            });
+                            await model.verifyAccount();
+                            await model.login(this.widget.password);
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => SetupInvoicingView()),
+                            );
+                          } catch (errors) {
+                            setState(() {
+                              model.verificationErrors = errors.toString();
+                            });
+                          }
+                        }),
+                    SizedBox(
+                        height:
+                            30.0), /*
+                    if (!model.isAccountVerified &&
+                        model.verificationErrors.isNotEmpty)
+                      Text(model.verificationErrors,
+                          style: TextStyle(color: Colors.red)),
+                      // Text(model.errors.toString())
+                      */
+                  ],
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

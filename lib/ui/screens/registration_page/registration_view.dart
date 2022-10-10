@@ -30,6 +30,10 @@ class _RegistrationViewState extends State<RegistrationView> {
 
   late String errorMsg = "";
 
+  String email = "";
+  String password = "";
+  String repeatedPassword = "";
+
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<RegistrationViewmodel>.reactive(
@@ -53,6 +57,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                         hint: 'Enter Your Email',
                         suffixIcon: Icon(null),
                         validator: (email) {
+                          email = email!;
                           var message = model.validateEmail(email);
                           return message;
                         },
@@ -77,6 +82,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                           },
                         ),
                         validator: (password) {
+                          password = password!;
                           var message = model.validatePassword(password);
                           return message;
                         },
@@ -101,6 +107,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                             },
                           ),
                           validator: (repeatedPassword) {
+                            repeatedPassword = repeatedPassword!;
                             var message = model
                                 .validateRepeatedPassword(repeatedPassword);
                             return message;
@@ -132,38 +139,41 @@ class _RegistrationViewState extends State<RegistrationView> {
                       ),
                       ErrorText(errorMessage: errorMsg),
                       SizedBox(height: 30.0),
-                      //TODO: Disable WideButton while input fields are red or the checkbox is not checked.
                       WideButton(
                           showWideButton: true,
                           text: 'Register',
-                          color: Color(0xff78bd76),
+                          color: model.showButtonColor(
+                              email, password, repeatedPassword),
                           onTap: () async {
-                            var registerData = await model.registerNewUser(
-                              emailController.text,
-                              passwordController.text,
-                              repeatPasswordController.text,
-                            );
-
-                            _registrationIsValid = registerData.elementAt(0);
-
-                            if (!_registrationIsValid) {
-                              setState(() {
-                                print(_registrationIsValid);
-                                errorMsg = registerData.elementAt(1);
-                              });
-                            } else {
-                              setState(() {
-                                errorMsg = "";
-                              });
-
-                              Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        VerifyRegistrationView(
-                                            password:
-                                                this.passwordController.text)),
+                            if (model.checked) {
+                              var registerData = await model.registerNewUser(
+                                emailController.text,
+                                passwordController.text,
+                                repeatPasswordController.text,
                               );
+                              _registrationIsValid = registerData.elementAt(0);
+
+                              if (!_registrationIsValid) {
+                                setState(() {
+                                  print(_registrationIsValid);
+                                  errorMsg = registerData.elementAt(1);
+                                });
+                              } else {
+                                setState(() {
+                                  errorMsg = "";
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) =>
+                                          VerifyRegistrationView(
+                                              password: this
+                                                  .passwordController
+                                                  .text)),
+                                );
+                              }
+                            } else {
+                              print("Please accept the coditions!");
                             }
                           }),
                       SizedBox(height: 20.0),
