@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_view.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -83,7 +84,7 @@ class _LoginViewState extends State<LoginView> {
                                   !_passwordVisible
                                       ? Icons.visibility
                                       : Icons.visibility_off,
-                                  color: Color(0xff868686),
+                                  color: FlexiChargeTheme.lightGrey,
                                 ),
                                 onPressed: () {
                                   setState(() {
@@ -133,7 +134,7 @@ class _LoginViewState extends State<LoginView> {
                                 );
                               }
                             },
-                            color: Color(0xff78bd76),
+                            color: FlexiChargeTheme.green,
                           ),
                           SizedBox(height: 20),
                           InkWell(
@@ -149,7 +150,7 @@ class _LoginViewState extends State<LoginView> {
                               'I forgot my password',
                               style: TextStyle(
                                 fontFamily: 'Lato',
-                                color: Color(0xff78bd76),
+                                color: FlexiChargeTheme.green,
                                 fontSize: 13,
                                 fontWeight: FontWeight.w700,
                                 fontStyle: FontStyle.normal,

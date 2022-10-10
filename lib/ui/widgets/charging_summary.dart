@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
 class ChargingSummary extends StatelessWidget {
@@ -77,8 +78,8 @@ class ChargingSummary extends StatelessWidget {
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(4)),
                     border:
-                        Border.all(color: const Color(0xffe5e5e5), width: 1),
-                    color: const Color(0xffffffff)),
+                        Border.all(color: FlexiChargeTheme.lightGrey, width: 1),
+                    color: FlexiChargeTheme.white),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [

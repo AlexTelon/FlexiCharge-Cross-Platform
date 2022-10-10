@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/sheets/top_sheet/top_sheet_view_model.dart';
 import 'package:flexicharge/ui/widgets/charging_in_progress.dart';
 import 'package:flexicharge/ui/widgets/charging_summary.dart';
@@ -22,7 +23,7 @@ class TopSheetView extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height * model.topSheetSize,
         decoration: BoxDecoration(
-          color: const Color(0xff333333),
+          color: FlexiChargeTheme.midGrey,
           borderRadius: BorderRadius.circular(5),
         ),
         child: Column(
@@ -36,7 +37,7 @@ class TopSheetView extends StatelessWidget {
                 child: Text(
                   model.topSheetText,
                   style: const TextStyle(
-                      color: const Color(0xffffffff),
+                      color: FlexiChargeTheme.white,
                       fontWeight: FontWeight.w700,
                       fontFamily: "ITCAvantGardeStd",
                       fontStyle: FontStyle.normal,

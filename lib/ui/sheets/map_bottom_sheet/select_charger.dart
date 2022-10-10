@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/sheets/map_bottom_sheet/snappingcheet_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/charging_station.dart';
 import 'package:flexicharge/ui/widgets/invoice_button.dart';
@@ -29,7 +30,7 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
           "Payment",
           style: TextStyle(
             fontFamily: 'Lato-Regular',
-            color: Color(0xffffffff),
+            color: FlexiChargeTheme.white,
             fontSize: 17,
             fontWeight: FontWeight.w400,
             fontStyle: FontStyle.normal,

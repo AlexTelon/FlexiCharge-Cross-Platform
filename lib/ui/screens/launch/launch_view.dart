@@ -1,4 +1,5 @@
 import 'package:flexicharge/models/widget_keys.dart';
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/launch/launch_viewmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
@@ -35,11 +36,10 @@ class LaunchView extends StatelessWidget {
                             borderRadius: BorderRadius.circular(5),
                             gradient: LinearGradient(
                               colors: [
-                                Color(0xfff2e006),
-                                Color(0xff71b974),
-                                Color(0xff409c68)
+                                FlexiChargeTheme.yellow,
+                                FlexiChargeTheme.green,
                               ],
-                              stops: [0, 0.8659470016891891, 1],
+                              stops: [0, 1],
                               begin: Alignment(-1.00, 0.00),
                               end: Alignment(1.00, -0.00),
                             ),

@@ -1,5 +1,6 @@
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/app/setup_dialog_ui.dart';
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,14 +29,14 @@ class MyApp extends StatelessWidget {
           textTheme: const TextTheme(
             bodyText1: TextStyle(
                 // White text
-                color: const Color(0xffffffff),
+                color: FlexiChargeTheme.white,
                 fontWeight: FontWeight.w400,
                 fontFamily: "Lato",
                 fontStyle: FontStyle.normal,
                 fontSize: 17.0),
             bodyText2: TextStyle(
                 // Black text
-                color: const Color(0xff000000),
+                color: FlexiChargeTheme.black,
                 fontWeight: FontWeight.w700,
                 fontFamily: "ITCAvantGardeStd",
                 fontStyle: FontStyle.normal,
