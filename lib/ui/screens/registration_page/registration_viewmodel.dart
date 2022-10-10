@@ -4,6 +4,9 @@ import 'package:stacked/stacked.dart';
 import '../../../services/user_api_service.dart';
 import '../../../models/user_input_validator.dart';
 
+/// The class is a viewmodel for a registration page. It has a method that
+/// validates the user's input and a method that sends the user's input to
+/// the server
 class RegistrationViewmodel extends BaseViewModel {
   bool _checked = false;
   bool _registrationIsValid = false;
@@ -18,6 +21,14 @@ class RegistrationViewmodel extends BaseViewModel {
 
   bool get checked => _checked;
 
+  /// If the email is not null, not empty, and not valid, return
+  /// 'Enter a valid email', otherwise return null
+  ///
+  /// Args:
+  ///   email: The email address to validate.
+  ///
+  /// Returns:
+  ///   A String?
   String? validateEmail(email) {
     if (email != null &&
         email.isNotEmpty &&
@@ -28,6 +39,16 @@ class RegistrationViewmodel extends BaseViewModel {
     }
   }
 
+  /// If the password is not null and not empty, check if it's valid. If it's
+  /// valid, set the password to the password variable. If it's not valid,
+  /// return the first error message. If the password is null
+  /// or empty, return null
+  ///
+  /// Args:
+  ///   password: The password to validate.
+  ///
+  /// Returns:
+  ///   A String?
   String? validatePassword(password) {
     if (password != null && password.isNotEmpty) {
       if (!_userInputValidator.passwordIsValid(password)) {
@@ -41,6 +62,14 @@ class RegistrationViewmodel extends BaseViewModel {
     }
   }
 
+  /// If the repeated password is not null, not empty, and not equal to the
+  /// password, then return an error message
+  ///
+  /// Args:
+  ///   repeatedPassword: The repeated password that the user entered.
+  ///
+  /// Returns:
+  ///   A string.
   String? validateRepeatedPassword(repeatedPassword) {
     if (repeatedPassword != null &&
         repeatedPassword.isNotEmpty &&
@@ -54,6 +83,17 @@ class RegistrationViewmodel extends BaseViewModel {
     }
   }
 
+  /// It takes in an email, password, and repeated password, and returns a
+  /// set of a boolean and a string
+  ///
+  /// Args:
+  ///   email (String): String
+  ///   password (String): String
+  ///   repeatedPassword (String): The password that the user entered in the
+  ///   repeated password field.
+  ///
+  /// Returns:
+  ///   A set of two values, a boolean and a string.
   Future<Set> registerNewUser(
     String email,
     String password,
@@ -73,6 +113,15 @@ class RegistrationViewmodel extends BaseViewModel {
     return registerData;
   }
 
+  /// If the checkbox is checked, return green, else return grey
+  ///
+  /// Args:
+  ///   email: String
+  ///   password: the password the user entered
+  ///   repeatedPassword: the password that the user has to repeat
+  ///
+  /// Returns:
+  ///   A function that returns a color.
   Color showButtonColor(email, password, repeatedPassword) {
     if (_checked) {
       return Color(0xff78bd76);
@@ -81,6 +130,14 @@ class RegistrationViewmodel extends BaseViewModel {
     }
   }
 
+  /// If the email is not null, not empty, and valid, then return true.
+  /// Otherwise, return false
+  ///
+  /// Args:
+  ///   email: The email address to check.
+  ///
+  /// Returns:
+  ///   A boolean value.
   bool checkEmail(email) {
     if (email != null &&
         email.isNotEmpty &&
@@ -90,6 +147,14 @@ class RegistrationViewmodel extends BaseViewModel {
     return false;
   }
 
+  /// If the password is not null, not empty, and valid, then return true.
+  /// Otherwise, return false
+  ///
+  /// Args:
+  ///   password: The password to be validated.
+  ///
+  /// Returns:
+  ///   A boolean value.
   bool checkPassword(password) {
     if (password != null &&
         password.isNotEmpty &&
@@ -99,6 +164,15 @@ class RegistrationViewmodel extends BaseViewModel {
     return false;
   }
 
+  /// If the repeated password is not null, not empty, and the passwords are
+  /// equal, return true. Otherwise, return false
+  ///
+  /// Args:
+  ///   repeatedPassword: The password that the user has entered in the
+  ///   repeated password field.
+  ///
+  /// Returns:
+  ///   A boolean value.
   bool checkRepeatPassword(repeatedPassword) {
     if (repeatedPassword != null &&
         repeatedPassword.isNotEmpty &&

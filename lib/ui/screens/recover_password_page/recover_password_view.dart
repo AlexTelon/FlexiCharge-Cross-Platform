@@ -8,6 +8,9 @@ import 'package:stacked/stacked.dart';
 
 import '../../widgets/user_form_input.dart';
 
+/// I have a form with a textfield and a button. When the button is pressed,
+/// the textfield is validated and if it's valid, the button's onTap function
+/// is called
 class RecoverPasswordView extends StatefulWidget {
   @override
   State<RecoverPasswordView> createState() => _RecoverPasswordViewState();

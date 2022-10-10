@@ -6,6 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../widgets/user_form_input.dart';
 
+/// It's a stateful widget that contains a form with two text inputs and a
+/// button. The button calls a method in the view model that verifies the
+/// user's account
 class VerifyRegistrationView extends StatefulWidget {
   final String password;
 
