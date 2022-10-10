@@ -27,14 +27,10 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
   bool _passwordVisible = true;
 
   TextEditingController textController = TextEditingController();
-
   TextEditingController textControllerPassword = TextEditingController();
-
   TextEditingController textControllerRepeatPassword = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
-  late String _password;
 
   @override
   Widget build(BuildContext context) {
@@ -50,9 +46,6 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                   children: [
                     Topbar(
                       text: viewTitle,
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
                     ),
                     SizedBox(height: 10),
                     Column(
@@ -68,7 +61,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                                 children: [
                                   TextSpan(
                                     text:
-                                        '''An email with a link to reset your password\n has been sent to the following address...''',
+                                        '''An email with a verification code to reset your password\n has been sent to the following address...''',
                                     style: TextStyle(
                                       fontFamily: 'Lato',
                                       color: Color(0xff212121),
@@ -82,7 +75,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                             ),
                           ],
                         ),
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 10.0),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.start,
                           children: [
@@ -97,7 +90,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                                   fontFamily: 'Lato',
                                   color: Color(0xff212121),
                                   fontSize: 19,
-                                  fontWeight: FontWeight.w900,
+                                  fontWeight: FontWeight.w800,
                                   fontStyle: FontStyle.normal,
                                 ),
                               ),
@@ -105,6 +98,19 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                           ],
                         ),
                         SizedBox(height: 20.0),
+                        UserFormInput(
+                          controller: textController,
+                          isPassword: false,
+                          suffixIcon: Icon(null),
+                          hint: 'Enter Your Verification code',
+                          labelText: 'Verification code',
+                          validator: (verificationCode) {
+                            var message = model
+                                .validateVerificationCode(verificationCode);
+                            return message;
+                          },
+                        ),
+                        SizedBox(height: 30),
                         UserFormInput(
                           controller: textControllerPassword,
                           isPassword: _passwordVisible,
@@ -124,17 +130,8 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                             },
                           ),
                           validator: (password) {
-                            final validator = UserInputValidator();
-                            if (password != null && password.isNotEmpty) {
-                              if (!validator.passwordIsValid(password)) {
-                                return validator.passwordErrors.first;
-                              } else {
-                                _password = password;
-                                return null;
-                              }
-                            } else {
-                              return null;
-                            }
+                            var message = model.validatePassword(password);
+                            return message;
                           },
                         ),
                         SizedBox(height: 10),
@@ -157,33 +154,11 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                               },
                             ),
                             validator: (repeatedPassword) {
-                              if (repeatedPassword != null &&
-                                  repeatedPassword.isNotEmpty) {
-                                /*  if (_password != repeatedPassword) { This gives a bugg due to _password not being initialized
-                                  return 'Fields do not match';
-                                }*/
-                              } else {
-                                return null;
-                              }
+                              var message = model
+                                  .validateRepeatedPassword(repeatedPassword);
+                              return message;
                             }),
                         SizedBox(height: 30),
-                        UserFormInput(
-                          controller: textController,
-                          isPassword: false,
-                          suffixIcon: Icon(null),
-                          hint: 'Enter Your Verification code',
-                          labelText: 'Verification code',
-                          validator: (code) {
-                            if (code != null &&
-                                code.isNotEmpty &&
-                                code.length < 5) {
-                              return 'Verification code needs to be 6 characters';
-                            } else {
-                              return null;
-                            }
-                          },
-                        ),
-                        SizedBox(height: 20),
                         Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: [
@@ -205,7 +180,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                                 color: Color(0xff78bd76),
                               ),
                             ]),
-                        SizedBox(height: 20.0),
+                        SizedBox(height: 10.0),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
