@@ -6,10 +6,17 @@ import 'package:flexicharge/models/charger_point.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
+/// It makes requests to the API and returns the response
 class ChargerApiService {
   http.Client client = new http.Client();
   var chargerPoint = new ChargerPoint();
 
+  /// It makes a GET request to the API, and if the response is 200, it
+  /// parses the response body as a list of dynamic objects, and then adds
+  /// each object to a list of Charger objects
+  ///
+  /// Returns:
+  ///   A list of Charger objects.
   Future<List<Charger>> getChargers() async {
     var chargers = <Charger>[];
     var response = await client.get(Uri.parse('${API.url}/chargers'));
@@ -27,6 +34,11 @@ class ChargerApiService {
     }
   }
 
+  /// It gets all the chargers from the API and then gets the charger point
+  /// for each charger and then adds the charger to the charger point
+  ///
+  /// Returns:
+  ///   A list of ChargerPoints.
   Future<List<ChargerPoint>> getChargerPoints() async {
     List<ChargerPoint> chargerPoints = [];
 
@@ -87,6 +99,14 @@ class ChargerApiService {
     return chargerPoints;
   }
 
+  /// It makes a GET request to the API, and if the response is successful,
+  /// it returns a ChargerPoint object
+  ///
+  /// Args:
+  ///   id (int): The id of the charger point you want to get.
+  ///
+  /// Returns:
+  ///   A ChargerPoint object.
   Future<ChargerPoint> getChargerPoint(int id) async {
     ChargerPoint chargerPoint = ChargerPoint();
     try {
@@ -118,6 +138,12 @@ class ChargerApiService {
     }
   }
 
+  /// It makes a GET request to the server, and if the response is 200, it
+  /// parses the response body into a  list of Charger objects, and returns
+  /// the list
+  ///
+  /// Returns:
+  ///   A list of chargers.
   Future<List<Charger>> getAllAvailableChargers() async {
     var chargers = <Charger>[];
     var response = await client.get(Uri.parse('${API.url}/chargers/available'));
@@ -135,13 +161,26 @@ class ChargerApiService {
     }
   }
 
-  // The function don't work yet...
+  /// The function does not work yet...
+  /// It takes a chargerPointId as a parameter, makes a GET request to the API,
+  /// and returns a Charger object
+  ///
+  /// Args:
+  ///   chargerPointId: The ID of the charger point you want to get the chargers for.
+  ///
+  /// Returns:
+  ///   A Charger object.
   Future<Charger> getChargersByChargerPointId(chargerPointId) async {
     var response = await client.get(Uri.parse('${API.url}/chargers'));
     return Charger.fromJson(jsonDecode(response.body));
   }
 
-  //Check later
+  /// It takes a string and an integer as parameters, and then it makes a PUT
+  /// request to the API with the string and integer as the body
+  ///
+  /// Args:
+  ///   status (String): "available"
+  ///   id (int): 1
   Future<void> updateStatus(String status, int id) async {
     print("Status: " + status);
     print("Id: " + id.toString());
@@ -159,6 +198,11 @@ class ChargerApiService {
             });
   }
 
+  /// It takes a chargerId as an argument, and then sends a PUT request to the
+  /// server with the chargerId, userId, start and end time
+  ///
+  /// Args:
+  ///   chargerId (int): The id of the charger you want to reserve
   Future<void> reserveCharger(int chargerId) async {
     var response = await client.put(
       Uri.parse('${API.url}/reservations'),

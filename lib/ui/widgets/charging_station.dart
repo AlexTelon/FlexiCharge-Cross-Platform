@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// The ChargingStation class is a stateless widget that takes in an address, currentLocation, and an
+/// onTap function. It displays the address and currentLocation in a row with an arrow back icon on the
+/// left and an empty text widget on the right
 class ChargingStation extends StatelessWidget {
   const ChargingStation({
     required this.onTap,

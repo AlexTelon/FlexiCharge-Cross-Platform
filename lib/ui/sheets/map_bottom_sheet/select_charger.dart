@@ -7,6 +7,8 @@ import 'package:flexicharge/ui/widgets/plugs.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
+/// This class is a stateless widget that is responsible for displaying the
+/// charging station, plugs, payment options and the charging button
 class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
   const BeginCharging({Key? key}) : super(key: key);
 

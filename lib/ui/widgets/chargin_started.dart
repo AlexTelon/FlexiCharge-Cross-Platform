@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// I'm trying to create a widget that displays a row of three images.
+/// The first image is a logo, the second is an arrow,
+/// and the third is a checkmark
 class ChargingStarted extends StatelessWidget {
   const ChargingStarted({
     Key? key,

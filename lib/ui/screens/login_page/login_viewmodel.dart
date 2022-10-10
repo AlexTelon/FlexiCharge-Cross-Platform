@@ -5,6 +5,15 @@ import '../../../services/user_api_service.dart';
 class LoginViewModel extends BaseViewModel {
   bool _isValid = false;
 
+  /// It takes a username and password, and returns a set of two values:
+  /// a boolean and a string
+  ///
+  /// Args:
+  ///   username (String): String
+  ///   password (String): String
+  ///
+  /// Returns:
+  ///   A Future<Set>
   Future<Set> validateLogin(String username, String password) async {
     var errorMessage = "";
 

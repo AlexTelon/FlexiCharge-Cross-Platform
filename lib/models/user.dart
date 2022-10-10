@@ -1,3 +1,8 @@
+/// The User class is a Dart class that is used to create a User object.
+/// The User object is used to store the user's email, mobile number, password
+/// and repeated password. The User class also has a factory constructor that
+/// is used to create a User object from the response data that is returned
+/// from the API
 class User {
   String email;
   String mobileNumber;

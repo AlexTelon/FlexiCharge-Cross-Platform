@@ -1,3 +1,5 @@
+/// The class is a model for a transaction. It has a bunch of properties,
+/// and a constructor that takes a map of strings and dynamic values
 class Transaction {
   int transactionID = 0;
   String userID = "";

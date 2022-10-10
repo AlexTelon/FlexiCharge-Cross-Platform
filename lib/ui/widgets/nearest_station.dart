@@ -1,6 +1,7 @@
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays the nearest charging station to the user
 class NearestStation extends StatelessWidget {
   const NearestStation({
     required this.location,

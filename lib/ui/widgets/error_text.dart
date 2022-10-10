@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+/// This class is a stateless widget that takes in an error message
+/// and a default input. It then returns a fractionally sized box that
+/// contains a text widget with the error message
 class ErrorText extends StatelessWidget {
   const ErrorText({
     Key? key,

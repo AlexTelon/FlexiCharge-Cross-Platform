@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
+/// A widget that displays an icon and can be tapped
 class MapIcon extends StatelessWidget {
   const MapIcon(
       {Key? key,

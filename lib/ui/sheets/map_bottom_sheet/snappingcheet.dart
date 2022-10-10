@@ -8,6 +8,9 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+/// I have a custom snapping sheet that has a text field and a button. When
+/// the user enters a valid code, the button changes color and text. When the
+/// user enters an invalid code, the button is hidden
 class CustomSnappingSheet extends StatelessWidget {
   const CustomSnappingSheet({
     required this.request,

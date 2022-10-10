@@ -1,6 +1,8 @@
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+/// A widget that displays a top bar with a title and an optional back button.
+/// </code>
 class Topbar extends StatelessWidget {
   const Topbar({Key? key, required this.text, this.onTap}) : super(key: key);
   final String text;

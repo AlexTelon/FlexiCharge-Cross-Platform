@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
 
+/// A button that is 300px wide and 48px tall, with a border radius of 8px,
+/// and a background color of the color passed in, and a text color of white,
+/// and a font size of 16px, and a font weight of 700, and a font style of normal,
+/// and a letter spacing of -0.3839999999999999, and a font family of ITCAvantGardePro,
+/// and a text of the text passed in, and a onTap of the onTap passed in, and a
+/// visibility of the showWideButton passed in
 class WideButton extends StatelessWidget {
   const WideButton({
     Key? key,
