@@ -1,4 +1,4 @@
-import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_view.dart';
+import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
@@ -70,11 +70,10 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                               model.verificationErrors = "";
                             });
                             await model.verifyAccount();
-                            await model.login(this.widget.password);
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => SetupInvoicingView()),
+                                  builder: (context) => LoginView()),
                             );
                           } catch (errors) {
                             setState(() {
@@ -82,15 +81,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                             });
                           }
                         }),
-                    SizedBox(
-                        height:
-                            30.0), /*
-                    if (!model.isAccountVerified &&
-                        model.verificationErrors.isNotEmpty)
-                      Text(model.verificationErrors,
-                          style: TextStyle(color: Colors.red)),
-                      // Text(model.errors.toString())
-                      */
+                    SizedBox(height: 30.0),
                   ],
                 ),
               ],
