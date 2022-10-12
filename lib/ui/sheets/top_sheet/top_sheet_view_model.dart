@@ -30,8 +30,8 @@ class TopSheetViewModel extends BaseViewModel {
   init() {
     startStreamListener();
 
-    timer = Timer.periodic(
-        Duration(seconds: 1), (Timer t) => incrementChargingPercentage());
+    timer = Timer.periodic(Duration(milliseconds: 200),
+        (Timer t) => incrementChargingPercentage());
   }
 
   /// If the charging percentage is less than 100, increment it by 1.
