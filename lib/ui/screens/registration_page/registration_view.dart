@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
-import 'package:flexicharge/models/user_input_validator.dart';
 import 'package:flexicharge/ui/screens/home_page/home_view.dart';
 import 'package:flexicharge/ui/screens/login_page/login_view.dart';
 import 'package:flexicharge/ui/screens/registration_page/registration_viewmodel.dart';
@@ -21,22 +20,35 @@ class RegistrationView extends StatefulWidget {
 }
 
 class _RegistrationViewState extends State<RegistrationView> {
-  bool checked = false;
+  String viewTitle = "Register";
   bool _registrationIsValid = false;
   bool _passwordVisible = true;
-
+  late String errorMsg = "";
   TextEditingController emailController = new TextEditingController();
   TextEditingController passwordController = new TextEditingController();
   TextEditingController repeatPasswordController = new TextEditingController();
 
-  final _formKey = GlobalKey<FormState>();
-  final userInputValidator = UserInputValidator();
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(() {
+      setState(() {});
+    });
+    passwordController.addListener(() {
+      setState(() {});
+    });
+    repeatPasswordController.addListener(() {
+      setState(() {});
+    });
+  }
 
-  late String errorMsg = "";
-
-  String email = "";
-  String password = "";
-  String repeatedPassword = "";
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    repeatPasswordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,11 +58,11 @@ class _RegistrationViewState extends State<RegistrationView> {
         body: SingleChildScrollView(
           child: Form(
             autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _formKey,
+            key: model.formKey,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Topbar(text: "Register"),
+                Topbar(text: viewTitle),
                 SizedBox(height: 30),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -61,7 +73,6 @@ class _RegistrationViewState extends State<RegistrationView> {
                       hint: 'Enter Your Email',
                       suffixIcon: Icon(null),
                       validator: (email) {
-                        email = email!;
                         var message = model.validateEmail(email);
                         return message;
                       },
@@ -86,7 +97,6 @@ class _RegistrationViewState extends State<RegistrationView> {
                         },
                       ),
                       validator: (password) {
-                        password = password!;
                         var message = model.validatePassword(password);
                         return message;
                       },
@@ -111,7 +121,6 @@ class _RegistrationViewState extends State<RegistrationView> {
                           },
                         ),
                         validator: (repeatedPassword) {
-                          repeatedPassword = repeatedPassword!;
                           var message =
                               model.validateRepeatedPassword(repeatedPassword);
                           return message;
@@ -146,20 +155,22 @@ class _RegistrationViewState extends State<RegistrationView> {
                     WideButton(
                         showWideButton: true,
                         text: 'Register',
-                        color: model.showButtonColor(
-                            email, password, repeatedPassword),
+                        color: emailController.text.isNotEmpty &&
+                                passwordController.text.isNotEmpty &&
+                                repeatPasswordController.text.isNotEmpty &&
+                                model.checked
+                            ? FlexiChargeTheme.green
+                            : FlexiChargeTheme.lightGrey,
                         onTap: () async {
-                          if (model.checked) {
+                          if (model.checked && model.areAllEntriesValid()) {
                             var registerData = await model.registerNewUser(
                               emailController.text,
                               passwordController.text,
                               repeatPasswordController.text,
                             );
                             _registrationIsValid = registerData.elementAt(0);
-
                             if (!_registrationIsValid) {
                               setState(() {
-                                print(_registrationIsValid);
                                 errorMsg = registerData.elementAt(1);
                               });
                             } else {
@@ -171,12 +182,20 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         VerifyRegistrationView(
-                                            password:
-                                                this.passwordController.text)),
+                                            password: passwordController.text)),
                               );
                             }
                           } else {
-                            print("Please accept the coditions!");
+                            setState(() {
+                              if (model.isEmailValid(emailController.text) &&
+                                  model.isPasswordValid(
+                                      passwordController.text) &&
+                                  model.isRepeatPasswordValid(
+                                      repeatPasswordController.text)) {
+                                errorMsg =
+                                    "Please accept the terms and conditions!";
+                              }
+                            });
                           }
                         }),
                     SizedBox(height: 20.0),

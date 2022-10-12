@@ -1,5 +1,7 @@
 import 'dart:async';
+import 'package:flexicharge/theme.dart';
 import 'package:flutter/animation.dart';
+import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../../services/user_api_service.dart';
 import '../../../models/user_input_validator.dart';
@@ -10,9 +12,12 @@ import '../../../models/user_input_validator.dart';
 class RegistrationViewmodel extends BaseViewModel {
   bool _checked = false;
   bool _registrationIsValid = false;
+  String _email = "";
   String _password = "";
+  String _repeatedPassword = "";
 
-  final _userInputValidator = UserInputValidator();
+  final userInputValidator = UserInputValidator();
+  final formKey = GlobalKey<FormState>();
 
   set checked(newState) {
     _checked = newState;
@@ -32,7 +37,7 @@ class RegistrationViewmodel extends BaseViewModel {
   String? validateEmail(email) {
     if (email != null &&
         email.isNotEmpty &&
-        !_userInputValidator.emailIsValid(email)) {
+        !userInputValidator.emailIsValid(email)) {
       return 'Enter a valid email';
     } else {
       return null;
@@ -51,8 +56,8 @@ class RegistrationViewmodel extends BaseViewModel {
   ///   A String?
   String? validatePassword(password) {
     if (password != null && password.isNotEmpty) {
-      if (!_userInputValidator.passwordIsValid(password)) {
-        return _userInputValidator.passwordErrors.first;
+      if (!userInputValidator.passwordIsValid(password)) {
+        return userInputValidator.passwordErrors.first;
       } else {
         _password = password;
         return null;
@@ -73,11 +78,12 @@ class RegistrationViewmodel extends BaseViewModel {
   String? validateRepeatedPassword(repeatedPassword) {
     if (repeatedPassword != null &&
         repeatedPassword.isNotEmpty &&
-        !_userInputValidator.passwordsAreEqual(_password, repeatedPassword)) {
-      if (_userInputValidator.passwordErrors.isNotEmpty) {
+        !userInputValidator.passwordsAreEqual(_password, repeatedPassword)) {
+      if (userInputValidator.passwordErrors.isNotEmpty) {
         return 'Password must be valid';
-      } else
+      } else {
         return 'Passwords do not match';
+      }
     } else {
       return null;
     }
@@ -113,20 +119,17 @@ class RegistrationViewmodel extends BaseViewModel {
     return registerData;
   }
 
-  /// If the checkbox is checked, return green, else return grey
-  ///
-  /// Args:
-  ///   email: String
-  ///   password: the password the user entered
-  ///   repeatedPassword: the password that the user has to repeat
+  /// If the email, password, and repeated password are all valid, return true, otherwise return false
   ///
   /// Returns:
-  ///   A function that returns a color.
-  Color showButtonColor(email, password, repeatedPassword) {
-    if (_checked) {
-      return Color(0xff78bd76);
+  ///   A boolean value.
+  bool areAllEntriesValid() {
+    if (isEmailValid(_email) &&
+        isPasswordValid(_password) &&
+        isRepeatPasswordValid(_repeatedPassword)) {
+      return true;
     } else {
-      return Color.fromARGB(255, 157, 160, 159);
+      return false;
     }
   }
 
@@ -138,12 +141,14 @@ class RegistrationViewmodel extends BaseViewModel {
   ///
   /// Returns:
   ///   A boolean value.
-  bool checkEmail(email) {
+  bool isEmailValid(email) {
     if (email != null &&
         email.isNotEmpty &&
-        _userInputValidator.emailIsValid(email)) {
+        userInputValidator.emailIsValid(email)) {
+      _email = email;
       return true;
     }
+    _email = "";
     return false;
   }
 
@@ -155,12 +160,14 @@ class RegistrationViewmodel extends BaseViewModel {
   ///
   /// Returns:
   ///   A boolean value.
-  bool checkPassword(password) {
+  bool isPasswordValid(password) {
     if (password != null &&
         password.isNotEmpty &&
-        _userInputValidator.passwordIsValid(password)) {
+        userInputValidator.passwordIsValid(password)) {
+      _password = password;
       return true;
     }
+    _password = "";
     return false;
   }
 
@@ -173,12 +180,14 @@ class RegistrationViewmodel extends BaseViewModel {
   ///
   /// Returns:
   ///   A boolean value.
-  bool checkRepeatPassword(repeatedPassword) {
+  bool isRepeatPasswordValid(repeatedPassword) {
     if (repeatedPassword != null &&
         repeatedPassword.isNotEmpty &&
-        _userInputValidator.passwordsAreEqual(_password, repeatedPassword)) {
+        userInputValidator.passwordsAreEqual(_password, repeatedPassword)) {
+      _repeatedPassword = repeatedPassword;
       return true;
     }
+    _repeatedPassword = "";
     return false;
   }
 }
