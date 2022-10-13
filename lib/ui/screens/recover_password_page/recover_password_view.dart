@@ -64,7 +64,7 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                           ),
                           SizedBox(height: 30),
                           Text(
-                              '''Please provide the email address you used to register.\nWe will send you an email.\nWith a link to reset your password''',
+                              '''Please provide the email address you used to register.\nWe will send you an email\nwith a link to reset your password''',
                               textAlign: TextAlign.center,
                               style: TextStyle(
                                 fontFamily: 'Lato',

@@ -13,16 +13,16 @@ class InvoiceButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: onTap,
+      onTap: null, //onTap,
       child: Container(
         width: 150,
         height: 48,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(5)),
           border: isSelected == true
-              ? Border.all(color: FlexiChargeTheme.green, width: 3)
+              ? Border.all(color: FlexiChargeTheme.lightMidGrey, width: 3)
               : null,
-          color: FlexiChargeTheme.white,
+          color: FlexiChargeTheme.lightMidGrey,
         ),
         // child: image,
         child: Column(

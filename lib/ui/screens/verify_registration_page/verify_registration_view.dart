@@ -53,7 +53,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                     SizedBox(height: 30),
                     UserFormInput(
                         controller: model.verificationController,
-                        isPassword: true,
+                        isPassword: false,
                         suffixIcon: Icon(null),
                         hint: 'Enter the verification code',
                         labelText: 'Verification Code',

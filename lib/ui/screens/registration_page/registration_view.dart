@@ -157,14 +157,20 @@ class _RegistrationViewState extends State<RegistrationView> {
                     WideButton(
                         showWideButton: true,
                         text: 'Register',
-                        color: emailController.text.isNotEmpty &&
-                                passwordController.text.isNotEmpty &&
-                                repeatPasswordController.text.isNotEmpty &&
+                        color: model.isEmailValid(emailController.text) &&
+                                model
+                                    .isPasswordValid(passwordController.text) &&
+                                model.isRepeatPasswordValid(
+                                    repeatPasswordController.text) &&
                                 model.checked
                             ? FlexiChargeTheme.green
                             : FlexiChargeTheme.lightGrey,
                         onTap: () async {
-                          if (model.checked && model.areAllEntriesValid()) {
+                          if (model.checked &&
+                              model.isEmailValid(emailController.text) &&
+                              model.isPasswordValid(passwordController.text) &&
+                              model.isRepeatPasswordValid(
+                                  repeatPasswordController.text)) {
                             var registerData = await model.registerNewUser(
                               emailController.text,
                               passwordController.text,
@@ -251,7 +257,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                               fontStyle: FontStyle.normal,
                               fontSize: 13.0),
                           textAlign: TextAlign.center),
-                    )
+                    ),
+                    SizedBox(height: 20.0),
                   ],
                 ),
               ],
