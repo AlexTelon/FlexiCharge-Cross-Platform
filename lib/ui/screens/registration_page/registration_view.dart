@@ -251,7 +251,8 @@ class _RegistrationViewState extends State<RegistrationView> {
                               fontStyle: FontStyle.normal,
                               fontSize: 13.0),
                           textAlign: TextAlign.center),
-                    )
+                    ),
+                    SizedBox(height: 20.0),
                   ],
                 ),
               ],

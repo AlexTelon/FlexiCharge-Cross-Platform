@@ -75,33 +75,24 @@ class _LoginViewState extends State<LoginView> {
                           SizedBox(height: 30),
                           FractionallySizedBox(
                             child: UserFormInput(
-                              controller: textControllerPassword,
-                              isPassword: _passwordVisible,
-                              hint: 'Enter Your Password',
-                              labelText: 'Password',
-                              suffixIcon: IconButton(
-                                icon: Icon(
-                                  !_passwordVisible
-                                      ? Icons.visibility
-                                      : Icons.visibility_off,
-                                  color: FlexiChargeTheme.lightMidGrey,
+                                controller: textControllerPassword,
+                                isPassword: _passwordVisible,
+                                hint: 'Enter Your Password',
+                                labelText: 'Password',
+                                suffixIcon: IconButton(
+                                  icon: Icon(
+                                    !_passwordVisible
+                                        ? Icons.visibility
+                                        : Icons.visibility_off,
+                                    color: FlexiChargeTheme.lightMidGrey,
+                                  ),
+                                  onPressed: () {
+                                    setState(() {
+                                      _passwordVisible = !_passwordVisible;
+                                    });
+                                  },
                                 ),
-                                onPressed: () {
-                                  setState(() {
-                                    _passwordVisible = !_passwordVisible;
-                                  });
-                                },
-                              ),
-                              validator: (password) {
-                                if (password != null &&
-                                    password.length < 3 &&
-                                    password.isNotEmpty) {
-                                  return 'Enter min. 3 characters';
-                                } else {
-                                  return null;
-                                }
-                              },
-                            ),
+                                validator: null),
                           ),
                         ],
                       ),
