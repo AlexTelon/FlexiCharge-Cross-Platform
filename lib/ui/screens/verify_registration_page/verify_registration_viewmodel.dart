@@ -16,7 +16,7 @@ class VerifyRegistrationViewModel extends BaseViewModel {
   final _inputValidator = UserInputValidator();
 
   var _dynamicValidationEmailError = "Enter a valid Email";
-  var _dynamicValidationVerificationCodeError = "Enter minimum 6 characters";
+  var _dynamicValidationVerificationCodeError = "Must be 6 characters";
 
   ///Do the verification of a new account.
   Future<void> verifyAccount() async {
