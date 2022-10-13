@@ -134,8 +134,9 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                   Padding(padding: EdgeInsets.fromLTRB(0, 0, 0, 20)),
                   WideButton(
                     text: 'Continue',
-                    color: FlexiChargeTheme.green,
-                    onTap: () async {
+                    color: FlexiChargeTheme.lightGrey,
+                    onTap:
+                        null /*() async {
                       var invoiceData = await model.validateSetupInvoice(
                           nameController.text,
                           addressController.text,
@@ -154,7 +155,8 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                           errorText = invoiceData.elementAt(1);
                         });
                       }
-                    },
+                    },*/
+                    ,
                     showWideButton: true,
                   ),
                   SizedBox(height: 20.0),
