@@ -164,7 +164,11 @@ class _RegistrationViewState extends State<RegistrationView> {
                             ? FlexiChargeTheme.green
                             : FlexiChargeTheme.lightGrey,
                         onTap: () async {
-                          if (model.checked && model.areAllEntriesValid()) {
+                          if (model.checked &&
+                              model.isEmailValid(emailController.text) &&
+                              model.isPasswordValid(passwordController.text) &&
+                              model.isRepeatPasswordValid(
+                                  repeatPasswordController.text)) {
                             var registerData = await model.registerNewUser(
                               emailController.text,
                               passwordController.text,
