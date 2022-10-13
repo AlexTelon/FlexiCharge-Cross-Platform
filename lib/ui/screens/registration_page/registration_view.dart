@@ -157,9 +157,11 @@ class _RegistrationViewState extends State<RegistrationView> {
                     WideButton(
                         showWideButton: true,
                         text: 'Register',
-                        color: emailController.text.isNotEmpty &&
-                                passwordController.text.isNotEmpty &&
-                                repeatPasswordController.text.isNotEmpty &&
+                        color: model.isEmailValid(emailController.text) &&
+                                model
+                                    .isPasswordValid(passwordController.text) &&
+                                model.isRepeatPasswordValid(
+                                    repeatPasswordController.text) &&
                                 model.checked
                             ? FlexiChargeTheme.green
                             : FlexiChargeTheme.lightGrey,
