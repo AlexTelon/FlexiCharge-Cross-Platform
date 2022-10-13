@@ -26,7 +26,7 @@ class WideButton extends StatelessWidget {
       child: InkWell(
         onTap: onTap,
         child: Container(
-          width: 300,
+          width: 315,
           height: 48,
           alignment: Alignment.center,
           decoration: BoxDecoration(
