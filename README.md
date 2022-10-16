@@ -37,5 +37,8 @@ Supports Android versions
 Targets iOS version
 - 15.0
 
-# Contribution
-Follow the convention and coding style explained under the chapter *Architecture* in the [documentation PDF](https://github.com/knowitrickard/FlexiCharge-Cross-Platform/blob/main/documentation/Documentation%20FlexiCharge-Cross-Platform.pdf) in the repository.
+## Documentation
+The official documentation files are placed in the `documentation` folder. The primary documentation is kept in this [PDF document](https://github.com/knowitrickard/FlexiCharge-Cross-Platform/blob/main/documentation/Documentation%20FlexiCharge-Cross-Platform.pdf). In the `documentation` folder there is also a .docx-version of the documentation which can be used to continue the documentation.
+
+## Contribution
+Follow the convention and coding style explained under the chapter *Architecture* in the [documentation PDF](https://github.com/knowitrickard/FlexiCharge-Cross-Platform/blob/main/documentation/Documentation%20FlexiCharge-Cross-Platform.pdf).
