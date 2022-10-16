@@ -1,5 +1,6 @@
+/// TODO: Make use of this Enum instead of hardcoding strings!
+
 enum ChargerStatus {
-  // TODO: Make use of this Enum instead of hardcoding strings!
   Available,
   Unavailable,
   Reserved, // We do no use this as of now, leave it to the backend

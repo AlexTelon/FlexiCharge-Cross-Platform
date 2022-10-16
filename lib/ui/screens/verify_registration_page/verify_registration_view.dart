@@ -18,7 +18,7 @@ class VerifyRegistrationView extends StatefulWidget {
 }
 
 class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
-  String viewTitle = "Verify account";
+  String viewTitle = "Verify Registration";
 
   @override
   Widget build(BuildContext context) {

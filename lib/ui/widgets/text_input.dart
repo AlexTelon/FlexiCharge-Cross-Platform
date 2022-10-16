@@ -1,6 +1,9 @@
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 
+// This widget should be removed from all views and replaced with the UserFormInput widget
+// This widget currently occur in the setup_invoicing_view
+
 /// A widget that displays a text input field with a label and a hint
 /// This class is a stateless widget that takes in a text editing controller,
 /// a label text, a hint, a boolean for whether or not the text is a password,

@@ -221,9 +221,7 @@ class UserApiService {
 
     switch (response.statusCode) {
       case 200:
-        //  var registration = json.decode(response.body);
-        // var parsedRegistration = UserVerificationData.fromJson(registration);
-        break; // return parsedRegistration;
+        break;
       case 400:
         throw responseMsg;
       case 404:
