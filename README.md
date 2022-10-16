@@ -38,4 +38,4 @@ Targets iOS version
 - 15.0
 
 # Contribution
-Follow the convention and coding style explained under chapter Architecture in the documentation PDF, found in the GitHub repository.
+Follow the convention and coding style explained under the chapter *Architecture* in the [documentation PDF](https://github.com/knowitrickard/FlexiCharge-Cross-Platform/blob/main/documentation/Documentation%20FlexiCharge-Cross-Platform.pdf) in the repository.
