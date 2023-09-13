@@ -26,7 +26,7 @@ class StopChargingButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             buttonText,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
       ),
