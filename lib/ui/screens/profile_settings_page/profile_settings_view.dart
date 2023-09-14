@@ -1,8 +1,10 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
 import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_viewmodel.dart';
+import '../change_name_address/change_name_address_view.dart';
 import '../login_page/login_view.dart';
 
 /// ProfileView is a StatelessWidget that returns a Scaffold with a
@@ -75,6 +77,13 @@ class ProfileView extends StatelessWidget {
                       shape: Border(
                         bottom: BorderSide(width: 0.5, color: Colors.grey),
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => ChangeNameAddressView()),
+                        );
+                      },
                     ),
                     ListTile(
                       title: Text(
@@ -92,7 +101,7 @@ class ProfileView extends StatelessWidget {
                     ),
                     WideButton(
                       text: 'Log Out',
-                      color: Color.fromARGB(239, 234, 96, 62),
+                      color: FlexiChargeTheme.red,
                       onTap: () async {
                         await model.logout();
                         Navigator.of(context).pushAndRemoveUntil(
