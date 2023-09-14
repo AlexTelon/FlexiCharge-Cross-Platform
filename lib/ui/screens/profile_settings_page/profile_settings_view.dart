@@ -3,6 +3,7 @@ import 'package:flexicharge/ui/widgets/wide_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flexicharge/ui/screens/profile_settings_page/profile_settings_viewmodel.dart';
+import '../account_settings_page/account_settings_view.dart';
 import '../login_page/login_view.dart';
 
 /// ProfileView is a StatelessWidget that returns a Scaffold with a
@@ -58,6 +59,14 @@ class ProfileView extends StatelessWidget {
                       title: Text(
                         'Account Settings',
                       ),
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => AccountSettingsView(),
+                            ),
+                        );
+                      },
                       trailing: Icon(
                         Icons.arrow_forward_ios,
                       ),
