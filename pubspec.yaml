@@ -3,7 +3,7 @@ description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
 # pub.dev using `pub publish`. This is preferred for private packages.
-publish_to: 'none' # Remove this line if you wish to publish to pub.dev
+publish_to: "none" # Remove this line if you wish to publish to pub.dev
 
 # The following defines the version and build number for your application.
 # A version number is three numbers separated by dots, like 1.2.43
@@ -27,7 +27,7 @@ dependencies:
   stacked: ^2.2.5
   stacked_services: ^0.8.13
   google_maps_flutter: ^2.0.8
-  geolocator: ^7.6.0  
+  geolocator: ^7.6.0
   http: ^0.13.3
   snapping_sheet: ^3.1.0
   flutter_svg: ^0.22.0
@@ -36,15 +36,13 @@ dependencies:
   gradient_widgets: ^0.6.0
   pin_code_fields: ^7.3.0
 
-  email_validator: '^2.1.16'
+  email_validator: "^2.1.16"
   flutter_secure_storage: ^6.0.0
 
-  provider: ^5.0.0 
+  provider: ^5.0.0
   shared_preferences: ^2.0.0
   flutter_riverpod: ^2.0.0-dev.9
   mobile_scanner: ^2.0.0
-
-
 dev_dependencies:
   stacked_generator: ^0.5.1
   build_runner: ^2.1.2
@@ -75,7 +73,6 @@ flutter_icons:
 
 # The following section is specific to Flutter.
 flutter:
-
   assets:
     - assets/images/
     - assets/svg_images/
@@ -87,7 +84,7 @@ flutter:
 
     - family: Lato-Regular
       fonts:
-        - asset: assets/fonts/Lato-Regular.ttf    
+        - asset: assets/fonts/Lato-Regular.ttf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
