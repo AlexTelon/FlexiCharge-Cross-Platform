@@ -43,7 +43,7 @@ dependencies:
   shared_preferences: ^2.0.0
   flutter_riverpod: ^2.0.0-dev.9
   mobile_scanner: ^2.0.0
-
+  
 dev_dependencies:
   stacked_generator: ^0.5.1
   build_runner: ^2.1.2
