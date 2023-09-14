@@ -29,14 +29,14 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
           textTheme: const TextTheme(
-            bodyText1: TextStyle(
+            bodyLarge: TextStyle(
                 // White text
                 color: FlexiChargeTheme.white,
                 fontWeight: FontWeight.w400,
                 fontFamily: "Lato",
                 fontStyle: FontStyle.normal,
                 fontSize: 17.0),
-            bodyText2: TextStyle(
+            bodyMedium: TextStyle(
                 // Black text
                 color: FlexiChargeTheme.black,
                 fontWeight: FontWeight.w700,

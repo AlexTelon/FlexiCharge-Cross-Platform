@@ -31,7 +31,7 @@ class ChargingSummary extends StatelessWidget {
               children: [
                 Text(
                   "Charging stopped at $time",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
               ],
             ),
@@ -44,11 +44,11 @@ class ChargingSummary extends StatelessWidget {
               children: [
                 Text(
                   "Duration ",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   chargingDuration,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -61,11 +61,11 @@ class ChargingSummary extends StatelessWidget {
               children: [
                 Text(
                   "Energy used ",
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 ),
                 Text(
                   energyUsed,
-                  style: Theme.of(context).textTheme.bodyText1,
+                  style: Theme.of(context).textTheme.bodyLarge,
                 )
               ],
             ),
@@ -88,11 +88,11 @@ class ChargingSummary extends StatelessWidget {
                   children: [
                     Text(
                       "Total Cost",
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     ),
                     Text(
                       totalCost,
-                      style: Theme.of(context).textTheme.bodyText2,
+                      style: Theme.of(context).textTheme.bodyMedium,
                     )
                   ],
                 ),
@@ -103,7 +103,7 @@ class ChargingSummary extends StatelessWidget {
             flex: 1,
             child: Text(
               "Your receipt for this charging session and others can be found on the Invoices Page.",
-              style: Theme.of(context).textTheme.bodyText1,
+              style: Theme.of(context).textTheme.bodyLarge,
               textAlign: TextAlign.center,
             ),
           ),
