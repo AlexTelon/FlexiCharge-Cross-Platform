@@ -139,13 +139,7 @@ class _LoginViewState extends State<LoginView> {
                             },
                             child: Text(
                               'I forgot my password',
-                              style: TextStyle(
-                                fontFamily: 'Lato',
-                                color: FlexiChargeTheme.green,
-                                fontSize: 13,
-                                fontWeight: FontWeight.w700,
-                                fontStyle: FontStyle.normal,
-                              ),
+                              style: Style.linkText,
                             ),
                           )
                         ],

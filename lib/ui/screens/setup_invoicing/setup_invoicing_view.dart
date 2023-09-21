@@ -62,13 +62,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                                     'Invoices are the quickest way to start charging \n and manage your payments.'),
                             TextSpan(),
                           ],
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: FlexiChargeTheme.darkGrey,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          style: Style.regularText,
                         ),
                       )
                     ],
@@ -87,13 +81,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                                 text:
                                     'All your charging sessions are collected in a single invoice \n and delivered to you at the end of each month'),
                           ],
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: FlexiChargeTheme.darkGrey,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          style: Style.regularText,
                         ),
                       )
                     ],
@@ -168,13 +156,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                       );
                     },
                     child: Text("No Thanks",
-                        style: const TextStyle(
-                            color: FlexiChargeTheme.green,
-                            fontWeight: FontWeight.w700,
-                            fontFamily: "Lato",
-                            fontStyle: FontStyle.normal,
-                            fontSize: 13.0),
-                        textAlign: TextAlign.center),
+                        style: Style.linkText, textAlign: TextAlign.center),
                   ),
                   SizedBox(height: 10.0),
                   Column(
@@ -190,13 +172,7 @@ class _SetupInvoicingViewState extends State<SetupInvoicingView> {
                                     'If you choose not to invoice, \nyou will be asked to pay each time using Swish'),
                             TextSpan()
                           ],
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: FlexiChargeTheme.black,
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          style: Style.regularText,
                         ),
                       )
                     ],

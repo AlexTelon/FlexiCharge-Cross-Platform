@@ -89,7 +89,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                           !_passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Color(0xff868686),
+                          color: FlexiChargeTheme.lightMidGrey,
                         ),
                         onPressed: () {
                           setState(() {
@@ -143,12 +143,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                         ),
                         Text(
                           "I agree to the terms and conditions",
-                          style: const TextStyle(
-                              color: const Color(0xff212121),
-                              fontWeight: FontWeight.w400,
-                              fontFamily: "Lato",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 13.0),
+                          style: Style.regularText,
                         )
                       ],
                     ),
@@ -212,13 +207,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                       children: [
                         Text(
                           'Already have an account? ',
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Color(0xff212121),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          style: Style.regularText,
                         ),
                         InkWell(
                           onTap: () {
@@ -230,13 +219,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                           },
                           child: Text(
                             'Log In',
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Color(0xff78bd76),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                            ),
+                            style: Style.linkText,
                           ),
                         ),
                       ],
@@ -250,13 +233,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                         );
                       },
                       child: Text("Continue as Guest",
-                          style: const TextStyle(
-                              color: const Color(0xff78bd76),
-                              fontWeight: FontWeight.w700,
-                              fontFamily: "Lato",
-                              fontStyle: FontStyle.normal,
-                              fontSize: 13.0),
-                          textAlign: TextAlign.center),
+                          style: Style.linkText, textAlign: TextAlign.center),
                     ),
                     SizedBox(height: 20.0),
                   ],
