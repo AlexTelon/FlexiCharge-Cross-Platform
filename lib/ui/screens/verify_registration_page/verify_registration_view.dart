@@ -1,3 +1,4 @@
+import 'package:flexicharge/theme.dart';
 import 'package:flexicharge/ui/screens/setup_invoicing/setup_invoicing_view.dart';
 import 'package:flexicharge/ui/screens/verify_registration_page/verify_registration_viewmodel.dart';
 import 'package:flexicharge/ui/widgets/top_bar.dart';
@@ -63,7 +64,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                     WideButton(
                         showWideButton: true,
                         text: 'Verify Account',
-                        color: Color(0xff78bd76),
+                        color: FlexiChargeTheme.green,
                         onTap: () async {
                           try {
                             setState(() {

@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 import '../../widgets/user_form_input.dart';
+import '../../../theme.dart';
 
 /// I have a form with a textfield and a button. When the button is pressed,
 /// the textfield is validated and if it's valid, the button's onTap function
@@ -64,15 +65,10 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                           ),
                           SizedBox(height: 30),
                           Text(
-                              '''Please provide the email address you used to register.\nWe will send you an email\nwith a link to reset your password''',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                fontFamily: 'Lato',
-                                color: Color(0xff212121),
-                                fontSize: 13,
-                                fontWeight: FontWeight.w400,
-                                fontStyle: FontStyle.normal,
-                              )),
+                            '''Please provide the email address you used to register.\nWe will send you an email\nwith a link to reset your password''',
+                            style: Style.regularText,
+                            textAlign: TextAlign.center,
+                          ),
                           // Text('We will send you an email.'),
                           // Text('with a link to reset your password')
                         ],
@@ -91,7 +87,7 @@ class _RecoverPasswordViewState extends State<RecoverPasswordView> {
                                     mail: textControllerEmail.text)),
                           );
                         },
-                        color: Color(0xff78bd76),
+                        color: FlexiChargeTheme.green,
                       ),
                       SizedBox(height: 20),
                     ],
