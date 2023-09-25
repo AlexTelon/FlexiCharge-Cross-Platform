@@ -10,11 +10,20 @@
   **Retrospective Summery Sprint 1**
   - The application is now fully functional on both devices, with two new UIs implemented. Deprecated dependencies and packages have been updated, and crucial documentation was received. The Scrum method is streamlining development, and cross-platform and native squads are aligning efforts. However, backlog grooming for Sprint 2 needs improvement, and communication with late arrivals must be enhanced. The team had a positive feeling during the retrospective, and a new Git workflow was introduced, but the Google Maps API key is still pending. Reflecting on the product, there were successes in UI development and documentation, but delays in documentation delivery and missing API keys were noted. Technology updates and Git workflow implementation were positive, though repository updates took time. The Scrum process has been fully adapted, with open dialogue and constructive feedback. Overall, the team is making progress, but there's room for improvement in certain areas, particularly in communication and documentation management.
 
-  **Sprint 2**
-  - The Sprint backlog is set for Sprint 2.
-  - We agreed on putting our focus on UI related items and once they are done switch the focus to the backend functionality for these UI related items.
-  - 3 backlog items regarding bug fixing is also on the agenda for this sprint but they will be focused later in the sprint.
-  - A lot of backlog items regarding testing is also on the table for this sprint.
-  - The native squad also has their focus on UI related backlog items this sprint so that our squads work towards the same direction. 
+ **Sprint 2**
+ - The Sprint backlog is set for Sprint 2.
+ - We agreed on putting our focus on UI related items and once they are done switch the focus to the backend functionality for these UI related items.
+ - 3 backlog items regarding bug fixing is also on the agenda for this sprint but they will be focused later in the sprint.
+ - A lot of backlog items regarding testing is also on the table for this sprint.
+ - The native squad also has their focus on UI related backlog items this sprint so that our squads work towards the same direction.
 
+   **Retrospective Summery Sprint 2**
+   In summary, the team has made effective progress through cooperation with other squads and gained valuable insights from a Scrum Master workshop with Bruce. However, time dedicated to an AI assignment affected overall productivity. The team demonstrated agility in handling setbacks and communicates well. We successfully implemented new UI screens and maintained project documentation. Despite these accomplishments, we faced challenges with missing backend functionality due to absent API endpoints and the ongoing quest for a Google Maps API key. Our communication and collaboration efforts with other squads have improved, but we reflected on the need for better-defined sprint goal and enhanced communication practices. Additionally, there is some uncertainty caused by conflicting opinions on Scrum practices from different sources. 
+
+**Sprint 3**
+- The sprint backlog is set for Sprint 3.
+- Sprint Goal: Get the charging functionality to properly work
+- The main focus this sprint will be getting the charging process to work and therefore is most of sprint backlog items related to that.
+- There are also some items related to some UI fixes.
+- Our test lead focus will be on preparing tests for the disred charging functionality.
 
