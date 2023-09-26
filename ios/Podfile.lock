@@ -11,10 +11,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
-  - GoogleMaps (7.1.0):
-    - GoogleMaps/Maps (= 7.1.0)
-  - GoogleMaps/Base (7.1.0)
-  - GoogleMaps/Maps (7.1.0):
+
+  - GoogleMaps (8.2.0):
+    - GoogleMaps/Maps (= 8.2.0)
+  - GoogleMaps/Base (8.2.0)
+  - GoogleMaps/Maps (8.2.0):
+
     - GoogleMaps/Base
   - GoogleMLKit/BarcodeScanning (2.6.0):
     - GoogleMLKit/MLKitCore
@@ -42,9 +44,11 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.2)
-  - KlarnaMobileSDK (2.2.3):
-    - KlarnaMobileSDK/full (= 2.2.3)
-  - KlarnaMobileSDK/full (2.2.3)
+
+  - KlarnaMobileSDK (2.6.10):
+    - KlarnaMobileSDK/full (= 2.6.10)
+  - KlarnaMobileSDK/full (2.6.10)
+
   - MLImage (1.0.0-beta2)
   - MLKitBarcodeScanning (1.7.0):
     - MLKitCommon (~> 5.0)
@@ -83,7 +87,7 @@ DEPENDENCIES:
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - geolocator_apple (from `.symlinks/plugins/geolocator_apple/ios`)
   - google_maps_flutter_ios (from `.symlinks/plugins/google_maps_flutter_ios/ios`)
-  - KlarnaMobileSDK (= 2.2.3)
+  - KlarnaMobileSDK
   - mobile_scanner (from `.symlinks/plugins/mobile_scanner/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
 
@@ -125,13 +129,14 @@ SPEC CHECKSUMS:
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
-  GoogleMaps: bc56ffb0324e345a2d91bac1a64a920f9c8f1b20
+
+  GoogleMaps: 081f2547b60a1c0870a8f49166a653900e5055d5
   GoogleMLKit: 755661c46990a85e42278015f26400286d98ad95
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34
   GoogleUtilities: 13e2c67ede716b8741c7989e26893d151b2b2084
   GoogleUtilitiesComponents: 679b2c881db3b615a2777504623df6122dd20afe
   GTMSessionFetcher: 5595ec75acf5be50814f81e9189490412bad82ba
-  KlarnaMobileSDK: fd45c3323345347a866d44b5bc00178ddb11c87b
+  KlarnaMobileSDK: 7cbd171e0bec5128bbd732b87967941045817d84
   MLImage: a454f9f8ecfd537783a12f9488f5be1a68820829
   MLKitBarcodeScanning: b8257854f6afc1c8443d61ec6b98c28b35625df6
   MLKitCommon: 3bc17c6f7d25ce3660f030350b46ae7ec9ebca6e
@@ -142,6 +147,6 @@ SPEC CHECKSUMS:
   Protobuf: 970f7ee93a3a08e3cf64859b8efd95ee32b4f87f
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
 
-PODFILE CHECKSUM: 4f0f4cc041961986b1e84e15e58b9cdd68e52964
+PODFILE CHECKSUM: c85171f42754331f5f1cbc3c374e7daddf469cdc
 
 COCOAPODS: 1.12.1
