@@ -11,10 +11,12 @@ PODS:
     - GoogleUtilities/Environment (~> 7.7)
     - nanopb (< 2.30910.0, >= 2.30908.0)
     - PromisesObjC (< 3.0, >= 1.2)
+
   - GoogleMaps (8.2.0):
     - GoogleMaps/Maps (= 8.2.0)
   - GoogleMaps/Base (8.2.0)
   - GoogleMaps/Maps (8.2.0):
+
     - GoogleMaps/Base
   - GoogleMLKit/BarcodeScanning (2.6.0):
     - GoogleMLKit/MLKitCore
@@ -42,9 +44,11 @@ PODS:
   - GoogleUtilitiesComponents (1.1.0):
     - GoogleUtilities/Logger
   - GTMSessionFetcher/Core (1.7.2)
+
   - KlarnaMobileSDK (2.6.10):
     - KlarnaMobileSDK/full (= 2.6.10)
   - KlarnaMobileSDK/full (2.6.10)
+
   - MLImage (1.0.0-beta2)
   - MLKitBarcodeScanning (1.7.0):
     - MLKitCommon (~> 5.0)
@@ -125,6 +129,7 @@ SPEC CHECKSUMS:
   geolocator_apple: b741765c55dc21950e3e106e8b3584e55cf81ce5
   google_maps_flutter_ios: 66201f392bf62d500f07670a30488a247b9bb5b9
   GoogleDataTransport: 54dee9d48d14580407f8f5fbf2f496e92437a2f2
+
   GoogleMaps: 081f2547b60a1c0870a8f49166a653900e5055d5
   GoogleMLKit: 755661c46990a85e42278015f26400286d98ad95
   GoogleToolboxForMac: 8bef7c7c5cf7291c687cf5354f39f9db6399ad34

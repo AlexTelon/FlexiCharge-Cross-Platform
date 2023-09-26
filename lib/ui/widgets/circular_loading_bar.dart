@@ -39,8 +39,8 @@ class CircularLoadingBar extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text((loadingPercentage * 100).toInt().toString(),
-                      style: Theme.of(context).textTheme.bodyText1),
-                  Text("%", style: Theme.of(context).textTheme.bodyText1)
+                      style: Theme.of(context).textTheme.bodyLarge),
+                  Text("%", style: Theme.of(context).textTheme.bodyLarge)
                 ],
               )
             ],

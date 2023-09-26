@@ -18,6 +18,7 @@ class LocalData {
   int chargingPercentage = 0;
   //late Timer timer; This is commented out because a temporary
   //fake timer is used to simulate a charging session.
+  // ignore: close_sinks
   late StreamController<EventType> controller;
   late Stream stream;
 

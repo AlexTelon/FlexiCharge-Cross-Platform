@@ -6,6 +6,8 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 import '../../widgets/user_form_input.dart';
 
+import '../../../theme.dart';
+
 /// A class that creates a view when a reset password verification code was sent to the email provided.
 /// The email will be displayed in this view and the user will have input fields to type in the
 /// new password, repeat new password and the verification code. The email, password and verification
@@ -54,13 +56,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                               TextSpan(
                                 text:
                                     '''An email with a verification code to reset your password\n has been sent to the following address...''',
-                                style: TextStyle(
-                                  fontFamily: 'Lato',
-                                  color: Color(0xff212121),
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w400,
-                                  fontStyle: FontStyle.normal,
-                                ),
+                                style: Style.regularText,
                               ),
                             ],
                           ),
@@ -78,13 +74,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                             children: [
                               TextSpan(text: widget.mail),
                             ],
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Color(0xff212121),
-                              fontSize: 19,
-                              fontWeight: FontWeight.w800,
-                              fontStyle: FontStyle.normal,
-                            ),
+                            style: Style.higlightedText,
                           ),
                         ),
                       ],
@@ -113,7 +103,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                           !_passwordVisible
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: Color(0xff868686),
+                          color: FlexiChargeTheme.lightMidGrey,
                         ),
                         onPressed: () {
                           setState(() {
@@ -137,7 +127,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                             !_passwordVisible
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: Color(0xff868686),
+                            color: FlexiChargeTheme.lightMidGrey,
                           ),
                           onPressed: () {
                             setState(() {
@@ -169,7 +159,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                                     builder: (context) => LoginView()),
                               );
                             },
-                            color: Color(0xff78bd76),
+                            color: FlexiChargeTheme.green,
                           ),
                         ]),
                     SizedBox(height: 10.0),
@@ -178,13 +168,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                       children: [
                         Text(
                           "I didn't get my email :(",
-                          style: TextStyle(
-                            fontFamily: 'Lato',
-                            color: Color(0xff212121),
-                            fontSize: 13,
-                            fontWeight: FontWeight.w400,
-                            fontStyle: FontStyle.normal,
-                          ),
+                          style: Style.regularText,
                         ),
                         InkWell(
                           onTap: () {
@@ -192,13 +176,7 @@ class _RecoverEmailSentViewState extends State<RecoverEmailSentView> {
                           },
                           child: Text(
                             "Send Again",
-                            style: TextStyle(
-                              fontFamily: 'Lato',
-                              color: Color(0xff78bd76),
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                              fontStyle: FontStyle.normal,
-                            ),
+                            style: Style.linkText,
                           ),
                         ),
                       ],
