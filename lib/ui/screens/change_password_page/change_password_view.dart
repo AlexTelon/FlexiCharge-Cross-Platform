@@ -61,7 +61,15 @@ class _ChangePasswordViewState extends State<ChangePasswordView> {
                                 suffixIcon: Icon(null),
                                 validator: null,
                               ),
-                              SizedBox(height: 320),
+                              SizedBox(height: 20),
+                              UserFormInput(
+                                controller: newPasswordController,
+                                labelText: 'Repeat Password',
+                                hint: 'Enter Your Repeat Password',
+                                suffixIcon: Icon(null),
+                                validator: null,
+                              ),
+                              SizedBox(height: 180),
                               WideButton(
                                 color: FlexiChargeTheme.green,
                                 text: "Save",
