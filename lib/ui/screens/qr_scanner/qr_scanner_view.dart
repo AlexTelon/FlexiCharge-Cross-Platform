@@ -16,7 +16,7 @@ class _QRViewState extends State<QrScannerView> {
   @override
   Widget build(BuildContext context) {
     return ViewModelBuilder<QrScannerViewModel>.reactive(
-      onModelReady: (model) => model.init(),
+      onViewModelReady: (model) => model.init(),
       builder: (context, model, child) => Scaffold(
         appBar: AppBar(
           backgroundColor: FlexiChargeTheme.green,
@@ -57,9 +57,13 @@ class _QRViewState extends State<QrScannerView> {
           ],
         ),
         body: MobileScanner(
-            allowDuplicates: false,
             controller: model.cameraController,
-            onDetect: model.onDetectQrCode),
+            onDetect: (capture) {
+              final List<Barcode> barcodes = capture.barcodes;
+              for (final barcode in barcodes) {
+                model.onDetectQrCode(barcode, null);
+              }
+            }),
       ),
       viewModelBuilder: () => QrScannerViewModel(),
     );
