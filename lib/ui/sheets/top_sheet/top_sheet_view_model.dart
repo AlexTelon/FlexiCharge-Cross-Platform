@@ -46,13 +46,13 @@ class TopSheetViewModel extends BaseViewModel {
     }
   }
 
-  /// A getter that returns the address of the charger.
+  /// The `chargingAddress` getter is returning the address of the charger.
   String get chargingAdress {
-    /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+    var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
-        .contains((charger) => charger.id == transactionSession.chargerID));
-    */
-    return 'Kungsgatan 1a, Jönköping';
+        .any((element) => element.id == transactionSession.chargerID));
+
+    return chargerPoint.name;
   }
 
   /// Returns amount of seconds left until fully charged expressed as

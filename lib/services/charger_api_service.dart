@@ -78,8 +78,8 @@ class ChargerApiService {
                       status: charger['status'],
                     )
                   ],
-                  coordinates:
-                      LatLng(charger['location'][0], charger['location'][1]),
+                  coordinates: LatLng(charger['location'][0].toDouble(),
+                      charger['location'][1].toDouble()),
                   price: chargerPoint.price,
                   name: chargerPoint.name,
                 ),
