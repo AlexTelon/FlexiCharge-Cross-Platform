@@ -12,10 +12,8 @@ import '../../widgets/user_form_input.dart';
 /// user's account
 class VerifyRegistrationView extends StatefulWidget {
   final String password;
-  final String email;
 
-  const VerifyRegistrationView(
-      {super.key, required this.password, required this.email});
+  const VerifyRegistrationView({super.key, required this.password});
   @override
   State<VerifyRegistrationView> createState() => _VerifyRegistrationViewState();
 }
@@ -47,15 +45,6 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                   children: [
                     ///Contains the TextInputs
                     UserFormInput(
-                        controller: model.emailController,
-                        defaultInput: widget.email,
-                        isPassword: false,
-                        hint: 'Enter your Email',
-                        labelText: 'Email',
-                        suffixIcon: Icon(null),
-                        validator: (email) => model.emailValidator(email)),
-                    SizedBox(height: 30),
-                    UserFormInput(
                         controller: model.verificationController,
                         isPassword: false,
                         suffixIcon: Icon(null),
@@ -63,7 +52,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                         labelText: 'Verification Code',
                         validator: (verificationCode) =>
                             model.verificationCodeValidator(verificationCode)),
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 380),
                     WideButton(
                         showWideButton: true,
                         text: 'Verify Account',

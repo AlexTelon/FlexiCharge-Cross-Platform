@@ -185,8 +185,7 @@ class _RegistrationViewState extends State<RegistrationView> {
                                 MaterialPageRoute(
                                     builder: (context) =>
                                         VerifyRegistrationView(
-                                            password: passwordController.text,
-                                            email: emailController.text)),
+                                            password: passwordController.text)),
                               );
                             }
                           } else {
