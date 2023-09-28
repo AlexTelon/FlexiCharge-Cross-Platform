@@ -29,6 +29,9 @@ class UserFormInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (defaultInput != null) {
+      controller.text = defaultInput!;
+    }
     return FractionallySizedBox(
       widthFactor: 0.8,
       child: TextFormField(
