@@ -352,6 +352,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  freezed_annotation:
+    dependency: transitive
+    description:
+      name: freezed_annotation
+      sha256: c3fd9336eb55a38cc1bbd79ab17573113a8deccd0ecbbf926cca3c62803b5c2d
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.4.1"
   frontend_server_client:
     dependency: transitive
     description:
@@ -973,22 +981,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.1+1"
-  stacked_core:
-    dependency: transitive
-    description:
-      name: stacked_core
-      sha256: "28889e0b3cb612bf8f13d85050df43fb386f9483bd0fba6756637d9bc7af23dd"
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.2.4"
   stacked_generator:
     dependency: "direct dev"
     description:
       name: stacked_generator
-      sha256: "6ca20eae7da39b16b77270625086d60e055da746d6abc1b037df59ce3dd529e2"
+      sha256: c141baf56cb7168dfde142d3578118c7bf914be9fb62bc8593344e97894ac8f9
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.8"
+    version: "1.5.1"
   stacked_services:
     dependency: "direct main"
     description:
