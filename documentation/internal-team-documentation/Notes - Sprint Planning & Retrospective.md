@@ -18,7 +18,7 @@
  - The native squad also has their focus on UI related backlog items this sprint so that our squads work towards the same direction.
 
    **Retrospective Summery Sprint 2**
-   In summary, the team has made effective progress through cooperation with other squads and gained valuable insights from a Scrum Master workshop with Bruce. However, time dedicated to an AI assignment affected overall productivity. The team demonstrated agility in handling setbacks and communicates well. We successfully implemented new UI screens and maintained project documentation. Despite these accomplishments, we faced challenges with missing backend functionality due to absent API endpoints and the ongoing quest for a Google Maps API key. Our communication and collaboration efforts with other squads have improved, but we reflected on the need for better-defined sprint goal and enhanced communication practices. Additionally, there is some uncertainty caused by conflicting opinions on Scrum practices from different sources. 
+   - In summary, the team has made effective progress through cooperation with other squads and gained valuable insights from a Scrum Master workshop with Bruce. However, time dedicated to an AI assignment affected overall productivity. The team demonstrated agility in handling setbacks and communicates well. We successfully implemented new UI screens and maintained project documentation. Despite these accomplishments, we faced challenges with missing backend functionality due to absent API endpoints and the ongoing quest for a Google Maps API key. Our communication and collaboration efforts with other squads have improved, but we reflected on the need for better-defined sprint goal and enhanced communication practices. Additionally, there is some uncertainty caused by conflicting opinions on Scrum practices from different sources. 
 
 **Sprint 3**
 - The sprint backlog is set for Sprint 3.
@@ -27,3 +27,7 @@
 - There are also some items related to some UI fixes.
 - Our test lead focus will be on preparing tests for the disred charging functionality.
 
+   **Retrospective Summery Sprint 3**
+  - In sum, the sprint exhibited a commendable level of team focus, demonstrating significant progress toward the ultimate goal of delivering a comprehensive product. Noteworthy achievements include the successful implementation of the charging process, encompassing payment integration with Klarna, albeit solely with mock data and not yet with live data sourced from the backend. It has become apparent, however, that our team's reliance on the backend squad has presented certain limitations, hindering the sprint's overall efficiency.
+A prominent positive aspect of this sprint was the lucidity and specificity of our sprint goal, which facilitated alignment among team members, fostering a cohesive work environment. Nevertheless, it became evident that more time than initially anticipated was requisite for the complete realization of this goal. Furthermore, the sprint was characterized by effective intra-team and inter-team communication, particularly with the native squad.
+On the other hand, it has become increasingly apparent that communication with the backend squad must undergo improvement in preparation for the forthcoming sprint.   
