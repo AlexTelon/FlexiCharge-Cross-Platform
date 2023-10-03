@@ -9,7 +9,11 @@ import 'package:stacked_services/stacked_services.dart';
 class QrScannerViewModel extends BaseViewModel {
   final _navigationService = locator<NavigationService>();
   final localData = locator<LocalData>();
-  MobileScannerController cameraController = MobileScannerController();
+  MobileScannerController cameraController = MobileScannerController(
+    detectionSpeed: DetectionSpeed.noDuplicates,
+    facing: CameraFacing.back,
+    torchEnabled: false,
+  );
 
   void init() {}
 
