@@ -1,226 +1,220 @@
 import 'dart:convert';
 import 'package:flexicharge/enums/error_codes.dart';
+import 'package:flexicharge/enums/charger_status.dart';
 import 'package:flexicharge/models/api.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart' as http;
 
-/// It makes requests to the API and returns the response
+/// This class contains the functions that handles HTTP requests to the API
+/// endpoints, relating to both chargers and charger points, and returns the
+/// appropriate data or exceptions based on the HTTP responses.
 class ChargerApiService {
   http.Client client = new http.Client();
-  var chargerPoint = new ChargerPoint();
 
-  /// It makes a GET request to the API, and if the response is 200, it
-  /// parses the response body as a list of dynamic objects, and then adds
-  /// each object to a list of Charger objects
+  /// It makes a `get` request to the API, and returns a list of [Charger] Objects
+  /// on a successful response.
   ///
-  /// Returns:
-  ///   A list of Charger objects.
+  /// * **Returns**:
+  ///   * A list of [Charger] Objects.
   Future<List<Charger>> getChargers() async {
-    var chargers = <Charger>[];
-    var response = await client.get(Uri.parse('${API.url}/chargers'));
-    switch (response.statusCode) {
-      case 200:
-        var parsed = json.decode(response.body) as List<dynamic>;
-        for (var charger in parsed) {
-          chargers.add(Charger.fromJson(charger));
-        }
-        return chargers;
-      case 500:
-        throw Exception(ErrorCodes.internalError);
-      default:
-        throw Exception(ErrorCodes.internalError);
-    }
-  }
-
-  /// It gets all the chargers from the API and then gets the charger point
-  /// for each charger and then adds the charger to the charger point
-  ///
-  /// Returns:
-  ///   A list of ChargerPoints.
-  Future<List<ChargerPoint>> getChargerPoints() async {
-    List<ChargerPoint> chargerPoints = [];
-
     try {
+      // TODO: Why not explcitly set the type of response to http.Response?
+      // Applies to all functions in this file.
       var response = await client.get(Uri.parse('${API.url}/chargers'));
       switch (response.statusCode) {
         case 200:
-          List<dynamic> chargers = json.decode(response.body);
-          if (chargers.isEmpty)
-            return throw throw Exception('No Chargers Found');
-          for (var charger in chargers) {
-            var chargerPoint = chargerPoints
-                .where(
-                    (value) => value.chargerPointId == charger['chargePointID'])
-                .toList();
-            if (chargerPoint.isNotEmpty) {
-              var firstChargerPoint = chargerPoint.first;
-
-              chargerPoint.first.chargers.add(Charger.fromCharger(
-                id: charger['chargerID'],
-                cost: firstChargerPoint.price,
-                chargerPointId: charger['chargePointID'],
-                status: charger['status'],
-              ));
-            } else {
-              var chargerPoint =
-                  await getChargerPoint(charger['chargePointID']);
-
-              chargerPoints.add(
-                ChargerPoint.fromCharger(
-                  chargerPointId: charger['chargePointID'],
-                  chargers: [
-                    Charger.fromCharger(
-                      id: charger['chargerID'],
-                      cost: chargerPoint.price,
-                      chargerPointId: charger['chargePointID'],
-                      status: charger['status'],
-                    )
-                  ],
-                  coordinates:
-                      LatLng(charger['location'][0], charger['location'][1]),
-                  price: chargerPoint.price,
-                  name: chargerPoint.name,
-                ),
-              );
-            }
+          List<Charger> chargers = [];
+          List<dynamic> parsed = json.decode(response.body);
+          for (var charger in parsed) {
+            chargers.add(Charger.fromJson(charger));
           }
+          return chargers;
+        // TODO: Check if this is supposed to throw an exception or return an
+        // empty list. Applicable to all 404 responses in this file.
+        // TODO: Check if this 404 is intentional from the backend.
+        case 404:
+          throw Exception(ErrorCodes.notFound);
+        // TODO: Check if there should be a 500 response from the backend.
+        // Commented out as there is no 500 response from the backend as of now.
+        /*
+        case 500:
+          throw Exception(ErrorCodes.internalError);
+        */
+        default:
+          throw Exception(ErrorCodes.internalError);
+      }
+    } catch (e) {
+      print('Error in charger_api_service, getChargers():\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
+    }
+  }
 
+  /// It makes a `get` request to the API, and returns a list of [ChargerPoint]
+  /// Objects on a successful response.
+  ///
+  /// * **Returns**:
+  ///   * A list of [ChargerPoint] Objects.
+  Future<List<ChargerPoint>> getChargerPoints() async {
+    try {
+      var response = await client.get(Uri.parse('${API.url}/chargePoints'));
+      switch (response.statusCode) {
+        case 200:
+          List<ChargerPoint> chargerPoints = [];
+          List<dynamic> parsed = json.decode(response.body);
+          for (var chargerPoint in parsed) {
+            chargerPoints.add(ChargerPoint.fromJson(chargerPoint));
+          }
           return chargerPoints;
+        // TODO: Check if this 404 is intentional from the backend.
+        case 404:
+          throw Exception(ErrorCodes.notFound);
         case 500:
           throw Exception(ErrorCodes.internalError);
         default:
           throw Exception(ErrorCodes.internalError);
       }
     } catch (e) {
-      print(e);
+      print(
+          'Error in charger_api_service, getChargerPoints():\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
     }
-    return chargerPoints;
   }
 
-  /// It makes a GET request to the API, and if the response is successful,
-  /// it returns a ChargerPoint object
+  /// It makes a `get` request to the API, and returns the [ChargerPoint]
+  /// Object of the corresponding `id` on a successful response.
   ///
-  /// Args:
-  ///   id (int): The id of the charger point you want to get.
+  /// * **Args**:
+  ///   * `id` [int] : The ID of the charger point you want to get.
   ///
-  /// Returns:
-  ///   A ChargerPoint object.
+  /// * **Returns**:
+  ///   * A [ChargerPoint] Object.
+  // TODO: Check if this name should be getChargerPointById instead.
   Future<ChargerPoint> getChargerPoint(int id) async {
-    ChargerPoint chargerPoint = ChargerPoint();
     try {
       var response = await client.get(Uri.parse('${API.url}/chargePoints/$id'));
-      if (response.statusCode == 200) {
-        return ChargerPoint.fromJson(json.decode(response.body));
+      switch (response.statusCode) {
+        case 200:
+          return ChargerPoint.fromJson(json.decode(response.body));
+        case 404:
+          throw Exception(ErrorCodes.notFound);
+        case 500:
+          throw Exception(ErrorCodes.internalError);
+        default:
+          throw Exception(ErrorCodes.internalError);
       }
     } catch (e) {
-      print(e);
+      print(
+          'Error in charger_api_service, getChargerPoint($id):\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
     }
-
-    return chargerPoint;
   }
 
-  /// Remove .first from the return when you use the flexi charger Api
+  /// It makes a `get` request to the API, and returns the [Charger]
+  /// Object of the corresponding `id` on a successful response.
+  ///
+  /// * **Args**:
+  ///   * `id` [int] : The ID of the charger you want to get.
+  ///
+  /// * **Returns**:
+  ///   * A [Charger] Object.
   Future<Charger> getChargerById(int id) async {
-    // print(id);
-    var response = await client.get(Uri.parse('${API.url}/chargers/$id'));
-    // print(response.body);
-    switch (response.statusCode) {
-      case 200:
-        var charger = json.decode(response.body);
-        var chargerFromJson = Charger.fromJson(charger);
-        return chargerFromJson;
-      case 404:
-        throw Exception(ErrorCodes.notFound);
-      default:
-        throw Exception(ErrorCodes.internalError);
+    try {
+      var response = await client.get(Uri.parse('${API.url}/chargers/$id'));
+      switch (response.statusCode) {
+        case 200:
+          return Charger.fromJson(json.decode(response.body));
+        case 404:
+          // TODO: Check if this really this should throw an exception and not just return empty chargerPoint
+          throw Exception(ErrorCodes.notFound);
+        default:
+          throw Exception(ErrorCodes.internalError);
+      }
+    } catch (e) {
+      print(
+          'Error in charger_api_service, getChargerById($id):\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
     }
   }
 
-  /// It makes a GET request to the server, and if the response is 200, it
-  /// parses the response body into a  list of Charger objects, and returns
-  /// the list
+  /// It makes a `get` request to the API, and returns a list of all available
+  /// [Charger] Objects on a successful response.
   ///
-  /// Returns:
-  ///   A list of chargers.
+  /// * **Returns**:
+  ///   * A list of [Charger] Objects.
   Future<List<Charger>> getAllAvailableChargers() async {
-    var chargers = <Charger>[];
-    var response = await client.get(Uri.parse('${API.url}/chargers/available'));
-    switch (response.statusCode) {
-      case 200:
-        var parsed = json.decode(response.body) as List<dynamic>;
-        for (var charger in parsed) {
-          chargers.add(Charger.fromJson(charger));
-        }
-        return chargers;
-      case 404:
-        throw Exception(ErrorCodes.notFound);
-      default:
-        throw Exception(ErrorCodes.internalError);
+    try {
+      var response =
+          await client.get(Uri.parse('${API.url}/chargers/available'));
+      switch (response.statusCode) {
+        case 200:
+          List<Charger> chargers = [];
+          var parsed = json.decode(response.body) as List<dynamic>;
+          for (var charger in parsed) {
+            chargers.add(Charger.fromJson(charger));
+          }
+          return chargers;
+        // TODO: Check if this 404 is intentional from the backend.
+        case 404:
+          throw Exception(ErrorCodes.notFound);
+        // TODO: Check if there should be a 500 response from the backend.
+        // Commented out as there is no 500 response from the backend as of now.
+        /*
+        case 500:
+          throw Exception(ErrorCodes.internalError);
+        */
+        default:
+          throw Exception(ErrorCodes.internalError);
+      }
+    } catch (e) {
+      print(
+          'Error in charger_api_service, getAllAvailableChargers():\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
     }
   }
 
-  /// The function does not work yet...
-  /// It takes a chargerPointId as a parameter, makes a GET request to the API,
-  /// and returns a Charger object
+  /// Used to update the status of a charger.
+  /// It takes a `status` and an `id` as parameters, and then it makes a `put`
+  /// request to the API with the `id`in the URL, and `status`in the body.
   ///
-  /// Args:
-  ///   chargerPointId: The ID of the charger point you want to get the chargers for.
-  ///
-  /// Returns:
-  ///   A Charger object.
-  Future<Charger> getChargersByChargerPointId(chargerPointId) async {
-    var response = await client.get(Uri.parse('${API.url}/chargers'));
-    return Charger.fromJson(jsonDecode(response.body));
-  }
-
-  /// It takes a string and an integer as parameters, and then it makes a PUT
-  /// request to the API with the string and integer as the body
-  ///
-  /// Args:
-  ///   status (String): "available"
-  ///   id (int): 1
+  /// * **Args**:
+  ///   * `status` [String] : Either "Available" or "Unavailable"
+  ///   * `id` [int] : The ID of the charger you want to update
+  // TODO: Check if this name should be updateChargerStatus instead.
   Future<void> updateStatus(String status, int id) async {
-    print("Status: " + status);
-    print("Id: " + id.toString());
-    await client
-        .put(
-          Uri.parse('${API.url}/chargers/$id'),
-          headers: API.defaultRequestHeaders,
-          body: jsonEncode(<String, String>{
-            'status': status,
-          }),
-        )
-        .then((result) => {
-              print("statusCode: " + result.statusCode.toString()),
-              print("body: " + result.body.toString())
-            });
-  }
-
-  /// It takes a chargerId as an argument, and then sends a PUT request to the
-  /// server with the chargerId, userId, start and end time
-  ///
-  /// Args:
-  ///   chargerId (int): The id of the charger you want to reserve
-  Future<void> reserveCharger(int chargerId) async {
-    var response = await client.put(
-      Uri.parse('${API.url}/reservations'),
-      headers: API.defaultRequestHeaders,
-      body: jsonEncode(<String, dynamic>{
-        "chargerId": chargerId,
-        "userId": 1,
-        "start": 200,
-        "end": 300,
-      }),
-    );
-    switch (response.statusCode) {
-      case 400: // Not able to connect to charger
-        throw Exception("Statuscode: " + response.statusCode.toString());
-      case 404:
-        throw Exception(ErrorCodes.notFound);
-      case 500: // Internal server error
-        throw Exception(ErrorCodes.internalError);
+    if (status != ChargerStatus.Available.name &&
+        status != ChargerStatus.Unavailable.name) {
+      throw Exception(ErrorCodes.badRequest);
+    }
+    try {
+      var response = await client.put(
+        Uri.parse('${API.url}/chargers/$id'),
+        headers: API.defaultRequestHeaders,
+        body: jsonEncode(<String, String>{
+          'status': status,
+        }),
+      );
+      switch (response.statusCode) {
+        case 200:
+          print('Status on Charger #$id updated successfully to $status');
+          break;
+        case 400:
+          throw Exception(ErrorCodes.badRequest);
+        case 404:
+          throw Exception(ErrorCodes.notFound);
+        // TODO: Check if there should be a 500 response from the backend.
+        // Commented out as there is no 500 response from the backend as of now.
+        /*
+        case 500:
+          throw Exception(ErrorCodes.internalError);
+        */
+        default:
+          throw Exception(ErrorCodes.internalError);
+      }
+    } catch (e) {
+      print(
+          'Error in charger_api_service, updateStatus($status, $id):\n\t${e.toString()}');
+      throw Exception(ErrorCodes.internalError);
     }
   }
 }
