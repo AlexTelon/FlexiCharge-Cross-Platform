@@ -5,6 +5,7 @@ import 'package:flexicharge/ui/widgets/charging_summary.dart';
 import 'package:flexicharge/ui/widgets/stop_chargning_button.dart';
 import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
+import '../../widgets/chargin_started.dart';
 
 /// It's a StatelessWidget that shows a TopSheet with different content
 /// depending on the chargingState
@@ -49,23 +50,28 @@ class TopSheetView extends StatelessWidget {
             ),
             //This Widget is commented out temporarily because it shows
             //instead of the Widget below which shows the charging percent etc
-            /*if (model.chargingState == 1)
+            if (model.chargingState == 1)
               Container(
-                // Charging Started
-                height: MediaQuery.of(context).size.height * 0.15,
-                child: ChargingStarted(),
+                  // Charging Started
+                  height: MediaQuery.of(context).size.height * 0.15,
+                  child: Builder(
+                    builder: (BuildContext context) {
+                      model.changeChargingState(false);
+                      return ChargingStarted();
+                    },
+                  )),
+            if (model.chargingState == 2 || model.chargingState == 3)
+              Container(
+                height: MediaQuery.of(context).size.height * 0.09,
+                // Charging In Progress & Fully Charged
+                child: ChargingInProgress(
+                  batteryPercent: model.currentChargePercentage,
+                  chargingAdress: model.chargingAdress,
+                  timeUntilFullyCharged:
+                      model.transactionSession.timestamp.parseTimeDiff(),
+                  kilowattHours: model.kilowattHours,
+                ),
               ),
-            if (model.chargingState == 2 || model.chargingState == 3)*/
-            Container(
-              height: MediaQuery.of(context).size.height * 0.09,
-              // Charging In Progress & Fully Charged
-              child: ChargingInProgress(
-                batteryPercent: model.localData.chargingPercentage,
-                chargingAdress: model.chargingAdress,
-                timeUntilFullyCharged: model.timeUntilFullyCharged,
-                kilowattHours: model.kilowattHours,
-              ),
-            ),
             if (model.topSheetState == 2 &&
                 (model.chargingState == 2 || model.chargingState == 3))
               Expanded(
@@ -109,8 +115,7 @@ class TopSheetView extends StatelessWidget {
               Expanded(
                 child: ChargingSummary(
                   time: model.stopTime,
-                  chargingDuration:
-                      model.transactionSession.timestamp.parseTimeDiff(),
+                  chargingDuration: "1hr 41min",
                   energyUsed:
                       "${model.transactionSession.kwhTransferred.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
                   totalCost:

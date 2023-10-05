@@ -17,9 +17,12 @@ class ChargerPoint {
     required this.price,
   });
 
+  /// The `ChargerPoint.fromJson` method is a factory constructor that takes a `Map<String, dynamic>` as a
+  /// parameter. It is used to create a `ChargerPoint` object from a JSON representation.
   ChargerPoint.fromJson(Map<String, dynamic> json) {
     chargerPointId = json['chargePointID'];
-    coordinates = LatLng(json['location'][0], json['location'][1]);
+    coordinates =
+        LatLng(json['location'][0].toDouble(), json['location'][1].toDouble());
     name = json['name'] ?? '';
     price = json['price'] ?? '';
   }

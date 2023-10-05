@@ -162,16 +162,15 @@ class TransactionApiService {
   ///   The response is a JSON object containing the following:
   Future<Transaction> createKlarnaPaymentSession(
       int? userId, int chargerId) async {
-    var response =
-        await client.post(Uri.parse('${API.url}/transactions/session'),
-            headers: API.defaultRequestHeaders,
-            encoding: Encoding.getByName('utf-8'),
-            //These parameters do not appear to make a difference
-            //since the functionality on the backend is not implemented.
-            body: json.encode(<String, int>{
-              'userID': 1,
-              'chargerID': chargerId,
-            }));
+    var response = await client.post(Uri.parse('${API.url}/transactions'),
+        headers: API.defaultRequestHeaders,
+        encoding: Encoding.getByName('utf-8'),
+        //These parameters do not appear to make a difference
+        //since the functionality on the backend is not implemented.
+        body: json.encode(<String, dynamic>{
+          'chargerID': chargerId,
+          'isKlarnaPayment': true
+        }));
     switch (response.statusCode) {
       case 201:
         var transaction = json.decode(response.body) as Map<String, dynamic>;
@@ -203,10 +202,10 @@ class TransactionApiService {
         }));
 
     switch (response.statusCode) {
-      case 201:
-        var list = json.decode(response.body) as List<Map<String, dynamic>>;
-        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = Transaction.fromJson(list[0]);
+      case 200:
+        var transaction = json.decode(response.body) as Map<String, dynamic>;
+        if (transaction.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(transaction);
 
         print("Klarna updatedSession paymentID: " +
             parsedSession.paymentID.toString());

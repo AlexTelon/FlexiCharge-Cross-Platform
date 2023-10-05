@@ -62,7 +62,7 @@ class ChargingInProgress extends StatelessWidget {
                           height: 20,
                           image: AssetImage(
                               'assets/images/white_alarm_clock.png')),
-                      Text("1hr 21min until full",
+                      Text(timeUntilFullyCharged,
                           style: Theme.of(context).textTheme.bodyLarge),
                     ],
                   ),
@@ -76,7 +76,7 @@ class ChargingInProgress extends StatelessWidget {
                           width: 20,
                           height: 20,
                           image: AssetImage('assets/images/lightningIcon.png')),
-                      Text("5,72kwh at 3kwh",
+                      Text(kilowattHours,
                           style: Theme.of(context).textTheme.bodyLarge)
                     ],
                   ),

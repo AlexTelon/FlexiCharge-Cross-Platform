@@ -30,6 +30,9 @@ class TopSheetViewModel extends BaseViewModel {
   init() {
     startStreamListener();
 
+    // This function is implemented temporarily until the stream line is used correctly in the app.
+    updateStopStime();
+
     timer = Timer.periodic(Duration(milliseconds: 200),
         (Timer t) => incrementChargingPercentage());
   }
@@ -46,13 +49,13 @@ class TopSheetViewModel extends BaseViewModel {
     }
   }
 
-  /// A getter that returns the address of the charger.
+  /// The `chargingAddress` getter is returning the address of the charger.
   String get chargingAdress {
-    /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+    var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
-        .contains((charger) => charger.id == transactionSession.chargerID));
-    */
-    return 'Kungsgatan 1a, Jönköping';
+        .any((element) => element.id == transactionSession.chargerID));
+
+    return chargerPoint.name;
   }
 
   /// Returns amount of seconds left until fully charged expressed as
@@ -67,6 +70,8 @@ class TopSheetViewModel extends BaseViewModel {
   /// It's a getter that returns the amount of kilowatt hours transferred.
   String get kilowattHours =>
       "${transactionSession.kwhTransferred} kWh transferred";
+
+  int get currentChargePercentage => transactionSession.currentChargePercentage;
 
   /// It changes the state of the top sheet and notifies the listeners
   ///
@@ -188,12 +193,24 @@ class TopSheetViewModel extends BaseViewModel {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
-        stopTime = '${DateTime.now().hour} :${DateTime.now().minute} ';
+        stopTime = '${DateTime.now().hour}:${DateTime.now().minute} ';
         notifyListeners();
       } else if (event == EventType.showCharging) {
         changeChargingState(false);
       }
     });
+  }
+
+  /// The function "updateStopStime" updates the "stopTime" variable with the current hour and minute in
+  /// the format "HH:MM".
+  void updateStopStime() {
+    int hour = DateTime.now().hour;
+    int minute = DateTime.now().minute;
+
+    String hourString = hour < 10 ? '0$hour' : '$hour';
+    String minuteString = minute < 10 ? '0$minute' : '$minute';
+
+    stopTime = '$hourString:$minuteString';
   }
 }
 
@@ -216,10 +233,7 @@ extension TimeParser on int {
     if (duration.inMinutes % 60 > 0) {
       result = result + (duration.inMinutes % 60).toString() + 'min ';
     }
-    if (duration.inSeconds % 60 > 0) {
-      result = result + (duration.inMinutes % 60).toString() + 'sec ';
-    }
 
-    return result;
+    return result + "until full";
   }
 }
