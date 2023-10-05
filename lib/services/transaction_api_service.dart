@@ -202,10 +202,10 @@ class TransactionApiService {
         }));
 
     switch (response.statusCode) {
-      case 201:
-        var list = json.decode(response.body) as List<Map<String, dynamic>>;
-        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = Transaction.fromJson(list[0]);
+      case 200:
+        var transaction = json.decode(response.body) as Map<String, dynamic>;
+        if (transaction.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(transaction);
 
         print("Klarna updatedSession paymentID: " +
             parsedSession.paymentID.toString());

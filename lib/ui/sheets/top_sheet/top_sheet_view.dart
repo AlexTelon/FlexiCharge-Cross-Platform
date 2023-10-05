@@ -65,9 +65,10 @@ class TopSheetView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height * 0.09,
                 // Charging In Progress & Fully Charged
                 child: ChargingInProgress(
-                  batteryPercent: model.localData.chargingPercentage,
+                  batteryPercent: model.currentChargePercentage,
                   chargingAdress: model.chargingAdress,
-                  timeUntilFullyCharged: model.timeUntilFullyCharged,
+                  timeUntilFullyCharged:
+                      model.transactionSession.timestamp.parseTimeDiff(),
                   kilowattHours: model.kilowattHours,
                 ),
               ),
@@ -114,8 +115,7 @@ class TopSheetView extends StatelessWidget {
               Expanded(
                 child: ChargingSummary(
                   time: model.stopTime,
-                  chargingDuration:
-                      model.transactionSession.timestamp.parseTimeDiff(),
+                  chargingDuration: "1hr 41min",
                   energyUsed:
                       "${model.transactionSession.kwhTransferred.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
                   totalCost:

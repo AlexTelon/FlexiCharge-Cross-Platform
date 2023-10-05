@@ -71,6 +71,8 @@ class TopSheetViewModel extends BaseViewModel {
   String get kilowattHours =>
       "${transactionSession.kwhTransferred} kWh transferred";
 
+  int get currentChargePercentage => transactionSession.currentChargePercentage;
+
   /// It changes the state of the top sheet and notifies the listeners
   ///
   /// Args:
@@ -231,10 +233,7 @@ extension TimeParser on int {
     if (duration.inMinutes % 60 > 0) {
       result = result + (duration.inMinutes % 60).toString() + 'min ';
     }
-    if (duration.inSeconds % 60 > 0) {
-      result = result + (duration.inSeconds % 60).toString() + 'sec ';
-    }
 
-    return result;
+    return result + "until full";
   }
 }
