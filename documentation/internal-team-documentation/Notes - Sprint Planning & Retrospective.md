@@ -30,4 +30,13 @@
    **Retrospective Summery Sprint 3**
   - In sum, the sprint exhibited a commendable level of team focus, demonstrating significant progress toward the ultimate goal of delivering a comprehensive product. Noteworthy achievements include the successful implementation of the charging process, encompassing payment integration with Klarna, albeit solely with mock data and not yet with live data sourced from the backend. It has become apparent, however, that our team's reliance on the backend squad has presented certain limitations, hindering the sprint's overall efficiency.
 A prominent positive aspect of this sprint was the lucidity and specificity of our sprint goal, which facilitated alignment among team members, fostering a cohesive work environment. Nevertheless, it became evident that more time than initially anticipated was requisite for the complete realization of this goal. Furthermore, the sprint was characterized by effective intra-team and inter-team communication, particularly with the native squad.
-On the other hand, it has become increasingly apparent that communication with the backend squad must undergo improvement in preparation for the forthcoming sprint.   
+On the other hand, it has become increasingly apparent that communication with the backend squad must undergo improvement in preparation for the forthcoming sprint.
+
+
+**Sprint 4**
+- Sprint Goal: Get the charging process to work with live metrics from the backend including payment method and QR scan a charger.
+- The main focus will be to get the charging process to work with live metrics from the backend.
+- There are also som bug fixing that is related to the charging process that is being focused this week (QR scan a charger)
+- The payment bug with klarna will also have a high priority.
+- Other than that, some UI features will be implemented in line with the native sqaud.
+- The test lead will be focused on testing the bug fixes and the charging process. 
