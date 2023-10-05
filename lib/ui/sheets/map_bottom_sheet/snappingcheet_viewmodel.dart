@@ -5,6 +5,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
+import 'package:flexicharge/services/user_api_service.dart';
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,6 +21,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final localData = locator<LocalData>();
   static const platform =
       const MethodChannel('com.startActivity/klarnaChannel');
+  String userStreetLocation = "";
 
   /// If the data is a ChargerPoint, then set the selectedChargerPoint to the data.
   /// If the data is a String, then get the charger by the id and
@@ -51,6 +53,21 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         selectedChargerPoint = ChargerPoint();
         showWideButton = true;
       }
+    }
+  }
+
+  /// The function `updateUserAddress` updates the `userAddress` variable based on the `userLocation` and
+  /// notifies listeners of the change.
+  Future<void> updateUserAddress() async {
+    try {
+      final String? address =
+          await UserApiService().getAddressFromCoordinates(userLocation);
+      if (address != null) {
+        userStreetLocation = address;
+        notifyListeners(); // Notify listeners that userAddress has been updated
+      }
+    } catch (e) {
+      print('Error updating user address: $e');
     }
   }
 
