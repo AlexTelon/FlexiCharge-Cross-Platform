@@ -30,6 +30,9 @@ class TopSheetViewModel extends BaseViewModel {
   init() {
     startStreamListener();
 
+    // This function is implemented temporarily until the stream line is used correctly in the app.
+    updateStopStime();
+
     timer = Timer.periodic(Duration(milliseconds: 200),
         (Timer t) => incrementChargingPercentage());
   }
@@ -188,12 +191,24 @@ class TopSheetViewModel extends BaseViewModel {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
-        stopTime = '${DateTime.now().hour} :${DateTime.now().minute} ';
+        stopTime = '${DateTime.now().hour}:${DateTime.now().minute} ';
         notifyListeners();
       } else if (event == EventType.showCharging) {
         changeChargingState(false);
       }
     });
+  }
+
+  /// The function "updateStopStime" updates the "stopTime" variable with the current hour and minute in
+  /// the format "HH:MM".
+  void updateStopStime() {
+    int hour = DateTime.now().hour;
+    int minute = DateTime.now().minute;
+
+    String hourString = hour < 10 ? '0$hour' : '$hour';
+    String minuteString = minute < 10 ? '0$minute' : '$minute';
+
+    stopTime = '$hourString:$minuteString';
   }
 }
 
