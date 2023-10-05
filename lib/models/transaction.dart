@@ -36,12 +36,12 @@ class Transaction {
     userID = json['userID'] ?? '';
     chargerID = json['chargerID'] ?? 0;
     pricePerKwh = double.parse(json['pricePerKwh'] ?? '0.0');
-    sessionID = json['session_id'];
-    clientToken = json['client_token'];
+    sessionID = json['session_id'] ?? "";
+    clientToken = json['klarna_consumer_token'];
     paymentConfirmed = json['paymentConfirmed'] ?? false;
     isKlarnaPayment = json['isKlarnaPayment'] ?? true;
     timestamp = json['timestamp'] ?? 0;
-    kwhTransferred = json['kwhTransfered'] ?? 0;
+    kwhTransferred = json['kwhTransfered'].toDouble() ?? 0;
     currentChargePercentage = json['currentChargePercentage'] ?? 0;
     paymentID = json['paymentID'] ?? '';
   }

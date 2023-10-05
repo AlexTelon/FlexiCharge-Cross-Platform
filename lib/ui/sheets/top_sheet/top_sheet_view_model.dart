@@ -217,7 +217,7 @@ extension TimeParser on int {
       result = result + (duration.inMinutes % 60).toString() + 'min ';
     }
     if (duration.inSeconds % 60 > 0) {
-      result = result + (duration.inMinutes % 60).toString() + 'sec ';
+      result = result + (duration.inSeconds % 60).toString() + 'sec ';
     }
 
     return result;
