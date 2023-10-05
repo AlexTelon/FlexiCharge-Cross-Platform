@@ -45,14 +45,6 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                   children: [
                     ///Contains the TextInputs
                     UserFormInput(
-                        controller: model.emailController,
-                        isPassword: false,
-                        hint: 'Enter your Email',
-                        labelText: 'Email',
-                        suffixIcon: Icon(null),
-                        validator: (email) => model.emailValidator(email)),
-                    SizedBox(height: 30),
-                    UserFormInput(
                         controller: model.verificationController,
                         isPassword: false,
                         suffixIcon: Icon(null),
@@ -60,7 +52,7 @@ class _VerifyRegistrationViewState extends State<VerifyRegistrationView> {
                         labelText: 'Verification Code',
                         validator: (verificationCode) =>
                             model.verificationCodeValidator(verificationCode)),
-                    SizedBox(height: 30.0),
+                    SizedBox(height: 380),
                     WideButton(
                         showWideButton: true,
                         text: 'Verify Account',

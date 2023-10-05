@@ -47,13 +47,16 @@ class LaunchView extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    width: 250,
-                    height: 10,
-                    child: LinearProgressIndicator(
-                      backgroundColor: Colors.black.withOpacity(0),
-                      valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
-                      value: model.indication,
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Container(
+                      width: 250,
+                      height: 10,
+                      child: LinearProgressIndicator(
+                        backgroundColor: Colors.transparent,
+                        valueColor: AlwaysStoppedAnimation<Color>(Colors.black),
+                        value: model.indication,
+                      ),
                     ),
                   ),
                 ],

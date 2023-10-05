@@ -145,6 +145,20 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
+  /// The `shouldStartCharging` getter function is used to determine whether the charging process should
+  /// be started or not. It checks the status of the selected charger and returns `true` if the status
+  /// is "Available", indicating that the charger is available for charging. Otherwise, it returns
+  /// `false`. This getter function can be used to conditionally enable or disable the charging
+  /// functionality based on the status of the charger.
+  bool get shouldStartCharging {
+    switch (selectedCharger.status) {
+      case "Available":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   /// Setting the selected charger to the new charger and then it is setting
   /// the charger code to the id of the charger. Then it is calling the
   /// getChargerById function with the id of the charger.
