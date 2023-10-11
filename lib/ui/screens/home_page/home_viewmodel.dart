@@ -1,5 +1,5 @@
 import 'dart:async';
-import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/models/old_transaction.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
 import 'package:flexicharge/app/app.router.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -121,7 +121,7 @@ class HomeViewModel extends BaseViewModel {
   ///   The current charging percentage of the car.
   Future<int> fetchChargingPercentage() async {
     try {
-      Transaction currentTransaction = await _transactionAPI
+      OldTransaction currentTransaction = await _transactionAPI
           .getTransactionById(localData.transactionSession.transactionID);
 
       int currentChargingPercentage =

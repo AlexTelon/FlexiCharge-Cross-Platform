@@ -1,6 +1,6 @@
 /// The class is a model for a transaction. It has a bunch of properties,
 /// and a constructor that takes a map of strings and dynamic values
-class Transaction {
+class OldTransaction {
   int transactionID = 0;
   String userID = "";
   int chargerID = 0;
@@ -14,9 +14,9 @@ class Transaction {
   int currentChargePercentage = 0;
   String paymentID = '';
 
-  Transaction();
+  OldTransaction();
 
-  Transaction.fromTransaction({
+  OldTransaction.fromTransaction({
     required this.transactionID,
     required this.userID,
     required this.chargerID,
@@ -31,10 +31,10 @@ class Transaction {
     required this.paymentID,
   });
 
-  Transaction.fromJson(Map<String, dynamic> json) {
+  OldTransaction.fromJson(Map<String, dynamic> json) {
     transactionID = json['transactionID'] ?? 0;
     userID = json['userID'] ?? '';
-    chargerID = json['chargerID'] ?? 0;
+    chargerID = json['connectorID'] ?? 0;
     pricePerKwh = double.parse(json['pricePerKwh'] ?? '0.0');
     sessionID = json['session_id'] ?? "";
     clientToken = json['klarna_consumer_token'] ?? "";

@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/models/old_transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
@@ -255,7 +255,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("starting the session..");
         // Create a transaction session
         print("Trying to create a transaction session... ");
-        Transaction transactionSession =
+        OldTransaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
         print("TransactionID: " +
