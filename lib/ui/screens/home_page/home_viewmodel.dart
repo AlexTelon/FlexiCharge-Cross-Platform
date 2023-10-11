@@ -36,7 +36,7 @@ class HomeViewModel extends BaseViewModel {
                 ? localData.redMarkerIcon
                 : localData.greenMarkerIcon,
             onTap: () => openFindCharger(chargerPointId: chargingPoint),
-            position: chargingPoint.coordinates,
+            position: chargingPoint.location,
             consumeTapEvents: true,
           ),
         ),

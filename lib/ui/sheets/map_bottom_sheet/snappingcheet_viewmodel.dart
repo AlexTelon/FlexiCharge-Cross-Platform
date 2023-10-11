@@ -191,15 +191,15 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   List<Map<String, dynamic>> get getSortedChargerPoints {
     var chargerPoints = localData.chargerPoints;
     chargerPoints.sort((first, after) =>
-        getDistance(userLocation, first.coordinates)
-            .compareTo(getDistance(userLocation, after.coordinates)));
+        getDistance(userLocation, first.location)
+            .compareTo(getDistance(userLocation, after.location)));
 
     List<Map<String, dynamic>> result = [];
     try {
       for (int i = 0; i < chargerPoints.length && i < 4; i += 1) {
         var distance = getDistance(
           userLocation,
-          chargerPoints[i].coordinates,
+          chargerPoints[i].location,
         );
 
         result.add({
