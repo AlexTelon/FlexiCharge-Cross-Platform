@@ -22,7 +22,7 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
         ChargingStation(
           onTap: () => model.isFirstView = true,
           address: model.selectedChargerPoint.name,
-          currentLocation: model.userStreetLocation,
+          currentLocation: model.selectedChargerPoint.address,
         ),
         SizedBox(height: 20),
         Plugs(

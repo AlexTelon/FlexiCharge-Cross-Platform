@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/enums/event_type.dart';
 import 'package:flexicharge/enums/top_sheet_strings.dart';
-import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/models/old_transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
@@ -29,9 +29,6 @@ class TopSheetViewModel extends BaseViewModel {
   /// the charging percentage every second
   init() {
     startStreamListener();
-
-    // This function is implemented temporarily until the stream line is used correctly in the app.
-    updateStopStime();
 
     timer = Timer.periodic(Duration(milliseconds: 200),
         (Timer t) => incrementChargingPercentage());
@@ -83,7 +80,7 @@ class TopSheetViewModel extends BaseViewModel {
     changeTopSheetSize();
   }
 
-  Transaction get transactionSession => localData.transactionSession;
+  OldTransaction get transactionSession => localData.transactionSession;
 
   /// It changes the size of the top sheet based on the state of the top sheet
   void changeTopSheetSize() {
@@ -201,16 +198,21 @@ class TopSheetViewModel extends BaseViewModel {
     });
   }
 
-  /// The function "updateStopStime" updates the "stopTime" variable with the current hour and minute in
-  /// the format "HH:MM".
-  void updateStopStime() {
+  /// The function returns the current time in the format "HH:MM".
+  ///
+  /// This method is temporarily used to retrieve the charging stop time until the stream listeners is
+  /// used correctly in the app.
+  ///
+  /// Returns:
+  ///   The method is returning a string representing the current hour and minute in the format "HH:MM".
+  String getChargingStopTime() {
     int hour = DateTime.now().hour;
     int minute = DateTime.now().minute;
 
     String hourString = hour < 10 ? '0$hour' : '$hour';
     String minuteString = minute < 10 ? '0$minute' : '$minute';
 
-    stopTime = '$hourString:$minuteString';
+    return '$hourString:$minuteString';
   }
 }
 
