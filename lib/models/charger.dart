@@ -6,9 +6,10 @@ class Charger {
   int id = -1;
   int chargerPointId = 0;
   String status = '';
-  LatLng coordinates = LatLng(0, 0);
+  String serialNumber = "";
+  LatLng location = LatLng(0, 0);
   String capacity = '';
-  String cost = '';
+  int cost = 0;
   String type = '';
 
   Charger();
@@ -16,15 +17,19 @@ class Charger {
     required this.id,
     required this.chargerPointId,
     required this.status,
-    // required this.coordinates,
+    required this.location,
+    required serialNumber,
     this.capacity = '',
     required this.cost,
     this.type = '',
   });
 
   Charger.fromJson(Map<String, dynamic> json) {
-    id = json['chargerID'];
-    chargerPointId = json['chargePointID'];
+    id = json['connectorID'];
+    location =
+        LatLng(json['location'][0].toDouble(), json['location'][1].toDouble());
+    serialNumber = json["serialNumber"] ?? "";
     status = json['status'] ?? '';
+    chargerPointId = json['chargePointID'];
   }
 }

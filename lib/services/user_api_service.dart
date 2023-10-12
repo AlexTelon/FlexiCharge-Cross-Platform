@@ -1,5 +1,7 @@
 import 'dart:convert';
+import 'package:geocoding/geocoding.dart';
 import 'package:flexicharge/models/api.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:http/http.dart';
 import 'package:http/http.dart' as http;
 import 'package:flexicharge/enums/error_codes.dart';
@@ -230,6 +232,36 @@ class UserApiService {
         throw responseMsg;
       default:
         throw exeptionMsg;
+    }
+  }
+
+  /// The function `getAddressFromCoordinates` takes a `LatLng` object representing coordinates and
+  /// returns a formatted address string using the `placemarkFromCoordinates` function.
+  ///
+  /// Args:
+  ///   coordinates (LatLng): The "coordinates" parameter is of type LatLng, which represents a pair of
+  /// latitude and longitude values. It is used to specify the location for which you want to fetch the
+  /// address.
+  ///
+  /// Returns:
+  ///   The method `getAddressFromCoordinates` returns a `Future<String?>`.
+  Future<String?> getAddressFromCoordinates(LatLng coordinates) async {
+    try {
+      final List<Placemark> placemarks = await placemarkFromCoordinates(
+        coordinates.latitude,
+        coordinates.longitude,
+      );
+
+      if (placemarks.isNotEmpty) {
+        final Placemark placemark = placemarks.first;
+        return placemark.street
+            .toString(); // This will return a formatted street address string.
+      } else {
+        return null;
+      }
+    } catch (e) {
+      print('Error fetching address: $e');
+      return null;
     }
   }
 }

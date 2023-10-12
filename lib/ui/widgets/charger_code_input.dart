@@ -29,6 +29,8 @@ class ChargerCodeInput extends StatelessWidget {
         keyboardAppearance: Brightness.dark,
         boxShadows: [BoxShadow(color: Colors.white)],
         autoDismissKeyboard: true,
+        enableActiveFill: true,
+        cursorColor: Colors.black,
         pinTheme: PinTheme(
           fieldHeight: 53,
           fieldWidth: 34,
@@ -46,6 +48,10 @@ class ChargerCodeInput extends StatelessWidget {
             0,
             0,
           ), //Override default green to fully transparent
+          selectedColor: Colors.white,
+          selectedFillColor: Colors.white,
+          inactiveFillColor: Colors.white,
+          activeFillColor: Colors.white,
         ),
       ),
     );

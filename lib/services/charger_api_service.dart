@@ -43,56 +43,48 @@ class ChargerApiService {
     List<ChargerPoint> chargerPoints = [];
 
     try {
-      var response = await client.get(Uri.parse('${API.url}/chargers'));
-      switch (response.statusCode) {
-        case 200:
-          List<dynamic> chargers = json.decode(response.body);
-          if (chargers.isEmpty)
-            return throw throw Exception('No Chargers Found');
-          for (var charger in chargers) {
-            var chargerPoint = chargerPoints
-                .where(
-                    (value) => value.chargerPointId == charger['chargePointID'])
-                .toList();
-            if (chargerPoint.isNotEmpty) {
-              var firstChargerPoint = chargerPoint.first;
+      var chargers = await getChargers();
+      if (chargers.isEmpty) return throw throw Exception('No Chargers Found');
+      for (var charger in chargers) {
+        var chargerPoint = chargerPoints
+            .where((value) => value.chargerPointId == charger.chargerPointId)
+            .toList();
+        if (chargerPoint.isNotEmpty) {
+          chargerPoint.first.chargers.add(Charger.fromCharger(
+            id: charger.id,
+            location: charger.location,
+            serialNumber: charger.serialNumber,
+            cost: chargerPoint.first.price,
+            chargerPointId: charger.chargerPointId,
+            status: charger.status,
+          ));
+        } else {
+          var chargerPoint = await getChargerPoint(charger.chargerPointId);
 
-              chargerPoint.first.chargers.add(Charger.fromCharger(
-                id: charger['chargerID'],
-                cost: firstChargerPoint.price,
-                chargerPointId: charger['chargePointID'],
-                status: charger['status'],
-              ));
-            } else {
-              var chargerPoint =
-                  await getChargerPoint(charger['chargePointID']);
-
-              chargerPoints.add(
-                ChargerPoint.fromCharger(
-                  chargerPointId: charger['chargePointID'],
-                  chargers: [
-                    Charger.fromCharger(
-                      id: charger['chargerID'],
-                      cost: chargerPoint.price,
-                      chargerPointId: charger['chargePointID'],
-                      status: charger['status'],
-                    )
-                  ],
-                  coordinates:
-                      LatLng(charger['location'][0], charger['location'][1]),
-                  price: chargerPoint.price,
-                  name: chargerPoint.name,
-                ),
-              );
-            }
-          }
-
-          return chargerPoints;
-        case 500:
-          throw Exception(ErrorCodes.internalError);
-        default:
-          throw Exception(ErrorCodes.internalError);
+          chargerPoints.add(
+            ChargerPoint.fromCharger(
+                chargerPointId: charger.chargerPointId,
+                chargers: [
+                  Charger.fromCharger(
+                    id: charger.id,
+                    cost: chargerPoint.price,
+                    location: charger.location,
+                    serialNumber: charger.serialNumber,
+                    chargerPointId: charger.chargerPointId,
+                    status: charger.status,
+                  )
+                ],
+                location: LatLng(charger.location.latitude.toDouble(),
+                    charger.location.longitude.toDouble()),
+                price: chargerPoint.price,
+                name: chargerPoint.name,
+                address: chargerPoint.address,
+                klarnaReservationAmount: chargerPoint.klarnaReservationAmount),
+          );
+        }
       }
+
+      return chargerPoints;
     } catch (e) {
       print(e);
     }

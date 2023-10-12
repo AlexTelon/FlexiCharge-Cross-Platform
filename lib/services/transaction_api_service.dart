@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/api.dart';
 import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/models/user_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 /// It's a class that makes requests to the server and returns a Transaction object
@@ -17,7 +18,15 @@ class TransactionApiService {
   /// Returns:
   ///   A Future<Transaction>
   Future<Transaction> getTransactionById(int id) async {
-    var response = await client.get(Uri.parse('${API.url}/transactions/$id'));
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+
+    var response = await client.get(
+      Uri.parse('${API.url}/transaction/$id'),
+      headers: {
+        ...API.defaultRequestHeaders,
+        'Authorization': 'Bearer $accessToken'
+      },
+    );
 
     switch (response.statusCode) {
       case 200:
@@ -162,16 +171,17 @@ class TransactionApiService {
   ///   The response is a JSON object containing the following:
   Future<Transaction> createKlarnaPaymentSession(
       int? userId, int chargerId) async {
-    var response =
-        await client.post(Uri.parse('${API.url}/transactions/session'),
-            headers: API.defaultRequestHeaders,
-            encoding: Encoding.getByName('utf-8'),
-            //These parameters do not appear to make a difference
-            //since the functionality on the backend is not implemented.
-            body: json.encode(<String, int>{
-              'userID': 1,
-              'chargerID': chargerId,
-            }));
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+    var response = await client.post(Uri.parse('${API.url}/transaction'),
+        headers: {
+          ...API.defaultRequestHeaders,
+          'Authorization': 'Bearer $accessToken'
+        },
+        encoding: Encoding.getByName('utf-8'),
+        body: json.encode(<String, dynamic>{
+          'connectorID': chargerId,
+          'paymentType': "klarna"
+        }));
     switch (response.statusCode) {
       case 201:
         var transaction = json.decode(response.body) as Map<String, dynamic>;
@@ -194,22 +204,27 @@ class TransactionApiService {
     int transactionId,
     String authToken,
   ) async {
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
     var response = await client.put(
-        Uri.parse('${API.url}/transactions/start/$transactionId'),
-        headers: API.defaultRequestHeaders,
+        Uri.parse('${API.url}/transaction/start/$transactionId'),
+        headers: {
+          ...API.defaultRequestHeaders,
+          'Authorization': 'Bearer $accessToken'
+        },
         body: jsonEncode(<String, dynamic>{
           'transactionID': transactionId,
           'authorization_token': authToken
         }));
 
     switch (response.statusCode) {
-      case 201:
-        var list = json.decode(response.body) as List<Map<String, dynamic>>;
-        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = Transaction.fromJson(list[0]);
+      case 200:
+        print(response.body);
+        var transaction = json.decode(response.body) as Map<String, dynamic>;
+        if (transaction.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(transaction);
 
         print("Klarna updatedSession paymentID: " +
-            parsedSession.paymentID.toString());
+            parsedSession.klarnaSessionID.toString());
         return parsedSession;
       case 400:
         print(response.body);
@@ -228,18 +243,27 @@ class TransactionApiService {
   /// The request will return an updated transaction object which contains
   /// paymentConfirmed == true.
   Future<Transaction> stopCharging(int transactionId) async {
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+
     var response = await client.put(
-        Uri.parse('${API.url}/transactions/stop/$transactionId'),
-        headers: API.defaultRequestHeaders);
+      Uri.parse('${API.url}/transaction/stop/$transactionId'),
+      headers: {
+        ...API.defaultRequestHeaders,
+        'Authorization': 'Bearer $accessToken'
+      },
+    );
+
+    print("==============================================" +
+        response.statusCode.toString());
+    print(response.statusCode);
 
     switch (response.statusCode) {
       case 200:
-        // We get a List with a single Transaction object in response
-        var list = json.decode(response.body) as List<dynamic>;
-        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = Transaction.fromJson(list.first);
-        print("Klarna updatedSession paymentConfirmed : " +
-            parsedSession.paymentConfirmed.toString());
+        var decodedRespBody = json.decode(response.body);
+        print("=====================================");
+        print(decodedRespBody);
+        if (decodedRespBody.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(decodedRespBody);
         return parsedSession;
       case 400:
         throw Exception(ErrorCodes.badRequest);

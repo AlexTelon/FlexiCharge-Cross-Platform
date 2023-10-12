@@ -30,29 +30,16 @@ class TopSheetViewModel extends BaseViewModel {
   init() {
     startStreamListener();
 
-    timer = Timer.periodic(Duration(milliseconds: 200),
-        (Timer t) => incrementChargingPercentage());
+    changeChargingState(false);
   }
 
-  /// If the charging percentage is less than 100, increment it by 1.
-  /// If it's not, cancel the timer and change the charging state to true
-  void incrementChargingPercentage() {
-    if (localData.chargingPercentage < 100) {
-      localData.chargingPercentage += 1;
-      notifyListeners();
-    } else {
-      timer?.cancel();
-      changeChargingState(true);
-    }
-  }
-
-  /// A getter that returns the address of the charger.
+  /// The `chargingAddress` getter is returning the address of the charger.
   String get chargingAdress {
-    /*var chargerPoint = localData.chargerPoints.firstWhere((element) => element
+    var chargerPoint = localData.chargerPoints.firstWhere((element) => element
         .chargers
-        .contains((charger) => charger.id == transactionSession.chargerID));
-    */
-    return 'Kungsgatan 1a, Jönköping';
+        .any((element) => element.id == transactionSession.connectorID));
+
+    return chargerPoint.name;
   }
 
   /// Returns amount of seconds left until fully charged expressed as
@@ -67,6 +54,8 @@ class TopSheetViewModel extends BaseViewModel {
   /// It's a getter that returns the amount of kilowatt hours transferred.
   String get kilowattHours =>
       "${transactionSession.kwhTransferred} kWh transferred";
+
+  int get currentChargePercentage => transactionSession.currentChargePercentage;
 
   /// It changes the state of the top sheet and notifies the listeners
   ///
@@ -114,8 +103,9 @@ class TopSheetViewModel extends BaseViewModel {
       chargingState = 4;
       changeTopSheetState(3);
       try {
-        await transactionApiService
-            .stopCharging(localData.transactionSession.transactionID);
+        Transaction stoppedChargingSession =
+            await transactionApiService.stopCharging(9999); // hardcoded
+        localData.transactionSession.updateFrom(stoppedChargingSession);
       } catch (error) {
         print("Could not stop charging");
       }
@@ -188,12 +178,55 @@ class TopSheetViewModel extends BaseViewModel {
     localData.stream.listen((event) {
       if (event == EventType.stopTimer) {
         changeChargingState(false);
-        stopTime = '${DateTime.now().hour} :${DateTime.now().minute} ';
+        stopTime = '${DateTime.now().hour}:${DateTime.now().minute} ';
         notifyListeners();
       } else if (event == EventType.showCharging) {
         changeChargingState(false);
       }
     });
+  }
+
+  /// The function `getChargingStopTime` takes an end timestamp and returns the time in hours and minutes,
+  /// adjusted by 2 hours.
+  ///
+  /// Args:
+  ///   endTimeStamp (int): The `endTimeStamp` parameter is a Unix timestamp representing the end time of
+  /// a charging session.
+  ///
+  /// Returns:
+  ///   a string representing the time when charging should stop.
+  String getChargingStopTime(int endTimeStamp) {
+    DateTime realTime =
+        DateTime.fromMillisecondsSinceEpoch(endTimeStamp * 1000, isUtc: true);
+
+    String timeNow =
+        (realTime.hour + 2).toString() + ":" + (realTime.minute).toString();
+
+    return timeNow;
+  }
+
+  /// The function calculates the duration between two timestamps in hours and minutes.
+  ///
+  /// Args:
+  ///   startTimeStamp (int): The startTimeStamp parameter represents the starting time of an event or
+  /// duration in seconds since the Unix epoch (January 1, 1970, 00:00:00 UTC).
+  ///   endTimeStamp (int): The `endTimeStamp` parameter represents the end time of an event or duration
+  /// in seconds since the Unix epoch (January 1, 1970).
+  ///
+  /// Returns:
+  ///   a string that represents the duration between the start and end timestamps in the format "X hr Y
+  /// min", where X is the number of hours and Y is the number of minutes.
+  String getDuration(int startTimeStamp, int endTimeStamp) {
+    DateTime startTime = startTimeStamp.parseUNIXTimestamp();
+    DateTime endTime = endTimeStamp.parseUNIXTimestamp();
+
+    Duration difference = endTime.difference(startTime);
+
+    int hours = difference.inHours;
+    int minutes = difference.inMinutes.remainder(60);
+
+    String totalDuration = '$hours hr ${minutes}min';
+    return totalDuration;
   }
 }
 
@@ -201,7 +234,7 @@ class TopSheetViewModel extends BaseViewModel {
 /// two dates.
 extension TimeParser on int {
   DateTime parseUNIXTimestamp() {
-    return DateTime.fromMicrosecondsSinceEpoch(this * 1000);
+    return DateTime.fromMillisecondsSinceEpoch(this * 1000, isUtc: true);
   }
 
   String parseTimeDiff() {
@@ -216,10 +249,7 @@ extension TimeParser on int {
     if (duration.inMinutes % 60 > 0) {
       result = result + (duration.inMinutes % 60).toString() + 'min ';
     }
-    if (duration.inSeconds % 60 > 0) {
-      result = result + (duration.inMinutes % 60).toString() + 'sec ';
-    }
 
-    return result;
+    return result + "until full";
   }
 }

@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
@@ -5,6 +6,7 @@ import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
+import 'package:flexicharge/services/user_api_service.dart';
 import 'package:flexicharge/theme.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
@@ -20,6 +22,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   final localData = locator<LocalData>();
   static const platform =
       const MethodChannel('com.startActivity/klarnaChannel');
+  String userStreetLocation = "";
 
   /// If the data is a ChargerPoint, then set the selectedChargerPoint to the data.
   /// If the data is a String, then get the charger by the id and
@@ -51,6 +54,21 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         selectedChargerPoint = ChargerPoint();
         showWideButton = true;
       }
+    }
+  }
+
+  /// The function `updateUserAddress` updates the `userAddress` variable based on the `userLocation` and
+  /// notifies listeners of the change.
+  Future<void> updateUserAddress() async {
+    try {
+      final String? address =
+          await UserApiService().getAddressFromCoordinates(userLocation);
+      if (address != null) {
+        userStreetLocation = address;
+        notifyListeners(); // Notify listeners that userAddress has been updated
+      }
+    } catch (e) {
+      print('Error updating user address: $e');
     }
   }
 
@@ -127,6 +145,20 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     }
   }
 
+  /// The `shouldStartCharging` getter function is used to determine whether the charging process should
+  /// be started or not. It checks the status of the selected charger and returns `true` if the status
+  /// is "Available", indicating that the charger is available for charging. Otherwise, it returns
+  /// `false`. This getter function can be used to conditionally enable or disable the charging
+  /// functionality based on the status of the charger.
+  bool get shouldStartCharging {
+    switch (selectedCharger.status) {
+      case "Available":
+        return true;
+      default:
+        return false;
+    }
+  }
+
   /// Setting the selected charger to the new charger and then it is setting
   /// the charger code to the id of the charger. Then it is calling the
   /// getChargerById function with the id of the charger.
@@ -159,15 +191,15 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
   List<Map<String, dynamic>> get getSortedChargerPoints {
     var chargerPoints = localData.chargerPoints;
     chargerPoints.sort((first, after) =>
-        getDistance(userLocation, first.coordinates)
-            .compareTo(getDistance(userLocation, after.coordinates)));
+        getDistance(userLocation, first.location)
+            .compareTo(getDistance(userLocation, after.location)));
 
     List<Map<String, dynamic>> result = [];
     try {
       for (int i = 0; i < chargerPoints.length && i < 4; i += 1) {
         var distance = getDistance(
           userLocation,
-          chargerPoints[i].coordinates,
+          chargerPoints[i].location,
         );
 
         result.add({
@@ -229,7 +261,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("TransactionID: " +
             localData.transactionSession.transactionID.toString());
         print("clientToken: " +
-            localData.transactionSession.clientToken.toString());
+            localData.transactionSession.klarnaClientToken.toString());
 
         print('Done');
 
@@ -238,7 +270,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("Getting auth token...");
 
         String authToken =
-            await _startKlarnaActivity(transactionSession.clientToken);
+            await _startKlarnaActivity(transactionSession.klarnaClientToken);
         print("authToken: " + authToken);
 
         print("auth token: " + authToken);
@@ -249,10 +281,15 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           // Create transaction order with the auth token from klarna
           print(
               "Trying to update our transaction session with Klarna order... ");
-          localData.transactionSession = await _transactionAPI
-              .createKlarnaOrder(transactionSession.transactionID, authToken);
-          print(
-              "payment ID" + localData.transactionSession.paymentID.toString());
+          await _transactionAPI.createKlarnaOrder(
+              transactionSession.transactionID, authToken);
+
+          Transaction specificTransaction = await _transactionAPI
+              .getTransactionById(transactionSession.transactionID);
+          localData.transactionSession.updateFrom(specificTransaction);
+
+          print("payment ID" +
+              localData.transactionSession.klarnaSessionID.toString());
         }
       } catch (e) {
         print(e);
@@ -266,10 +303,10 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     try {
       // Reserve charger during payment
       print("trying to disconnect the charger...");
-      localData.transactionSession = await _transactionAPI.stopCharging(id);
+      Transaction stoppedChargingSession =
+          await _transactionAPI.stopCharging(id);
+      localData.transactionSession.updateFrom(stoppedChargingSession);
       print("charger is disconnected");
-      print("paymentConfirmed: " +
-          localData.transactionSession.paymentConfirmed.toString());
     } catch (e) {
       print(e);
     }

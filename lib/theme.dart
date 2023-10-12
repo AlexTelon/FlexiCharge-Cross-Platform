@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 //This class contains the official FlexiCharge theme colors
 class FlexiChargeTheme {
@@ -12,4 +12,30 @@ class FlexiChargeTheme {
   static const yellow = Color(0xfff0c200);
   static const blue = Color(0xff5e5eb7);
   static const red = Color(0xffef6048);
+}
+
+class Style {
+  static TextStyle regularText = TextStyle(
+    fontFamily: 'Lato',
+    color: FlexiChargeTheme.darkGrey,
+    fontSize: 13,
+    fontWeight: FontWeight.w400,
+    fontStyle: FontStyle.normal,
+  );
+
+  static TextStyle linkText = TextStyle(
+    fontFamily: 'Lato',
+    color: FlexiChargeTheme.green,
+    fontSize: 13,
+    fontWeight: FontWeight.w700,
+    fontStyle: FontStyle.normal,
+  );
+
+  static TextStyle higlightedText = TextStyle(
+    fontFamily: 'Lato',
+    color: FlexiChargeTheme.darkGrey,
+    fontSize: 19,
+    fontWeight: FontWeight.w800,
+    fontStyle: FontStyle.normal,
+  );
 }

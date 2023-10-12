@@ -14,12 +14,15 @@ class BeginCharging extends ViewModelWidget<CustomSnappingSheetViewModel> {
 
   @override
   Widget build(context, model) {
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      model.updateUserAddress();
+    });
     return Column(
       children: [
         ChargingStation(
           onTap: () => model.isFirstView = true,
           address: model.selectedChargerPoint.name,
-          currentLocation: 'Barnarpsgatan 68',
+          currentLocation: model.selectedChargerPoint.address,
         ),
         SizedBox(height: 20),
         Plugs(

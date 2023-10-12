@@ -36,7 +36,7 @@ class HomeViewModel extends BaseViewModel {
                 ? localData.redMarkerIcon
                 : localData.greenMarkerIcon,
             onTap: () => openFindCharger(chargerPointId: chargingPoint),
-            position: chargingPoint.coordinates,
+            position: chargingPoint.location,
             consumeTapEvents: true,
           ),
         ),
@@ -167,7 +167,9 @@ class HomeViewModel extends BaseViewModel {
     _bottomSheetService
         .showCustomSheet(variant: SheetType.mapBottomSheet, data: data)
         .then((value) {
-      activeTopSheet = true;
+      if (value != null) {
+        activeTopSheet = true;
+      }
       notifyListeners();
     });
   }

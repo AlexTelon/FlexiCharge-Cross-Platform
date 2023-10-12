@@ -18,6 +18,8 @@ Make sure that the extension Flutter is installed and enabled.
 
 If you get prompted that some packages are missing, press download. Else, go to pubspec.yaml and and download the packages from there, or download from the terminal by entering `flutter pub get`
 
+Follow the instructions in the documentation file on how to start the app in iOS and android simulators.
+
 The app can now be started with either the command `flutter run` or by going to main.dart. If you have a connected supported Android or IOS device, or an emulator up and running, the app should launch fine. :)
 
 ### Versions

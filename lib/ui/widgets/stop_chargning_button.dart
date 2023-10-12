@@ -16,7 +16,7 @@ class StopChargingButton extends StatelessWidget {
     return FittedBox(
       fit: BoxFit.fitWidth,
       child: Container(
-        height: MediaQuery.of(context).size.height * 0.10,
+        height: MediaQuery.of(context).size.height * 0.07,
         width: MediaQuery.of(context).size.width * 0.90,
         decoration: BoxDecoration(
             border: Border.all(color: Colors.white),
@@ -26,7 +26,7 @@ class StopChargingButton extends StatelessWidget {
           onPressed: onPressed,
           child: Text(
             buttonText,
-            style: Theme.of(context).textTheme.bodyText1,
+            style: Theme.of(context).textTheme.bodyLarge,
           ),
         ),
       ),

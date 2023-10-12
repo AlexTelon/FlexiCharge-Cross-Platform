@@ -46,6 +46,10 @@ class Topbar extends StatelessWidget {
                     textAlign: TextAlign.center,
                   ),
                 ),
+                if (onTap != null)
+                  Container(
+                    width: 30,
+                  ),
               ],
             ),
           ),
