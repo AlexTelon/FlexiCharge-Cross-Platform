@@ -2,7 +2,7 @@ import 'dart:async';
 import 'package:flexicharge/app/app.locator.dart';
 import 'package:flexicharge/models/charger.dart';
 import 'package:flexicharge/models/charger_point.dart';
-import 'package:flexicharge/models/old_transaction.dart';
+import 'package:flexicharge/models/transaction.dart';
 import 'package:flexicharge/services/charger_api_service.dart';
 import 'package:flexicharge/services/local_data.dart';
 import 'package:flexicharge/services/transaction_api_service.dart';
@@ -255,13 +255,13 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("starting the session..");
         // Create a transaction session
         print("Trying to create a transaction session... ");
-        OldTransaction transactionSession =
+        Transaction transactionSession =
             await _transactionAPI.createKlarnaPaymentSession(null, id);
         localData.transactionSession = transactionSession;
         print("TransactionID: " +
             localData.transactionSession.transactionID.toString());
         print("clientToken: " +
-            localData.transactionSession.clientToken.toString());
+            localData.transactionSession.klarnaClientToken.toString());
 
         print('Done');
 
@@ -270,7 +270,7 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
         print("Getting auth token...");
 
         String authToken =
-            await _startKlarnaActivity(transactionSession.clientToken);
+            await _startKlarnaActivity(transactionSession.klarnaClientToken);
         print("authToken: " + authToken);
 
         print("auth token: " + authToken);
@@ -284,21 +284,12 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
           await _transactionAPI.createKlarnaOrder(
               transactionSession.transactionID, authToken);
 
-          int numberOfCalls = 100;
-          // Start the loop
-          for (int i = 0; i < numberOfCalls; i++) {
-            // Calculate the delay for each call
-            Duration delay = Duration(seconds: i * 3);
+          Transaction specificTransaction = await _transactionAPI
+              .getTransactionById(transactionSession.transactionID);
+          localData.transactionSession.updateFrom(specificTransaction);
 
-            // Schedule the call after the delay
-            Timer(delay, () async {
-              localData.transactionSession = await _transactionAPI
-                  .getTransactionById(transactionSession.transactionID);
-            });
-          }
-
-          print(
-              "payment ID" + localData.transactionSession.paymentID.toString());
+          print("payment ID" +
+              localData.transactionSession.klarnaSessionID.toString());
         }
       } catch (e) {
         print(e);
@@ -312,10 +303,10 @@ class CustomSnappingSheetViewModel extends BaseViewModel {
     try {
       // Reserve charger during payment
       print("trying to disconnect the charger...");
-      localData.transactionSession = await _transactionAPI.stopCharging(id);
+      Transaction stoppedChargingSession =
+          await _transactionAPI.stopCharging(id);
+      localData.transactionSession.updateFrom(stoppedChargingSession);
       print("charger is disconnected");
-      print("paymentConfirmed: " +
-          localData.transactionSession.paymentConfirmed.toString());
     } catch (e) {
       print(e);
     }
