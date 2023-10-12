@@ -68,7 +68,7 @@ class TopSheetView extends StatelessWidget {
                   batteryPercent: model.currentChargePercentage,
                   chargingAdress: model.chargingAdress,
                   timeUntilFullyCharged:
-                      model.transactionSession.timestamp.parseTimeDiff(),
+                      "1hr 21min until full", // this is hardcoded because we don't get it from backend yet
                   kilowattHours: model.kilowattHours,
                 ),
               ),
@@ -114,12 +114,15 @@ class TopSheetView extends StatelessWidget {
             if (model.chargingState == 4 && model.topSheetState == 3)
               Expanded(
                 child: ChargingSummary(
-                  time: model.getChargingStopTime(),
-                  chargingDuration: "1hr 41min",
+                  time: model.getChargingStopTime(
+                      model.localData.transactionSession.endTimeStamp),
+                  chargingDuration: model.getDuration(
+                      model.localData.transactionSession.startTimestamp,
+                      model.localData.transactionSession.endTimeStamp),
                   energyUsed:
                       "${model.transactionSession.kwhTransferred.toStringAsFixed(2)}kWh @ ${model.transactionSession.pricePerKwh.toStringAsFixed(2)}kr",
                   totalCost:
-                      "${(model.transactionSession.kwhTransferred * model.transactionSession.pricePerKwh).toStringAsFixed(2)}kr",
+                      "${model.transactionSession.price.toStringAsFixed(2)}kr",
                   stopCharging: complete,
                 ),
               ),

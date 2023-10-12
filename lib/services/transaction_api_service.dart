@@ -1,7 +1,8 @@
 import 'dart:convert';
 import 'package:flexicharge/enums/error_codes.dart';
 import 'package:flexicharge/models/api.dart';
-import 'package:flexicharge/models/old_transaction.dart';
+import 'package:flexicharge/models/transaction.dart';
+import 'package:flexicharge/models/user_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 /// It's a class that makes requests to the server and returns a Transaction object
@@ -16,13 +17,21 @@ class TransactionApiService {
   ///
   /// Returns:
   ///   A Future<Transaction>
-  Future<OldTransaction> getTransactionById(int id) async {
-    var response = await client.get(Uri.parse('${API.url}/transactions/$id'));
+  Future<Transaction> getTransactionById(int id) async {
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+
+    var response = await client.get(
+      Uri.parse('${API.url}/transaction/$id'),
+      headers: {
+        ...API.defaultRequestHeaders,
+        'Authorization': 'Bearer $accessToken'
+      },
+    );
 
     switch (response.statusCode) {
       case 200:
         var parsedTransaction = json.decode(response.body);
-        var transactionFromJson = OldTransaction.fromJson(parsedTransaction);
+        var transactionFromJson = Transaction.fromJson(parsedTransaction);
         return transactionFromJson;
       case 404:
         throw Exception(ErrorCodes.notFound);
@@ -41,8 +50,8 @@ class TransactionApiService {
   ///
   /// Returns:
   ///   A list of transactions.
-  Future<List<OldTransaction>> getTransactionsByUserId(int id) async {
-    var transactions = <OldTransaction>[];
+  Future<List<Transaction>> getTransactionsByUserId(int id) async {
+    var transactions = <Transaction>[];
     var response = await client
         .get(Uri.parse('${API.url}/transactions/userTransactions/$id'));
 
@@ -50,7 +59,7 @@ class TransactionApiService {
       case 200:
         var parsedTransactions = json.decode(response.body) as List<dynamic>;
         for (var trans in parsedTransactions) {
-          transactions.add(OldTransaction.fromJson(trans));
+          transactions.add(Transaction.fromJson(trans));
         }
         return transactions;
       case 404:
@@ -70,8 +79,8 @@ class TransactionApiService {
   ///
   /// Returns:
   ///   A list of transactions.
-  Future<List<OldTransaction>> getTransactionsByChargerId(int id) async {
-    var transactions = <OldTransaction>[];
+  Future<List<Transaction>> getTransactionsByChargerId(int id) async {
+    var transactions = <Transaction>[];
     var response = await client
         .get(Uri.parse('${API.url}/transactions/chargerTransactions/$id'));
 
@@ -79,7 +88,7 @@ class TransactionApiService {
       case 200:
         var parsedTransactions = json.decode(response.body) as List<dynamic>;
         for (var trans in parsedTransactions) {
-          transactions.add(OldTransaction.fromJson(trans));
+          transactions.add(Transaction.fromJson(trans));
         }
         return transactions;
       case 404:
@@ -160,21 +169,23 @@ class TransactionApiService {
   ///
   /// Returns:
   ///   The response is a JSON object containing the following:
-  Future<OldTransaction> createKlarnaPaymentSession(
+  Future<Transaction> createKlarnaPaymentSession(
       int? userId, int chargerId) async {
-    var response = await client.post(Uri.parse('${API.url}/transactions'),
-        headers: API.defaultRequestHeaders,
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+    var response = await client.post(Uri.parse('${API.url}/transaction'),
+        headers: {
+          ...API.defaultRequestHeaders,
+          'Authorization': 'Bearer $accessToken'
+        },
         encoding: Encoding.getByName('utf-8'),
-        //These parameters do not appear to make a difference
-        //since the functionality on the backend is not implemented.
         body: json.encode(<String, dynamic>{
-          'chargerID': chargerId,
-          'isKlarnaPayment': true
+          'connectorID': chargerId,
+          'paymentType': "klarna"
         }));
     switch (response.statusCode) {
       case 201:
         var transaction = json.decode(response.body) as Map<String, dynamic>;
-        var parsedSession = OldTransaction.fromJson(transaction);
+        var parsedSession = Transaction.fromJson(transaction);
         return parsedSession;
       case 400:
         throw Exception(ErrorCodes.badRequest);
@@ -189,13 +200,17 @@ class TransactionApiService {
 
   /// The request returns the updated transaction object,
   /// If everything goes as expected, it will contain a paymentId.
-  Future<OldTransaction> createKlarnaOrder(
+  Future<Transaction> createKlarnaOrder(
     int transactionId,
     String authToken,
   ) async {
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
     var response = await client.put(
-        Uri.parse('${API.url}/transactions/start/$transactionId'),
-        headers: API.defaultRequestHeaders,
+        Uri.parse('${API.url}/transaction/start/$transactionId'),
+        headers: {
+          ...API.defaultRequestHeaders,
+          'Authorization': 'Bearer $accessToken'
+        },
         body: jsonEncode(<String, dynamic>{
           'transactionID': transactionId,
           'authorization_token': authToken
@@ -203,12 +218,13 @@ class TransactionApiService {
 
     switch (response.statusCode) {
       case 200:
+        print(response.body);
         var transaction = json.decode(response.body) as Map<String, dynamic>;
         if (transaction.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = OldTransaction.fromJson(transaction);
+        var parsedSession = Transaction.fromJson(transaction);
 
         print("Klarna updatedSession paymentID: " +
-            parsedSession.paymentID.toString());
+            parsedSession.klarnaSessionID.toString());
         return parsedSession;
       case 400:
         print(response.body);
@@ -226,19 +242,28 @@ class TransactionApiService {
 
   /// The request will return an updated transaction object which contains
   /// paymentConfirmed == true.
-  Future<OldTransaction> stopCharging(int transactionId) async {
+  Future<Transaction> stopCharging(int transactionId) async {
+    String? accessToken = await UserSecureStorage.getUserAccessToken();
+
     var response = await client.put(
-        Uri.parse('${API.url}/transactions/stop/$transactionId'),
-        headers: API.defaultRequestHeaders);
+      Uri.parse('${API.url}/transaction/stop/$transactionId'),
+      headers: {
+        ...API.defaultRequestHeaders,
+        'Authorization': 'Bearer $accessToken'
+      },
+    );
+
+    print("==============================================" +
+        response.statusCode.toString());
+    print(response.statusCode);
 
     switch (response.statusCode) {
       case 200:
-        // We get a List with a single Transaction object in response
-        var list = json.decode(response.body) as List<dynamic>;
-        if (list.isEmpty) throw Exception(ErrorCodes.emptyResponse);
-        var parsedSession = OldTransaction.fromJson(list.first);
-        print("Klarna updatedSession paymentConfirmed : " +
-            parsedSession.paymentConfirmed.toString());
+        var decodedRespBody = json.decode(response.body);
+        print("=====================================");
+        print(decodedRespBody);
+        if (decodedRespBody.isEmpty) throw Exception(ErrorCodes.emptyResponse);
+        var parsedSession = Transaction.fromJson(decodedRespBody);
         return parsedSession;
       case 400:
         throw Exception(ErrorCodes.badRequest);
