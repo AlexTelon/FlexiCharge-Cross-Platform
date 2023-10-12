@@ -19,8 +19,6 @@ class ChargerApiService {
   ///   * A list of [Charger] Objects.
   Future<List<Charger>> getChargers() async {
     try {
-      // TODO: Why not explcitly set the type of response to http.Response?
-      // Applies to all functions in this file.
       var response = await client.get(Uri.parse('${API.url}/chargers'));
       switch (response.statusCode) {
         case 200:
@@ -30,12 +28,8 @@ class ChargerApiService {
             chargers.add(Charger.fromJson(charger));
           }
           return chargers;
-        // TODO: Check if this is supposed to throw an exception or return an
-        // empty list. Applicable to all 404 responses in this file.
-        // TODO: Check if this 404 is intentional from the backend.
         case 404:
           throw Exception(ErrorCodes.notFound);
-        // TODO: Check if there should be a 500 response from the backend.
         // Commented out as there is no 500 response from the backend as of now.
         /*
         case 500:
@@ -66,7 +60,6 @@ class ChargerApiService {
             chargerPoints.add(ChargerPoint.fromJson(chargerPoint));
           }
           return chargerPoints;
-        // TODO: Check if this 404 is intentional from the backend.
         case 404:
           throw Exception(ErrorCodes.notFound);
         case 500:
@@ -89,7 +82,6 @@ class ChargerApiService {
   ///
   /// * **Returns**:
   ///   * A [ChargerPoint] Object.
-  // TODO: Check if this name should be getChargerPointById instead.
   Future<ChargerPoint> getChargerPoint(int id) async {
     try {
       var response = await client.get(Uri.parse('${API.url}/chargePoints/$id'));
@@ -125,7 +117,6 @@ class ChargerApiService {
         case 200:
           return Charger.fromJson(json.decode(response.body));
         case 404:
-          // TODO: Check if this really this should throw an exception and not just return empty chargerPoint
           throw Exception(ErrorCodes.notFound);
         default:
           throw Exception(ErrorCodes.internalError);
@@ -154,10 +145,8 @@ class ChargerApiService {
             chargers.add(Charger.fromJson(charger));
           }
           return chargers;
-        // TODO: Check if this 404 is intentional from the backend.
         case 404:
           throw Exception(ErrorCodes.notFound);
-        // TODO: Check if there should be a 500 response from the backend.
         // Commented out as there is no 500 response from the backend as of now.
         /*
         case 500:
@@ -180,7 +169,6 @@ class ChargerApiService {
   /// * **Args**:
   ///   * `status` [String] : Either "Available" or "Unavailable"
   ///   * `id` [int] : The ID of the charger you want to update
-  // TODO: Check if this name should be updateChargerStatus instead.
   Future<void> updateStatus(String status, int id) async {
     if (status != ChargerStatus.Available.name &&
         status != ChargerStatus.Unavailable.name) {
@@ -202,7 +190,6 @@ class ChargerApiService {
           throw Exception(ErrorCodes.badRequest);
         case 404:
           throw Exception(ErrorCodes.notFound);
-        // TODO: Check if there should be a 500 response from the backend.
         // Commented out as there is no 500 response from the backend as of now.
         /*
         case 500:
